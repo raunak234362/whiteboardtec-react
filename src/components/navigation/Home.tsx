@@ -16,7 +16,7 @@ function Home(props: NavRouteType): JSX.Element {
                 <img
                   src={props.image}
                   alt={props.name}
-                  className={`w-[13.65rem] scale-${hovered? 105:100} ease-in-out duration-1000 opacity-${hovered? 30:100}`}
+                  className={`w-[14rem] scale-${hovered? 105:100} ease-in-out duration-1000 opacity-${hovered? 30:100}`}
                 />
                 <div className={`absolute bottom-1/2 left-10 font-bold text-2xl text-white z-20 opacity-${hovered? '0':'1'}`} style={{ textShadow: '5px 5px 7px rgb(0, 0, 0)' }}>
                   {props.name}
@@ -31,7 +31,7 @@ function Home(props: NavRouteType): JSX.Element {
                     {
                       props.child?.map((child) => (
                         <NavLink to={props.path + child.path}>
-                          <li className="text-white text-left text-sm px-2 py-1">
+                          <li className="text-white text-left text-sm p-1">
                             {child.name}
                           </li>
                         </NavLink>

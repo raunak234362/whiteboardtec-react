@@ -124,8 +124,14 @@ const HomeNav = () : JSX.Element => {
 
     return (
         <>
-            <div className="relative flex item-center">
-                <div className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth no-scrollbar overflow-y-hidden">
+            <div className="relative flex item-center" >
+                <div className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth no-scrollbar overflow-y-hidden"
+                    onWheel={(e) => {
+                    e.preventDefault();
+                    const container = e.currentTarget;
+                    const scrollAmount = e.deltaY;
+                    container.scrollLeft += (scrollAmount*100);
+                }}>
                     {
                         NavRoute.map((route) => (
                             <Home key={route.name} {...route} />
