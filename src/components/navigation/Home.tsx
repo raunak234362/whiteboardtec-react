@@ -7,7 +7,7 @@ function Home(props: NavRouteType): JSX.Element {
 
   return (
     <>
-      <div className="inline"
+      <NavLink to={props.path} className="inline"
       onMouseOver={() => setHovered(true)}
       onMouseOut={() => setHovered(false)}>
         <div
@@ -18,6 +18,7 @@ function Home(props: NavRouteType): JSX.Element {
                 src={props.image}
                 alt={props.name}
                 className={`w-[18rem] h-3/5 ease-in-out duration-500 transform scale-${hovered ? '105' : '100'} hover:opacity-${hovered ? '30':'100'}`}/>
+
             )}
             <div
               className={`absolute bottom-1/2 left-10 font-bold text-2xl  text-white z-20 ${hovered? "invisible":""}`}
@@ -45,7 +46,7 @@ function Home(props: NavRouteType): JSX.Element {
             </div>
           </div>
         </div>
-      </div>
+      </NavLink>
     </>
   );
 }
