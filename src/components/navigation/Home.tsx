@@ -17,7 +17,7 @@ function Home(props: NavRouteType): JSX.Element {
               <img
                 src={props.image}
                 alt={props.name}
-                className={`w-[18rem] h-3/5 ease-in-out duration-500 transform scale-${hovered ? '105' : '100'} hover:opacity-${hovered ? '30':'100'}`}/>
+                className={`w-[18rem] h-3/5 ease-in-out duration-500 transform hover:scale-105 hover:opacity-30`}/>
 
             )}
             <div
