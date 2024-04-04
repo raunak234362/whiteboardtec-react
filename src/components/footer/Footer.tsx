@@ -8,7 +8,7 @@ const Footer = () : JSX.Element => {
                 <div className="flex justify-center">
                 021948
                 </div>
-                <div className="flex-row flex items-center ml-2">
+                <div className="flex-row flex items-center ml-72">
                         <span className="[&>svg]:h-3 [&>svg]:w-3 m-1">
                         <svg xmlns="http://www.w3.org/2000/svg"
                             fill="#fff"
