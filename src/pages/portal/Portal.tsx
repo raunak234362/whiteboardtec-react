@@ -1,6 +1,6 @@
 import { BannerPropType } from "../../components/banner";
 import { PageBanner } from "../../components/banner";
-import { useId } from "react";
+import { useEffect, useId } from "react";
 
 type ContextType = {
   title: string;
@@ -70,7 +70,11 @@ function Portal() {
   function handleSubmit(formData: FormData) {
     const email = formData.get("email");
     console.log(email);
-}
+  }
+
+  useEffect(() => {
+    document.title = "Portal - Whiteboard";
+  })
 
   return (
     <>

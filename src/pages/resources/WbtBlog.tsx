@@ -1,5 +1,6 @@
 import { PageBanner } from "../../components/banner"
 import { ResourcePropType } from ".";
+import { useEffect } from "react";
 
 const props: ResourcePropType = {
   banner: {
@@ -18,6 +19,10 @@ const props: ResourcePropType = {
 
 
 function WbtBlog() {
+  useEffect(()=> {
+    document.title = "WBT Blog- Resources - Whiteboard";
+  })
+
   return (
     <>
       <PageBanner {...props.banner} />

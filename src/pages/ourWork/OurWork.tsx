@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 function OurWork() {
+  useEffect(() => {
+    document.title = "Our Work - Whiteboard";
+  }, []);
   return (
     <div>OurWork</div>
   )

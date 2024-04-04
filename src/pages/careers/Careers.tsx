@@ -1,6 +1,7 @@
 import { BannerPropType, PageBanner } from "../../components/banner";
 import { HeadSectionType, JobListType } from ".";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const banner: BannerPropType = {
   header: "Careers at",
@@ -85,6 +86,10 @@ const treeData = [
 ]
 
 function Careers() {
+  useEffect(() => {
+    document.title = "Careers - Whiteboard";
+  }, []);
+
   return (
     <>
       <PageBanner {...banner} />

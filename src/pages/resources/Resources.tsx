@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { BannerPropType, PageBanner } from '../../components/banner';
+import { useEffect } from 'react';
 
 const banner: BannerPropType = {
   header: "Resources",
@@ -22,6 +23,10 @@ const data = [
 
 
 function Resources() {
+
+  useEffect(()=> {
+    document.title = "Resources - Whiteboard";
+  })
 
   return (
     <>

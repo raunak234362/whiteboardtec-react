@@ -1,5 +1,6 @@
 import { PageBanner } from "../../components/banner"
 import { ResourcePropType } from ".";
+import { useEffect } from "react";
 
 const props: ResourcePropType = {
   banner: {
@@ -16,6 +17,10 @@ const props: ResourcePropType = {
 }
 
 function CaseStudies() {
+  useEffect(()=> {
+    document.title = "CaseStudies - Resources - Whiteboard";
+  })
+
     return (
       <>
         <PageBanner {...props.banner} />

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { PageBanner, BannerPropType } from "../../components/banner";
 import { Forms, FormType } from "../../components/forms/Forms";
 
@@ -97,6 +98,10 @@ const data: DataType = {
 };
 
 function Connect() {
+  useEffect(()=>{
+    document.title = "Connect - Whiteboard"
+  })
+
   return (
     <>
       <PageBanner {...data.banner} />

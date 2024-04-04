@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { NavRouteType } from ".";
 
 function Home(props: NavRouteType): JSX.Element {
   const [hovered, setHovered] = useState(false);
+  useEffect(()=> {
+    document.title = "Whiteboard Technologies-Structural Steel Detailing|USA|Canada";
+  });
 
   return (
     <>
