@@ -85,8 +85,8 @@ const NavRoute: NavRouteType[] = [
     image: "/src/assets/image/route-image/resources.jpg",
     child: [
       {
-        name: "Blog",
-        path: "/blog",
+        name: "WBT Blog",
+        path: "/wbt-blog",
       },
       {
         name: "Case Studies",

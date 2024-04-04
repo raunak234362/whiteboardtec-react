@@ -11,19 +11,24 @@ import Resources from './pages/resources/Resources.tsx'
 import Portal from './pages/portal/Portal.tsx'
 import Careers from './pages/careers/Careers.tsx'
 import Connect from './pages/connect/Connect.tsx'
+import CaseStudies from './pages/resources/CaseStudies'
+import WbtBlog from './pages/resources/WbtBlog'
 
 const BrowserRouter = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
-      { path: '/our-firm', element: <OurFirm/> },
-      { path: '/services', element: <Services/> },
-      { path: '/our-work', element: <OurWork/>},
-      { path: '/resources', element: <Resources/> },
-      { path: '/portal', element: <Portal/> },
-      { path: '/career', element: <Careers/> },
-      { path: '/connect', element: <Connect/> },
+      { path: '/our-firm', element: <OurFirm/>, errorElement: <Error/> },
+      { path: '/services', element: <Services/> , errorElement: <Error/> },
+      { path: '/our-work', element: <OurWork/> , errorElement: <Error/>},
+      { path: '/resources', element: <Resources />, children: [
+        { path: '/resources/case-studies', element: <CaseStudies/>, errorElement: <Error/> },
+        { path: '/resources/wbt-blog', element: <WbtBlog/>, errorElement: <Error/> },
+      ], errorElement: <Error/>},
+      { path: '/portal', element: <Portal/>, errorElement: <Error/> },
+      { path: '/career', element: <Careers/>, errorElement: <Error/> },
+      { path: '/connect', element: <Connect/>, errorElement: <Error/> },
       { path: '*', element: <Error/>}
     ],
   },

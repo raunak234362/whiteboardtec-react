@@ -1,8 +1,8 @@
-import React from 'react'
+import { useNavigate } from "react-router-dom"
 
 function Resources() {
   return (
-    <div>Resources</div>
+    <></>
   )
 }
 
