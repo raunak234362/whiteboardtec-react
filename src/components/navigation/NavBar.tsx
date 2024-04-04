@@ -14,7 +14,7 @@ function NavBar(props: NavRouteType): JSX.Element {
     <>
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 hover:bg-[#6abd45] px-3 py-2 text-sm font-semibold text-gray-900 mx-1">
+          <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 hover:bg-[#6abd45] px-3 py-2 text-sm font-semibold text-gray-900 mx-1 rounded-t-md">
           <NavLink
             to={props.path}
             onMouseOver={()=>setActive(true)}
@@ -35,9 +35,10 @@ function NavBar(props: NavRouteType): JSX.Element {
           show={isactive}
         >
           <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="py-1">
+
               {props.child && (
                 <>
+                <div className="py-1">
                   {props.child.map((child) => (
                     <Menu.Item key={child.name}>
                       {({ active }) => (
@@ -55,9 +56,10 @@ function NavBar(props: NavRouteType): JSX.Element {
                       )}
                     </Menu.Item>
                   ))}
+                </div>
                 </>
               )}
-            </div>
+
           </Menu.Items>
         </Transition>
       </Menu>
