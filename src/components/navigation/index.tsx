@@ -146,7 +146,7 @@ const HomeNav = (): JSX.Element => {
         <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
         <div className="fixed inset-0 w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
-                    <Dialog.Panel className="bg-slate-200 w-3/5 rounded-3xl p-5 border-slate-800 border-[3px] drop-shadow-lg shadow-inner">
+                    <Dialog.Panel className="bg-white w-3/5 rounded-3xl p-5 bg-opacity-60 border-slate-800 border-[3px] drop-shadow-lg shadow-inner">
                     <Dialog.Title className="font-extrabold text-2xl">{Notification.title}</Dialog.Title>
                     <Dialog.Description className="text-justify my-3">{Notification.description}</Dialog.Description>
                     {
