@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 function Estimate({ head }: { head: string }) {
     return (
         <>
-            <div className="bg-[#6abd45] rounded-xl md:order-1 order-first p-4 mx-10 -mt-6 text-white">
-                <div className="text-xl text-justify" style={{ textShadow: "4px 4px 8px rgba(0, 0, 0, 0.5)" }}>{head}</div>
+            <div className="bg-[#6abd45] rounded-xl md:order-1 order-first p-4 mx-5 text-white">
+                <div className="text-xl" style={{ textShadow: "4px 4px 8px rgba(0, 0, 0, 0.5)" }}>{head}</div>
                 <div className="m-5 ml-0 text-sm text-justify">
                     We will assess your projects absolutely free of cost and point out schedules that work best for your project's quick turnaround in no time at all!
                 </div>
@@ -32,7 +32,7 @@ function Estimate({ head }: { head: string }) {
                                 </svg>
                             </span>
                             <span>
-                                <span className="flex text-sm text-justify">Integrated Project Management</span>
+                                <span className="flex text-sm text-start">Integrated Project Management</span>
                             </span>
                         </li>
                         <li className="flex-row flex justify-start mr-2 my-1">
@@ -57,7 +57,7 @@ function Estimate({ head }: { head: string }) {
                                 </svg>
                             </span>
                             <span>
-                                <span className="flex text-sm text-justify">Insights on how to Optimize Schedules</span>
+                                <span className="flex text-sm text-start">Insights on how to Optimize Schedules</span>
                             </span>
                         </li>
                         <li className="flex-row flex justify-start mr-2 my-1">
@@ -82,7 +82,7 @@ function Estimate({ head }: { head: string }) {
                                 </svg>
                             </span>
                             <span>
-                                <span className="flex text-sm text-justify">Weekly, Quarterly, Progress & Assessments of Projects</span>
+                                <span className="flex text-sm text-start">Weekly, Quarterly, Progress & Assessments of Projects</span>
                             </span>
                         </li>
                     </ul>

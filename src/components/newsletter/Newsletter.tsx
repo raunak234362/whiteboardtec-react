@@ -1,9 +1,3 @@
-type NewsletterType = {
-    description: string[];
-    formMail: string;
-};
-
-
 const newsletter= {
     description: [
       "Industry Insights",
@@ -13,7 +7,7 @@ const newsletter= {
     formMail: "sales@whiteboard.com",
   }
 
-import React, {useId} from 'react'
+import {useId} from 'react'
 
 function Newsletter() {
     const formId = useId();

@@ -18,8 +18,6 @@ type JobListType = {
     applyMail: string;
 }
 
-type 
-
 export type {
     HeadSectionType,
     JobListType,

@@ -1,11 +1,20 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
+import { PageBanner, BannerPropType } from "../../components/banner";
+
+const banner : BannerPropType = {
+  header: "Services",
+  image: "/src/assets/image/banner-image/services.jpg"
+}
+
 
 function Services() {
   useEffect(()=> {
     document.title = "Services - Whiteboard";
   })
   return (
-    <div>Services</div>
+    <>
+      <PageBanner {...banner} />
+    </>
   )
 }
 
