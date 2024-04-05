@@ -49,7 +49,7 @@ function NavBar(props: NavRouteType): JSX.Element {
                           to={props.path + child.path}
                           className={Dropdown(
                             active
-                              ? "bg-gray-100 text-gray-900"
+                              ? "bg-gray-100 text-[#6abd45]"
                               : "text-gray-700",
                             "block px-4 py-2 text-sm"
                           )}

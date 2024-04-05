@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const HeaderHome = (): JSX.Element => {
   return (
     <>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center" id="header">
         <Link to="/" className="inline-flex">
           <img
             src="/src/assets/image/logo/whiteboardtec-logo.png"
@@ -112,7 +112,7 @@ const HeaderHome = (): JSX.Element => {
 const HeaderBase = (): JSX.Element => {
   return (
     <>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center" id="header">
         <Link to="/" className="inline-flex">
           <img
             src="/src/assets/image/logo/whiteboardtec-logo.png"
