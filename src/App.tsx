@@ -6,14 +6,24 @@ import { useLocation } from 'react-router-dom';
 
 function App(): JSX.Element{
   const location = useLocation();
-  return (
-    <>
-      {(location.pathname === '/') ? <HeaderHome /> : <HeaderBase />}
-      {(location.pathname === '/') ? <HomeNav /> : <NavigationBar />}
-      <Outlet />
-      <Footer />
-    </>
-  )
+  if (location.pathname.startsWith('/admin')) {
+    return (
+      <>
+        <Outlet />
+        <Footer />
+      </>
+    )
+
+  } else {
+    return (
+      <>
+        {(location.pathname === '/') ? <HeaderHome /> : <HeaderBase />}
+        {(location.pathname === '/') ? <HomeNav /> : <NavigationBar />}
+        <Outlet />
+        <Footer />
+      </>
+    )
+  }
 }
 
 export default App
