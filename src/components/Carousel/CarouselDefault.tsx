@@ -1,5 +1,10 @@
 import { Carousel } from "@material-tailwind/react";
-import { CarouselPropType } from ".";
+
+export type CarouselPropType = {
+  title?:string;
+  image: string;
+  alt?:string;
+}
 
 const images: CarouselPropType[] = [
   {
@@ -24,7 +29,7 @@ export function CarouselDefault() {
   if (images.length !== 0) {
     return (
       <Carousel
-        className="rounded-xl"
+        className="rounded-xl h-full w-full overflow-hidden relative"
         navigation={({ setActiveIndex, activeIndex, length }) => (
           <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
             {new Array(length).fill("").map((_, i) => (

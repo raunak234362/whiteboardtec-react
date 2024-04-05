@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import { PageBanner, BannerPropType } from "../../components/banner";
 import Newsletter from "../../components/newsletter/Newsletter";
 import Estimate from "../../components/estimation/Estimate";
-import { CarouselDefault } from "./CarouselDefault";
-import { CarouselPropType } from ".";
+import { CarouselDefault } from "../../components/Carousel/CarouselDefault";
 
 const banner: BannerPropType = {
   header: "Structural Steel",
@@ -146,7 +145,7 @@ function StructuralSteel() {
             </section>
           </section>
           <div className="flex flex-wrap items-center justify-center">
-            <div className="h-1/3 w-1/2 border-2 ">
+            <div className="h-60 w-1/2 border-2 ">
                 <CarouselDefault/>
             </div>
           </div>

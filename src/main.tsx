@@ -25,7 +25,9 @@ import {
   Rebar
 } from './pages/services'
 import Error from './pages/error/Error.tsx'
-import OurWork from './pages/ourWork/OurWork.tsx'
+import {
+  OurWork, Portfolio
+} from './pages/ourWork'
 import {
   Resources,
   WbtBlog,
@@ -50,6 +52,7 @@ const route = createBrowserRouter(
       <Route path="/services/pemb-detailing" element={<PEMB />} />
       <Route path="/services/rebar-estimation-and-detailing" element={<Rebar />} />
       <Route path="/our-work" element={<OurWork />} />
+      <Route path="/our-work/project-portfolio" element={<Portfolio />} />
       <Route path="/portal" element={<Portal />} />
       <Route path="/career" element={<Careers />} />
       <Route path="/connect" element={<Connect />} />

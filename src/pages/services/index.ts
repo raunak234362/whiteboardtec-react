@@ -6,11 +6,6 @@ import PEMB from "./PEMB";
 import StructuralSteel from "./StructuralSteel";
 import Rebar from "./Rebar";
 
-export type CarouselPropType = {
-    image: string,
-    alt?:string,
-}
-
 export {
     Services,
     ArchitecturalBIM,
