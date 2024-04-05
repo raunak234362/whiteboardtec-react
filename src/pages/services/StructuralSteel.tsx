@@ -64,7 +64,7 @@ function StructuralSteel() {
       <div className="bg-gray-100 shadow-md drop-shadow-md pb-16">
         <div className="mx-28 pt-3 my-10">
           <div className="text-4xl font-bold my-2 text-[#6abd45] mt-5">
-            Our Portfolio
+            Our Services
           </div>
           <section className="mt-3 flex flex-wrap md:flex-row flex-col">
             <div className="mt-3 p-2 h-fit flex flex-wrap flex-col w-2/3 md:flex-row">
@@ -109,7 +109,7 @@ function StructuralSteel() {
         <div className="mx-28 py-3 rounded-3xl border-4 shadow-xl drop-shadow-xl">
           <section className="px-10">
             <div className="text-4xl font-bold mb-0 text-[#6abd45] mt-3">
-              Our Services
+              Our Portfolio
             </div>
             <section className="p-2 flex flex-wrap md:flex-row flex-col">
               <div className="p-2 h-fit flex flex-wrap flex-col md:flex-row">
