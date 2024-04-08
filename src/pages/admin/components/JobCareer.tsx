@@ -36,7 +36,7 @@ function JobCareer(props: JobDescType) {
               <div className="bg-white w-full max-w-4xl p-6 rounded-lg shadow-lg flex flex-col">
                 <div className="flex justify-between">
                   <Dialog.Title className="text-lg font-semibold">
-                    Add New Job Role
+                    Edit Job Role for {props.role}
                   </Dialog.Title>
                   <button
                     onClick={() => setOpenJob(false)}

@@ -1,91 +1,30 @@
-import { useEffect, useState } from "react";
-import { auth } from "../../config/firebase";
-import { Navigate } from "react-router-dom";
-import { Header, HeaderProp, Sidebar } from "./components";
-import WorkPortfolio from "./components/WorkPortfolio";
-import { PortfolioPropType } from "../ourWork"
+import { useState } from "react";
+import { PortfolioPropType } from "../../ourWork";
+import { Link } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
-import { CarouselPropType } from "../../components/Carousel/CarouselDefault";
 
-const portfolios: PortfolioPropType[] = [
-  {
-    title: "Structural Steel – Main Steel",
-    description:
-      "These are shop drawings supplied for main structural elements such as beams, columns, etc. For us, our portfolio is more than a collection. It’s work that has gone out and delivered results and created a lasting impact with the respective project. The very reason why clients keep coming back to us.",
-    pdf: "https://www.whiteboardtec.com/projects/main-steel/WBT-Main-steel-sample.pdf",
-    images: [
-      {
-        image: "/src/assets/image/insite-images/connection-design.png",
-        alt: "Structural Steel 1",
-      },
-      {
-        image: "/src/assets/image/insite-images/equal-opportunity.png",
-        alt: "Structural Steel 2",
-      },
-      {
-        image: "/src/assets/image/insite-images/our-services.jpg",
-        alt: "Structural Steel 3",
-      },
-      {
-        image: "/src/assets/image/insite-images/simplified.jpg",
-        alt: "Structural Steel 4",
-      },
-    ],
-  },
-  {
-    title: "Structural Steel – Miscellaneous Steel",
-    description:
-      "These are shop drawings of various miscellaneous steel elements such as gratings, handrails, trusses, ISO-Views and more.",
-    pdf: "https://www.whiteboardtec.com/projects/misc-steel/WBT-Misc-steel-sample.pdf",
-    images: [
-      {
-        image: "/src/assets/image/insite-images/connection-design.png",
-        alt: "Structural Steel 1",
-      },
-      {
-        image: "/src/assets/image/insite-images/equal-opportunity.png",
-        alt: "Structural Steel 2",
-      },
-      {
-        image: "/src/assets/image/insite-images/our-services.jpg",
-        alt: "Structural Steel 3",
-      },
-      {
-        image: "/src/assets/image/insite-images/simplified.jpg",
-        alt: "Structural Steel 4",
-      },
-    ],
-  },
-];
+function WorkPortfolio(props: PortfolioPropType) {
+  const [isOpenJob, setOpenJob] = useState(false);
+  const [id] = useState(props.id);
+  const [title, setTitle] = useState(props.title);
+  const [description, setDescription] = useState(props.description);
+  const [pdf, setPdf] = useState(props.pdf);
+  const [images, setImages] = useState(props.images);
+  const [status, setStatus] = useState(props.status);
 
-function AdminPortfolio() {
-  const [isOpen, setOpen] = useState(false);
-
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [pdf, setPdf] = useState("");
-  const [images, setImages] = useState<CarouselPropType[]>([]);
-  const [status, setStatus] = useState(false);
-
-
-  const handleSubmit = () => {
-    console.log(title, description, pdf, images, status);
+  const handleUpdate = () => {
+    console.log(id, title, description, pdf, images, status);
   };
 
-  useEffect(() => {
-    document.title = "Admin | Dashboard - Whiteboard";
-  });
-
-  const header: HeaderProp = {
-    head: "Portfolio",
+  const handleDelete = () => {
+    console.log(id);
   };
 
-  if (auth.currentUser?.email) {
-    return (
-      <>
-        <Dialog
-        open={isOpen}
-        onClose={() => setOpen(false)}
+  return (
+    <>
+      <Dialog
+        open={isOpenJob}
+        onClose={() => setOpenJob(false)}
         className="relative z-50"
       >
         <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
@@ -94,10 +33,10 @@ function AdminPortfolio() {
             <div className="bg-white w-full max-w-4xl p-6 rounded-lg shadow-lg flex flex-col">
               <div className="flex justify-between">
                 <Dialog.Title className="text-lg font-semibold">
-                  Add New Portfolio
+                  Edit Portfolio for {props.title}
                 </Dialog.Title>
                 <button
-                  onClick={() => setOpen(false)}
+                  onClick={() => setOpenJob(false)}
                   className="text-gray-400 hover:text-gray-800"
                 >
                   <span className="sr-only">Close</span>
@@ -167,7 +106,7 @@ function AdminPortfolio() {
                   </td>
                   <td >
                     {images?.map((_image, index) => (
-                      <div key={index} className="ml-3 my-1">
+                      <div key={index} className="my-1 ml-3">
                         <input
                           type="file"
                           name="image"
@@ -184,7 +123,7 @@ function AdminPortfolio() {
                         />
                         <button
                           type="button"
-                          className="text-red-500 ml-2"
+                          className="text-red-500 ml-1"
                           onClick={() => {
                             const filteredImages = images.filter(
                               (img, i) => i !== index
@@ -262,16 +201,26 @@ function AdminPortfolio() {
                   type="submit"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleSubmit();
+                    handleUpdate();
                   }}
                   className=" px-4 border-2 rounded-md bg-[#6abd45] text-white text-lg border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
                 >
-                  Add New
+                  Update
+                </button>
+                <button
+                  type="submit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleDelete();
+                  }}
+                  className=" px-4 border-2 rounded-md bg-red-600 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-red-600 hover:text-red-600 hover:bg-white"
+                >
+                  Delete
                 </button>
                 <button
                   type="submit"
                   onClick={() => {
-                    setOpen(false);
+                    setOpenJob(false);
                   }}
                   className=" px-4 border-2 rounded-md bg-slate-600 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-slate-600 hover:text-slate-600 hover:bg-white"
                 >
@@ -283,63 +232,34 @@ function AdminPortfolio() {
         </div>
       </Dialog>
 
-        <section className="w-full grid grid-cols-[20%_80%]">
-          <div style={{ minHeight: "95.2vh" }}>
-            <Sidebar />
-          </div>
-          <div className="flex flex-col flex-wrap">
-            <Header {...header} />
-            <div className="flex flex-wrap flex-row m-4">
-              <h1 className="text-lg font-semibold">
-                List of Current Portfolio Works
-              </h1>
-              <button
-                className="mx-4 px-2 border-2 rounded-md bg-gray-200 border-black hover:drop-shadow-none drop-shadow-xl shadow-xl hover:shadow-none"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setOpen(true);
-                }}
-              >
-                Add New
-              </button>
-            </div>
-
-            <table className="mx-4 divide-y divide-gray-200">
-              <thead className="bg-[#6abd45] text-white">
-                <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-start pl-20 text-xs font-medium uppercase"
-                  >
-                    Title
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium  uppercase"
-                  >
-                    Portfolio PDF
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3 text-center text-xs font-medium  uppercase"
-                  >
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 ">
-                {portfolios?.map((portfolio, index) => (
-                  <WorkPortfolio key={index} {...portfolio} />
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </>
-    );
-  } else {
-    return <Navigate to="/admin/login" />;
-  }
+      <tr className="hover:bg-gray-100">
+        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 ">
+          {props.title}
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-800 ">
+          <Link
+            to={props.pdf}
+            target="_blank"
+            className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
+          >
+            View PDF
+          </Link>
+        </td>
+        <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              setOpenJob(true);
+            }}
+            className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
+          >
+            More
+          </button>
+        </td>
+      </tr>
+    </>
+  );
 }
 
-export default AdminPortfolio
+export default WorkPortfolio;

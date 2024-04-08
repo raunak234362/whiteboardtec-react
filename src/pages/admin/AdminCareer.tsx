@@ -250,7 +250,7 @@ function AdminCareer() {
                   onClick={() => {
                     setOpen(false)
                   }}
-                  className=" px-4 border-2 rounded-md bg-red-600 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-red-600 hover:text-red-600 hover:bg-white"
+                  className=" px-4 border-2 rounded-md bg-slate-600 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-slate-600 hover:text-slate-600 hover:bg-white"
                 >
                   Cancel
                 </button>

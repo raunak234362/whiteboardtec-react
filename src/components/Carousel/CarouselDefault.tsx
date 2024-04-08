@@ -1,6 +1,7 @@
 import { Carousel } from "@material-tailwind/react";
 
 export type CarouselPropType = {
+  id?: string;
   title?:string;
   image: string;
   alt?:string;
