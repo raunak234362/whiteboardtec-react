@@ -36,6 +36,14 @@ import {
 import Portal from './pages/portal/Portal.tsx'
 import Careers from './pages/careers/Careers.tsx'
 import Connect from './pages/connect/Connect.tsx'
+import {
+  Admin,
+  Login,
+  Dashboard,
+  AdminCareer,
+  AdminGallery,
+  AdminPortfolio,
+} from './pages/admin'
 
 const route = createBrowserRouter(
   createRoutesFromElements(
@@ -60,6 +68,12 @@ const route = createBrowserRouter(
       <Route path="/resources/case-studies" element={<CaseStudies />} />
       <Route path="/resources/wbt-blog" element={<WbtBlog />} />
       <Route path="*" element={<Error />} />
+      <Route path="/admin" element={<Admin />} />
+      <Route path="/admin/dashboard" element={<Dashboard />} />
+      <Route path="/admin/login" element={<Login />}/>
+      <Route path="/admin/career" element={<AdminCareer />} />
+      <Route path="/admin/portfolio" element={<AdminPortfolio />}/>
+      <Route path="/admin/gallery" element={<AdminGallery />}/>
     </Route>
   ),
 );

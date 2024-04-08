@@ -4,6 +4,7 @@ import { Footer } from './components/footer/Footer'
 import { NavigationBar, HomeNav } from './components/navigation';
 import { useLocation } from 'react-router-dom';
 
+
 function App(): JSX.Element{
   const location = useLocation();
   if (location.pathname.startsWith('/admin')) {

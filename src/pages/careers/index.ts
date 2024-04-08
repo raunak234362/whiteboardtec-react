@@ -11,6 +11,7 @@ type JobDescType = {
     "type": string;
     qualification: string;
     jd: string;
+    status: boolean;
 }
 
 type JobListType = {

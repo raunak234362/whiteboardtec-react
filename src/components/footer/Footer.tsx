@@ -1,3 +1,6 @@
+// import { analytics } from "../../config/firebase";
+// import { getDatabase } from "firebase/database";
+
 const Footer = () : JSX.Element => {
     return (
         <>

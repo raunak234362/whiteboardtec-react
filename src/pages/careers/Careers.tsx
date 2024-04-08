@@ -26,6 +26,7 @@ const jobs: JobListType = {
   jobList: [
     {
       id: "1",
+      status: true,
       role: "Market Development Associate",
       location: "Bengaluru, India",
       type: "Full-time",
@@ -34,6 +35,7 @@ const jobs: JobListType = {
     },
     {
       id: "2",
+      status: true,
       role: "Structural Engineering Trainee",
       location: "Bengaluru, India",
       type: "Full-time",
@@ -42,6 +44,7 @@ const jobs: JobListType = {
     },
     {
       id: "3",
+      status: true,
       role: "Business Development Associate",
       location: "Bengaluru, India",
       type: "Full-time",
@@ -50,6 +53,7 @@ const jobs: JobListType = {
     },
     {
       id: "4",
+      status: false,
       role: "Business Development Manager",
       location: "Bengaluru, India",
       type: "Full-time",
@@ -58,6 +62,7 @@ const jobs: JobListType = {
     },
     {
       id: "5",
+      status: true,
       role: "Tekla Erector",
       location: "Bengaluru, India",
       type: "Full-time",
@@ -129,7 +134,7 @@ function Careers() {
 
           <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 gap-x-10 md:grid-cols-2">
             {jobs.jobList?.map((job, index) => {
-              return (
+              return job.status && (
                 <div
                   key={index}
                   className="rounded-3xl border-2 shadow-lg drop-shadow-lg bg-white"
