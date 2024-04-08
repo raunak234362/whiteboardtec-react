@@ -5,6 +5,8 @@ function Sidebar() {
     <>
       <div className="flex flex-col bg-gray-900 h-full text-white">
         <div>
+        <NavLink
+          to="/">
           <div className="flex items-center justify-center h-fit my-2.5">
             <img
               src="/src/assets/icon/Favicon.png"
@@ -13,6 +15,7 @@ function Sidebar() {
             />
             <h1 className="text-2xl font-bold">Whiteboard</h1>
           </div>
+          </NavLink>
         </div>
         <NavLink
           to="/admin/dashboard"
