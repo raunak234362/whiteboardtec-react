@@ -1,66 +1,78 @@
-import { Carousel } from "@material-tailwind/react";
+import { useState } from 'react';
+import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 
 export type CarouselPropType = {
   id?: string;
-  title?:string;
-  image: string;
-  alt?:string;
-}
+  title?: string;
+  url: string;
+  alt?: string;
+};
 
 const images: CarouselPropType[] = [
   {
-    image: "/src/assets/image/insite-images/connection-design.png",
+    url: "/src/assets/image/insite-images/connection-design.png",
     alt: "Structural Steel 1",
+    title: "Connection Design",
+    id: "1",
   },
   {
-    image: "/src/assets/image/insite-images/equal-opportunity.png",
+    url: "/src/assets/image/insite-images/equal-opportunity.png",
     alt: "Structural Steel 2",
+    title: "Equal Opportunity",
+    id: "2",
   },
   {
-    image: "/src/assets/image/insite-images/our-services.jpg",
+    url: "/src/assets/image/insite-images/our-services.jpg",
     alt: "Structural Steel 3",
+    title: "Our Services",
+    id: "3",
   },
   {
-    image: "/src/assets/image/insite-images/simplified.jpg",
+    url: "/src/assets/image/insite-images/simplified.jpg",
     alt: "Structural Steel 4",
+    title: "Simplified",
+    id: "4",
   },
-]
+];
 
-export function CarouselDefault() {
-  if (images.length !== 0) {
-    return (
-      <Carousel
-        className="rounded-xl h-full w-full overflow-hidden relative"
-        navigation={({ setActiveIndex, activeIndex, length }) => (
-          <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
-            {new Array(length).fill("").map((_, i) => (
-              <span
-                key={i}
-                className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
-                  activeIndex === i ? "w-8 bg-white" : "w-4 bg-white/50"
-                }`}
-                onClick={() => setActiveIndex(i)}
-              />
-            ))}
+
+function CarouselDefault() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const prevSlide = () => {
+    const isFirstSlide = currentIndex === 0;
+    const newIndex = isFirstSlide ? images.length - 1 : currentIndex - 1;
+    setCurrentIndex(newIndex);
+  };
+
+  const nextSlide = () => {
+    const isLastSlide = currentIndex === images.length - 1;
+    const newIndex = isLastSlide ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+  };
+
+  return (
+    <div className='w-full h-full m-auto py-1 relative group'>
+      <div
+        style={{ backgroundImage: `url(${images[currentIndex].url})`, backgroundPosition: "center center", backgroundRepeat: "no-repeat"}}
+        className='w-full h-full rounded-lg bg-center bg-cover duration-500'
+      ></div>
+      <div className='hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>
+        <BsChevronCompactLeft onClick={prevSlide} size={30} />
+      </div>
+      <div className='hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>
+        <BsChevronCompactRight onClick={nextSlide} size={30} />
+      </div>
+      {
+        images[currentIndex].title && (
+          <div className='absolute bottom-0 left-0 right-0 bg-black/30 text-white p-2 text-lg text-center'>
+            {images[currentIndex].title}
           </div>
-        )}
-        placeholder={undefined}
-        onPointerEnterCapture={undefined}
-        onPointerLeaveCapture={undefined}
-      >
-        {
-          images.map((image, index) => {
-            return (
-              <img
-                key={index}
-                src={image.image}
-                alt={(image.alt === undefined ? "" : image.alt)}
-                className="h-full w-full object-cover"
-              />
-            )
-          })
-        }
-      </Carousel>
-    );
-  }
+        )
+      }
+    </div>
+  );
+
 }
+
+export { CarouselDefault };

@@ -44,6 +44,7 @@ import {
   AdminGallery,
   AdminPortfolio,
 } from './pages/admin'
+import "tw-elements-react/dist/css/tw-elements-react.min.css"
 
 const route = createBrowserRouter(
   createRoutesFromElements(

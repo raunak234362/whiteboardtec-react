@@ -57,7 +57,7 @@ function JobBox(job: JobDescType) {
                   <tr>
                     <td>
                       <label htmlFor="Name" className="text-sm text-gray-800">
-                        Role
+                        Name
                       </label>
                     </td>
                     <td>

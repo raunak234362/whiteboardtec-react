@@ -15,19 +15,19 @@ const portfolios: PortfolioPropType[] = [
     pdf: "https://www.whiteboardtec.com/projects/main-steel/WBT-Main-steel-sample.pdf",
     images: [
       {
-        image: "/src/assets/image/insite-images/connection-design.png",
+        url: "/src/assets/image/insite-images/connection-design.png",
         alt: "Structural Steel 1",
       },
       {
-        image: "/src/assets/image/insite-images/equal-opportunity.png",
+        url: "/src/assets/image/insite-images/equal-opportunity.png",
         alt: "Structural Steel 2",
       },
       {
-        image: "/src/assets/image/insite-images/our-services.jpg",
+        url: "/src/assets/image/insite-images/our-services.jpg",
         alt: "Structural Steel 3",
       },
       {
-        image: "/src/assets/image/insite-images/simplified.jpg",
+        url: "/src/assets/image/insite-images/simplified.jpg",
         alt: "Structural Steel 4",
       },
     ],
@@ -39,19 +39,19 @@ const portfolios: PortfolioPropType[] = [
     pdf: "https://www.whiteboardtec.com/projects/misc-steel/WBT-Misc-steel-sample.pdf",
     images: [
       {
-        image: "/src/assets/image/insite-images/connection-design.png",
+        url: "/src/assets/image/insite-images/connection-design.png",
         alt: "Structural Steel 1",
       },
       {
-        image: "/src/assets/image/insite-images/equal-opportunity.png",
+        url: "/src/assets/image/insite-images/equal-opportunity.png",
         alt: "Structural Steel 2",
       },
       {
-        image: "/src/assets/image/insite-images/our-services.jpg",
+        url: "/src/assets/image/insite-images/our-services.jpg",
         alt: "Structural Steel 3",
       },
       {
-        image: "/src/assets/image/insite-images/simplified.jpg",
+        url: "/src/assets/image/insite-images/simplified.jpg",
         alt: "Structural Steel 4",
       },
     ],
@@ -176,7 +176,7 @@ function AdminPortfolio() {
                             const newImages = [...images];
                             newImages[index] = {
                               ...newImages[index],
-                              image: e.target.value,
+                              url: e.target.value,
                             };
                             setImages(newImages);
                           }}
@@ -200,7 +200,7 @@ function AdminPortfolio() {
                       type="button"
                       className="bg-blue-500 text-white px-2 py-0.5 rounded-lg ml-10 mt-2"
                       onClick={() => {
-                        const newImage = { image: "" };
+                        const newImage = { url: "" };
                         setImages((prevImages) => [
                           ...(prevImages || []),
                           newImage,

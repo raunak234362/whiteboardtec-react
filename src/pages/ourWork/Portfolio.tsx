@@ -16,19 +16,19 @@ const portfolioData: PortfolioPropType[] = [
     pdf: "https://www.whiteboardtec.com/projects/main-steel/WBT-Main-steel-sample.pdf",
     images: [
       {
-        image: "/src/assets/image/insite-images/connection-design.png",
+        url: "/src/assets/image/insite-images/connection-design.png",
         alt: "Structural Steel 1",
       },
       {
-        image: "/src/assets/image/insite-images/equal-opportunity.png",
+        url: "/src/assets/image/insite-images/equal-opportunity.png",
         alt: "Structural Steel 2",
       },
       {
-        image: "/src/assets/image/insite-images/our-services.jpg",
+        url: "/src/assets/image/insite-images/our-services.jpg",
         alt: "Structural Steel 3",
       },
       {
-        image: "/src/assets/image/insite-images/simplified.jpg",
+        url: "/src/assets/image/insite-images/simplified.jpg",
         alt: "Structural Steel 4",
       },
     ],
@@ -40,19 +40,19 @@ const portfolioData: PortfolioPropType[] = [
     pdf: "https://www.whiteboardtec.com/projects/misc-steel/WBT-Misc-steel-sample.pdf",
     images: [
       {
-        image: "/src/assets/image/insite-images/connection-design.png",
+        url: "/src/assets/image/insite-images/connection-design.png",
         alt: "Structural Steel 1",
       },
       {
-        image: "/src/assets/image/insite-images/equal-opportunity.png",
+        url: "/src/assets/image/insite-images/equal-opportunity.png",
         alt: "Structural Steel 2",
       },
       {
-        image: "/src/assets/image/insite-images/our-services.jpg",
+        url: "/src/assets/image/insite-images/our-services.jpg",
         alt: "Structural Steel 3",
       },
       {
-        image: "/src/assets/image/insite-images/simplified.jpg",
+        url: "/src/assets/image/insite-images/simplified.jpg",
         alt: "Structural Steel 4",
       },
     ],
@@ -67,7 +67,7 @@ function Portfolio() {
         {portfolioData?.map((portfolio, index) => {
           return (
             <section key={index} className="rounded-3xl mt-20 h-fit border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
-              <div className="m-4 w-full h-72 flex flex-row flex-wrap justify-center items-center">
+              <div className="m-4 w-full h-96 flex flex-row flex-wrap justify-center items-center">
                 <CarouselDefault />
               </div>
               <div>

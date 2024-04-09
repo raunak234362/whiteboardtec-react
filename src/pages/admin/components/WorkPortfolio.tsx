@@ -115,7 +115,7 @@ function WorkPortfolio(props: PortfolioPropType) {
                             const newImages = [...images];
                             newImages[index] = {
                               ...newImages[index],
-                              image: e.target.value,
+                              url: e.target.value,
                             };
                             setImages(newImages);
                           }}
@@ -139,7 +139,7 @@ function WorkPortfolio(props: PortfolioPropType) {
                       type="button"
                       className="bg-blue-500 text-white px-2 py-0.5 rounded-lg ml-10 mt-2"
                       onClick={() => {
-                        const newImage = { image: "" };
+                        const newImage = { url: "" };
                         setImages((prevImages) => [
                           ...(prevImages || []),
                           newImage,
