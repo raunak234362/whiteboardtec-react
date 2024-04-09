@@ -1,7 +1,7 @@
 import { BannerPropType, PageBanner } from "../../components/banner";
 import { HeadSectionType, JobListType } from ".";
-import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import JobBox from "./JobBox";
 
 const banner: BannerPropType = {
   header: "Careers at",
@@ -135,45 +135,7 @@ function Careers() {
           <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 gap-x-10 md:grid-cols-2">
             {jobs.jobList?.map((job, index) => {
               return job.status && (
-                <div
-                  key={index}
-                  className="rounded-3xl border-2 shadow-lg drop-shadow-lg bg-white"
-                >
-                  <div className="m-5 p-3">
-                    <div className="text-[#6abd45] text-lg font-semibold">
-                      {job.role}
-                    </div>
-                    <div className="my-2">
-                      <div className="text-gray-700 text-sm">
-                        Location: {job.location}
-                      </div>
-                      <div className="text-gray-700 text-sm">
-                        Job Type: {job.type}
-                      </div>
-                      <div className="text-gray-700 text-sm">
-                        Qualification: {job.qualification}
-                      </div>
-                    </div>
-                    <div className="mt-5 mb-0 flex flex-wrap flex-col md:flex-row justify-evenly">
-                      <Link
-                        to={job.jd}
-                        target="_blank"
-                        className="border-2 rounded-full border-black border-opacity-50 opacity-80 text-sm px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
-                      >
-                        Download JD ➤{" "}
-                      </Link>
-                      <Link
-                        to={job.jd}
-                        target="_blank"
-                        className="border-2 rounded-full border-black border-opacity-50 opacity-80 text-sm px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
-                      >
-                        Apply Now ➤{" "}
-                      </Link>
-                      {/* <ApplyDialogBox {...job} /> */}
-                      {/* // TODO: Add Dialog box */}
-                    </div>
-                  </div>
-                </div>
+                <JobBox key={index} {...job} />
               );
             })}
           </section>
