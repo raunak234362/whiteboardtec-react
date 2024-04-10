@@ -1,7 +1,9 @@
 import { BannerPropType, PageBanner } from "../../components/banner";
-import { HeadSectionType, JobListType } from ".";
-import { useEffect } from "react";
+import { HeadSectionType, JobListType, JobDescType } from ".";
+import { useCallback, useEffect, useState } from "react";
 import JobBox from "./JobBox";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../config/firebase";
 
 const banner: BannerPropType = {
   header: "Careers at",
@@ -91,8 +93,22 @@ const treeData = [
 ]
 
 function Careers() {
+  const [job, setJob] = useState<JobDescType[]>([]);
+
+  const fetchJob = useCallback(async () => {
+    const career = collection(db, "career");
+    const jobs = query(career, where("status", "==", true));
+    const querySnapshot = await getDocs(jobs);
+    const data = querySnapshot.docs.map((doc) => ({
+      id: String(doc.id),
+      ...doc.data(),
+    }));
+    setJob(data as JobDescType[]); // Fix: Cast 'data' as 'JobDescType[]'
+  }, []);
+
   useEffect(() => {
     document.title = "Careers - Whiteboard";
+    fetchJob();
   }, []);
 
   return (
@@ -133,7 +149,7 @@ function Careers() {
           </div>
 
           <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 gap-x-10 md:grid-cols-2">
-            {jobs.jobList?.map((job, index) => {
+            {job?.map((job, index) => {
               return job.status && (
                 <JobBox key={index} {...job} />
               );

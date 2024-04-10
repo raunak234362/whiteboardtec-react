@@ -2,25 +2,60 @@ import { Link } from "react-router-dom";
 import { JobDescType } from "../../careers";
 import { Dialog } from "@headlessui/react";
 import { useState } from "react";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { db, storage } from "../../../config/firebase";
+import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
 
 function JobCareer(props: JobDescType) {
   const [isOpenJob, setOpenJob] = useState(false);
-  const [id] = useState(props.id);
   const [role, setRole] = useState(props.role);
   const [location, setLocation] = useState(props.location);
   const [type0, setType] = useState(props.type);
   const [qualification, setQualification] = useState(props.qualification);
-  const [jd, setJD] = useState(props.jd);
+  const [jd, setJD] = useState<any>(null);
   const [status, setStatus] = useState(props.status);
 
-  const handleUpdate = () => {
-    console.log(id, role, location, type0, qualification, jd, status);
+  const handleUpdate = async () => {
+    const data = {
+      role: (props.role !== role) ? role : props.role,
+      location: (props.location !== location) ? location : props.location,
+      type: (props.type !== type0) ? type0 : props.type,
+      qualification: (props.qualification !== qualification) ? qualification : props.qualification,
+      jd: props.jd,
+      status: (props.status !== status) ? status : props.status,
+    }
+
+  
+    if (jd) {
+      const reference = ref(storage, props.jd.split("?")[0]);
+      await deleteObject(reference).then(() => {
+        console.log("Old JD Deleted");
+      }).catch((err)=>[
+        console.log(err)
+      ])
+      const jobDesc = ref(storage, `Careers/${role.replace(" ", "_")}_${v4()}`);
+      await uploadBytes(jobDesc, jd).then((val) => {
+        getDownloadURL(val.ref).then((url) => {
+          data.jd = url;
+          const job = doc(db, "career", props.id)
+          updateDoc(job, data);
+        });
+      });
+    } else {
+      const job = doc(db, "career", props.id)
+      updateDoc(job, data);
+    }
   }
 
-  const handleDelete = () => {
-    console.log("Id: ", props.id)
-    console.log("Delete");
-    setOpenJob(false);
+  const handleDelete = async () => {
+    const reference = ref(storage, props.jd.split("?")[0]);
+    await deleteObject(reference).then(() => {
+      console.log("Old JD Deleted");
+    }).catch((err)=>[
+      console.log(err)
+    ])
+    await deleteDoc(doc(db, "career", props.id))
   }
 
   return (
@@ -147,7 +182,7 @@ function JobCareer(props: JobDescType) {
                         type="file"
                         name="JD"
                         id="JD"
-                        onChange={(e) => {setJD(e.target.value)}}
+                        onChange={async(e) => await setJD(e.target.files?.[0])}
                         className="border-2 border-gray-200 rounded-md mx-4 w-full"
                       />
                     </td>
@@ -234,7 +269,7 @@ function JobCareer(props: JobDescType) {
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
           <button
-            type="button" onClick={(e) => {e.preventDefault(); setOpenJob(true);}}
+            type="button" onClick={(e) => {e.preventDefault(); setOpenJob(true); console.log(props.id);}}
             className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
           >
             More
