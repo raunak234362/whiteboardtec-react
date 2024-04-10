@@ -52,7 +52,7 @@ function CarouselDefault() {
   };
 
   return (
-    <div className='w-full h-full m-auto py-1 relative group'>
+    <div className='w-full h-full m-auto mt-0 relative group'>
       <div
         style={{ backgroundImage: `url(${images[currentIndex].url})`, backgroundPosition: "center center", backgroundRepeat: "no-repeat"}}
         className='w-full h-full rounded-lg bg-center bg-cover duration-500'

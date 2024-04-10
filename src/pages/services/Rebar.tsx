@@ -99,7 +99,7 @@ function Rebar() {
   return (
     <>
       <PageBanner {...banner} />
-      <div className="m-28 my-0 ">
+      <div className="m-28 my-0 mx-auto lg:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
           <div className="m-4 leading-loose text-gray-700">
             {headSection.description?.map((desc, index) => {
@@ -118,7 +118,7 @@ function Rebar() {
       </div>
 
       <div className="bg-gray-100">
-        <div className="mx-28 pt-3 my-10">
+        <div className="mx-auto lg:max-w-screen-xl pt-3 my-10">
           <div className="text-4xl font-bold my-2 text-[#6abd45] mt-5">
             Rebar Detailing
           </div>
@@ -155,7 +155,7 @@ function Rebar() {
         </div>
       </div>
 
-      <div className="m-28 my-0 ">
+      <div className="m-28 my-0 mx-auto lg:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-2 gap-3 shadow-xl drop-shadow-xl">
           <div className="m-10 mr-4 leading-loose text-gray-700">
             <div className="text-2xl font-bold my-2 text-[#6abd45]">
@@ -227,7 +227,7 @@ function Rebar() {
         </section>
       </div>
 
-      <div className="mx-28 pt-3 mt-5">
+      <div className="mx-auto lg:max-w-screen-xl pt-3 mt-5">
           <div className="text-2xl font-semibold my-2 text-[#6abd45] mt-5">
           Rebar Estimation work done
           </div>
@@ -246,7 +246,7 @@ function Rebar() {
         </div>
 
         <div className="bg-gray-100 shadow-md drop-shadow-md">
-        <div className="mx-28 pt-3 my-10">
+        <div className="mx-auto lg:max-w-screen-xl pt-3 my-10">
           <div className="text-2xl font-semibold my-2 text-[#6abd45] mt-5">
           Job Done By Our Teams
           </div>

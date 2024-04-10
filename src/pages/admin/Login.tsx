@@ -30,7 +30,7 @@ function Login() {
     <>
         <HeaderBase />
         <div className='flex flex-wrap justify-center items-center' style={{minHeight:"80vh"}}>
-            <div className='flex flex-col items-center flex-wrap bg-[#6abd45] rounded-2xl m-3 p-5 border-4 border-white shadow-lg drop-shadow-lg h-fit w-full md:w-1/3'>
+            <div className='flex flex-col items-center flex-wrap bg-[#6abd45] rounded-2xl m-3 p-5 border-4 border-white shadow-lg drop-shadow-lg h-fit w-full md:w-1/3 sm:w-fit lg:max-w-screen-sm'>
                 <div className='items-center text-2xl font-bold text-white uppercase' style={{ textShadow: "5px 5px 20px rgb(0,0,0)" }}>
                     Login
                 </div>

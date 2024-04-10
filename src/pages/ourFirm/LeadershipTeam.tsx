@@ -38,7 +38,7 @@ function LeadershipTeam() {
   return (
     <>
         < PageBanner {...banner}/>
-        <div className="mx-28 my-3">
+        <div className="mx-auto lg:max-w-screen-xl my-3">
           <section className="mt-3 mb-10 p-2 grid grid-cols-1 gap-y-0 gap-x-0 md:gap-y-5 md:gap-x-10 md:grid-cols-2">
             {
               team.map((leader, index) => {

@@ -31,7 +31,7 @@ function Resources() {
   return (
     <>
       <PageBanner {...banner} />
-      <section className="rounded-3xl m-28 mt-0 mb-10 p-2 grid grid-cols-2 gap-10">
+      <section className="rounded-3xl m-28 p-2 grid grid-cols-2 gap-10 mx-auto my-10 lg:max-w-screen-xl">
         {data.map((item, index) => (
           <div key={index} className='rounded-3xl shadow-xl drop-shadow-xl border-4'>
             <div>

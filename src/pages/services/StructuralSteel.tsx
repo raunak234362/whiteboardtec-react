@@ -43,7 +43,7 @@ function StructuralSteel() {
   return (
     <>
       <PageBanner {...banner} />
-      <div className="m-28 my-0 ">
+      <div className="m-28 my-0 mx-auto lg:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
           <div className="m-4 leading-loose text-gray-700">
             <div className="text-2xl font-bold my-2 text-[#6abd45]">
@@ -62,7 +62,7 @@ function StructuralSteel() {
       </div>
 
       <div className="bg-gray-100 shadow-md drop-shadow-md pb-16">
-        <div className="mx-28 pt-3 my-10">
+        <div className="mx-auto lg:max-w-screen-xl pt-3 my-10">
           <div className="text-4xl font-bold my-2 text-[#6abd45] mt-5">
             Our Services
           </div>
@@ -106,7 +106,7 @@ function StructuralSteel() {
           </section>
         </div>
 
-        <div className="mx-28 py-3 rounded-3xl border-4 shadow-xl drop-shadow-xl">
+        <div className="mx-auto lg:max-w-screen-xl py-3 rounded-3xl border-4 shadow-xl drop-shadow-xl">
           <section className="px-10">
             <div className="text-4xl font-bold mb-0 text-[#6abd45] mt-3">
               Our Portfolio

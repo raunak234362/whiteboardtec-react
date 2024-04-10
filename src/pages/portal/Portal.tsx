@@ -62,7 +62,7 @@ function Portal() {
     <>
       <PageBanner {...data.banner} />
       {data.context && (
-        <section className="rounded-3xl m-28 mt-0 mb-10 border-4 p-2 grid grid-cols-[75%_25%] gap-3 shadow-xl drop-shadow-xl">
+        <section className="rounded-3xl m-28 border-4 p-2 grid grid-cols-[75%_25%] gap-3 shadow-xl drop-shadow-xl mx-auto my-10 lg:max-w-screen-xl">
           <div className="m-4 pr-10">
             <div className="text-xl text-justify m-1 text-[#6abd45]">
               {data.context.title}

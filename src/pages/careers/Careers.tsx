@@ -98,7 +98,7 @@ function Careers() {
   return (
     <>
       <PageBanner {...banner} />
-      <div className="m-28 my-0 ">
+      <div className="mx-auto my-0 lg:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
           <div className="m-4 leading-loose">
             <div className="text-2xl font-bold my-2 text-[#6abd45]">
@@ -127,7 +127,7 @@ function Careers() {
         </section>
       </div>
       <div className="bg-gray-100">
-        <div className="mx-28 pt-3 my-10">
+        <div className="pt-3 my-10 mx-auto lg:max-w-screen-xl">
           <div className="text-4xl font-semibold my-2 text-black mt-7">
             Current Openings
           </div>
@@ -224,7 +224,7 @@ function Careers() {
           </div>
         </div>
       </div>
-      <div className="mx-28 pt-3 my-10">
+      <div className="pt-3 my-10 mx-auto lg:max-w-screen-xl">
         <div className="text-2xl font-semibold my-2 text-black mt-7">
           We continue to attract and retain the best talent because of
         </div>
@@ -251,7 +251,7 @@ function Careers() {
       </div>
 
       <div className="bg-gray-100">
-        <div className="mx-28 pt-3 mt-10">
+        <div className="pt-3 mt-10 mx-auto my-0 lg:max-w-screen-xl">
           <section className="mt-3p-2 grid grid-cols-[35%_65%] gap-3">
             <div className="flex flex-wrap item-center justify-center m-5">
               <img src="src/assets/image/insite-images/equal-opportunity.png" alt="Equal Opportunity"/>

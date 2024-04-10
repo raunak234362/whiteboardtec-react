@@ -18,7 +18,7 @@ function Newsletter() {
     }
   return (
     <>
-          <section className="m-28 mt-0 mb-5 p-2 flex flex-wrap justify-start items-start">
+          <section className="m-28 mt-0 mb-5 p-2 flex flex-wrap justify-start items-start mx-auto lg:max-w-screen-xl">
             <div className="flex flex-wrap flex-col">
               <div className="text-xl text-justify m-1 font-semibold text-[#6abd45]">
                 Sign up for our newsletter to get exclusive access to

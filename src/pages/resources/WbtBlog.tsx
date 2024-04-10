@@ -26,7 +26,7 @@ function WbtBlog() {
   return (
     <>
       <PageBanner {...props.banner} />
-      <div className="w-ful bg-gray-100">
+      <div className="w-ful bg-gray-100 my-0 mx-auto lg:max-w-screen-xl">
       <section className="m-28 mt-0 mb-10 p-2 grid grid-cols-[70%_30%] gap-4">
         <div>
           <div className="text-3xl font-bold text-black mb-4">{props.context?.head}</div>
