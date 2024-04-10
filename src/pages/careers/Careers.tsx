@@ -98,11 +98,19 @@ function Careers() {
           </div>
 
           <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 gap-x-10 md:grid-cols-2">
-            {job?.map((job, index) => {
-              return job.status && (
-                <JobBox key={index} {...job} />
-              );
-            })}
+            {
+              (job.length > 0) && (
+                job?.map((job, index) => {
+                  return job.status && (
+                    <JobBox key={index} {...job} />
+                  );
+                })
+              ) || (
+                <p className="text-lg my-2 text-black mt-3">
+                  No openings at the moment
+                </p>
+              )
+            }
           </section>
 
           <div className="text-4xl font-semibold my-2 text-black mt-7">
