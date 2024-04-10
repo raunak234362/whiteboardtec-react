@@ -8,35 +8,7 @@ export type CarouselPropType = {
   alt?: string;
 };
 
-const images: CarouselPropType[] = [
-  {
-    url: "/src/assets/image/insite-images/connection-design.png",
-    alt: "Structural Steel 1",
-    title: "Connection Design",
-    id: "1",
-  },
-  {
-    url: "/src/assets/image/insite-images/equal-opportunity.png",
-    alt: "Structural Steel 2",
-    title: "Equal Opportunity",
-    id: "2",
-  },
-  {
-    url: "/src/assets/image/insite-images/our-services.jpg",
-    alt: "Structural Steel 3",
-    title: "Our Services",
-    id: "3",
-  },
-  {
-    url: "/src/assets/image/insite-images/simplified.jpg",
-    alt: "Structural Steel 4",
-    title: "Simplified",
-    id: "4",
-  },
-];
-
-
-function CarouselDefault() {
+function CarouselDefault({ images }: { images: CarouselPropType[] | any }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const prevSlide = () => {

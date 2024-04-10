@@ -2,22 +2,58 @@ import { useState } from "react";
 import { PortfolioPropType } from "../../ourWork";
 import { Link } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
+import { storage, db } from "../../../config/firebase";
+import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { v4 } from "uuid";
 
 function WorkPortfolio(props: PortfolioPropType) {
   const [isOpenJob, setOpenJob] = useState(false);
-  const [id] = useState(props.id);
   const [title, setTitle] = useState(props.title);
   const [description, setDescription] = useState(props.description);
-  const [pdf, setPdf] = useState(props.pdf);
-  const [images, setImages] = useState(props.images);
+  const [pdf, setPdf] = useState<any>(null);
   const [status, setStatus] = useState(props.status);
 
-  const handleUpdate = () => {
-    console.log(id, title, description, pdf, images, status);
-  };
+  const handleUpdate = async () => {
+    // console.log(pdf);
+    const data = {
+      title: (props.title !== title) ? title : props.title,
+      description: (props.description !== description) ? description : props.description,
+      pdf: props.pdf,
+      status: (props.status !== status) ? status : props.status,
+    }
 
-  const handleDelete = () => {
-    console.log(id);
+    if (pdf){
+      const reference = ref(storage, props.pdf.split("?")[0]);
+    await deleteObject(reference).then(() => {
+      console.log("Old PDF Deleted");
+    }).catch((err)=>[
+      console.log(err)
+    ])
+
+    const pdfFile = ref(storage, `Portfolio/${title.replace(" ","_")}_${v4()}`);
+    await uploadBytes(pdfFile, pdf).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        data.pdf = url;
+        const portfolio = collection(db, "portfolio");
+        addDoc(portfolio, data);
+      });
+    })
+    } else {
+      const portfolioRef = doc(db, "portfolio", props.id);
+      await updateDoc(portfolioRef, data)
+    }
+
+  }
+
+  const handleDelete = async () => {
+    const reference = ref(storage, props.pdf.split("?")[0]);
+    await deleteObject(reference).then(() => {
+      console.log("Old PDF Deleted");
+    }).catch((err)=>[
+      console.log(err)
+    ])
+    await deleteDoc(doc(db, "career", props.id))
   };
 
   return (
@@ -97,60 +133,7 @@ function WorkPortfolio(props: PortfolioPropType) {
                     />
                   </td>
                 </tr>
-
-                <tr>
-                  <td>
-                    <label htmlFor="image" className="text-sm text-gray-800">
-                      Images
-                    </label>
-                  </td>
-                  <td >
-                    {images?.map((_image, index) => (
-                      <div key={index} className="my-1 ml-3">
-                        <input
-                          type="file"
-                          name="image"
-                          id="image"
-                          onChange={(e) => {
-                            const newImages = [...images];
-                            newImages[index] = {
-                              ...newImages[index],
-                              url: e.target.value,
-                            };
-                            setImages(newImages);
-                          }}
-                          className="border-2 border-gray-200 rounded-md mx-2 w-fit"
-                        />
-                        <button
-                          type="button"
-                          className="text-red-500 ml-1"
-                          onClick={() => {
-                            const filteredImages = images.filter(
-                              (img, i) => i !== index
-                            );
-                            setImages(filteredImages);
-                          }}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    ))}
-                    <button
-                      type="button"
-                      className="bg-blue-500 text-white px-2 py-0.5 rounded-lg ml-10 mt-2"
-                      onClick={() => {
-                        const newImage = { url: "" };
-                        setImages((prevImages) => [
-                          ...(prevImages || []),
-                          newImage,
-                        ]);
-                      }}
-                    >
-                      { (images?.length == 0)? "Add Images":"Add More Images" }
-                    </button>
-                  </td>
-                </tr>
-
+                
                 <tr>
                   <td>
                     <label htmlFor="pdf" className="text-sm text-gray-800">
@@ -162,8 +145,8 @@ function WorkPortfolio(props: PortfolioPropType) {
                       type="file"
                       name="PDF"
                       id="PDF"
-                      onChange={(e) => {
-                        setPdf(e.target.value);
+                      onChange={async(e) => {
+                        await setPdf(e.target.files?.[0]);
                       }}
                       className="border-2 border-gray-200 rounded-md mx-4 w-full"
                     />

@@ -15,7 +15,6 @@ function AdminCareer() {
 
   const fetchJob = useCallback(async () => {
     const career = collection(db, "career");
-    // const jobs = query(career);
     const querySnapshot = await getDocs(career);
     const data = querySnapshot.docs.map((doc) => ({
       id: String(doc.id),
@@ -40,7 +39,7 @@ function AdminCareer() {
   const [status, setStatus] = useState(false);
 
   const handleSubmit = useCallback( async () => {
-    console.log(jd);
+    // console.log(jd);
     if (!jd) {
       alert("Please add a Job Description File");
       return;

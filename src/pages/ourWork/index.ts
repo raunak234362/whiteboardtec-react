@@ -3,7 +3,7 @@ import Portfolio from "./Portfolio";
 import { CarouselPropType } from "../../components/Carousel/CarouselDefault";
 
 export type PortfolioPropType = {
-    id?: string,
+    id: string,
     title: string,
     description: string,
     pdf: string,

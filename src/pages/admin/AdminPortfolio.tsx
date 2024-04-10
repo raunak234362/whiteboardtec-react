@@ -1,79 +1,61 @@
-import { useEffect, useState } from "react";
-import { auth } from "../../config/firebase";
+import { useCallback, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Header, HeaderProp, Sidebar } from "./components";
 import WorkPortfolio from "./components/WorkPortfolio";
 import { PortfolioPropType } from "../ourWork"
 import { Dialog } from "@headlessui/react";
-import { CarouselPropType } from "../../components/Carousel/CarouselDefault";
-
-const portfolios: PortfolioPropType[] = [
-  {
-    title: "Structural Steel – Main Steel",
-    description:
-      "These are shop drawings supplied for main structural elements such as beams, columns, etc. For us, our portfolio is more than a collection. It’s work that has gone out and delivered results and created a lasting impact with the respective project. The very reason why clients keep coming back to us.",
-    pdf: "https://www.whiteboardtec.com/projects/main-steel/WBT-Main-steel-sample.pdf",
-    images: [
-      {
-        url: "/src/assets/image/insite-images/connection-design.png",
-        alt: "Structural Steel 1",
-      },
-      {
-        url: "/src/assets/image/insite-images/equal-opportunity.png",
-        alt: "Structural Steel 2",
-      },
-      {
-        url: "/src/assets/image/insite-images/our-services.jpg",
-        alt: "Structural Steel 3",
-      },
-      {
-        url: "/src/assets/image/insite-images/simplified.jpg",
-        alt: "Structural Steel 4",
-      },
-    ],
-  },
-  {
-    title: "Structural Steel – Miscellaneous Steel",
-    description:
-      "These are shop drawings of various miscellaneous steel elements such as gratings, handrails, trusses, ISO-Views and more.",
-    pdf: "https://www.whiteboardtec.com/projects/misc-steel/WBT-Misc-steel-sample.pdf",
-    images: [
-      {
-        url: "/src/assets/image/insite-images/connection-design.png",
-        alt: "Structural Steel 1",
-      },
-      {
-        url: "/src/assets/image/insite-images/equal-opportunity.png",
-        alt: "Structural Steel 2",
-      },
-      {
-        url: "/src/assets/image/insite-images/our-services.jpg",
-        alt: "Structural Steel 3",
-      },
-      {
-        url: "/src/assets/image/insite-images/simplified.jpg",
-        alt: "Structural Steel 4",
-      },
-    ],
-  },
-];
+import { auth, storage, db } from "../../config/firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 
 function AdminPortfolio() {
+  const [portfolios, setPortfolio] = useState<PortfolioPropType[]>([]);
   const [isOpen, setOpen] = useState(false);
-
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [pdf, setPdf] = useState("");
-  const [images, setImages] = useState<CarouselPropType[]>([]);
+  const [pdf, setPdf] = useState<any>(null);
   const [status, setStatus] = useState(false);
 
+  const fetchPortfolio = useCallback(async () => {
+    const career = collection(db, "portfolio");
+    const querySnapshot = await getDocs(career);
+    const data = querySnapshot.docs.map((doc) => ({
+      id: String(doc.id),
+      ...doc.data(),
+    }));
+    setPortfolio(data as PortfolioPropType[]); // Fix: Cast 'data' as 'JobDescType[]'
+  }, []);
 
-  const handleSubmit = () => {
-    console.log(title, description, pdf, images, status);
-  };
+
+  const handleSubmit = useCallback(async () => {
+    // console.log(pdf);
+    if(!pdf) {
+      alert("Please upload a PDF file");
+      return;
+    }
+
+    const data = {
+      title: title,
+      description: description,
+      pdf: "",
+      status: status,
+    }
+
+    const pdfFile = ref(storage, `Portfolio/${title.replace(" ","_")}_${v4()}`);
+    await uploadBytes(pdfFile, pdf).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        data.pdf = url;
+        const portfolio = collection(db, "portfolio");
+        addDoc(portfolio, data);
+      });
+    })
+    fetchPortfolio();
+  }, [])
 
   useEffect(() => {
     document.title = "Admin | Dashboard - Whiteboard";
+    fetchPortfolio();
   });
 
   const header: HeaderProp = {
@@ -159,58 +141,6 @@ function AdminPortfolio() {
                   </td>
                 </tr>
 
-                <tr>
-                  <td>
-                    <label htmlFor="image" className="text-sm text-gray-800">
-                      Images
-                    </label>
-                  </td>
-                  <td >
-                    {images?.map((_image, index) => (
-                      <div key={index} className="ml-3 my-1">
-                        <input
-                          type="file"
-                          name="image"
-                          id="image"
-                          onChange={(e) => {
-                            const newImages = [...images];
-                            newImages[index] = {
-                              ...newImages[index],
-                              url: e.target.value,
-                            };
-                            setImages(newImages);
-                          }}
-                          className="border-2 border-gray-200 rounded-md mx-2 w-fit"
-                        />
-                        <button
-                          type="button"
-                          className="text-red-500 ml-2"
-                          onClick={() => {
-                            const filteredImages = images.filter(
-                              (img, i) => i !== index
-                            );
-                            setImages(filteredImages);
-                          }}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    ))}
-                    <button
-                      type="button"
-                      className="bg-blue-500 text-white px-2 py-0.5 rounded-lg ml-10 mt-2"
-                      onClick={() => {
-                        const newImage = { url: "" };
-                        setImages((prevImages) => [
-                          ...(prevImages || []),
-                          newImage,
-                        ]);
-                      }}
-                    >
-                      { (images?.length == 0)? "Add Images":"Add More Images" }
-                    </button>
-                  </td>
-                </tr>
 
                 <tr>
                   <td>
@@ -223,8 +153,8 @@ function AdminPortfolio() {
                       type="file"
                       name="PDF"
                       id="PDF"
-                      onChange={(e) => {
-                        setPdf(e.target.value);
+                      onChange={async (e) => {
+                        await setPdf(e.target.files?.[0]);
                       }}
                       className="border-2 border-gray-200 rounded-md mx-4 w-full"
                     />
