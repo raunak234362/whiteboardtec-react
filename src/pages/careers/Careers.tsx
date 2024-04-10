@@ -1,5 +1,5 @@
 import { BannerPropType, PageBanner } from "../../components/banner";
-import { HeadSectionType, JobListType, JobDescType } from ".";
+import { HeadSectionType, JobDescType } from ".";
 import { useCallback, useEffect, useState } from "react";
 import JobBox from "./JobBox";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -20,57 +20,6 @@ const headSection: HeadSectionType = {
   tagline: [
     "Innovate, Collaborate and Thrive!",
     "Be empowered to change the world with us!",
-  ],
-};
-
-const jobs: JobListType = {
-  applyMail: "careers@whiteboard.com",
-  jobList: [
-    {
-      id: "1",
-      status: true,
-      role: "Market Development Associate",
-      location: "Bengaluru, India",
-      type: "Full-time",
-      qualification: "Degree",
-      jd: "https://www.whiteboardtec.com/wp-content/uploads/2019/08/Market-Development-Associate-JD.pdf",
-    },
-    {
-      id: "2",
-      status: true,
-      role: "Structural Engineering Trainee",
-      location: "Bengaluru, India",
-      type: "Full-time",
-      qualification: "Degree",
-      jd: "https://www.whiteboardtec.com/wp-content/uploads/2019/08/Market-Development-Associate-JD.pdf",
-    },
-    {
-      id: "3",
-      status: true,
-      role: "Business Development Associate",
-      location: "Bengaluru, India",
-      type: "Full-time",
-      qualification: "Degree",
-      jd: "https://www.whiteboardtec.com/wp-content/uploads/2019/08/Market-Development-Associate-JD.pdf",
-    },
-    {
-      id: "4",
-      status: false,
-      role: "Business Development Manager",
-      location: "Bengaluru, India",
-      type: "Full-time",
-      qualification: "Degree",
-      jd: "https://www.whiteboardtec.com/wp-content/uploads/2019/08/Market-Development-Associate-JD.pdf",
-    },
-    {
-      id: "5",
-      status: true,
-      role: "Tekla Erector",
-      location: "Bengaluru, India",
-      type: "Full-time",
-      qualification: "Degree",
-      jd: "https://www.whiteboardtec.com/wp-content/uploads/2019/08/Market-Development-Associate-JD.pdf",
-    },
   ],
 };
 

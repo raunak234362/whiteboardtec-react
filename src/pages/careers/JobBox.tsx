@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { JobDescType } from ".";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
+// import nodemailer from 'nodemailer';
 
 function JobBox(job: JobDescType) {
   const [isOpenJob, setOpenJob] = useState(false);
@@ -9,9 +10,44 @@ function JobBox(job: JobDescType) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [resume, setResume] = useState("");
+  const [resume, setResume] = useState<any>(null);
 
-  const handleApply = () => {
+  const handleApply = async () => {
+    if (!name || !email || !phone || !resume) {
+      alert("Please fill all the fields");
+      return;
+    }
+
+    // const transporter = nodemailer.createTransport({
+    //   host: 'smtp.example.com',
+    //   port: 587,
+    //   secure: false,
+    //   auth: {
+    //     user: 'anuragbhatt1805@gmail.com',
+    //     pass: '8005231181'
+    //   }
+    // });
+
+    // const mailOptions = {
+    //   from: 'anuragbhatt1805@gmail.com',
+    //   to: 'program.anurag@gmail.com',
+    //   subject: `Application from ${name} for ${job.role}`,
+    //   text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nResume: ${resume}`,
+    //   attachments: [
+    //     {
+    //       filename:'resume.pdf',
+    //       path: resume,
+    //       contentType: 'application/pdf'
+    //     }
+    //   ]
+    // };
+
+    // try {
+    //   await transporter.sendMail(mailOptions);
+    //   alert("Application sumbitted successfully")
+    // } catch (error) {
+    //   alert("Error in submitting application. Please try again later.");
+    // }
     console.log(name, email, phone, resume);
   }
 
@@ -116,7 +152,7 @@ function JobBox(job: JobDescType) {
                         type="file"
                         name="resume"
                         id="resume"
-                        onChange={(e) => {setResume(e.target.value)}}
+                        onChange={async(e) => await setResume(e.target.files?.[0])}
                         className="border-2 border-gray-200 rounded-md mx-4 w-full"
                       />
                     </td>
