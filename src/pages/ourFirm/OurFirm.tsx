@@ -37,7 +37,7 @@ function OurFirm() {
   return (
     <>
       <PageBanner {...banner} />
-      <div className="m-28 my-0 ">
+      <div className="m-28 my-0  mx-auto lg:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
           <div className="m-4 pt-2 pl-4">
             <div className="text-2xl font-bold my-2 text-[#6abd45]">
@@ -89,9 +89,9 @@ function OurFirm() {
       </div>
 
       <div className="bg-gray-100">
-        <div className="mx-28 pt-3">
-          <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 gap-x-6 md:grid-cols-[35%_65%]">
-            <div className="py-4 m-2">
+        <div className=" mx-auto lg:max-w-screen-xl pt-3">
+          <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 gap-x-6 md:grid-cols-[35%_65%] lg:grid-cols-2">
+            <div className="py-4 my-2 flex flex-row items-center justify-center">
               <img
                 src="src/assets/image/insite-images/project-in-mind.jpg"
                 alt="Have a large project in mind?"
@@ -123,7 +123,7 @@ function OurFirm() {
         </div>
       </div>
 
-      <div className="mx-28 pt-3">
+      <div className=" mx-auto lg:max-w-screen-xl pt-3">
         <div className="text-4xl font-semibold my-2 text-[#6abd45] mt-7">
           Our Key Differentiators
         </div>
@@ -150,8 +150,8 @@ function OurFirm() {
       </div>
 
       <div className="bg-[#6abd45]">
-        <div className="mx-28 pt-2 mt-3">
-          <section className="mt-3 p-2 grid grid-cols-1 gap-y-0 gap-x-0 md:gap-y-5 md:gap-x-10 md:grid-cols-[45%_55%]">
+        <div className=" mx-auto lg:max-w-screen-xl pt-2 mt-3">
+          <section className="mt-3 p-2 grid grid-cols-1 gap-y-0 gap-x-0 md:gap-y-5 md:gap-x-10 md:grid-cols-[45%_55%] lg:grid-cols-2">
             <div className="py-2 my-7 text-white">
               <div className="text-xl font-bold">
                 Project Management further simplified
