@@ -16,6 +16,7 @@ type AddressType = {
   addrLine1: string;
   addrLine2?: string;
   addrLine3?: string;
+  phone?: string;
 };
 
 type ContextType = {
@@ -55,6 +56,9 @@ const data: DataType = {
       {
         email: "sales@whiteboardtec.com",
       },
+      {
+        email: "hr@whiteboardtec.com",
+      },
     ],
     address: [
       {
@@ -66,6 +70,7 @@ const data: DataType = {
         title: "INDIA",
         addrLine1: "No. 23/4, 1st Floor, Dr. Rajgopal Road, RMV 2nd Stage,",
         addrLine2: "Sanjaynagar, Bengalurur-560094, Karnataka, India",
+        phone: "+91-6364063539",
       },
     ],
   },
@@ -98,9 +103,9 @@ const data: DataType = {
 };
 
 function Connect() {
-  useEffect(()=>{
-    document.title = "Connect - Whiteboard"
-  })
+  useEffect(() => {
+    document.title = "Connect - Whiteboard";
+  });
 
   return (
     <>
@@ -137,15 +142,17 @@ function Connect() {
                     </span>
                     <span className="text-gray-500">
                       <span className="flex text-sm">
-                        <a href="tel:1-612-605-5833" target="_blank">{phone.primary}</a>
+                        <a href="tel:1-612-605-5833" target="_blank">
+                          {phone.primary}
+                        </a>
                       </span>
-                      {
-                        phone.secondary && (
-                          <span className="flex text-sm">
-                            <a href="tel:1-612-216-5427" target="_blank">{phone.secondary}</a>
-                          </span>
-                        )
-                      }
+                      {phone.secondary && (
+                        <span className="flex text-sm">
+                          <a href="tel:1-612-216-5427" target="_blank">
+                            {phone.secondary}
+                          </a>
+                        </span>
+                      )}
                     </span>
                   </div>
                 </>
@@ -153,40 +160,41 @@ function Connect() {
             })}
           </div>
 
-          <div className="flex flex-wrap flex-row justify-start my-3 mx-3">
-            {data.context.mail?.map((mail, index) => {
-              return (
-                <>
-                  <div key={index} className="flex-row flex items-center mr-5">
-                    <span className="text-gray-700 m-2">
-                      <svg
-                        className="h-8 w-8 text-[#6abd45]"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        {" "}
-                        <path stroke="none" d="M0 0h24v24H0z" />{" "}
-                        <rect x="3" y="5" width="18" height="14" rx="2" />{" "}
-                        <polyline points="3 7 12 13 21 7" />
-                      </svg>
-                    </span>
-                    <span className="text-gray-500">
-                      <span className="flex text-sm">
-                        <a href={`mailto:${mail.email}`} target="_blank">{mail.email}</a>
+          <div className="flex flex-wrap flex-row items-center my-3 mx-3">
+            <span className="text-gray-700 m-2 ">
+              <svg
+                className="h-8 w-8 text-[#6abd45]"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                {" "}
+                <path stroke="none" d="M0 0h24v24H0z" />{" "}
+                <rect x="3" y="5" width="18" height="14" rx="2" />{" "}
+                <polyline points="3 7 12 13 21 7" />
+              </svg>
+            </span>
+            <div className="flex-col flex items-start mr-5">
+              {data.context.mail?.map((mail, index) => {
+                return (
+                  <>
+                    <span key={index} className="text-gray-500 my-1">
+                      <span className="flex text-sm text-start">
+                        <a href={`mailto:${mail.email}`} target="_blank">
+                          {mail.email}
+                        </a>
                       </span>
                     </span>
-                  </div>
-                </>
-              );
-            })}
+                  </>
+                );
+              })}
+            </div>
           </div>
-
 
           <div className="flex flex-wrap flex-col justify-start my-3">
             {data.context.address?.map((addr, index) => {
@@ -194,30 +202,49 @@ function Connect() {
                 <>
                   <div key={index} className="flex-col flex my-3">
                     <span className="text-black">
-                      <span className="flex text-xl font-bold">{addr.title}</span>
-                      {
-                        addr.addrLine1 && (
-                          <span className="flex text-sm">{addr.addrLine1}</span>
-                        )
-                      }
-                      {
-                        addr.addrLine2 && (
-                          <span className="flex text-sm">{addr.addrLine2}</span>
-                        )
-                      }
-                      {
-                        addr.addrLine3 && (
-                          <span className="flex text-sm">{addr.addrLine3}</span>
-                        )
-                      }
+                      <span className="flex text-xl font-bold">
+                        {addr.title}
+                      </span>
+                      {addr.addrLine1 && (
+                        <span className="flex text-sm">{addr.addrLine1}</span>
+                      )}
+                      {addr.addrLine2 && (
+                        <span className="flex text-sm">{addr.addrLine2}</span>
+                      )}
+                      {addr.addrLine3 && (
+                        <span className="flex text-sm">{addr.addrLine3}</span>
+                      )}
+                      {addr.phone && (
+                        <span className="flex flex-row text-sm items-center">
+                          <span className="text-gray-700 m-2">
+                            <svg
+                              className="h-6 w-6 text-[#6abd45]"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              {" "}
+                              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                            </svg>
+                          </span>
+                          <span className="text-gray-500">
+                          <span className="flex items-center text-sm">
+                            <a href={`tel:${addr.phone}`} target="_blank">
+                              {addr.phone}
+                            </a>
+                          </span>
+                        </span>
+                        </span>
+                      )}
                     </span>
                   </div>
                 </>
               );
             })}
           </div>
-
-
         </div>
 
         <div className="flex flex-wrap justify-center">
