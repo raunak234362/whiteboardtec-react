@@ -37,9 +37,8 @@ function Portfolio() {
       <div className="my-2 mx-auto lg:max-w-screen-xl">
         {portfolios?.map((portfolio, index) => {
           return (
-            <section key={index} className="rounded-3xl mt-10 h-96 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
-              <div className="m-4 w-full h-full pb-5 flex flex-row flex-wrap justify-center items-center">
-                {/* <CarouselDefault images={portfolio.images} /> */}
+            <section key={index} className="rounded-3xl mt-10 h-[70vh] border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
+              <div className="overflow-y-hidden">
                 {
                   portfolio.pdf && (
                     <PortfolioPdf pdfURL={portfolio.pdf} />
