@@ -35,8 +35,8 @@ function WorkPortfolio(props: PortfolioPropType) {
     await uploadBytes(pdfFile, pdf).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         data.pdf = url;
-        const portfolio = collection(db, "portfolio");
-        addDoc(portfolio, data);
+        const portfolio = doc(db, "portfolio", props.id);
+        updateDoc(portfolio, data);
       });
     })
     } else {
@@ -53,7 +53,7 @@ function WorkPortfolio(props: PortfolioPropType) {
     }).catch((err)=>[
       console.log(err)
     ])
-    await deleteDoc(doc(db, "career", props.id))
+    await deleteDoc(doc(db, "portfolio", props.id))
   };
 
   return (

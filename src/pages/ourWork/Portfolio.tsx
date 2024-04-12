@@ -38,7 +38,7 @@ function Portfolio() {
         {portfolios?.map((portfolio, index) => {
           return (
             <section key={index} className="rounded-3xl mt-10 h-[70vh] border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
-              <div className="overflow-y-hidden">
+              <div className="overflow-y-hidden my-4">
                 {
                   portfolio.pdf && (
                     <PortfolioPdf pdfURL={portfolio.pdf} />
