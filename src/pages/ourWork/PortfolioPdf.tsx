@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { pdfjs } from "react-pdf";
 import { Document, Page } from "react-pdf";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
@@ -12,6 +12,21 @@ function PortfolioPdf({ pdfURL }: { pdfURL: string }) {
 
   const [numPage, setNumPage] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(1);
+
+  const [pdfData, setPdfData] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+        console.log(pdfURL);
+      const response = await fetch(pdfURL, {mode:"no-cors"});
+      console.log(response);
+      const data = await response.blob(); // Get the binary data
+      setPdfData(data);
+    };
+
+    fetchData();
+  }, [pdfURL]);
+
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPage(numPages);
@@ -47,11 +62,12 @@ function PortfolioPdf({ pdfURL }: { pdfURL: string }) {
         <div className="flex flex-row w-full justify-center">
 
           <Document
-            file="\src\assets\dummy.pdf"
+            file={pdfData}
             onLoadSuccess={onDocumentLoadSuccess}
           >
             <Page pageNumber={pageNumber} />
           </Document>
+          {/* <embed src={pdfURL} type="application/pdf" width="200%" height="100%" /> */}
 
         </div>
       </div>
