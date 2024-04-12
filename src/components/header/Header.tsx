@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
 
+// import { useEffect } from "react";
+// import { db } from "../../config/firebase";
+// import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
+
 const HeaderHome = (): JSX.Element => {
   return (
     <>
@@ -110,6 +114,22 @@ const HeaderHome = (): JSX.Element => {
 };
 
 const HeaderBase = (): JSX.Element => {
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const collRef = collection(db, "views");
+  //     const docRef = await getDocs(collRef);
+  //     docRef.forEach((docR)=>{
+  //       const data = docR.data();
+  //       data.view += 1;
+  //       const footerView = doc(db, "views", "Ky6liajBNOeINYN9G6dC");
+  //       updateDoc(footerView, {
+  //         view: data.view,
+  //       });
+  //     })
+  //   };
+  //   fetchData();
+  // }, [])
+
   return (
     <>
       <div className="flex items-center justify-center" id="header">

@@ -1,7 +1,24 @@
 // import { analytics } from "../../config/firebase";
 // import { getDatabase } from "firebase/database";
+import { useEffect, useState } from "react";
+import { db } from "../../config/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 const Footer = (): JSX.Element => {
+  const [view, setView] = useState<number>()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const collRef = collection(db, "views");
+      const docRef = await getDocs(collRef);
+      docRef.forEach((doc)=>{
+        const data = doc.data();
+        setView(data.view);
+      })
+    };
+    fetchData();
+  }, [])
+
   return (
     <>
       <div className="bg-black text-[#FFF] h-7 items-center flex text-[13px] justify-evenly">
@@ -9,7 +26,7 @@ const Footer = (): JSX.Element => {
           Copyright © 2023 by Whiteboard Technologies Pvt. Ltd. All rights
           reserved.
         </div>
-        <div className="flex justify-center">021948</div>
+        <div className="flex justify-center">{view}</div>
         <div className="flex-row flex items-center ml-72">
           <span className="[&>svg]:h-3 [&>svg]:w-3 m-1">
             <svg
