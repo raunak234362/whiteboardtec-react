@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { pdfjs } from "react-pdf";
 import { Document, Page } from "react-pdf";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
@@ -9,7 +9,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 ).toString();
 
 function PortfolioPdf({ pdfURL }: { pdfURL: string }) {
-  const [pdf, setPdf] = useState<any>(null);
 
   const [numPage, setNumPage] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(1);

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
 import { storage, db } from "../../../config/firebase";
 import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { v4 } from "uuid";
 
 function WorkPortfolio(props: PortfolioPropType) {

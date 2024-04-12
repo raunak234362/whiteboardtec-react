@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function PortfolioInfo(prop: PortfolioInfoPropType) {
   return (
     <>
-      <div className="bg-[#6abd45] rounded-xl md:order-1 order-first p-5 mx-5 text-white h-full flex flex-col justify-between">
+      <div className="bg-[#6abd45] rounded-xl md:order-1 order-first p-5 mx-5 text-white h-fit flex flex-col justify-between">
         <div className="flex flex-wrap flex-col">
           <div
             className="text-xl"
