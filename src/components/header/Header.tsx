@@ -10,7 +10,7 @@ const HeaderHome = (): JSX.Element => {
       <div className="flex items-center justify-center" id="header">
         <Link to="/" className="inline-flex">
           <img
-            src="/src/assets/image/logo/whiteboardtec-logo.png"
+            src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2Fwhiteboardtec-logo.png?alt=media&token=f73c5257-9b47-4139-84d9-08a1b058d7e9"
             alt="logo"
             className="m-2 h-16"
           />
@@ -135,7 +135,7 @@ const HeaderBase = (): JSX.Element => {
       <div className="flex items-center justify-center" id="header">
         <Link to="/" className="inline-flex">
           <img
-            src="/src/assets/image/logo/whiteboardtec-logo.png"
+            src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2Fwhiteboardtec-logo.png?alt=media&token=f73c5257-9b47-4139-84d9-08a1b058d7e9"
             alt="logo"
             className="m-2 h-16"
           />
