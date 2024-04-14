@@ -21,7 +21,7 @@ const NavRoute: NavRouteType[] = [
   {
     name: "Our Firm",
     path: "/our-firm",
-    image: "/src/assets/image/route-image/our-firm.jpg",
+    image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Froute-image%2Four-firm.jpg?alt=media&token=f4f4ff27-0291-4589-80a6-b709eae3ed4a",
     child: [
       {
         name: "Business Model",
@@ -40,7 +40,7 @@ const NavRoute: NavRouteType[] = [
   {
     name: "Services",
     path: "/services",
-    image: "/src/assets/image/route-image/services.jpg",
+    image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Froute-image%2Fservices.jpg?alt=media&token=1235bf26-7bc6-4286-b3d0-2bb0e76c838b",
     child: [
       {
         name: "Structural Steel Detailing",
@@ -71,7 +71,7 @@ const NavRoute: NavRouteType[] = [
   {
     name: "Our Work",
     path: "/our-work",
-    image: "/src/assets/image/route-image/our-work.jpg",
+    image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Froute-image%2Four-work.jpg?alt=media&token=62137c19-1c2a-41cf-b724-e6b4ff227835",
     child: [
       {
         name: "Project Portfolio",
@@ -82,7 +82,7 @@ const NavRoute: NavRouteType[] = [
   {
     name: "Resources",
     path: "/resources",
-    image: "/src/assets/image/route-image/resources.jpg",
+    image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Froute-image%2Fresources.jpg?alt=media&token=0faa19f8-10a9-42fe-8396-717ae696dca7",
     child: [
       {
         name: "WBT Blog",
@@ -97,17 +97,17 @@ const NavRoute: NavRouteType[] = [
   {
     name: "Portal",
     path: "/portal",
-    image: "/src/assets/image/route-image/portal.jpg",
+    image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Froute-image%2Fportal.jpg?alt=media&token=ffdd2739-0f5e-4195-96ab-91f5f23bc533",
   },
   {
     name: "Career",
     path: "/career",
-    image: "/src/assets/image/route-image/careers.jpg",
+    image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Froute-image%2Fcareers.jpg?alt=media&token=f6b3ff73-f527-4d81-a378-d9ad538bcd5c",
   },
   {
     name: "Connect",
     path: "/connect",
-    image: "/src/assets/image/route-image/connect.jpg",
+    image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Froute-image%2Fconnect.jpg?alt=media&token=91e42cd8-3d01-4cdb-97e8-a7d1a8bb4851",
   },
 ];
 
