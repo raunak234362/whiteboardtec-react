@@ -5,7 +5,7 @@ import { useEffect } from "react";
 const banner : BannerPropType = {
     header: "Leadership",
     subheader: "Team",
-    image: "/src/assets/image/banner-image/team-banner.jpg",
+    image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fteam-banner.jpg?alt=media&token=9345d405-1069-4bd1-a467-c3679f352096",
 }
 
 const team : LeaderDetailType[] = [

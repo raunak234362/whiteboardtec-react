@@ -5,7 +5,7 @@ import { useEffect } from "react";
 const props: ResourcePropType = {
   banner: {
     header: "Our Stories",
-    image: "/src/assets/image/banner-image/resource.jpg",
+    image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fresource.jpg?alt=media&token=6d7ac0e9-0716-4c6d-8a83-acc05d210682",
   },
   context: {
     desc: "Real-life stories of how we’ve helped our clients navigate through intricate design challenges. How we’ve impacted their businesses. Stories that continue to test our abilities, drive sustainable outcomes and push us towards newer frontiers of innovation. We are Whiteboardtec and we open our journey’s milestones to you."

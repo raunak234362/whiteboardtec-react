@@ -8,7 +8,7 @@ import { db } from "../../config/firebase";
 const banner: BannerPropType = {
   header: "Careers at",
   subheader: "Whiteboard",
-  image: "/src/assets/image/banner-image/career-banner.jpg",
+  image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fcareer-banner.jpg?alt=media&token=1f9ef382-ebae-4663-aec6-927f675d26be",
 };
 
 const headSection: HeadSectionType = {
@@ -25,17 +25,17 @@ const headSection: HeadSectionType = {
 
 const treeData = [
   {
-    icon: "src/assets/icon/people-icon.png",
+    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fpeople-icon.png?alt=media&token=b32abb2d-08f8-4703-8a60-93a1b07cc9cf",
     head: "Our People",
     body: "Work with the best and the brightest minds in the industry. Imagine having everyday access to thought leaders and process champions who have been pivotal in driving sustainable construction technologies. At the heart of who we are today, are our people. People who have shared the vision with us and continue to push the frontiers of innovation in our industry."
   },
   {
-    icon: "src/assets/icon/work-icon.png",
+    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fwork-icon.png?alt=media&token=8eecf9dd-f504-467c-b7e7-b0750d3b3542",
     head: "Work Environment",
     body: "A state-of-the-art facility that fosters innovation and promotes healthy productivity. A transparent office space that doesn’t confine your creative juices and promotes interaction with our awesome community of people. Plus, who doesn’t like a good blend of carefully sourced caffeine and a fully loaded pantry with cookies on us round the clock?"
   },
   {
-    icon: "src/assets/icon/tech-icon.png",
+    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Ftech-icon.png?alt=media&token=07fa5299-c7bf-42c3-86a8-7290b5030897",
     head: "Tools & Technology",
     body: "Get trained and hands-on with every modern software and tools that are used in our tradec“raft. We believe if the right people are given the right tools, there is no definitive limit to what they can go out and achieve. From modern BIM tools to contemporary 3D modeling software, we work only with the best to drive outcomes for our clients."
   }
@@ -227,7 +227,7 @@ function Careers() {
         <div className="pt-3 mt-10 mx-auto my-0 lg:max-w-screen-xl">
           <section className="mt-3p-2 grid grid-cols-[35%_65%] gap-3">
             <div className="flex flex-wrap item-center justify-center m-5">
-              <img src="src/assets/image/insite-images/equal-opportunity.png" alt="Equal Opportunity"/>
+              <img src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Fequal-opportunity.png?alt=media&token=5a88a52e-4519-426c-967f-8ff0e5226f18" alt="Equal Opportunity"/>
             </div>
             <div className="flex flex-wrap flex-col justify-center">
               <div className="text-[#6abd45] text-2xl font-semibold">

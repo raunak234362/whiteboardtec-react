@@ -42,17 +42,17 @@ const HeaderHome = (): JSX.Element => {
           </div>
           <div className="inline-flex ml-3">
             <img
-              src="/src/assets/image/logo/AISC-Detailer-logo.png"
+              src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2FAISC-Detailer-logo.png?alt=media&token=362f27a4-bad8-47d2-95e3-1100853fd01e"
               alt="AISC Detailer"
               className="h-10 m-0.5"
             />
             <img
-              src="/src/assets/image/logo/Tekla_Structures_logo.png"
+              src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2FTekla_Structures_logo.png?alt=media&token=66ac8212-267c-47bd-8291-29aeeaa9c4b8"
               alt="Tekla Structures"
               className="h-10 m-0.5"
             />
             <img
-              src="/src/assets/image/logo/SDS2-logo.png"
+              src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2FSDS2-logo.png?alt=media&token=32ae59c8-1f15-49f3-9cc3-324e3efe8389"
               alt="SDS2 Logo"
               className="h-10 m-0.5"
             />
@@ -114,21 +114,6 @@ const HeaderHome = (): JSX.Element => {
 };
 
 const HeaderBase = (): JSX.Element => {
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const collRef = collection(db, "views");
-  //     const docRef = await getDocs(collRef);
-  //     docRef.forEach((docR)=>{
-  //       const data = docR.data();
-  //       data.view += 1;
-  //       const footerView = doc(db, "views", "Ky6liajBNOeINYN9G6dC");
-  //       updateDoc(footerView, {
-  //         view: data.view,
-  //       });
-  //     })
-  //   };
-  //   fetchData();
-  // }, [])
 
   return (
     <>
@@ -167,17 +152,17 @@ const HeaderBase = (): JSX.Element => {
           </div>
           <div className="inline-flex ml-3">
             <img
-              src="/src/assets/image/logo/AISC-Detailer-logo.png"
+              src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2FAISC-Detailer-logo.png?alt=media&token=362f27a4-bad8-47d2-95e3-1100853fd01e"
               alt="AISC Detailer"
               className="h-10 m-0.5"
             />
             <img
-              src="/src/assets/image/logo/Tekla_Structures_logo.png"
+              src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2FTekla_Structures_logo.png?alt=media&token=66ac8212-267c-47bd-8291-29aeeaa9c4b8"
               alt="Tekla Structures"
               className="h-10 m-0.5"
             />
             <img
-              src="/src/assets/image/logo/SDS2-logo.png"
+              src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2FSDS2-logo.png?alt=media&token=32ae59c8-1f15-49f3-9cc3-324e3efe8389"
               alt="SDS2 Logo"
               className="h-10 m-0.5"
             />

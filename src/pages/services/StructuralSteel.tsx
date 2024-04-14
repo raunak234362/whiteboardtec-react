@@ -7,7 +7,7 @@ import { CarouselDefault, CarouselPropType } from "../../components/Carousel/Car
 const banner: BannerPropType = {
   header: "Structural Steel",
   subheader: "Detailing",
-  image: "/src/assets/image/banner-image/structural-stell-banner.jpg",
+  image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fstructural-stell-banner.jpg?alt=media&token=14415ab1-9e18-4dca-9f61-51ee82b0450c",
 };
 
 const headSection: string[] = [
@@ -37,28 +37,49 @@ const portfolio: string[] = [
 
 const service_images : CarouselPropType[] =  [
   {
-    url: "/src/assets/image/insite-images/connection-design.png",
-    alt: "Structural Steel 1",
-    title: "Connection Design",
-    id: "1",
+    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FLOVES-894-ISO.png?alt=media&token=ca13ee2a-781c-4516-bbb5-6a6604506c73",
   },
   {
-    url: "/src/assets/image/insite-images/equal-opportunity.png",
-    alt: "Structural Steel 2",
-    title: "Equal Opportunity",
-    id: "2",
+    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FPINON-MISC-ISO.png?alt=media&token=e2c99360-f6f1-4453-92b7-ee880a914e04"
   },
   {
-    url: "/src/assets/image/insite-images/our-services.jpg",
-    alt: "Structural Steel 3",
-    title: "Our Services",
-    id: "3",
+    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FEast-Chambers-Show-Barn-Addition-ISO.png?alt=media&token=ace6e434-b4f3-4b9c-afbc-5d368aa2b5b2"
   },
   {
-    url: "/src/assets/image/insite-images/simplified.jpg",
-    alt: "Structural Steel 4",
-    title: "Simplified",
-    id: "4",
+    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FCross-Creek-Ranch-Fire-Station-ISO.png?alt=media&token=94b13c74-0198-4e81-8488-699afbc41203"
+  },
+  {
+    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FTRINITY-ISO.png?alt=media&token=0da83470-01d1-4d68-80a3-dfad99b62529"
+  },
+  {
+    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FFreeport-Chilled-Storage-ISO.png?alt=media&token=3df733e9-2ad3-4d55-bbe9-8cbb2a900b47"
+  },
+  {
+    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FWest-Fraser-Sawmill-Production-Building-1715-ISO.png?alt=media&token=7540999d-f87e-41c7-9b11-bce6180b4ed7"
+  },
+  {
+    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FCUMMINGS-ISO.png?alt=media&token=64587f6d-4fa2-47d5-ace9-23c3817c3100"
+  },
+  {
+    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FCollage-1-Jefferson-ISO.png?alt=media&token=be7212a2-8842-412c-92fb-2ed5ce971322"
+  },
+  {
+    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FYARBROUGH-ISO.png?alt=media&token=500a72ca-227a-4474-a191-e695df3907ba"
+  },
+  {
+    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FPINON-ISO.png?alt=media&token=ed6c67e3-3d5e-484b-98f8-f727612fac8b"
+  },
+  {
+    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FKBC-ISO.png?alt=media&token=14d6a871-c7b9-4fd2-89d1-6ae6a2c1c341"
+  },
+  {
+    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FTHE-BLOCK-ISO.png?alt=media&token=f731d98d-a8fa-4f5d-b984-5c269ce562f9"
+  },
+  {
+    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FTest-Range-Support-Facility-ISO.png?alt=media&token=42e6e401-b9a8-4c97-a469-74793a718b44"
+  },
+  {
+    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FPUEBLO-ISO.png?alt=media&token=94f2ea26-d909-4267-9f26-a235ef586298"
   },
 ]
 
@@ -126,7 +147,7 @@ function StructuralSteel() {
             </div>
             <div className="flex flex-wrap item-center justify-center m-5">
               <img
-                src="/src/assets/image/insite-images/our-services.jpg"
+                src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Four-services.jpg?alt=media&token=56d33c91-c20d-4d23-bdc3-9d8cae9bb336"
                 alt="Equal Opportunity"
               />
             </div>
@@ -172,7 +193,7 @@ function StructuralSteel() {
             </section>
           </section>
           <div className="flex flex-wrap items-center justify-center">
-            <div className="h-60 w-1/2 border-2 ">
+            <div className="h-60 w-1/2 border-2">
             <CarouselDefault images={service_images} />
             </div>
           </div>

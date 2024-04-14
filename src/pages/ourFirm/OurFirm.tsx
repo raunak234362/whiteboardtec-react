@@ -4,27 +4,27 @@ import { PageBanner, BannerPropType } from "../../components/banner";
 const banner: BannerPropType = {
   header: "Simplicity",
   subheader: "is the key to our success",
-  image: "/src/assets/image/banner-image/our-firm-banner.jpg",
+  image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Four-firm-banner.jpg?alt=media&token=99474f57-1520-4e97-bf86-1fd838e8e4c7",
 };
 
 const treeData = [
   {
-    icon: "/src/assets/icon/process.png",
+    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fprocess.png?alt=media&token=624a0811-2b04-4672-bfa0-7071e4ee601e",
     head: "Process",
     body: "From ideation, design to execution, expect clarity and consistency in our execution workflow. Attuned to the AISC standards and adherence to a meticulous “Project Management Strategy” we methodically approach the shop drawings.",
   },
   {
-    icon: "/src/assets/icon/tech-icon.png",
+    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Ftech-icon.png?alt=media&token=07fa5299-c7bf-42c3-86a8-7290b5030897",
     head: "Technology",
     body: "Leveraging the latest 3D BIM modeling tools, we can produce the most advanced 3D models and shop drawings. These drawings ensure that the fabrication process is executed effortlessly, reducing rework and extended lead times.",
   },
   {
-    icon: "/src/assets/icon/associate-members.png",
+    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fassociate-members.png?alt=media&token=bdd733ec-5576-414d-8e2f-138e30db7e03",
     head: "AISC Associate Members",
     body: "We are committed to providing our clients with an exceptional level of service at all times. Our industry affiliation with AISC as an associate member reinforces our commitment to you.",
   },
   {
-    icon: "/src/assets/icon/timeliness.png",
+    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Ftimeliness.png?alt=media&token=1fe6ff23-c664-4b6c-80bb-986536a3979e",
     head: "Timeliness",
     body: "A critical KPI but often overlooked or compromised. Today, many customers stand as advocates for us when it comes to operating in strict, committed and responsible timelines. Our Project Portal ensures your documents reach us seamlessly, collaborate online, track progress of your tasks and more.",
   },
@@ -93,7 +93,7 @@ function OurFirm() {
           <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 gap-x-6 md:grid-cols-[35%_65%] lg:grid-cols-2">
             <div className="py-4 my-2 flex flex-row items-center justify-center">
               <img
-                src="src/assets/image/insite-images/project-in-mind.jpg"
+                src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Fproject-in-mind.jpg?alt=media&token=31be1cd7-e919-45ae-ae67-4fa80a8b6b02"
                 alt="Have a large project in mind?"
               />
             </div>
@@ -275,7 +275,7 @@ function OurFirm() {
             <div className="md:py-4 md:m-2 mb-10">
               <img
                 className="shadow-lg drop-shadow-lg border-2 border-white rounded-md md:m-2"
-                src="/src/assets/image/insite-images/simplified.jpg"
+                src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Fsimplified.jpg?alt=media&token=aeadf659-35d3-45c1-befd-1f452c8ba5bf"
                 alt="Our Firm"
               />
             </div>

@@ -9,7 +9,7 @@ function Sidebar() {
           to="/">
           <div className="flex items-center justify-center h-fit my-2.5">
             <img
-              src="/src/assets/icon/Favicon.png"
+              src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2FFavicon.png?alt=media&token=47ae9ad9-98f3-46b1-a7a0-95f5f64515f8"
               alt="logo"
               className="h-8 w-8 mx-1"
             />

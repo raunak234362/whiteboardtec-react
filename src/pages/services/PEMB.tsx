@@ -5,7 +5,7 @@ import Estimate from "../../components/estimation/Estimate";
 
 const banner : BannerPropType = {
   header: "PEMB Detailing",
-  image: "/src/assets/image/banner-image/pemb-banner.jpg"
+  image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fpemb-banner.jpg?alt=media&token=e983bb4d-7ca1-4560-a11e-75f3bd3064e9"
 }
 
 const headSection:string[] = [

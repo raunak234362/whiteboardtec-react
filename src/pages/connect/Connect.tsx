@@ -37,7 +37,7 @@ const data: DataType = {
   banner: {
     header: "Connect",
     subheader: "with us",
-    image: "/src/assets/image/banner-image/contact-banner.jpg",
+    image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fcontact-banner.jpg?alt=media&token=ba0feeb4-fb01-48d6-a89a-05eef618023a",
   },
   context: {
     heading: "We’d love to hear from you.",

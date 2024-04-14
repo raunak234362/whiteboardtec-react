@@ -6,7 +6,7 @@ import Estimate from "../../components/estimation/Estimate";
 const banner : BannerPropType = {
   header: "Architectural",
   subheader: "BIM services",
-  image: "/src/assets/image/banner-image/bim-banner.jpg"
+  image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fbim-banner.jpg?alt=media&token=ba0bb96a-e69c-47b3-b85d-7efa1336bf0e"
 }
 
 const headSection:string[] = [

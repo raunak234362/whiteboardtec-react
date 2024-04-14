@@ -6,7 +6,7 @@ import Newsletter from "../../components/newsletter/Newsletter";
 const banner: BannerPropType = {
   header: "Rebar Estimation",
   subheader: "and Detailing",
-  image: "/src/assets/image/banner-image/reber-banner.jpg",
+  image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Freber-banner.jpg?alt=media&token=aab957bb-df5b-486f-b8dd-4d12968001d8",
 };
 
 const headSection = {

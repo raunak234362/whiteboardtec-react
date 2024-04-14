@@ -11,6 +11,7 @@ type ContextType = {
 type LinkPropType = {
   url: string;
   device: "web" | "android" | "ios";
+  image: string;
 };
 
 type PortalPropType = {
@@ -22,7 +23,7 @@ type PortalPropType = {
 const data: PortalPropType = {
   banner: {
     header: "Portal",
-    image: "/src/assets/image/banner-image/portal-banner.jpg",
+    image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fportal-banner.jpg?alt=media&token=ba2cd7e6-4283-4fb2-a1b8-4d1519cd7679",
   },
   context: {
     title:
@@ -39,14 +40,17 @@ const data: PortalPropType = {
     {
       url: "/web/#",
       device: "web",
+      image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fweb.png?alt=media&token=27bf29ed-2d7b-405a-bc74-fe5c0cf6989c",
     },
     {
       url: "/android/#",
       device: "android",
+      image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fandroid.png?alt=media&token=7e6f8195-2f90-4003-bdc8-80b1f682271d",
     },
     {
       url: "/ios/#",
       device: "ios",
+      image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fios.png?alt=media&token=cf2c825a-40dd-4904-9055-b26d6aaaa62d",
     },
   ]
 };
@@ -110,7 +114,7 @@ function Portal() {
                       className="m-2 rounded-xl h-fit w-fit shadow-2xl"
                     >
                       <img
-                        src={`/src/assets/icon/${item.device}.png`}
+                        src={item.image}
                         alt={item.device}
                         className="h-fit w-fit"
                       />

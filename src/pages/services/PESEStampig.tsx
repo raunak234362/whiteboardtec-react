@@ -6,7 +6,7 @@ import Estimate from "../../components/estimation/Estimate";
 const banner : BannerPropType = {
   header: "Connection Design",
   subheader: "and PE/SE Stamping",
-  image: "/src/assets/image/banner-image/pese-banner.jpg"
+  image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fpese-banner.jpg?alt=media&token=429544bc-8d85-4d28-8c4a-d072a39ae78d"
 }
 
 const headSection:string[] = [
@@ -57,7 +57,7 @@ function PESEStampig() {
               </div>
             </div>
             <div className="flex flex-wrap item-center justify-center m-5">
-              <img src="/src/assets/image/insite-images/connection-design.png" alt="Equal Opportunity"/>
+              <img src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Fconnection-design.png?alt=media&token=97c68e23-c816-44cd-8a17-90880114816e" alt="Equal Opportunity"/>
             </div>
           </section>
         </div>

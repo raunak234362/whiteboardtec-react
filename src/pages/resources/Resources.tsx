@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 const banner: BannerPropType = {
   header: "Resources",
-  image: "/src/assets/image/banner-image/resource.jpg",
+  image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fresource.jpg?alt=media&token=6d7ac0e9-0716-4c6d-8a83-acc05d210682",
 }
 
 const data = [
