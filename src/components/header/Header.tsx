@@ -1,10 +1,21 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
-
-// import { useEffect } from "react";
-// import { db } from "../../config/firebase";
-// import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
+import { db } from "../../config/firebase";
+import { collection, getDocs, updateDoc } from "firebase/firestore";
 
 const HeaderHome = (): JSX.Element => {
+  const fetchData = async () => {
+    const collRef = collection(db, "views");
+    const docRef = await getDocs(collRef);
+    docRef.forEach((doc) => {
+      const data = doc.data();
+      updateDoc(doc.ref, {view: data.view + 1});
+    });
+  };
+  useEffect(() => {
+    fetchData();
+  });
+
   return (
     <>
       <div className="flex items-center justify-center" id="header">
@@ -114,7 +125,6 @@ const HeaderHome = (): JSX.Element => {
 };
 
 const HeaderBase = (): JSX.Element => {
-
   return (
     <>
       <div className="flex items-center justify-center" id="header">
@@ -224,3 +234,6 @@ const HeaderBase = (): JSX.Element => {
 };
 
 export { HeaderHome, HeaderBase };
+function setView(view: any) {
+  throw new Error("Function not implemented.");
+}
