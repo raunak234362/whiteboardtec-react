@@ -234,6 +234,3 @@ const HeaderBase = (): JSX.Element => {
 };
 
 export { HeaderHome, HeaderBase };
-function setView(view: any) {
-  throw new Error("Function not implemented.");
-}
