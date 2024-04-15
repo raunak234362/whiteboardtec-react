@@ -132,6 +132,7 @@ function Careers() {
                       "_blank"
                     );
                   }}
+                  style={{ backgroundColor: "#1877f2" }}
                   className="mb-2 inline-block rounded bg-[#1877f2] px-6 py-2.5 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
                 >
                   <span className="[&>svg]:h-4 [&>svg]:w-4">
@@ -156,6 +157,7 @@ function Careers() {
                       "_blank"
                     );
                   }}
+                  style={{ backgroundColor: "#c13584" }}
                   className="mb-2 inline-block rounded bg-[#c13584] px-6 py-2.5 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
                 >
                   <span className="[&>svg]:h-4 [&>svg]:w-4">
@@ -180,6 +182,7 @@ function Careers() {
                       "_blank"
                     );
                   }}
+                  style={{ backgroundColor: "#0077b5" }}
                   className="mb-2 inline-block rounded bg-[#0077b5] px-6 py-2.5 text-xs font-medium uppercase leading-normal text-white shadow-md transition duration-150 ease-in-out hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg"
                 >
                   <span className="[&>svg]:h-4 [&>svg]:w-4">

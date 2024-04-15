@@ -222,7 +222,7 @@ function JobCareer(props: JobDescType) {
                     e.preventDefault();
                     handleUpdate();
                   }}
-                  className=" px-4 border-2 rounded-md bg-[#6abd45] text-white text-lg border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
+                  className=" px-4 border-2 rounded-md bg-green-500 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
                 >
                   Update
                 </button>

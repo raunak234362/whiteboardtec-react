@@ -205,7 +205,7 @@ function AdminPortfolio() {
                       e.preventDefault();
                       handleSubmit();
                     }}
-                    className="px-4 border-2 rounded-md bg-[#6abd45] text-white text-lg border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
+                    className=" px-4 border-2 rounded-md bg-green-500 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
                   >
                     Add New
                   </button>
@@ -214,7 +214,7 @@ function AdminPortfolio() {
                     onClick={() => {
                       setOpen(false);
                     }}
-                    className="px-4 border-2 rounded-md bg-slate-600 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-slate-600 hover:text-slate-600 hover:bg-white"
+                    className=" px-4 border-2 rounded-md bg-red-600 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-red-500 hover:text-red-500  hover:bg-white"
                   >
                     Cancel
                   </button>
