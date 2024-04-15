@@ -145,6 +145,7 @@ function WorkPortfolio(props: PortfolioPropType) {
                       type="file"
                       name="PDF"
                       id="PDF"
+                      accept="application/pdf"
                       onChange={async(e) => {
                         await setPdf(e.target.files?.[0]);
                       }}

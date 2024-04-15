@@ -192,6 +192,7 @@ function AdminCareer() {
                         type="file"
                         name="JD"
                         id="JD"
+                        accept="application/pdf"
                         onChange={async(e) => await setJD(e.target.files?.[0])}
                         className="border-2 border-gray-200 rounded-md mx-4 w-full"
                       />
