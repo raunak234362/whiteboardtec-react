@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 
 export type CarouselPropType = {
@@ -22,6 +22,12 @@ function CarouselDefault({ images }: { images: CarouselPropType[] | any }) {
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
+
+  useEffect(() => {
+    setInterval(() => {
+      nextSlide();
+    }, 2000)
+  }, [])
 
   return (
     <div className="w-full h-full m-auto mt-0 relative group">
