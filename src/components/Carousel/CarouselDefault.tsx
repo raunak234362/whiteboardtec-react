@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 
 export type CarouselPropType = {
@@ -23,11 +23,11 @@ function CarouselDefault({ images }: { images: CarouselPropType[] | any }) {
     setCurrentIndex(newIndex);
   };
 
-  useEffect(() => {
-    setInterval(() => {
-      nextSlide();
-    }, 2000)
-  }, [])
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     nextSlide();
+  //   }, 2000)
+  // }, [])
 
   return (
     <div className="w-full h-full m-auto mt-0 relative group">
@@ -36,6 +36,7 @@ function CarouselDefault({ images }: { images: CarouselPropType[] | any }) {
           backgroundImage: `url(${images[currentIndex].url})`,
           backgroundPosition: "center center",
           backgroundRepeat: "no-repeat",
+          objectFit: "contain"
         }}
         className="w-full h-full rounded-lg bg-center bg-cover duration-500" />
       <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
