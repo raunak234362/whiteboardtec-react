@@ -2,6 +2,10 @@ import { Link } from "react-router-dom";
 import { JobDescType } from ".";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { db, storage } from "../../config/firebase";
+import { v4 } from "uuid";
+import { addDoc, collection } from "firebase/firestore";
 // import nodemailer from 'nodemailer';
 
 function JobBox(job: JobDescType) {
@@ -18,31 +22,22 @@ function JobBox(job: JobDescType) {
       return;
     }
 
-    // const transporter = nodemailer.createTransport({
-    //   host: 'smtp.example.com',
-    //   port: 587,
-    //   secure: false,
-    //   auth: {
-    //     user: 'anuragbhatt1805@gmail.com',
-    //     pass: '8005231181'
-    //   }
-    // });
+    const data = {
+      name: name,
+      email: email,
+      phone: phone,
+      resume: "",
+      jobId: job.id,
+    }
 
-    // const mailOptions = {
-    //   from: 'anuragbhatt1805@gmail.com',
-    //   to: 'program.anurag@gmail.com',
-    //   subject: `Application from ${name} for ${job.role}`,
-    //   text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nResume: ${resume}`,
-    //   attachments: [
-    //     {
-    //       filename:'resume.pdf',
-    //       path: resume,
-    //       contentType: 'application/pdf'
-    //     }
-    //   ]
-    // };
-    // }
-    console.log(name, email, phone, resume);
+    const profileDesc = ref(storage, `Application/${name.replace(" ", "_")}_${v4()}`);
+    await uploadBytes(profileDesc, resume).then((val) => {
+      getDownloadURL(val.ref).then((url) => {
+        data.resume = url;
+        const application = collection(db, "application");
+        addDoc(application, data);
+      });
+    });
   }
 
   return (

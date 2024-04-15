@@ -307,6 +307,12 @@ function AdminCareer() {
                   >
                     Action
                   </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-center text-xs font-medium  uppercase"
+                  >
+                    Applications
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 ">
