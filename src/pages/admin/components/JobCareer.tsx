@@ -18,6 +18,29 @@ function JobCareer(props: JobDescType) {
   const [jd, setJD] = useState<any>(null);
   const [status, setStatus] = useState(props.status);
   const [app, setApp] = useState<CandidateApplication[]>([]);
+  const [progress, setProgress] = useState<number>(0);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProgress(0);
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const percentLoaded = (event.loaded / event.total) * 100;
+          setProgress(percentLoaded);
+        }
+      };
+
+      reader.onloadend = () => {
+        setProgress(100); // Set progress to 100% when loading is complete
+        setJD(file);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleUpdate = async () => {
     const data = {
@@ -216,9 +239,12 @@ function JobCareer(props: JobDescType) {
                         name="JD"
                         id="JD"
                         accept="application/pdf"
-                        onChange={async(e) => await setJD(e.target.files?.[0])}
+                        onChange={handleFileChange}
                         className="border-2 border-gray-200 rounded-md mx-4 w-full"
                       />
+                      {progress > 0 && progress <= 100 && (
+                        <span className="mx-3 text-gray-600">{progress}%</span>
+                      )}
                     </td>
                   </tr>
                   <tr>

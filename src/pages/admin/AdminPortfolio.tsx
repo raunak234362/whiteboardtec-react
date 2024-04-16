@@ -28,6 +28,28 @@ function AdminPortfolio() {
     setPortfolio(data as PortfolioPropType[]); // Fix: Cast 'data' as 'JobDescType[]'
   }, []);
 
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProgress(0);
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const percentLoaded = (event.loaded / event.total) * 100;
+          setProgress(percentLoaded);
+        }
+      };
+
+      reader.onloadend = () => {
+        setProgress(100); // Set progress to 100% when loading is complete
+        setPdf(file);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = useCallback(async () => {
     // console.log(pdf);
     if (!pdf) {
@@ -161,9 +183,7 @@ function AdminPortfolio() {
                         name="PDF"
                         id="PDF"
                         accept="application/pdf"
-                        onChange={async (e) => {
-                          await setPdf(e.target.files?.[0]);
-                        }}
+                        onChange={handleFileChange}
                         className="border-2 border-gray-200 rounded-md mx-4 w-full"
                       />
                       {progress > 0 && progress <= 100 && (
