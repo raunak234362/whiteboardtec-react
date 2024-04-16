@@ -64,6 +64,7 @@ function JobBox(job: JobDescType) {
         addDoc(application, data);
       });
     });
+    setOpenJob(false);
   };
 
   return (
