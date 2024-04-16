@@ -81,7 +81,8 @@ function JobCareer(props: JobDescType) {
     }).catch((err)=>[
       console.log(err)
     ])
-    await deleteDoc(doc(db, "career", props.id))
+    await deleteDoc(doc(db, "career", props.id));
+    fetchApplications();
   }
 
   // const handleApplicationConnect = async (application: CandidateApplication) => {
