@@ -1,22 +1,19 @@
 // import { analytics } from "../../config/firebase";
 // import { getDatabase } from "firebase/database";
 import { useEffect, useState } from "react";
-import { db } from "../../config/firebase";
-import { collection, getDocs } from "firebase/firestore";
+// import { db } from "../../config/firebase";
+// import { collection, getDocs } from "firebase/firestore";
+import { database } from "../../config/firebase";
+import { onValue, ref } from "firebase/database";
 
 const Footer = (): JSX.Element => {
   const [view, setView] = useState<number>()
-
+  
   useEffect(() => {
-    const fetchData = async () => {
-      const collRef = collection(db, "views");
-      const docRef = await getDocs(collRef);
-      docRef.forEach((doc)=>{
-        const data = doc.data();
-        setView(data.view);
-      })
-    };
-    fetchData();
+    const countView = ref(database, "/view");
+  onValue(countView, (snapshot) => {
+    setView(snapshot.val())
+  })
   }, [])
 
   return (

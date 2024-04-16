@@ -1,20 +1,8 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { db } from "../../config/firebase";
-import { collection, getDocs, updateDoc } from "firebase/firestore";
 
 const HeaderHome = (): JSX.Element => {
-  const fetchData = async () => {
-    const collRef = collection(db, "views");
-    const docRef = await getDocs(collRef);
-    docRef.forEach((doc) => {
-      const data = doc.data();
-      updateDoc(doc.ref, {view: data.view + 1});
-    });
-  };
-  useEffect(() => {
-    fetchData();
-  });
+
+
 
   return (
     <>
