@@ -37,7 +37,7 @@ function Portfolio() {
       <div className="my-2 mx-auto lg:max-w-screen-xl">
         {portfolios?.map((portfolio, index) => {
           return (
-            <section key={index} className="rounded-3xl mt-10 h-[70vh] border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
+            <section key={index} className="rounded-3xl mt-10 h-[60vh] border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
               <div className="overflow-y-hidden my-4 ml-6">
                 {
                   portfolio.pdf && (
