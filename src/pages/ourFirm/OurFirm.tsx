@@ -40,16 +40,16 @@ function OurFirm() {
       <div className="m-28 my-0  mx-auto lg:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
           <div className="m-4 pt-2 pl-4">
-            <div className="text-2xl font-bold my-2 text-[#6abd45]">
+            <div className="text-3xl font-bold my-2 text-[#6abd45]">
               We understand how dynamic the structural steel industry is.
             </div>
-            <p className="text-justify text-sm leading-relaxed">
+            <p className="text-justify text-lg leading-relaxed">
               The constant design shifts, compliance, and adoption of modern
               software technologies have left the fabricators under immense
               pressure. Because we understand the challenges you are up against,
               we approach steel detailing through your lens.
             </p>
-            <p className="text-justify text-sm leading-relaxed">
+            <p className="text-justify text-lg leading-relaxed">
               For over two decades, we have perfected the art of professional
               Steel Design and Detailing with an unwavering focus on Quality and
               Design-Based thinking in all of our projects. We invest heavily in
@@ -65,18 +65,18 @@ function OurFirm() {
 
           <div className="flex flex-wrap justify-center">
             <div className="bg-[#6abd45] rounded-xl flex flex-wrap flex-col w-full h-fit shadow-2xl m-4 mr-8 p-4">
-              <h1 className="text-white text-2xl font-semibold px-4 pt-2">
+              <h1 className="text-white text-3xl font-semibold px-4 pt-2">
                 Vision
               </h1>
-              <p className="text-justify text-sm text-white px-4">
+              <p className="text-justify text-md text-white px-4">
                 To achieve a Top position in providing Engineering Services &
                 Solutions spread through Civil / Mechanical and other ITES
                 verticals.
               </p>
-              <h1 className="text-white text-2xl font-semibold px-4 pt-4">
+              <h1 className="text-white text-3xl font-semibold px-4 pt-4">
                 Mission
               </h1>
-              <p className="text-justify text-sm text-white px-4 pb-4">
+              <p className="text-justify text-md text-white px-4 pb-4">
                 To provide high-quality Engineering Services to our clients that
                 adhere to industry's best project management practices driven by
                 a skilled group of diverse teams who are committed to a service
@@ -106,7 +106,7 @@ function OurFirm() {
                 We can ramp up our internal resources faster at rocket speeds
                 and still deliver responsibly.
               </div>
-              <div className="text-sm m-2 my-5 text-justify">
+              <div className="text-md m-2 my-5 text-justify">
                 Our success also comes from the fact that we leverage the most
                 up to date, new age 3D softwares in the market to produce the
                 most advanced shop drawings covering all critical aspects of the
