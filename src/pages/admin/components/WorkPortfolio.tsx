@@ -66,7 +66,8 @@ function WorkPortfolio(props: PortfolioPropType) {
       const portfolioRef = doc(db, "portfolio", props.id);
       await updateDoc(portfolioRef, data)
     }
-
+    alert("Portfolio Project Updated successfully");
+    setOpenJob(false);
   }
 
   const handleDelete = async () => {

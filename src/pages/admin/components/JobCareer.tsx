@@ -72,6 +72,8 @@ function JobCareer(props: JobDescType) {
       const job = doc(db, "career", props.id)
       updateDoc(job, data);
     }
+    alert("Job Details updated successfully");
+    setOpenJob(false);
   }
 
   const handleDelete = async () => {
@@ -97,7 +99,9 @@ function JobCareer(props: JobDescType) {
     }).catch((err)=>[
       console.log(err)
     ])
-    await deleteDoc(doc(db, "application", application.id))
+    await deleteDoc(doc(db, "application", application.id));
+    alert("Application Deleted Successfully");
+    fetchApplications();
   }
 
   const fetchApplications = async () => {

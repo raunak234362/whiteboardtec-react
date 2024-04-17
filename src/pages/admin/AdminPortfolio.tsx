@@ -75,6 +75,7 @@ function AdminPortfolio() {
         addDoc(portfolio, data);
       });
     });
+    alert("New Portfolio Project Sucessfully Added");
     fetchPortfolio();
     setProgress(0);
     setOpen(false);

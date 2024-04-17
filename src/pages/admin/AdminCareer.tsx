@@ -86,7 +86,9 @@ function AdminCareer() {
         addDoc(career, data);
       });
     });
+    alert("Job Description Sucessfully Added");
     fetchJob();
+    setOpen(false);
   }, []);
 
   const [isOpen, setOpen] = useState(false);
