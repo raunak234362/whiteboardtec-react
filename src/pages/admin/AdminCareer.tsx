@@ -53,12 +53,14 @@ function AdminCareer() {
       };
 
       reader.onloadend = () => {
-        setProgress(100); // Set progress to 100% when loading is complete
+        // setProgress(100); // Set progress to 100% when loading is complete
         setJD(file);
       };
 
       reader.readAsDataURL(file);
     }
+    console.log(file);
+    console.log(jd);
   };
 
 
@@ -88,6 +90,13 @@ function AdminCareer() {
     });
     alert("Job Description Sucessfully Added");
     fetchJob();
+    setJD(null);
+    setRole("");
+    setLocation("");
+    setType("");
+    setQualification("");
+    setStatus(false);
+    setProgress(0);
     setOpen(false);
   }, []);
 
