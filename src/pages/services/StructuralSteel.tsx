@@ -94,12 +94,12 @@ function StructuralSteel() {
       <div className="m-28 my-0 mx-auto lg:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
           <div className="m-4 leading-loose text-gray-700">
-            <div className="text-2xl font-bold my-2 text-[#6abd45]">
+            <div className="text-3xl font-bold my-2 text-[#6abd45]">
               Steel industry continues to evolve
             </div>
             {headSection?.map((desc, index) => {
               return (
-                <p key={index} className="text-justify text-sm leading-relaxed">
+                <p key={index} className="text-justify text-lg leading-relaxed">
                   {desc}
                 </p>
               );
@@ -123,7 +123,7 @@ function StructuralSteel() {
                     className=" h-fit w-1/2 my-2 flex flex-wrap flex-row items-center"
                   >
                     <svg
-                      className="h-4 w-4 text-[#6abd45] inline-flex"
+                      className="h-6 w-6 text-[#6abd45] inline-flex"
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
@@ -140,7 +140,7 @@ function StructuralSteel() {
                         transform="rotate(90 12 12)"
                       />
                     </svg>
-                    <p className="text-sm inline-flex">{detail}</p>
+                    <p className="text-lg inline-flex">{detail}</p>
                   </div>
                 );
               })}
@@ -168,7 +168,7 @@ function StructuralSteel() {
                       className=" h-fit w-1/3 my-2 flex flex-wrap flex-row items-center"
                     >
                       <svg
-                        className="h-4 w-4 text-[#6abd45] inline-flex"
+                        className="h-6 w-6 text-[#6abd45] inline-flex"
                         width="24"
                         height="24"
                         viewBox="0 0 24 24"
@@ -185,7 +185,7 @@ function StructuralSteel() {
                           transform="rotate(90 12 12)"
                         />
                       </svg>
-                      <p className="text-sm inline-flex">{detail}</p>
+                      <p className="text-lg inline-flex">{detail}</p>
                     </div>
                   );
                 })}
@@ -193,7 +193,7 @@ function StructuralSteel() {
             </section>
           </section>
           <div className="flex flex-wrap items-center justify-center">
-            <div className="h-60 w-1/2 border-2">
+            <div className="h-60 w-5/12 border-2">
             <CarouselDefault images={service_images} />
             </div>
           </div>

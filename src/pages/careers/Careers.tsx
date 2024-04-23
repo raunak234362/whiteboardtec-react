@@ -67,12 +67,12 @@ function Careers() {
       <div className="mx-auto my-0 lg:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
           <div className="m-4 leading-loose">
-            <div className="text-2xl font-bold my-2 text-[#6abd45]">
+            <div className="text-3xl font-bold my-2 text-[#6abd45]">
               {headSection.title}
             </div>
             {headSection.description?.map((desc, index) => {
               return (
-                <p key={index} className="text-justify text-sm leading-relaxed">
+                <p key={index} className="text-justify text-lg leading-relaxed">
                   {desc}
                 </p>
               );
@@ -118,7 +118,7 @@ function Careers() {
             Campus Recruitment
           </div>
 
-          <div className="text-md my-2 text-black mt-3">
+          <div className="text-lg my-2 text-black mt-3">
             We might just be a part of the recruitment drive at your college.
             Follow our social handles for more information on campus events.
             <div className="flex-row flex items-center ml-2">
@@ -202,7 +202,7 @@ function Careers() {
         </div>
       </div>
       <div className="pt-3 my-10 mx-auto lg:max-w-screen-xl">
-        <div className="text-2xl font-semibold my-2 text-black mt-7">
+        <div className="text-3xl font-semibold my-2 text-black mt-7">
           We continue to attract and retain the best talent because of
         </div>
         <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 gap-x-10 md:grid-cols-3">
@@ -213,11 +213,11 @@ function Careers() {
                 className="rounded-3xl border-2 shadow-lg drop-shadow-lg bg-white"
               >
                 <div className="m-5 p-3">
-                  <div className="text-[#6abd45] text-lg font-semibold">
-                    <img src={data.icon} alt="icon" className="w-10 h-10" />
+                  <div className="text-[#6abd45] text-xl font-semibold">
+                    <img src={data.icon} alt="icon" className="w-12 h-12" />
                     {data.head}
                   </div>
-                  <div className="my-2 text-gray-700 text-sm text-justify">
+                  <div className="my-2 text-gray-700 text-md text-justify">
                     {data.body}
                   </div>
                 </div>
@@ -234,10 +234,10 @@ function Careers() {
               <img src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Fequal-opportunity.png?alt=media&token=5a88a52e-4519-426c-967f-8ff0e5226f18" alt="Equal Opportunity"/>
             </div>
             <div className="flex flex-wrap flex-col justify-center">
-              <div className="text-[#6abd45] text-2xl font-semibold">
+              <div className="text-[#6abd45] text-3xl font-semibold">
               Equal Opportunity Employer
               </div>
-              <div className="text-sm text-justify my-2 mr-10">
+              <div className="text-lg text-justify my-2 mr-10">
               Whiteboard is an Equal Opportunity Employer and provides equal opportunities to all its employees regardless of their race, color, religion, gender, age, disability or marital status. We are committed to diversity and inclusion in the workplace and treat all our employees and potential employees fairly at all times.
               </div>
             </div>

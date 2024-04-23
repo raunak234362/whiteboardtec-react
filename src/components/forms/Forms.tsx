@@ -25,8 +25,8 @@ function handleSubmit(formData: FormData) {
 
   return (
     <>
-      <div className="bg-[#6abd45] rounded-lg flex flex-wrap flex-col w-72 h-fit shadow-2xl">
-        <h1 className="text-white text-2xl p-4 pb-2">{props.title}</h1>
+      <div className="bg-[#6abd45] rounded-lg flex flex-wrap flex-col w-80 h-fit shadow-2xl">
+        <h1 className="text-white text-3xl p-4 pb-2">{props.title}</h1>
         <form id={formId}>
           {props.field &&
             props.field.map((field, index) => {
@@ -38,7 +38,7 @@ function handleSubmit(formData: FormData) {
                       id={formId + "_" + field.name}
                       name={field.name}
                       placeholder={field.placeholder}
-                      className="w-full p-2 h-24 rounded-md placeholder-black placeholder-opacity-70 text-sm"
+                      className="w-full p-2 h-24 rounded-md placeholder-black placeholder-opacity-70 text-lg"
                     />
                   ) : (
                     <input
@@ -47,7 +47,7 @@ function handleSubmit(formData: FormData) {
                       id={formId + "_" + field.name}
                       name={field.name}
                       placeholder={field.placeholder}
-                      className="w-full p-2 rounded-md placeholder-black placeholder-opacity-70 text-sm"
+                      className="w-full p-2 rounded-md placeholder-black placeholder-opacity-70 text-lg"
                     />
                   )}
                 </div>
@@ -60,7 +60,7 @@ function handleSubmit(formData: FormData) {
                 const formData = new FormData(document.getElementById(formId) as HTMLFormElement);
                 handleSubmit(formData);
               }}
-              className="bg-white text-[#6abd45] text-lg px-2 rounded-full items-center w-1/2 h-10 hover:bg-[#6abd45] hover:text-white hover:font-semibold hover:border-white border-4 shadow-lg"
+              className="bg-white text-[#6abd45] text-xl px-2 rounded-full items-center w-1/2 h-10 hover:bg-[#6abd45] hover:text-white hover:font-semibold hover:border-white border-4 shadow-lg"
             >
               Submit
             </button>

@@ -36,12 +36,12 @@ function ArchitecturalBIM() {
           <div className="m-4 leading-loose text-gray-700">
             {headSection?.map((desc, index) => {
               return (
-                <p key={index} className="text-justify text-sm leading-relaxed">
+                <p key={index} className="text-justify text-lg leading-relaxed">
                   {desc}
                 </p>
               );
             })}
-            <div className="text-lg font-semibold my-2 text-Black">
+            <div className="text-xl font-semibold my-2 text-Black">
             Collaborate seamlessly with all stakeholders at every touch point, mitigate risks and impact overall revenues.
             </div>
           </div>
@@ -51,7 +51,7 @@ function ArchitecturalBIM() {
 
       <div className="bg-gray-100">
         <div className=" pt-3 my-10 pb-7 mx-auto lg:max-w-screen-xl">
-          <div className="text-2xl font-semibold my-2 text-[#6abd45] mt-5">
+          <div className="text-3xl font-semibold my-2 text-[#6abd45] mt-5">
           Our BIM Architectural Service Offerings
           </div>
           <section className="mt-3 p-2 grid grid-cols-1 md:gap-x-10 md:grid-cols-2">
@@ -62,7 +62,7 @@ function ArchitecturalBIM() {
                   className="py-1 md:py-2 flex flex-wrap flex-row items-center"
                 >
                   <svg
-                    className="h-4 w-4 text-[#6abd45] inline-flex"
+                    className="h-6 w-6 text-[#6abd45] inline-flex"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -79,7 +79,7 @@ function ArchitecturalBIM() {
                       transform="rotate(90 12 12)"
                     />
                   </svg>
-                  <p className="text-sm inline-flex">{detail}</p>
+                  <p className="text-lg inline-flex">{detail}</p>
                 </div>
               );
             })}

@@ -48,11 +48,11 @@ function LeadershipTeam() {
                       key={index}
                       className="rounded-xl border-2 shadow-lg drop-shadow-lg bg-white p-7"
                     >
-                      <div className="text-[#6abd45] font-semibold text-xl flex flex-wrap flex-col">
+                      <div className="text-[#6abd45] font-semibold text-3xl flex flex-wrap flex-col">
                         {leader.name}
                       </div>
-                      <div className="text-black font-semibold texl-lg">{leader.designation}</div>
-                      <div className="font-normal text-sm text-justify text-gray-700 leading-relaxed">
+                      <div className="text-black font-semibold texl-2xl">{leader.designation}</div>
+                      <div className="font-normal text-lg text-justify text-gray-700 leading-relaxed">
                         {
                           leader.thoughts.map((thought, index) => {
                             return(
@@ -61,11 +61,11 @@ function LeadershipTeam() {
                           })
                         }
                       </div>
-                      <div className="font-normal text-sm text-justify text-gray-700 leading-relaxed">
+                      <div className="font-normal text-lg mt-8 text-justify text-gray-700 leading-relaxed">
                         <p className="my-2">Say Hello</p>
                       </div>
                       <div>
-                      <span className="[&>svg]:h-6 [&>svg]:w-6 my-2">
+                      <span className="[&>svg]:h-10 [&>svg]:w-8 my-2">
                         <button
                           type="button"
                           data-twe-ripple-init

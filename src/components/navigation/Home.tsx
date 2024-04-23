@@ -22,11 +22,11 @@ function Home(props: NavRouteType): JSX.Element {
               <img
                 src={props.image}
                 alt={props.name}
-                className={`w-[20rem] h-1/2 ease-in-out duration-500 transform scale-${hovered? "105": "100"} ${hovered? "opacity-30": ""}`}
+                className={`w-[25rem] h-1/2 ease-in-out duration-500 transform scale-${hovered? "105": "100"} ${hovered? "opacity-30": ""}`}
               />
             )}
             <div
-              className={`absolute bottom-1/2 left-10 font-bold text-2xl  text-white z-20 ${hovered ? "invisible" : ""}`}
+              className={`absolute bottom-1/2 left-10 font-bold text-3xl  text-white z-20 ${hovered ? "invisible" : ""}`}
               style={{ textShadow: "5px 5px 7px rgb(0, 0, 0)" }}
             >
               {props.name}
@@ -44,7 +44,7 @@ function Home(props: NavRouteType): JSX.Element {
               <ul>
                 {props.child?.map((child) => (
                   <NavLink key={child.name} to={props.path + child.path}>
-                    <li className="text-white text-left text-sm p-1 px-2">
+                    <li className="text-white text-left text-md p-1 px-2">
                       {child.name}
                     </li>
                   </NavLink>

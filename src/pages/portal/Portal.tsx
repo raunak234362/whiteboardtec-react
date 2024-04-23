@@ -68,7 +68,7 @@ function Portal() {
       {data.context && (
         <section className="rounded-3xl m-28 border-4 p-2 grid grid-cols-[75%_25%] gap-3 shadow-xl drop-shadow-xl mx-auto my-10 lg:max-w-screen-xl">
           <div className="m-4 pr-10">
-            <div className="text-xl text-justify m-1 text-[#6abd45]">
+            <div className="text-3xl text-justify m-1 text-[#6abd45]">
               {data.context.title}
             </div>
             <ul>
@@ -76,7 +76,7 @@ function Portal() {
                 <div key={index} className="flex-row flex justify-start mr-2 my-2">
                   <span className="text-gray-700 m-1 mt-1">
                     <svg
-                      className="h-4 w-4 text-[#6abd45]"
+                      className="h-6 w-6 text-[#6abd45]"
                       width="24"
                       height="24"
                       viewBox="0 0 24 24"
@@ -95,7 +95,7 @@ function Portal() {
                     </svg>
                   </span>
                   <span className="text-gray-500">
-                    <span className="flex text-sm">{item}</span>
+                    <span className="flex text-lg">{item}</span>
                   </span>
                 </div>
               ))}
@@ -104,7 +104,7 @@ function Portal() {
 
           <div className="flex flex-wrap justify-center">
             <div className="bg-[#6abd45] rounded-xl flex flex-wrap flex-col w-full h-fit shadow-2xl mx-4">
-            <h1 className="text-white text-xl font-semibold p-4 pb-2">Bridge all gaps and supercharge your projects on the fly.</h1>
+            <h1 className="text-white text-2xl font-semibold p-4 pb-2">Bridge all gaps and supercharge your projects on the fly.</h1>
               <div className="flex flex-wrap flex-col justify-center mx-2 mb-2">
                 {data.portal.map((item, index) => {
                   return (

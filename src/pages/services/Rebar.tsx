@@ -104,12 +104,12 @@ function Rebar() {
           <div className="m-4 leading-loose text-gray-700">
             {headSection.description?.map((desc, index) => {
               return (
-                <p key={index} className="text-justify text-sm leading-relaxed">
+                <p key={index} className="text-justify text-lg leading-relaxed">
                   {desc}
                 </p>
               );
             })}
-            <div className="text-xl font-bold my-2 text-[#6abd45]">
+            <div className="text-2xl font-bold my-2 text-[#6abd45]">
               {headSection.title}
             </div>
           </div>
@@ -130,7 +130,7 @@ function Rebar() {
                   className="py-1 md:py-2 flex flex-wrap flex-row items-center"
                 >
                   <svg
-                    className="h-4 w-4 text-[#6abd45]"
+                    className="h-6 w-6 text-[#6abd45]"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -147,7 +147,7 @@ function Rebar() {
                       transform="rotate(90 12 12)"
                     />
                   </svg>
-                  <p className="text-sm flex">{detail}</p>
+                  <p className="text-lg flex">{detail}</p>
                 </div>
               );
             })}
@@ -158,7 +158,7 @@ function Rebar() {
       <div className="m-28 my-0 mx-auto lg:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-2 gap-3 shadow-xl drop-shadow-xl">
           <div className="m-10 mr-4 leading-loose text-gray-700">
-            <div className="text-2xl font-bold my-2 text-[#6abd45]">
+            <div className="text-3xl font-bold my-2 text-[#6abd45]">
               {rebarEstimation.title}
             </div>
             {rebarEstimation.description?.map((detail, index) => {
@@ -168,7 +168,7 @@ function Rebar() {
                   className="py-1 md:py-2 flex flex-wrap flex-row items-center"
                 >
                   <svg
-                    className="h-4 w-4 text-[#6abd45]"
+                    className="h-6 w-6 text-[#6abd45]"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -185,14 +185,14 @@ function Rebar() {
                       transform="rotate(90 12 12)"
                     />
                   </svg>
-                  <p className="text-sm flex">{detail}</p>
+                  <p className="text-lg flex">{detail}</p>
                 </div>
               );
             })}
           </div>
 
           <div className="m-10 ml-4 leading-loose text-gray-700">
-            <div className="text-2xl font-bold my-2 text-[#6abd45]">
+            <div className="text-3xl font-bold my-2 text-[#6abd45]">
               {rebarStructures.title}
             </div>
             {rebarStructures.description?.map((detail, index) => {
@@ -202,7 +202,7 @@ function Rebar() {
                   className="py-1 md:py-2 flex flex-wrap flex-row items-center"
                 >
                   <svg
-                    className="h-4 w-4 text-[#6abd45]"
+                    className="h-6 w-6 text-[#6abd45]"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -219,7 +219,7 @@ function Rebar() {
                       transform="rotate(90 12 12)"
                     />
                   </svg>
-                  <p className="text-sm flex">{detail}</p>
+                  <p className="text-lg flex">{detail}</p>
                 </div>
               );
             })}
@@ -228,7 +228,7 @@ function Rebar() {
       </div>
 
       <div className="mx-auto lg:max-w-screen-xl pt-3 mt-5">
-          <div className="text-2xl font-semibold my-2 text-[#6abd45] mt-5">
+          <div className="text-3xl font-semibold my-2 text-[#6abd45] mt-5">
           Rebar Estimation work done
           </div>
           <section className="mt-3 p-2 grid grid-cols-1 md:gap-x-10 md:grid-cols-2">
@@ -237,8 +237,8 @@ function Rebar() {
                 <div
                   className="py-1 mx-4 my-1 md:py-2 flex flex-wrap flex-col items-start"
                   key={index} >
-                  <p className="text-sm flex">{detail.title}</p>
-                  <p className="text-sm flex text-[#6abd45]">{detail.desc}</p>
+                  <p className="text-lg flex">{detail.title}</p>
+                  <p className="text-md flex text-[#6abd45]">{detail.desc}</p>
                 </div>
               );
             })}
@@ -247,7 +247,7 @@ function Rebar() {
 
         <div className="bg-gray-100 shadow-md drop-shadow-md">
         <div className="mx-auto lg:max-w-screen-xl pt-3 my-10">
-          <div className="text-2xl font-semibold my-2 text-[#6abd45] mt-5">
+          <div className="text-3xl font-semibold my-2 text-[#6abd45] mt-5">
           Job Done By Our Teams
           </div>
           <section className="mt-3 p-2 grid grid-cols-1 md:gap-x-10 md:grid-cols-2">
@@ -258,7 +258,7 @@ function Rebar() {
                   className="py-1 md:py-2 flex flex-wrap flex-row items-center"
                 >
                   <svg
-                    className="h-4 w-4 text-[#6abd45]"
+                    className="h-6 w-6 text-[#6abd45]"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -275,7 +275,7 @@ function Rebar() {
                       transform="rotate(90 12 12)"
                     />
                   </svg>
-                  <p className="text-sm ml-1 flex">{detail}</p>
+                  <p className="text-lg ml-1 flex">{detail}</p>
                 </div>
               );
             })}

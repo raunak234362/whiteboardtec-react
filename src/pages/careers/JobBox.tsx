@@ -80,7 +80,7 @@ function JobBox(job: JobDescType) {
           <div className="flex min-h-full items-center justify-center p-4">
             <div className="bg-white w-full max-w-4xl p-6 rounded-lg shadow-lg flex flex-col">
               <div className="flex justify-between">
-                <Dialog.Title className="text-lg font-semibold">
+                <Dialog.Title className="text-2xl font-semibold">
                   Apply for {job.role}
                 </Dialog.Title>
                 <button
@@ -109,7 +109,7 @@ function JobBox(job: JobDescType) {
               <table className="mt-4 mx-10 border-separate border-spacing-y-4">
                 <tr>
                   <td>
-                    <label htmlFor="Name" className="text-sm text-gray-800">
+                    <label htmlFor="Name" className="text-lg text-gray-800">
                       Name
                     </label>
                   </td>
@@ -122,13 +122,13 @@ function JobBox(job: JobDescType) {
                       onChange={(e) => {
                         setName(e.target.value);
                       }}
-                      className="border-2 border-gray-200 rounded-md mx-4 w-full px-2"
+                      className="border-2 border-gray-200 rounded-md mx-4 w-full px-2 text-lg"
                     />
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <label htmlFor="Email" className="text-sm text-gray-800">
+                    <label htmlFor="Email" className="text-lg text-gray-800">
                       Email
                     </label>
                   </td>
@@ -141,13 +141,13 @@ function JobBox(job: JobDescType) {
                       onChange={(e) => {
                         setEmail(e.target.value);
                       }}
-                      className="border-2 border-gray-200 rounded-md mx-4 w-full px-2"
+                      className="border-2 border-gray-200 rounded-md mx-4 w-full px-2 text-lg"
                     />
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <label htmlFor="Phone" className="text-sm text-gray-800">
+                    <label htmlFor="Phone" className="text-lg text-gray-800">
                       Phone
                     </label>
                   </td>
@@ -160,13 +160,13 @@ function JobBox(job: JobDescType) {
                       onChange={(e) => {
                         setPhone(e.target.value);
                       }}
-                      className="border-2 border-gray-200 rounded-md mx-4 w-full px-2"
+                      className="border-2 border-gray-200 rounded-md mx-4 w-full px-2 text-lg"
                     />
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    <label htmlFor="resume" className="text-sm text-gray-800">
+                    <label htmlFor="resume" className="text-lg text-gray-800">
                       Resume
                     </label>
                   </td>
@@ -176,7 +176,7 @@ function JobBox(job: JobDescType) {
                       name="resume"
                       id="resume"
                       onChange={handleFileChange}
-                      className="border-2 border-gray-200 rounded-md mx-4 w-full"
+                      className="border-2 border-gray-200 rounded-md mx-4 w-full text-lg"
                     />
                     {progress > 0 && progress <= 100 && (
                         <span className="mx-3 text-gray-600">{progress}%</span>
@@ -191,7 +191,7 @@ function JobBox(job: JobDescType) {
                     e.preventDefault();
                     handleApply();
                   }}
-                  className=" px-4 border-2 rounded-md bg-green-500 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
+                  className=" px-4 border-2 rounded-md bg-green-500 text-white text-xl border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
                 >
                   Apply
                 </button>
@@ -200,7 +200,7 @@ function JobBox(job: JobDescType) {
                   onClick={() => {
                     setOpenJob(false);
                   }}
-                  className=" px-4 border-2 rounded-md bg-red-600 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-red-500 hover:text-red-500  hover:bg-white"
+                  className=" px-4 border-2 rounded-md bg-red-600 text-white text-xl border-white drop-shadow-lg mx-3 hover:border-red-500 hover:text-red-500  hover:bg-white"
                 >
                   Cancel
                 </button>
@@ -212,13 +212,13 @@ function JobBox(job: JobDescType) {
 
       <div className="rounded-3xl border-2 shadow-lg drop-shadow-lg bg-white">
         <div className="m-5 p-3">
-          <div className="text-[#6abd45] text-lg font-semibold">{job.role}</div>
+          <div className="text-[#6abd45] text-2xl font-semibold">{job.role}</div>
           <div className="my-2">
-            <div className="text-gray-700 text-sm">
+            <div className="text-gray-700 text-lg">
               Location: {job.location}
             </div>
-            <div className="text-gray-700 text-sm">Job Type: {job.type}</div>
-            <div className="text-gray-700 text-sm">
+            <div className="text-gray-700 text-lg">Job Type: {job.type}</div>
+            <div className="text-gray-700 text-lg">
               Qualification: {job.qualification}
             </div>
           </div>
@@ -226,12 +226,12 @@ function JobBox(job: JobDescType) {
             <Link
               to={job.jd}
               target="_blank"
-              className="border-2 rounded-full border-black border-opacity-50 opacity-80 text-sm px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
+              className="border-2 rounded-full border-black border-opacity-50 opacity-80 text-md px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
             >
               Download JD ➤{" "}
             </Link>
             <button
-              className="border-2 rounded-full border-black border-opacity-50 opacity-80 text-sm px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
+              className="border-2 rounded-full border-black border-opacity-50 opacity-80 text-md px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
               onClick={(e) => {
                 e.preventDefault();
                 setOpenJob(true);

@@ -38,7 +38,7 @@ function PEMB() {
           <div className="m-4 leading-loose text-gray-700">
             {headSection?.map((desc, index) => {
               return (
-                <p key={index} className="text-justify text-sm leading-relaxed">
+                <p key={index} className="text-justify text-lg leading-relaxed">
                   {desc}
                 </p>
               );
@@ -61,7 +61,7 @@ function PEMB() {
                   className="py-1 md:py-2 flex flex-wrap flex-row items-center"
                 >
                   <svg
-                    className="h-4 w-4 text-[#6abd45] inline-flex"
+                    className="h-6 w-6 text-[#6abd45] inline-flex"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -78,7 +78,7 @@ function PEMB() {
                       transform="rotate(90 12 12)"
                     />
                   </svg>
-                  <p className="text-sm inline-flex">{detail}</p>
+                  <p className="text-lg inline-flex">{detail}</p>
                 </div>
               );
             })}

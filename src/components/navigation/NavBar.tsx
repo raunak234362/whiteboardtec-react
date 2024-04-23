@@ -16,7 +16,7 @@ function NavBar(props: NavRouteType): JSX.Element {
       onMouseOver={()=>setActive(true)}
       onMouseOut={()=>setActive(false)}>
         <div>
-          <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 hover:bg-[#6abd45] px-3 py-2 text-sm font-semibold text-gray-900 mx-1 rounded-t-md">
+          <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 hover:bg-[#6abd45] px-3 py-2 text-lg font-semibold text-gray-900 mx-1 rounded-t-md">
           <NavLink
             to={props.path}
           >
@@ -51,7 +51,7 @@ function NavBar(props: NavRouteType): JSX.Element {
                             active
                               ? "bg-gray-100 text-[#6abd45]"
                               : "text-gray-700",
-                            "block px-4 py-2 text-sm"
+                            "block px-4 py-2 text-lg"
                           )}
                         >
                           {child.name}

@@ -35,12 +35,12 @@ function Resources() {
         {data.map((item, index) => (
           <div key={index} className='rounded-3xl shadow-xl drop-shadow-xl border-4'>
             <div>
-              <h2 className="text-2xl m-4 mb-2 font-bold text-[#6abd45]">{item.head}</h2>
-              <div className='m-4 mt-0 truncate'>
+              <h2 className="text-3xl m-4 mb-2 font-bold text-[#6abd45]">{item.head}</h2>
+              <div className='m-4 mt-0 truncate text-lg'>
                 {item.desc}
               </div>
               <Link to={item.link}>
-                <div className="m-4 mt-0 bg-[#6abd45] rounded-full h-fit w-fit px-4 py-2 text-white">
+                <div className="m-4 mt-0 bg-[#6abd45] rounded-full text-md h-fit w-fit px-4 py-2 text-white">
                   Read More
                 </div>
               </Link>

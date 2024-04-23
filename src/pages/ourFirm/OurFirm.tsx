@@ -135,11 +135,11 @@ function OurFirm() {
                 className="rounded-3xl border-2 shadow-lg drop-shadow-lg bg-white"
               >
                 <div className="m-5 p-3">
-                  <div className="text-[#6abd45] text-lg font-semibold">
+                  <div className="text-[#6abd45] text-2xl font-semibold">
                     <img src={data.icon} alt="icon" className="w-10 h-10" />
                     {data.head}
                   </div>
-                  <div className="my-2 text-gray-700 text-sm text-justify">
+                  <div className="my-2 text-gray-700 text-md text-justify">
                     {data.body}
                   </div>
                 </div>
@@ -153,10 +153,10 @@ function OurFirm() {
         <div className=" mx-auto lg:max-w-screen-xl pt-2 mt-3">
           <section className="mt-3 p-2 grid grid-cols-1 gap-y-0 gap-x-0 md:gap-y-5 md:gap-x-10 md:grid-cols-[45%_55%] lg:grid-cols-2">
             <div className="py-2 my-7 text-white">
-              <div className="text-xl font-bold">
+              <div className="text-3xl font-bold">
                 Project Management further simplified
               </div>
-              <div className="text-sm my-3 text-justify">
+              <div className="text-lg my-3 text-justify">
                 No more attachment size restrictions or adding documents on
                 multiple email drives. Upload all your project documents,
                 drawings, track and manage your projects all from a single
@@ -165,8 +165,8 @@ function OurFirm() {
                 you’ll be in awe of the simplicity behind the design. As we
                 said, we keep complexities to a minuscule or almost none.
               </div>
-              <div className="text-lg font-bold">Features</div>
-              <div className="text-sm my-2 text-justify">
+              <div className="text-2xl font-bold">Features</div>
+              <div className="text-lg my-2 text-justify">
                 <ul className="list-none list-inside">
                   <li className="flex-row flex justify-start mr-2 my-1">
                     <span className="m-1 mt-0.5">

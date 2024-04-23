@@ -20,7 +20,7 @@ function Newsletter() {
     <>
           <section className="m-28 mt-0 mb-5 p-2 flex flex-wrap justify-start items-start mx-auto lg:max-w-screen-xl">
             <div className="flex flex-wrap flex-col">
-              <div className="text-xl text-justify m-1 font-semibold text-[#6abd45]">
+              <div className="text-3xl text-justify m-1 font-semibold text-[#6abd45]">
                 Sign up for our newsletter to get exclusive access to
               </div>
               <div className="flex flex-wrap flex-row mx-5">
@@ -48,14 +48,14 @@ function Newsletter() {
                         </svg>
                       </span>
                       <span className="text-gray-500">
-                        <span className="flex text-sm">{item}</span>
+                        <span className="flex text-lg">{item}</span>
                       </span>
                     </div>
                   ))}
                 </div>
                 {
                   newsletter.formMail && (
-                    <div className="flex flex-wrap flex-row ml-40 items-end my-4">
+                    <div className="flex flex-wrap flex-row ml-60 items-end my-4">
                       <form id={formId}>
                         <input type="email" required placeholder="Email Address" name="email"
                         className="border-2 border-opacity-40 rounded-md border-slate-900 placeholder-black placeholder-opacity-50 px-2 py-1 w-80"/>
