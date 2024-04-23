@@ -18,7 +18,7 @@ function Newsletter() {
     }
   return (
     <>
-          <section className="m-28 mt-0 mb-5 p-2 flex flex-wrap justify-start items-start mx-auto lg:max-w-screen-xl">
+          <section className="m-28 mt-0 mb-5 p-2 flex flex-wrap justify-start items-start mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
             <div className="flex flex-wrap flex-col">
               <div className="text-3xl text-justify m-1 font-semibold text-[#6abd45]">
                 Sign up for our newsletter to get exclusive access to
@@ -55,7 +55,7 @@ function Newsletter() {
                 </div>
                 {
                   newsletter.formMail && (
-                    <div className="flex flex-wrap flex-row ml-60 items-end my-4">
+                    <div className="flex flex-wrap flex-row ml-40 items-end mt-4 mb-2">
                       <form id={formId}>
                         <input type="email" required placeholder="Email Address" name="email"
                         className="border-2 border-opacity-40 rounded-md border-slate-900 placeholder-black placeholder-opacity-50 px-2 py-1 w-80"/>

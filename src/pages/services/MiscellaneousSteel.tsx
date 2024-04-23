@@ -71,7 +71,7 @@ function MiscellaneousSteel() {
   return (
     <>
       <PageBanner {...banner} />
-      <div className="m-28 my-0 mx-auto lg:max-w-screen-xl">
+      <div className="m-28 my-0 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
           <div className="m-4 leading-loose text-gray-700">
             <div className="text-xl font-semibold my-2 text-Black">
@@ -90,7 +90,7 @@ function MiscellaneousSteel() {
       </div>
 
       <div className="bg-gray-100">
-        <div className="mx-auto lg:max-w-screen-xl pt-3 my-10 pb-7">
+        <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl pt-3 my-10 pb-7">
           <div className="text-3xl font-semibold my-2 text-[#6abd45] mt-5">
           Miscellaneous Detailing team Capabilities
           </div>
@@ -127,7 +127,7 @@ function MiscellaneousSteel() {
         </div>
       </div>
 
-      <div className="mx-auto lg:max-w-screen-xl mb-10">
+      <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl mb-10">
         <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-2 shadow-xl drop-shadow-xl">
           {
             MiscType?.map((type, index) => {

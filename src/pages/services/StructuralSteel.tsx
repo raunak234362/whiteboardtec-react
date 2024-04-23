@@ -91,7 +91,7 @@ function StructuralSteel() {
   return (
     <>
       <PageBanner {...banner} />
-      <div className="m-28 my-0 mx-auto lg:max-w-screen-xl">
+      <div className="m-28 my-0 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
           <div className="m-4 leading-loose text-gray-700">
             <div className="text-3xl font-bold my-2 text-[#6abd45]">
@@ -110,12 +110,12 @@ function StructuralSteel() {
       </div>
 
       <div className="bg-gray-100 shadow-md drop-shadow-md pb-16">
-        <div className="mx-auto lg:max-w-screen-xl pt-3 my-10">
+        <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl pt-3 my-10">
           <div className="text-4xl font-bold my-2 text-[#6abd45] mt-5">
             Our Services
           </div>
           <section className="mt-3 flex flex-wrap md:flex-row flex-col">
-            <div className="mt-3 p-2 h-fit flex flex-wrap flex-col w-2/3 md:flex-row">
+            <div className="mt-3 p-2 h-fit flex flex-wrap flex-col lg:w-3/5 md:flex-row">
               {services.map((detail, index) => {
                 return (
                   <div
@@ -145,7 +145,7 @@ function StructuralSteel() {
                 );
               })}
             </div>
-            <div className="flex flex-wrap item-center justify-center m-5">
+            <div className="flex flex-wrap item-center justify-center m-5 ">
               <img
                 src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Four-services.jpg?alt=media&token=56d33c91-c20d-4d23-bdc3-9d8cae9bb336"
                 alt="Equal Opportunity"
@@ -154,7 +154,7 @@ function StructuralSteel() {
           </section>
         </div>
 
-        <div className="mx-auto lg:max-w-screen-xl py-3 rounded-3xl border-4 shadow-xl drop-shadow-xl bg-white">
+        <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl py-3 rounded-3xl border-4 shadow-xl drop-shadow-xl bg-white">
           <section className="px-10">
             <div className="text-4xl font-bold mb-0 text-[#6abd45] mt-3">
               Our Portfolio

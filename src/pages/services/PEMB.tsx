@@ -33,7 +33,7 @@ function PEMB() {
   return (
     <>
       <PageBanner {...banner} />
-      <div className="m-28 my-0 mx-auto lg:max-w-screen-xl">
+      <div className="m-28 my-0 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
           <div className="m-4 leading-loose text-gray-700">
             {headSection?.map((desc, index) => {
@@ -49,7 +49,7 @@ function PEMB() {
       </div>
 
       <div className="bg-gray-100">
-        <div className="mx-auto lg:max-w-screen-xl pt-3 my-10">
+        <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl pt-3 my-10">
           <div className="text-4xl font-bold my-2 text-[#6abd45] mt-5">
           Our Structural Design Engineering Portfolio Includes
           </div>

@@ -110,7 +110,7 @@ function Connect() {
   return (
     <>
       <PageBanner {...data.banner} />
-      <section className="rounded-3xl m-40 border-4 p-4 grid grid-cols-[62%_38%] gap-3 shadow-xl drop-shadow-xl mx-auto my-10 lg:max-w-screen-xl">
+      <section className="rounded-3xl m-40 border-4 p-4 grid grid-cols-[62%_38%] gap-3 shadow-xl drop-shadow-xl mx-auto my-10 lg:max-w-screen-lg xl:max-w-screen-xl">
         <div className="m-4 pr-10">
           <div>
             <div className="text-3xl font-bold my-2 text-[#6abd45]">

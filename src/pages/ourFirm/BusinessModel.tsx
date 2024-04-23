@@ -34,7 +34,7 @@ function BusiessModel() {
   return (
     <>
         < PageBanner {...banner}/>
-        <div className="pt-3 mx-auto lg:max-w-screen-xl">
+        <div className="pt-3 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
         <section className="mt-3 mb-10 p-2 grid grid-cols-1 gap-y-10 gap-x-0 md:gap-y-5 md:gap-x-10 md:grid-cols-2">
         <Estimate head="Choose a model that suits your project requirements. Yes. You heard us right!" />
           {treeData.map((data, index) => {

@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom'
-import { HeaderBase, HeaderHome } from './components/header/Header'
+import { HeaderHome } from './components/header/Header'
+// import { HeaderBase } from './components/header/Header'
 import { Footer } from './components/footer/Footer'
 import { NavigationBar, HomeNav } from './components/navigation';
 import { useLocation } from 'react-router-dom';
@@ -31,7 +32,8 @@ function App(): JSX.Element{
   } else {
     return (
       <>
-        {(location.pathname === '/') ? <HeaderHome /> : <HeaderBase />}
+        {/* {(location.pathname === '/') ? <HeaderHome /> : <HeaderBase />} */}
+        <HeaderHome />
         {(location.pathname === '/') ? <HomeNav /> : <NavigationBar />}
         <Outlet />
         <Footer />

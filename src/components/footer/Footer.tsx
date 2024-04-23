@@ -18,7 +18,7 @@ const Footer = (): JSX.Element => {
 
   return (
     <>
-      <div className="bg-black text-[#FFF] h-7 items-center flex text-[13px] justify-evenly">
+      <div className="bg-black text-[#FFF] h-7 items-center flex text-[13px] justify-between px-96">
         <div className="flex">
           Copyright © 2023 by Whiteboard Technologies Pvt. Ltd. All rights
           reserved.

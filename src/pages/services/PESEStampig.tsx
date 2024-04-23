@@ -22,7 +22,7 @@ function PESEStampig() {
   return (
     <>
       <PageBanner {...banner} />
-      <div className="m-28 my-0 mx-auto lg:max-w-screen-xl">
+      <div className="m-28 my-0 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
           <div className="m-4 leading-loose text-gray-700">
           <div className="text-3xl font-bold my-2 text-[#6abd45]">
@@ -44,7 +44,7 @@ function PESEStampig() {
       </div>
 
       <div className="bg-gray-100 shadow-lg drop-shadow-lg mb-3">
-        <div className="mx-auto lg:max-w-screen-xl pt-3 mt-10">
+        <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl pt-3 mt-10">
           <section className="mt-3p-2 grid grid-cols-[65%_35%] gap-3">
             <div className="flex flex-wrap flex-col justify-center">
               <div className="text-[#6abd45] text-3xl font-semibold">
