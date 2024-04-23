@@ -122,7 +122,7 @@ const Notification: NotificationType = {
 const NavigationBar = (): JSX.Element => {
   return (
     <>
-      <nav className="flex flex-wrap justify-end mr-40">
+      <nav className="flex flex-wrap justify-end mr-[5%]">
         <ul className="flex flex-row mx-5 flex-wrap text-sm">
           {NavRoute.map((route) => (
             <NavBar key={route.name} {...route} />

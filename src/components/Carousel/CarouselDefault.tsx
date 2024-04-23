@@ -36,7 +36,7 @@ function CarouselDefault({ images }: { images: CarouselPropType[] | any }) {
           backgroundImage: `url(${images[currentIndex].url})`,
           backgroundPosition: "center center",
           backgroundRepeat: "no-repeat",
-          backgroundSize: "contain"
+          backgroundSize: "contain",
         }}
         className="w-full h-full rounded-lg bg-center bg-cover duration-500" />
       <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">

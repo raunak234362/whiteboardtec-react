@@ -17,16 +17,21 @@ function Home(props: NavRouteType): JSX.Element {
         onMouseOut={() => setHovered(false)}
       >
         <div className="relative inline-block h-full">
-          <div className="relative float-left bg-black">
+          <div className="flex float-left bg-black">
             {props.image && (
               <img
                 src={props.image}
                 alt={props.name}
                 className={`w-[25rem] h-1/2 ease-in-out duration-500 transform scale-${hovered? "105": "100"} ${hovered? "opacity-30": ""}`}
+                style={{
+                  scale: hovered? "1.2": "1",
+                  transition: "all 1s ease-in-out",
+                  zIndex: hovered? 0: 20,
+                }}
               />
             )}
             <div
-              className={`absolute bottom-1/2 left-10 font-bold text-3xl  text-white z-20 ${hovered ? "invisible" : ""}`}
+              className={`absolute uppercase bottom-1/2 left-1/4 font-bold text-3xl  text-white z-20 ${hovered ? "invisible" : ""}`}
               style={{ textShadow: "5px 5px 7px rgb(0, 0, 0)" }}
             >
               {props.name}
@@ -37,14 +42,14 @@ function Home(props: NavRouteType): JSX.Element {
               }`}
             >
               <NavLink to={props.path}>
-                <div className="text-white bg-[#6abd45] text-center font-semibold text-xl">
+                <div className="text-white bg-[#6abd45] text-center py-1 text-xl">
                   {props.name}
                 </div>
               </NavLink>
               <ul>
                 {props.child?.map((child) => (
                   <NavLink key={child.name} to={props.path + child.path}>
-                    <li className="text-white text-left text-md p-1 px-2">
+                    <li className="text-white text-left text-md p-1 px-2 hover:text-[#6abd45]">
                       {child.name}
                     </li>
                   </NavLink>

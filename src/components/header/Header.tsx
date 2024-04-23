@@ -120,7 +120,7 @@ const HeaderBase = (): JSX.Element => {
             className="m-2 h-20"
           />
         </Link>
-        <div className="inline-flex ml-[30%] flex-wrap align-start">
+        <div className="inline-flex ml-[25%] flex-wrap align-start">
           <div className="flex-row flex items-center">
             <span className="text-gray-700 m-2">
               <svg

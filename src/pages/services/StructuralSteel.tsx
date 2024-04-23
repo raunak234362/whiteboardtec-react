@@ -154,7 +154,7 @@ function StructuralSteel() {
           </section>
         </div>
 
-        <div className="mx-auto lg:max-w-screen-xl py-3 rounded-3xl border-4 shadow-xl drop-shadow-xl">
+        <div className="mx-auto lg:max-w-screen-xl py-3 rounded-3xl border-4 shadow-xl drop-shadow-xl bg-white">
           <section className="px-10">
             <div className="text-4xl font-bold mb-0 text-[#6abd45] mt-3">
               Our Portfolio
@@ -193,7 +193,7 @@ function StructuralSteel() {
             </section>
           </section>
           <div className="flex flex-wrap items-center justify-center">
-            <div className="h-60 w-5/12 border-2">
+            <div className="h-96 w-1/2">
             <CarouselDefault images={service_images} />
             </div>
           </div>
