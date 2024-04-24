@@ -5,20 +5,24 @@ import { Footer } from './components/footer/Footer'
 import { NavigationBar, HomeNav } from './components/navigation';
 import { useLocation } from 'react-router-dom';
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { database } from "./config/firebase";
 import { onValue, ref, set } from "firebase/database";
+import GoTo from './components/goto/GoTo';
 
 
 function App(): JSX.Element{
-
-  useEffect(()=> {
+  const [updated, setUpdated] = useState<boolean>(false);
+  useEffect( ()=> {
+    console.log('App loaded')
     const reference = ref(database, "/view");
-    onValue(reference, (snapshot) => {
-      set(reference, snapshot.val()+1);
+    onValue(reference, async (snapshot) => {
+      if (!updated){
+        await set(reference, snapshot.val()+1);
+        setUpdated(true);
+      }
     })
-  }, [])
-
+  }, [] );
   
   const location = useLocation();
   if (location.pathname.startsWith('/admin')) {
@@ -30,12 +34,16 @@ function App(): JSX.Element{
     )
 
   } else {
+    // console.log("Appppp Loooadded")
+  const reference = useRef<HTMLDivElement>(null);
     return (
       <>
         {/* {(location.pathname === '/') ? <HeaderHome /> : <HeaderBase />} */}
-        <HeaderHome />
+        <div ref={reference}></div>
+        <HeaderHome/>
         {(location.pathname === '/') ? <HomeNav /> : <NavigationBar />}
         <Outlet />
+        <GoTo props={reference}/>
         <Footer />
       </>
     )
