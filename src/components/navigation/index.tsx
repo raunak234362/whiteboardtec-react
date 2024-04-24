@@ -122,8 +122,8 @@ const Notification: NotificationType = {
 const NavigationBar = (): JSX.Element => {
   return (
     <>
-      <nav className="flex flex-wrap justify-end mr-[12%]">
-        <ul className="flex flex-row mx-5 flex-wrap text-sm">
+      <nav className="flex flex-wrap justify-end mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
+        <ul className="flex flex-row mx-5 flex-wrap text-sm ">
           {NavRoute.map((route) => (
             <NavBar key={route.name} {...route} />
           ))}
