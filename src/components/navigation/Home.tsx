@@ -12,17 +12,17 @@ function Home(props: NavRouteType): JSX.Element {
     <>
       <NavLink
         to={props.path}
-        className="inline w-full h-full"
+        className="md:inline md:w-fit md:h-full w-fit max-md:m-3"
         onMouseOver={() => setHovered(true)}
         onMouseOut={() => setHovered(false)}
       >
-        <div className="relative inline-block h-full">
-          <div className="flex float-left bg-black overflow-hidden" >
+        <div className="relative md:inline-block max-md:overflow-hidden h-full max-md:flex">
+          <div className="flex md:float-left flex-col max-md:flex-col md:bg-black overflow-hidden max-md:h-fit" >
             {props.image && (
               <img
                 src={props.image}
                 alt={props.name}
-                className={`w-[25rem] h-1/2 ease-in-out duration-1000 transform scale-${hovered? "105": "100"} ${hovered? "opacity-30": ""}`}
+                className={`w-[25rem] max-md:w-screen max-md:h-[12rem] max-md:object-cover ease-in-out duration-1000 transform scale-${hovered? "105": "100"} ${hovered? "opacity-30": ""}`}
                 style={{
                   scale: hovered? "1.2": "1",
                   transition: "all 1s ease-in-out",
@@ -30,13 +30,13 @@ function Home(props: NavRouteType): JSX.Element {
               />
             )}
             <div
-              className={`absolute uppercase bottom-1/2 left-1/4 font-bold text-3xl  text-white z-20 ${hovered ? "invisible" : ""}`}
+              className={`md:absolute flex uppercase flex-wrap items-center justify-center md:bottom-1/2 md:left-1/4 md:font-bold  md:text-3xl md:text-white z-20 ${hovered ? "invisible" : ""}`}
               style={{ textShadow: "5px 5px 7px rgb(0, 0, 0)" }}
             >
               {props.name}
             </div>
             <div
-              className={`absolute top-0 left-0 w-full ${
+              className={`absolute top-0 left-0 w-full max-md:hidden ${
                 hovered ? "" : "invisible"
               }`}
             >

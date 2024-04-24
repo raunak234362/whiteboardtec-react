@@ -173,7 +173,7 @@ const HomeNav = (): JSX.Element => {
 
       <div className="relative flex item-center">
         <div
-          className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth no-scrollbar overflow-y-hidden"
+          className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth no-scrollbar overflow-y-hidden max-md:grid max-md:grid-col-1"
           onWheel={(e) => {
           e.preventDefault();
           const container = e.currentTarget;
