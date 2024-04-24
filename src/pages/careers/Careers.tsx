@@ -64,9 +64,9 @@ function Careers() {
   return (
     <>
       <PageBanner {...banner} />
-      <div className="mx-auto my-0 lg:max-w-screen-lg">
-        <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
-          <div className="m-4 leading-loose">
+      <div className="mx-auto my-0 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
+        <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl max-md:grid-cols-1">
+          <div className="m-4 leading-loose order-1 max-md:order-2">
             <div className="text-3xl font-bold my-2 text-[#6abd45]">
               {headSection.title}
             </div>
@@ -79,7 +79,7 @@ function Careers() {
             })}
           </div>
 
-          <div className="flex flex-wrap justify-center">
+          <div className="flex flex-wrap justify-center order-2 max-md:order-1">
             <div className="bg-[#6abd45] rounded-xl flex flex-wrap flex-col w-full h-fit shadow-2xl m-4 mr-8">
               {headSection.tagline?.map((tag, index) => {
                 return (
@@ -118,7 +118,7 @@ function Careers() {
             Campus Recruitment
           </div>
 
-          <div className="text-lg my-2 text-black mt-3">
+          <div className="text-lg my-2 text-black mt-3 max-md:mx-2">
             We might just be a part of the recruitment drive at your college.
             Follow our social handles for more information on campus events.
             <div className="flex-row flex items-center ml-2">
@@ -229,8 +229,8 @@ function Careers() {
 
       <div className="bg-gray-100">
         <div className="pt-3 mt-10 mx-auto my-0 lg:max-w-screen-lg">
-          <section className="mt-3p-2 grid grid-cols-[35%_65%] gap-3">
-            <div className="flex flex-wrap item-center justify-center m-5">
+          <section className="mt-3p-2 grid grid-cols-[35%_65%] gap-3 max-md:grid-cols-1">
+            <div className="flex flex-wrap item-center justify-center m-5 max-md:h-1/2">
               <img src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Fequal-opportunity.png?alt=media&token=5a88a52e-4519-426c-967f-8ff0e5226f18" alt="Equal Opportunity"/>
             </div>
             <div className="flex flex-wrap flex-col justify-center">

@@ -38,8 +38,8 @@ function OurFirm() {
     <>
       <PageBanner {...banner} />
       <div className="m-28 my-0 mx-auto  lg:max-w-screen-lg xl:max-w-screen-xl">
-        <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
-          <div className="m-4 pt-2 pl-4">
+        <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl max-md:grid-cols-1">
+          <div className="m-4 pt-2 pl-4 order-1 max-md:order-2">
             <div className="text-3xl font-bold my-2 text-[#6abd45]">
               We understand how dynamic the structural steel industry is.
             </div>
@@ -63,7 +63,7 @@ function OurFirm() {
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center">
+          <div className="flex flex-wrap justify-center order-2 max-md:order-1">
             <div className="bg-[#6abd45] rounded-xl flex flex-wrap flex-col w-full h-fit shadow-2xl m-4 mr-8 p-4">
               <h1 className="text-white text-3xl font-semibold px-4 pt-2">
                 Vision

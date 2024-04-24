@@ -11,7 +11,7 @@ const HeaderHome = (): JSX.Element => {
             className="m-2 h-28"
           />
         </Link>
-        <div className="inline-flex items-center ">
+        <div className="max-md:hidden md:inline-flex items-center md:max-w-screen-md  lg:max-w-screen-lg xl:max-w-screen-xl">
           <div className="flex-row flex items-center">
             <span className="text-gray-700 m-2">
               <svg

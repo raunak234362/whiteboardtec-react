@@ -23,7 +23,7 @@ function Newsletter() {
               <div className="text-3xl text-justify m-1 font-semibold text-[#6abd45]">
                 Sign up for our newsletter to get exclusive access to
               </div>
-              <div className="flex flex-wrap flex-row mx-5">
+              <div className="flex flex-wrap flex-row mx-5 md-max:flex-col">
                 <div>
                   {newsletter?.description?.map((item, index) => (
                     <div key={index} className="flex-row flex justify-start mr-2 my-2">
@@ -55,10 +55,10 @@ function Newsletter() {
                 </div>
                 {
                   newsletter.formMail && (
-                    <div className="flex flex-wrap flex-row ml-40 items-end mt-4 mb-2">
+                    <div className="flex flex-wrap flex-row ml-40 max-md:ml-0 max-md:w-full items-end max-md:justify-center mt-4 mb-2">
                       <form id={formId}>
                         <input type="email" required placeholder="Email Address" name="email"
-                        className="border-2 border-opacity-40 rounded-md border-slate-900 placeholder-black placeholder-opacity-50 px-2 py-1 w-80"/>
+                        className="border-2 border-opacity-40 rounded-md border-slate-900 placeholder-black placeholder-opacity-50 px-2 py-1 w-80 max-md:w-[66%]"/>
                         <button type="submit"
                         className="px-2 py-1 mx-4 border-2  border-slate-900 border-opacity-40 rounded-md text-opacity-70 hover:bg-[#6abd45] hover:text-white hover:font-bold hover:border-white"
                         onClick={(e) => {

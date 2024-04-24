@@ -72,8 +72,8 @@ function MiscellaneousSteel() {
     <>
       <PageBanner {...banner} />
       <div className="m-28 my-0 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
-        <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
-          <div className="m-4 leading-loose text-gray-700">
+        <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl max-md:grid-cols-1">
+          <div className="m-4 leading-loose text-gray-700 order-1 max-md:order-2">
             <div className="text-xl font-semibold my-2 text-Black">
             We specialize in miscellaneous steel detailing for residential, commercial and industrial projects.
             </div>
@@ -91,15 +91,15 @@ function MiscellaneousSteel() {
 
       <div className="bg-gray-100">
         <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl pt-3 my-10 pb-7">
-          <div className="text-3xl font-semibold my-2 text-[#6abd45] mt-5">
+          <div className="text-3xl font-semibold my-2 text-[#6abd45] mt-5 max-md:mx-3">
           Miscellaneous Detailing team Capabilities
           </div>
           <section className="mt-3 p-2 grid grid-cols-1 md:gap-x-10 md:grid-cols-2">
             {MiscCapability.map((detail, index) => {
               return (
-                <div
+                <span
                   key={index}
-                  className="py-1 md:py-2 flex flex-wrap flex-row items-center"
+                  className="max-md:py-1 py-2 flex flex-wrap flex-row items-start"
                 >
                   <svg
                     className="h-6 w-6 text-[#6abd45] inline-flex"
@@ -119,8 +119,8 @@ function MiscellaneousSteel() {
                       transform="rotate(90 12 12)"
                     />
                   </svg>
-                  <p className="text-lg inline-flex">{detail}</p>
-                </div>
+                  <span className="text-lg inline-flex max-md:w-[90%]">{detail}</span>
+                </span>
               );
             })}
           </section>

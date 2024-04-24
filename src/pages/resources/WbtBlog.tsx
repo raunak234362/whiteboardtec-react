@@ -27,18 +27,24 @@ function WbtBlog() {
     <>
       <PageBanner {...props.banner} />
       <div className="w-ful bg-gray-100 my-0 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
-      <section className="m-28 mt-0 mb-10 p-2 grid grid-cols-[70%_30%] gap-4">
-        <div>
-          <div className="text-3xl font-bold text-black mb-4">{props.context?.head}</div>
-          <div className="text-xl leading-loose text-gray-900">{props.context?.desc}</div>
-        </div>
-
-        <div>
-          <div className="bg-[#6abd45] rounded-md h-fit m-3 p-4 -mt-1 text-white">
-          <div className="text-3xl font-bold  mb-4 ">{props.posts?.title}</div>
-          <div className="text-lg">{props.posts?.desc}</div>
+      <section className="m-28 max-md:mx-0 mt-0 mb-10 p-2 grid grid-cols-[70%_30%] max-md:grid-cols-1 gap-4">
+      <div className="order-1 max-md:order-2">
+            <div className="text-3xl font-bold text-black mb-4">
+              {props.context?.head}
+            </div>
+            <div className="text-xl leading-loose text-gray-900">
+              {props.context?.desc}
+            </div>
           </div>
-        </div>
+
+          <div className="bg-[#6abd45] rounded-md p-3 order-2 max-md:order-1">
+            <div className="h-fit p-1 -mt-1 text-white">
+              <div className="text-3xl font-bold  mb-4 ">
+                {props.posts?.title}
+              </div>
+              <div className="text-lg">{props.posts?.desc}</div>
+            </div>
+          </div>
       </section>
       </div>
     </>

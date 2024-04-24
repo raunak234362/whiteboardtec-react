@@ -226,12 +226,12 @@ function JobBox(job: JobDescType) {
             <Link
               to={job.jd}
               target="_blank"
-              className="border-2 rounded-full border-black border-opacity-50 opacity-80 text-md px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
+              className="border-2 rounded-full border-black border-opacity-50 text-center opacity-80 text-md px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
             >
               Download JD ➤{" "}
             </Link>
             <button
-              className="border-2 rounded-full border-black border-opacity-50 opacity-80 text-md px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
+              className="border-2 rounded-full max-md:mt-5 border-black border-opacity-50 opacity-80 text-md px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
               onClick={(e) => {
                 e.preventDefault();
                 setOpenJob(true);

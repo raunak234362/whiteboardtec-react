@@ -37,8 +37,8 @@ function Portfolio() {
       <div className="my-2 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
         {portfolios?.map((portfolio, index) => {
           return (
-            <section key={index} className="rounded-3xl mt-10 h-[60vh] border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl">
-              <div className="overflow-y-hidden my-4 ml-6">
+            <section key={index} className="rounded-3xl mt-10 h-[60vh] max-md:h-[90vh] border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl max-md:grid-cols-1">
+              <div className="overflow-y-hidden my-4 ml-6 max-md:ml-0 order-1 max-md:order-2">
                 {
                   portfolio.pdf && (
                     // <PortfolioPdf pdfURL={"https://clickdimensions.com/links/TestPDFfile.pdf"} />
@@ -46,7 +46,7 @@ function Portfolio() {
                   )
                 }
               </div>
-              <div>
+              <div className="max-md:order-1 order-2">
                 <PortfolioInfo
                   title={portfolio.title}
                   description={portfolio.description}

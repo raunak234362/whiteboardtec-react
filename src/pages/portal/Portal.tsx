@@ -66,8 +66,8 @@ function Portal() {
     <>
       <PageBanner {...data.banner} />
       {data.context && (
-        <section className="rounded-3xl m-28 border-4 p-2 grid grid-cols-[75%_25%] gap-3 shadow-xl drop-shadow-xl mx-auto my-10 lg:max-w-screen-lg xl:max-w-screen-xl">
-          <div className="m-4 pr-10">
+        <section className="rounded-3xl m-28 border-4 p-2 grid grid-cols-[75%_25%] max-md:grid-cols-1 gap-3 shadow-xl drop-shadow-xl mx-auto my-10 lg:max-w-screen-lg xl:max-w-screen-xl">
+          <div className="m-4 pr-10 order-1 max-md:order-2">
             <div className="text-2xl text-justify m-1 text-[#6abd45] font-semibold">
               {data.context.title}
             </div>
@@ -102,7 +102,7 @@ function Portal() {
             </ul>
           </div>
 
-          <div className="flex flex-wrap justify-center">
+          <div className="flex flex-wrap justify-center order-2 max-md:order-1">
             <div className="bg-[#6abd45] rounded-xl flex flex-wrap flex-col w-full h-fit shadow-2xl mx-4">
             <h1 className="text-white text-2xl  p-4 pb-2">Bridge all gaps and supercharge your projects on the fly.</h1>
               <div className="flex flex-wrap flex-col justify-center mx-2 mb-2">

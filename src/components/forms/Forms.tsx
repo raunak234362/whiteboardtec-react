@@ -25,7 +25,7 @@ function handleSubmit(formData: FormData) {
 
   return (
     <>
-      <div className="bg-[#6abd45] rounded-lg flex flex-wrap flex-col w-80 h-fit shadow-2xl">
+      <div className="bg-[#6abd45] rounded-lg flex flex-wrap flex-col w-80 h-fit shadow-2xl max-md:w-full max-md:rounded-xl">
         <h1 className="text-white text-3xl p-4 pb-2">{props.title}</h1>
         <form id={formId}>
           {props.field &&
