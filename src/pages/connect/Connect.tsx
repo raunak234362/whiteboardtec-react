@@ -161,7 +161,7 @@ function Connect() {
           </div>
 
           <div className="flex flex-wrap flex-row items-center my-3 mx-3 max-md:mx-0">
-            <span className="text-gray-700 m-2 ">
+            <span className="text-gray-700 m-2 max-md:m-1">
               <svg
                 className="h-10 w-10 text-[#6abd45]"
                 width="24"
