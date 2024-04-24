@@ -43,7 +43,7 @@ function App(): JSX.Element{
         <HeaderHome/>
         {(location.pathname === '/') ? <HomeNav /> : <NavigationBar />}
         <Outlet />
-        <GoTo props={reference}/>
+        {(location.pathname !== '/') && (<GoTo props={reference}/>)}
         <Footer />
       </>
     )
