@@ -121,7 +121,7 @@ function Connect() {
             </p>
           </div>
 
-          <div className="flex flex-wrap flex-row justify-start my-3 mx-3">
+          <div className="flex flex-wrap flex-row justify-start my-3 mx-3 max-md:mx-0">
             {data.context.phone?.map((phone, index) => {
               return (
                 <>
@@ -160,7 +160,7 @@ function Connect() {
             })}
           </div>
 
-          <div className="flex flex-wrap flex-row items-center my-3 mx-3">
+          <div className="flex flex-wrap flex-row items-center my-3 mx-3 max-md:mx-0">
             <span className="text-gray-700 m-2 ">
               <svg
                 className="h-10 w-10 text-[#6abd45]"
