@@ -90,7 +90,7 @@ function OurFirm() {
 
       <div className="bg-gray-100">
         <div className=" mx-auto lg:max-w-screen-lg xl:max-w-screen-xl pt-3">
-          <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 gap-x-6 md:grid-cols-[35%_65%] lg:grid-cols-2">
+          <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 -gap-x-80 md:grid-cols-[35%_65%] lg:grid-cols-2">
             <div className="py-4 my-2 flex flex-row items-center justify-center">
               <img
                 src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Fproject-in-mind.jpg?alt=media&token=31be1cd7-e919-45ae-ae67-4fa80a8b6b02"

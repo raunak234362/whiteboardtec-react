@@ -17,16 +17,15 @@ function Home(props: NavRouteType): JSX.Element {
         onMouseOut={() => setHovered(false)}
       >
         <div className="relative inline-block h-full">
-          <div className="flex float-left bg-black">
+          <div className="flex float-left bg-black overflow-hidden" >
             {props.image && (
               <img
                 src={props.image}
                 alt={props.name}
-                className={`w-[25rem] h-1/2 ease-in-out duration-500 transform scale-${hovered? "105": "100"} ${hovered? "opacity-30": ""}`}
+                className={`w-[25rem] h-1/2 ease-in-out duration-1000 transform scale-${hovered? "105": "100"} ${hovered? "opacity-30": ""}`}
                 style={{
                   scale: hovered? "1.2": "1",
                   transition: "all 1s ease-in-out",
-                  zIndex: hovered? 0: 20,
                 }}
               />
             )}

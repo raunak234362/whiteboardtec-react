@@ -110,7 +110,7 @@ function StructuralSteel() {
       </div>
 
       <div className="bg-gray-100 shadow-md drop-shadow-md pb-16">
-        <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl pt-3 my-10">
+        <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl pt-3 my-10 pl-16">
           <div className="text-4xl font-bold my-2 text-[#6abd45] mt-5">
             Our Services
           </div>

@@ -123,7 +123,7 @@ const NavigationBar = (): JSX.Element => {
   return (
     <>
       <nav className="flex flex-wrap justify-end mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
-        <ul className="flex flex-row mx-5 flex-wrap text-sm ">
+        <ul className="flex flex-row mx-5 flex-wrap text-md ">
           {NavRoute.map((route) => (
             <NavBar key={route.name} {...route} />
           ))}

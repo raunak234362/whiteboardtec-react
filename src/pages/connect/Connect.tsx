@@ -231,7 +231,7 @@ function Connect() {
                             </svg>
                           </span>
                           <span className="text-gray-500">
-                          <span className="flex items-center text-lg">
+                          <span className="flex items-center text-lg justify-start">
                             <a href={`tel:${addr.phone}`} target="_blank">
                               {addr.phone}
                             </a>

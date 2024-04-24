@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const HeaderHome = (): JSX.Element => {
   return (
     <>
-      <div className="flex items-center justify-center" id="header">
+      <div className="flex items-center lg:max-w-screen-lg xl:max-w-screen-xl mx-auto justify-between" id="header">
         <Link to="/" className="inline-flex">
           <img
             src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2Fwhiteboardtec-logo.png?alt=media&token=f73c5257-9b47-4139-84d9-08a1b058d7e9"
@@ -11,7 +11,7 @@ const HeaderHome = (): JSX.Element => {
             className="m-2 h-28"
           />
         </Link>
-        <div className="inline-flex items-center lg:ml-[12%] xl:ml-[20%]">
+        <div className="inline-flex items-center ">
           <div className="flex-row flex items-center">
             <span className="text-gray-700 m-2">
               <svg
