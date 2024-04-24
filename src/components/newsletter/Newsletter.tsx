@@ -18,7 +18,7 @@ function Newsletter() {
     }
   return (
     <>
-          <section className="m-28 mt-0 mb-5 p-2 flex flex-wrap justify-start items-start mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
+          <section className="m-28 max-md:mx-2 mt-0 mb-5 p-2 flex flex-wrap justify-start items-start mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
             <div className="flex flex-wrap flex-col">
               <div className="text-3xl text-justify m-1 font-semibold text-[#6abd45]">
                 Sign up for our newsletter to get exclusive access to
@@ -58,9 +58,9 @@ function Newsletter() {
                     <div className="flex flex-wrap flex-row ml-40 max-md:ml-0 max-md:w-full items-end max-md:justify-center mt-4 mb-2">
                       <form id={formId}>
                         <input type="email" required placeholder="Email Address" name="email"
-                        className="border-2 border-opacity-40 rounded-md border-slate-900 placeholder-black placeholder-opacity-50 px-2 py-1 w-80 max-md:w-[66%]"/>
+                        className="border-2 border-opacity-40 rounded-md border-slate-900 placeholder-black placeholder-opacity-50 px-2 py-1 w-80 max-md:w-[64%]"/>
                         <button type="submit"
-                        className="px-2 py-1 mx-4 border-2  border-slate-900 border-opacity-40 rounded-md text-opacity-70 hover:bg-[#6abd45] hover:text-white hover:font-bold hover:border-white"
+                        className="px-2 py-1 mx-2 md:mx-4 border-2  border-slate-900 border-opacity-40 rounded-md text-opacity-70 hover:bg-[#6abd45] hover:text-white hover:font-bold hover:border-white"
                         onClick={(e) => {
                           e.preventDefault();
                           const formData = new FormData(document.getElementById(formId) as HTMLFormElement);
