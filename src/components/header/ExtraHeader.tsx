@@ -31,17 +31,17 @@ function ExtraHeader() {
             <img
               src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2FAISC-Detailer-logo.png?alt=media&token=362f27a4-bad8-47d2-95e3-1100853fd01e"
               alt="AISC Detailer"
-              className="md:h-12 h-8 m-0.5"
+              className="md:h-12 max-md:h-8 m-0.5"
             />
             <img
               src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2FTekla_Structures_logo.png?alt=media&token=66ac8212-267c-47bd-8291-29aeeaa9c4b8"
               alt="Tekla Structures"
-              className="md:h-12 h-8 m-0.5"
+              className="md:h-12 max-md:h-8 m-0.5"
             />
             <img
               src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2FSDS2-logo.png?alt=media&token=32ae59c8-1f15-49f3-9cc3-324e3efe8389"
               alt="SDS2 Logo"
-              className="md:h-12 h-8 m-0.5"
+              className="md:h-12 max-md:h-8 m-0.5"
             />
           </div>
           <div className="md:flex-col flex-row md:flex items-center ml-2 hidden">
