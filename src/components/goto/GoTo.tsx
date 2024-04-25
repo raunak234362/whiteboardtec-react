@@ -8,9 +8,9 @@ const GoTop = ({props}:{props:RefObject<HTMLDivElement>}) => {
         const position = window.pageYOffset;
         setSrollPosition(position);
     
-        if (scrollPosition > 50) {
+        if (scrollPosition > 80) {
           return setshowGoTop(true);
-        } else if (scrollPosition < 50) {
+        } else if (scrollPosition < 80) {
           return setshowGoTop(false);
         }
       };
