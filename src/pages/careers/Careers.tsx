@@ -93,7 +93,7 @@ function Careers() {
         </section>
       </div>
       <div className="bg-gray-100">
-        <div className="pt-3 my-10 mx-auto lg:max-w-screen-lg">
+        <div className="pt-3 my-10 mx-auto md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
           <div className="text-4xl font-semibold my-2 text-black mt-7">
             Current Openings
           </div>
@@ -201,7 +201,7 @@ function Careers() {
           </div>
         </div>
       </div>
-      <div className="pt-3 my-10 mx-auto lg:max-w-screen-lg">
+      <div className="pt-3 my-10 mx-auto md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
         <div className="text-3xl font-semibold my-2 text-black mt-7">
           We continue to attract and retain the best talent because of
         </div>
@@ -228,7 +228,7 @@ function Careers() {
       </div>
 
       <div className="bg-gray-100">
-        <div className="pt-3 mt-10 mx-auto my-0 lg:max-w-screen-lg">
+        <div className="pt-3 mt-10 mx-auto md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
           <section className="mt-3p-2 grid grid-cols-[35%_65%] gap-3 max-md:grid-cols-1">
             <div className="flex flex-wrap item-center justify-center m-5 max-md:h-1/2">
               <img src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Fequal-opportunity.png?alt=media&token=5a88a52e-4519-426c-967f-8ff0e5226f18" alt="Equal Opportunity"/>
