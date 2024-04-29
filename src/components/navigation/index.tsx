@@ -128,9 +128,47 @@ const Notification: NotificationType = {
 };
 
 const NavigationBar = (): JSX.Element => {
+  const [display] = useState<boolean>(window.innerWidth <= 768);
+  const [navShow, setnavShow] = useState<boolean>(false);
+
   return (
     <>
-      <nav className="flex flex-wrap md:justify-end mx-auto lg:max-w-screen-lg xl:max-w-screen-xl max-md:justify-start">
+      <div className="flex flex-wrap items-center mr-5" style={{ display: display ? "" : "none" }}
+      onClick={() => {
+        setnavShow(!navShow);
+      }}>
+        <svg
+          width="8px"
+          height="8px"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-8 w-8"
+        >
+          <path
+            d="M4 18L20 18"
+            stroke="#000000"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <path
+            d="M4 12L20 12"
+            stroke="#000000"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <path
+            d="M4 6L20 6"
+            stroke="#000000"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+      <nav
+        className="flex flex-wrap md:justify-end mx-auto lg:max-w-screen-lg xl:max-w-screen-xl max-md:justify-start"
+        style={{ display: display && !navShow ? "none" : "" }}
+      >
         <ul className="flex md:flex-row mx-5 flex-wrap text-md flex-col max-md:w-full">
           {window.innerWidth <= 768 && <ExtraHeader />}
           {NavRoute.map((route) => (

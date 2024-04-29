@@ -40,8 +40,10 @@ function App(): JSX.Element{
       <>
         {/* {(location.pathname === '/') ? <HeaderHome /> : <HeaderBase />} */}
         <div ref={reference}></div>
+        <div className='max-md:flex max-md:flex-wrap max-md:justify-between'>
         <HeaderHome/>
         {(location.pathname === '/') ? <HomeNav /> : <NavigationBar />}
+        </div>
         <Outlet />
         {(location.pathname !== '/') && (<GoTo props={reference}/>)}
         <Footer />
