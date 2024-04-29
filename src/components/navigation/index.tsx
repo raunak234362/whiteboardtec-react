@@ -148,20 +148,20 @@ const NavigationBar = (): JSX.Element => {
           <path
             d="M4 18L20 18"
             stroke="#000000"
-            stroke-width="2"
-            stroke-linecap="round"
+            strokeWidth="2"
+            strokeLinecap="round"
           />
           <path
             d="M4 12L20 12"
             stroke="#000000"
-            stroke-width="2"
-            stroke-linecap="round"
+            strokeWidth="2"
+            strokeLinecap="round"
           />
           <path
             d="M4 6L20 6"
             stroke="#000000"
-            stroke-width="2"
-            stroke-linecap="round"
+            strokeWidth="2"
+            strokeLinecap="round"
           />
         </svg>
       </div>
@@ -172,7 +172,7 @@ const NavigationBar = (): JSX.Element => {
         <ul className="flex md:flex-row mx-5 flex-wrap text-md flex-col max-md:w-full">
           {window.innerWidth <= 768 && <ExtraHeader />}
           {NavRoute.map((route) => (
-            <NavBar key={route.name} {...route} />
+            <NavBar key={route.name} {...route} navShow={setnavShow}/>
           ))}
         </ul>
       </nav>

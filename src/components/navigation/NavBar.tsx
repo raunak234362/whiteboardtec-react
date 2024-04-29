@@ -8,7 +8,7 @@ function Dropdown(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-function NavBar(props: NavRouteType): JSX.Element {
+function NavBar(props: NavRouteType & { navShow: (show: boolean) => void }): JSX.Element {
   const [isactive, setActive] = useState(false);
   useEffect(() => {
     const isMobile = () => window.innerWidth <= 768;
@@ -32,7 +32,7 @@ function NavBar(props: NavRouteType): JSX.Element {
       >
         <div className="max-md:border-b-[1px] max-md:border-gray-300">
           <Menu.Button className="md:inline-flex flex max-md:justify-between max-md:flex-wrap w-full md:justify-center justify-start gap-x-1.5 hover:bg-[#6abd45] px-3 py-2 text-md text-gray-900 mx-1 rounded-t-md ">
-            <NavLink to={props.path}>{props.name}</NavLink>
+            <NavLink to={props.path} onClick={() => { props.navShow(false); }}>{props.name}</NavLink>
           </Menu.Button>
         </div>
         <Transition
@@ -64,6 +64,7 @@ function NavBar(props: NavRouteType): JSX.Element {
                               : "text-gray-700",
                             "block md:px-4 py-2 text-sm  max-md:border-b-[1px] max-md:border-gray-300 text-left max-md:px-8"
                           )}
+                          onClick={() => { props.navShow(false); }}
                         >
                           {child.name}
                         </NavLink>
