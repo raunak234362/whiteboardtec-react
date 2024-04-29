@@ -8,7 +8,7 @@ function PortfolioInfo(prop: PortfolioInfoPropType) {
         <div className="flex flex-wrap flex-col">
           <div
             className="text-3xl"
-            style={{ textShadow: "4px 4px 8px rgba(0, 0, 0, 0.5)" }}
+            // style={{ textShadow: "4px 4px 8px rgba(0, 0, 0, 0.5)" }}
           >
             {prop.title}
           </div>

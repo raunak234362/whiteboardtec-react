@@ -4,7 +4,7 @@ function Estimate({ head }: { head: string }) {
     return (
         <>
             <div className="bg-[#6abd45] rounded-xl md:order-1 order-first p-4 mx-5 text-white">
-                <div className="text-2xl" style={{ textShadow: "4px 4px 8px rgba(0, 0, 0, 0.5)" }}>{head}</div>
+                <div className="text-2xl" >{head}</div>
                 <div className="m-5 ml-0 text-md text-justify">
                     We will assess your projects absolutely free of cost and point out schedules that work best for your project's quick turnaround in no time at all!
                 </div>

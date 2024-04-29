@@ -44,8 +44,8 @@ function BusiessModel() {
                 className={`rounded-xl border-2 shadow-lg drop-shadow-lg bg-white order-${index}`}
               >
                 <div className="m-5 p-3">
-                  <div className="text-black text-2xl font-semibold">
-                    <img src={data.icon} alt="icon" className="w-10 h-10" />
+                  <div className="text-black text-2xl ">
+                    <img src={data.icon} alt="icon" className="w-16 h-16" />
                     {data.head}
                   </div>
                   <div className="my-2 text-gray-700 text-lg text-justify">
