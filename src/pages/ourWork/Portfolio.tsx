@@ -37,8 +37,8 @@ function Portfolio() {
       <div className="my-2 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
         {portfolios?.map((portfolio, index) => {
           return (
-            <section key={index} className="rounded-3xl mt-10 h-[60vh] max-md:h-[90vh] border-2 p-2 grid grid-cols-[60%_40%] gap-3 shadow-md max-md:grid-cols-1">
-              <div className="overflow-y-hidden my-4 ml-6 max-md:ml-0 order-1 max-md:order-2">
+            <section key={index} className="rounded-3xl mt-10 h-[60vh] max-md:h-[90vh] border-2 p-2 grid grid-cols-[60%_40%] gap-3 shadow-md max-md:grid-cols-1 relative">
+              <div className="overflow-y-hidden my-2 ml-6 max-md:ml-0 order-1 max-md:order-2">
                 {
                   portfolio.pdf && (
                     <PortfolioPdf pdfURL={portfolio.pdf} />
