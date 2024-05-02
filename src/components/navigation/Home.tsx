@@ -22,7 +22,7 @@ function Home(props: NavRouteType): JSX.Element {
               <img
                 src={props.image}
                 alt={props.name}
-                className={`w-[25rem] max-md:w-screen max-md:h-[12rem] max-md:object-cover ease-in-out duration-1000 transform scale-${hovered? "105": "100"} ${hovered? "opacity-30": ""}`}
+                className={`w-[28vw] max-md:w-screen max-md:h-[12rem] max-md:object-cover ease-in-out duration-1000 transform scale-${hovered? "105": "100"} ${hovered? "opacity-30": ""}`}
                 style={{
                   scale: hovered? "1.2": "1",
                   transition: "all 1s ease-in-out",

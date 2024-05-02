@@ -33,7 +33,7 @@ function Resources() {
       <PageBanner {...banner} />
       <section className="rounded-3xl m-28 p-2 grid grid-cols-2 max-md:grid-cols-1 gap-10 mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
         {data.map((item, index) => (
-          <div key={index} className='rounded-3xl shadow-xl drop-shadow-xl border-4'>
+          <div key={index} className='rounded-3xl shadow-md border-2'>
             <div>
               <h2 className="text-3xl m-4 mb-2 font-bold text-[#6abd45]">{item.head}</h2>
               <div className='m-4 mt-0 truncate text-lg'>

@@ -210,7 +210,7 @@ function JobBox(job: JobDescType) {
         </div>
       </Dialog>
 
-      <div className="rounded-3xl border-2 shadow-lg drop-shadow-lg bg-white">
+      <div className="rounded-3xl border-2 shadow-md drop-shadow-md bg-white">
         <div className="m-5 p-3">
           <div className="text-[#6abd45] text-2xl font-semibold">{job.role}</div>
           <div className="my-2">

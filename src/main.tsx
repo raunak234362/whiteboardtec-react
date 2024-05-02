@@ -16,7 +16,7 @@ import {
 } from './pages/ourFirm'
 
 import {
-  Services,
+  // Services,
   ArchitecturalBIM,
   MiscellaneousSteel,
   PESEStampig,
@@ -26,7 +26,8 @@ import {
 } from './pages/services'
 import Error from './pages/error/Error.tsx'
 import {
-  OurWork, Portfolio
+  // OurWork, 
+  Portfolio
 } from './pages/ourWork'
 import {
   Resources,
@@ -53,14 +54,14 @@ const route = createBrowserRouter(
       <Route path="/our-firm/gallery" element={<Gallery />} />
       <Route path="/our-firm/leadership-teams" element={<LeadershipTeam />} />
       <Route path="/our-firm/business-model" element={<BusiessModel />} />
-      <Route path="/services" element={<Services />} />
+      <Route path="/services" element={<StructuralSteel />} />
       <Route path="/services/structural-steel-detailing" element={<StructuralSteel />} />
       <Route path="/services/miscellaneous-steel-detailing" element={<MiscellaneousSteel />} />
       <Route path="/services/connection-design-and-pe-se-stamping" element={<PESEStampig />} />
       <Route path="/services/architectural-bim-services" element={<ArchitecturalBIM />} />
       <Route path="/services/pemb-detailing" element={<PEMB />} />
       <Route path="/services/rebar-estimation-and-detailing" element={<Rebar />} />
-      <Route path="/our-work" element={<OurWork />} />
+      <Route path="/our-work" element={<Portfolio />} />
       <Route path="/our-work/project-portfolio" element={<Portfolio />} />
       <Route path="/portal" element={<Portal />} />
       <Route path="/career" element={<Careers />} />

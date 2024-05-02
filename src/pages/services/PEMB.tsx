@@ -34,7 +34,7 @@ function PEMB() {
     <>
       <PageBanner {...banner} />
       <div className="m-28 my-0 mx-auto md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
-        <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl max-md:grid-cols-1">
+        <section className="rounded-3xl mt-3 border-2 p-2 grid grid-cols-[60%_40%] gap-3 shadow-md max-md:grid-cols-1">
           <div className="m-4 leading-loose text-gray-700 order-1 max-md:order-2">
             {headSection?.map((desc, index) => {
               return (

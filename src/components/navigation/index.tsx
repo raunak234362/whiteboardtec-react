@@ -230,14 +230,14 @@ const HomeNav = (): JSX.Element => {
         </div>
       </Dialog>
 
-      <div className="relative flex item-center">
+      <div className="relative flex item-center md:h-[83.5vh]">
         <div
           className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth no-scrollbar overflow-y-hidden max-md:grid max-md:grid-col-1"
           onWheel={(e) => {
             e.preventDefault();
             const container = e.currentTarget;
             const scrollAmount = e.deltaY;
-            container.scrollLeft += scrollAmount * 100;
+            container.scrollLeft += scrollAmount * 500;
           }}
         >
           {NavRoute.map((route) => (

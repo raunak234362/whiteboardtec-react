@@ -65,7 +65,7 @@ function Careers() {
     <>
       <PageBanner {...banner} />
       <div className="mx-auto my-0 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
-        <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl max-md:grid-cols-1">
+        <section className="rounded-3xl mt-3 border-2 p-2 grid grid-cols-[60%_40%] gap-3 shadow-md max-md:grid-cols-1">
           <div className="m-4 leading-loose order-1 max-md:order-2">
             <div className="text-3xl font-bold my-2 text-[#6abd45]">
               {headSection.title}
@@ -210,7 +210,7 @@ function Careers() {
             return (
               <div
                 key={index}
-                className="rounded-3xl border-2 shadow-lg drop-shadow-lg bg-white"
+                className="rounded-3xl border-2 shadow-md  bg-white"
               >
                 <div className="m-5 p-3">
                   <div className="text-[#6abd45] text-xl font-semibold">
