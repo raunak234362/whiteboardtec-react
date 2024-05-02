@@ -230,7 +230,7 @@ const HomeNav = (): JSX.Element => {
         </div>
       </Dialog>
 
-      <div className="relative flex item-center md:h-[83.5vh]">
+      <div className="relative flex item-center md:h-[83vh]">
         <div
           className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth no-scrollbar overflow-y-hidden max-md:grid max-md:grid-col-1"
           onWheel={(e) => {
