@@ -56,7 +56,6 @@ function PortfolioPdf({ pdfURL }: { pdfURL: string }) {
 
         </div>
       </div>
-         
     </>
   );
 }
