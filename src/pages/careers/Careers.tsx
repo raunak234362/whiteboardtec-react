@@ -213,8 +213,8 @@ function Careers() {
                 className="rounded-3xl border-2 shadow-md  bg-white"
               >
                 <div className="m-5 p-3">
-                  <div className="text-[#6abd45] text-xl font-semibold">
-                    <img src={data.icon} alt="icon" className="w-12 h-12" />
+                  <div className="text-black text-xl font-semibold">
+                    <img src={data.icon} alt="icon" className="w-14 h-14" />
                     {data.head}
                   </div>
                   <div className="my-2 text-gray-700 text-md text-justify">

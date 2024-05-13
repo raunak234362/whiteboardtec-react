@@ -90,7 +90,7 @@ function OurFirm() {
 
       <div className="bg-gray-100">
         <div className=" mx-auto lg:max-w-screen-lg xl:max-w-screen-xl pt-3">
-          <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 -gap-x-80 md:grid-cols-[35%_65%] lg:grid-cols-2">
+          <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 -gap-x-80 md:grid-cols-[20%_80%] lg:grid-cols-2">
             <div className="py-4 my-2 flex flex-row items-center justify-center">
               <img
                 src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Fproject-in-mind.jpg?alt=media&token=31be1cd7-e919-45ae-ae67-4fa80a8b6b02"
@@ -135,8 +135,8 @@ function OurFirm() {
                 className="rounded-3xl border-2 shadow-lg drop-shadow-lg bg-white"
               >
                 <div className="m-5 p-3">
-                  <div className="text-[#6abd45] text-2xl font-semibold">
-                    <img src={data.icon} alt="icon" className="w-10 h-10" />
+                  <div className="text-black text-2xl font-medium">
+                    <img src={data.icon} alt="icon" className="w-14 h-14" />
                     {data.head}
                   </div>
                   <div className="my-2 text-gray-700 text-md text-justify">
