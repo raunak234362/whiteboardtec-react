@@ -51,7 +51,7 @@ function PortfolioPdf({ pdfURL }: { pdfURL: string }) {
             file={pdfURL}
             onLoadSuccess={onDocumentLoadSuccess}
           >
-            <Page pageNumber={pageNumber} height={730} width={740} />
+            <Page pageNumber={pageNumber} height={720} width={720} />
           </Document>
 
         </div>
