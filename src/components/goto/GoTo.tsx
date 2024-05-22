@@ -27,7 +27,7 @@ const GoTop = ({props}:{props:RefObject<HTMLDivElement>}) => {
 
   return (
     <>
-      <div className={`bg-[#6abd45] rounded-full fixed md:bottom-20 right-10 border-2 border-white p-2.5 m-2 cursor-pointer max-md:bottom-32 ${(showGoTop)? "":"hidden"}`} onClick={handleScrollUp}>
+      <div className={`bg-[#6abd45] rounded-full fixed md:bottom-20 right-7 border-2 border-white p-2.5 m-2 cursor-pointer max-md:bottom-32 ${(showGoTop)? "":"hidden"}`} onClick={handleScrollUp}>
           <span>
             <svg
               fill="#fff"
