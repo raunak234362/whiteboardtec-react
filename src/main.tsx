@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import {
-  // createBrowserRouter,
-  createHashRouter,
+  createBrowserRouter,
+  // createHashRouter,
   createRoutesFromElements,
   Route,
   RouterProvider
@@ -48,7 +48,7 @@ import {
 } from './pages/admin'
 import "tw-elements-react/dist/css/tw-elements-react.min.css"
 
-const route = createHashRouter(
+const route = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="/our-firm" element={<OurFirm />} />
