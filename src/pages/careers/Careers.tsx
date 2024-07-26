@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import JobBox from "./JobBox";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../config/firebase";
+import { Link } from "react-router-dom";
 
 const banner: BannerPropType = {
   header: "Careers at",
@@ -117,6 +118,39 @@ function Careers() {
           <div className="text-4xl font-semibold my-2 text-black mt-7">
             Campus Recruitment
           </div>
+
+          <div className="rounded-3xl border-2 shadow-md drop-shadow-md bg-white w-1/2">
+        <div className="m-5 p-3">
+          <div className="text-[#6abd45] text-2xl font-semibold">{`Campus Recruitment`}</div>
+          <div className="my-2">
+            <div className="text-gray-700 text-lg">
+              Location: {`Bengaluru,India`}
+            </div>
+            <div className="text-gray-700 text-lg">Job Type: {`Full Time`}</div>
+            <div className="text-gray-700 text-lg">
+              Qualification: {`Degree`}
+            </div>
+          </div>
+          <div className="mt-5 mb-0 flex flex-wrap flex-col md:flex-row justify-evenly">
+            <Link
+              to={`http://106.51.141.125:808/#/register`}
+              target="_blank"
+              className="border-2 w-1/4 rounded-full border-black border-opacity-50 text-center opacity-80 text-md px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
+            >
+              Register ➤{" "}
+            </Link>
+            <Link
+              className="border-2 w-1/4 text-center rounded-full max-md:mt-5 border-black border-opacity-50 opacity-80 text-md px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
+              to={`http://106.51.141.125:808/#/student/`}
+              target="_blank"
+            >
+              Test ➤{" "}
+            </Link>
+          </div>
+        </div>
+      </div>
+
+
 
           <div className="text-lg my-2 text-black mt-3 max-md:mx-2">
             We might just be a part of the recruitment drive at your college.
