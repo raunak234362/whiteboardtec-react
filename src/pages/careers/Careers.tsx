@@ -119,7 +119,7 @@ function Careers() {
             Campus Recruitment
           </div>
 
-          <div className="rounded-3xl border-2 shadow-md drop-shadow-md bg-white w-1/2">
+          <div className="rounded-3xl border-2 shadow-md drop-shadow-md bg-white md:w-1/2">
         <div className="m-5 p-3">
           <div className="text-[#6abd45] text-2xl font-semibold">{`Campus Recruitment`}</div>
           <div className="my-2">
