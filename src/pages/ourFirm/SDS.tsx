@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { PageBanner, BannerPropType } from "../../components/banner";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ImageModal } from "./ImagePopup";
 
@@ -125,7 +124,6 @@ const sds = [
 ];
 
 function SDS() {
-  const navigate = useNavigate();
   const [popupImages, setPopupImages] = useState<{ src: string }[] | null>(
     null
   );
