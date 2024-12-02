@@ -30,9 +30,9 @@ function Gallery() {
 
   const navigate = useNavigate();
 
-  const openModal = (image: string) => {
-    setSelectedImage(image);
-  };
+  // const openModal = (image: string) => {
+  //   setSelectedImage(image);
+  // };
 
   const closeModal = () => {
     setSelectedImage(null);
