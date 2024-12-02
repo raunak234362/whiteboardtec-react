@@ -2,6 +2,10 @@ import OurFirm from "./OurFirm";
 import Gallery from "./Gallery";
 import LeadershipTeam from "./LeadershipTeam";
 import BusiessModel from "./BusinessModel";
+import PEMB from "./PEMB";
+import Structural from "./Structural";
+import Tekla from "./Tekla";
+import SDS from "./SDS";
 
 type LeaderDetailType = {
     name: string;
@@ -19,5 +23,9 @@ export {
     OurFirm,
     Gallery,
     LeadershipTeam,
-    BusiessModel
+    BusiessModel,
+    PEMB,
+    Structural,
+    Tekla,
+    SDS,
 }

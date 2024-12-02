@@ -11,14 +11,14 @@ const banner: BannerPropType = {
 
 const galleryImages = [
   {
-    src: "../../assets/image1.jpg",
+    src: "../../assets/Tekla.jpg",
     title: "Structural Steel Detailing Project",
-    url: "/gallery/structural-steel-detailing",
+    url: "/our-firm/gallery/Structural",
   },
   {
-    src: "../../assets/image2.jpg",
+    src: "../../assets/pembIMG.jpg",
     title: "PEMB Designing and Detailing",
-    url: "/gallery/pemb-designing",
+    url: "/our-firm/gallery/PEMB",
   },
 ];
 function Gallery() {
@@ -50,16 +50,21 @@ function Gallery() {
                 className="relative"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }} 
+                transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <img
-                  src={image.src}
-                  alt={image.title}
-                  className="w-full h-full object-cover rounded-lg cursor-pointer"
-                  onClick={() => navigate(image.url)} // Navigate to respective page
-                />
-                 <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 hover:opacity-50 transition duration-300 flex items-center justify-center rounded-lg">
-                  <span className="text-white text-xl font-bold">{image.title}</span>
+                <div className="h-full cursor-pointer" onClick={() => navigate(image.url)}>
+                  <img
+                    src={image.src}
+                    alt={image.title}
+                    className="w-full h-full object-cover rounded-lg cursor-pointer"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 hover:opacity-50 transition duration-300 flex items-center justify-center rounded-lg">
+                    <span
+                      className="text-white text-xl font-bold"
+                    >
+                      {image.title}
+                    </span>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -67,9 +72,7 @@ function Gallery() {
         </div>
       </section>
 
-      {selectedImage && (
-        <Modal image={selectedImage} onClose={closeModal} />
-      )}
+      {selectedImage && <Modal image={selectedImage} onClose={closeModal} />}
     </div>
   );
 }
