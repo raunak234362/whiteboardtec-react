@@ -12,7 +12,7 @@ const banner: BannerPropType = {
 
 const pembImg = [
   {
-    src: "../../../assets/PEMB/3D Building Systems (Brownwood ISD - Practice Facility)/Exported View 1.png",
+    src: "../../../assets/PEMB/3D Building Systems (Brownwood ISD - Practice Facility)/Exported View 3.png",
     title: "Brownwood ISD - Practice Facility",
     address: "Brpwnwood, Texas",
     Projecttype: "Commercial",
@@ -75,6 +75,9 @@ const pembImg = [
       {
         src: "../../../assets/PEMB/Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)/Exported View 2.png",
       },
+      {
+        src: "../../../assets/PEMB/Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)/Exported View 3.png",
+      }
     ],
   },
   {
@@ -95,7 +98,7 @@ const pembImg = [
     ],
   },
   {
-    src: "../../../assets/PEMB/Fort Construction (Emmanuel Chin Baptist Church)/Exported View 1.png",
+    src: "../../../assets/PEMB/Fort Construction (Emmanuel Chin Baptist Church)/Exported View 3.png",
     title: "Emmanuel Chin Baptist Church",
     address: "Denton, Texas",
     Projecttype: "Worship",
