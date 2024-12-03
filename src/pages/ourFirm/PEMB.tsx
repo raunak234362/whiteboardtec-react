@@ -55,6 +55,78 @@ const pembImg = [
             src: "../../../public/assets/PEMB/Crossland Construction Company (Rollertown Beerworks Brewery)/Exported View 3.png",
         }
     ]
+  },
+  {
+    src:"../../../public/assets/PEMB/Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)/Exported View 1.png",
+    title: "Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)",
+    images: [
+      {
+        src: "../../../public/assets/PEMB/Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)/Exported View 1.png",
+      },
+      {
+        src: "../../../public/assets/PEMB/Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)/Exported View 2.png",
+      }
+    ]
+  },
+  {
+    src:"../../../public/assets/PEMB/East Chambers-New Junior High School/Exported View 1.png",
+    title: "East Chambers-New Junior High School",
+    images: [
+      {
+        src: "../../../public/assets/PEMB/East Chambers-New Junior High School/Exported View 1.png",
+      },
+      {
+        src: "../../../public/assets/PEMB/East Chambers-New Junior High School/Exported View 2.png",
+      },
+      {
+        src: "../../../public/assets/PEMB/East Chambers-New Junior High School/Exported View 3.png",
+      }
+    ]
+  },
+  {
+    src:"../../../public/assets/PEMB/Fort Construction (Emmanuel Chin Baptist Church)/Exported View 1.png",
+    title: "Fort Construction (Emmanuel Chin Baptist Church)",
+    images: [
+      {
+        src: "../../../public/assets/PEMB/Fort Construction (Emmanuel Chin Baptist Church)/Exported View 1.png",
+      },
+      {
+        src: "../../../public/assets/PEMB/Fort Construction (Emmanuel Chin Baptist Church)/Exported View 2.png",
+      },
+      {
+        src: "../../../public/assets/PEMB/Fort Construction (Emmanuel Chin Baptist Church)/Exported View 3.png",
+      }
+    ]
+  },
+  {
+    src:"../../../public/assets/PEMB/Jackson Construction (Chapel Hill ISD Operations-Transportation)/Exported View 1.png",
+    title: "Jackson Construction (Chapel Hill ISD Operations-Transportation)",
+    images: [
+      {
+        src: "../../../public/assets/PEMB/Jackson Construction (Chapel Hill ISD Operations-Transportation)/Exported View 1.png",
+      },
+      {
+        src: "../../../public/assets/PEMB/Jackson Construction (Chapel Hill ISD Operations-Transportation)/Exported View 2.png",
+      },
+      {
+        src: "../../../public/assets/PEMB/Jackson Construction (Chapel Hill ISD Operations-Transportation)/Exported View 3.png",
+      }
+    ]
+  },
+  {
+    src:"../../../public/assets/PEMB/Pat Williams Construction (Lake Charles Airport Hangar )/Exported View 1.png",
+    title: "Pat Williams Construction (Lake Charles Airport Hangar )",
+    images: [
+      {
+        src: "../../../public/assets/PEMB/Pat Williams Construction (Lake Charles Airport Hangar )/Exported View 1.png",
+      },
+      {
+        src: "../../../public/assets/PEMB/Pat Williams Construction (Lake Charles Airport Hangar )/Exported View 2.png",
+      },
+      {
+        src: "../../../public/assets/PEMB/Pat Williams Construction (Lake Charles Airport Hangar )/Exported View 3.png",
+      }
+    ]
   }
 ];
 
