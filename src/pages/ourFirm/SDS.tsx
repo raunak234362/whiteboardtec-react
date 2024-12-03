@@ -14,9 +14,9 @@ const sds = [
   {
     src: "../../../assets/sds/LUBBOCK/model (30).png",
     title: "LUBBOCK Medical Examniner's Office",
-    address:" ",
-Projecttype:" ",
-images: [
+    address: "Lubbock, Texas",
+    Projecttype: "Commercial",
+    images: [
       {
         src: "../../../assets/sds/LUBBOCK/model (31).png",
       },
@@ -37,9 +37,9 @@ images: [
   {
     src: "../../../assets/sds/R.L.COUSINS-COMMUNITY-CENTER/Exported View 1.png",
     title: "R.L. Cousins Renovation & Community Center",
-    address:" ",
-Projecttype:" ",
-images: [
+    address: "Covington, Georgia",
+    Projecttype: "Commercial",
+    images: [
       {
         src: "../../../assets/sds/R.L.COUSINS-COMMUNITY-CENTER/Exported View 2.png",
       },
@@ -54,9 +54,9 @@ images: [
   {
     src: "../../../assets/sds/RANCHO/Exported View 1.png",
     title: "RANCHO Delrey Building",
-    address:" ",
-Projecttype:" ",
-images: [
+    address: "El Paso, Texas",
+    Projecttype: "Commercial",
+    images: [
       {
         src: "../../../assets/sds/RANCHO/Exported View 2.png",
       },
@@ -71,9 +71,9 @@ images: [
   {
     src: "../../../assets/sds/STAHL/Exported View 1.png",
     title: "STAHL Mezzanine",
-    address:" ",
-Projecttype:" ",
-images: [
+    address: "Calhoun, Georgia",
+    Projecttype: "Industrial",
+    images: [
       {
         src: "../../../assets/sds/STAHL/Exported View 2.png",
       },
@@ -88,9 +88,9 @@ images: [
   {
     src: "../../../assets/sds/TINKER/Exported View 1.png",
     title: "Project TINKER",
-    address:" ",
-Projecttype:" ",
-images: [
+    address: "Roonak, Virginia",
+    Projecttype: "Commercial",
+    images: [
       {
         src: "../../../assets/sds/TINKER/Exported View 2.png",
       },
@@ -105,9 +105,9 @@ images: [
   {
     src: "../../../assets/sds/Trinity/Exported View 1.png",
     title: "Project Trinity",
-    address:" ",
-Projecttype:" ",
-images: [
+    address: "Trinity, Alabama",
+    Projecttype: "Industrial",
+    images: [
       {
         src: "../../../assets/sds/Trinity/Exported View.png",
       },
@@ -119,16 +119,16 @@ images: [
   {
     src: "../../../assets/sds/Yarbrough/9.png",
     title: "Yarbrough Warehouse",
-    address:" ",
-Projecttype:" ",
-images: [{ src: "../../../assets/sds/Yarbrough/9.png" }],
+    address: "Shreveport, Louisiana",
+    Projecttype: "Commercial(Warehouse)",
+    images: [{ src: "../../../assets/sds/Yarbrough/9.png" }],
   },
   {
     src: "../../../assets/sds/Harrison/Exported View 1.png",
     title: "Harrison Middle School",
-    address:" ",
-Projecttype:" ",
-images: [
+    address: "Albuquerque, New Mexico",
+    Projecttype: "Institute",
+    images: [
       {
         src: "../../../assets/sds/Harrison/Exported View.png",
       },
