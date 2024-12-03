@@ -121,7 +121,9 @@ const sds = [
     title: "Yarbrough Warehouse",
     address: "Shreveport, Louisiana",
     Projecttype: "Commercial(Warehouse)",
-    images: [{ src: "../../../assets/sds/Yarbrough/9.png" }],
+    images: [
+      { src: "../../../assets/sds/Yarbrough/9.png" }
+    ],
   },
   {
     src: "../../../assets/sds/Harrison/Exported View 1.png",
