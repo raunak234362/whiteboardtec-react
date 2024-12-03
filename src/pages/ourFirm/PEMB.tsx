@@ -65,7 +65,7 @@ const pembImg = [
   {
     src: "../../../assets/PEMB/Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)/Exported View 1.png",
     title:
-      "Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)",
+      "Lonestar Truck Wichita Falls Service Facility",
     address: "Wichita Falls, Texas",
     Projecttype: "Commercial",
     images: [
