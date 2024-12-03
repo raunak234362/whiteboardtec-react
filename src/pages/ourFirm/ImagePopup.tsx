@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 interface ImageModalProps {
   images: { src: string }[];
   title: string;
+  address: string | "Image not available";
+  Projecttype: string | "Image not available";
   initialIndex: number;
   onClose: () => void;
 }
@@ -11,6 +13,8 @@ interface ImageModalProps {
 export const ImageModal: React.FC<ImageModalProps> = ({
   images,
   title,
+  address,
+  Projecttype,
   initialIndex,
   onClose,
 }) => {
@@ -24,49 +28,56 @@ export const ImageModal: React.FC<ImageModalProps> = ({
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowRight") nextImage();
+    if (e.key === "ArrowLeft") prevImage();
+    if (e.key === "Escape") onClose();
+  };
+
   return (
-    <div>
-      <motion.div
-        className="fixed inset-0 bg-slate-950 bg-opacity-65 flex items-center justify-center z-50"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
-        <div className="relative bg-white rounded-lg shadow-lg p-2 w-[90%] md:w-[70%] mx-auto ">
-          <button
-            className=" top-2 right-2 bg-red-500 px-2 rounded-full text-black text-2xl font-bold"
-            onClick={onClose}
-          >
-            ×
-          </button>
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            <div className="flex items-center justify-between">
-              <img
-                src={images[currentIndex]?.src}
-                alt={title}
-                className="lg:w-auto  lg:h-96 rounded-lg"
-              />
-            </div>
-            <div>
-              <p className="text-center text-3xl font-bold mt-4">{title}</p>
-            </div>
-            <div className="flex gap-5 justify-center mt-4 mx-10">
-              <button
-                className="text-white bg-green-400 rounded-full text-2xl font-bold px-4"
-                onClick={prevImage}
-              >
-                {"<"}
-              </button>
-              <button
-                className="text-white bg-green-400 rounded-full text-2xl font-bold px-4"
-                onClick={nextImage}
-              >
-                {">"}
-              </button>
-            </div>
+    <motion.div
+      className="fixed inset-0 bg-slate-950 bg-opacity-75 flex items-center justify-center z-50"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onKeyDown={handleKeyDown}
+      tabIndex={-1}
+    >
+      <div className="relative bg-white rounded-lg shadow-lg p-4 w-[90%] md:w-[45%] mx-auto">
+        <button
+          className="absolute top-2 right-2 bg-red-500 px-3 py-1 rounded-full text-white text-xl font-bold"
+          onClick={onClose}
+        >
+          ×
+        </button>
+        <div className="flex flex-col items-center">
+          <img
+            src={images[currentIndex]?.src}
+            alt={title}
+            className="lg:w-auto lg:h-96 rounded-lg"
+            onError={(e) => (e.currentTarget.src = "/assets/placeholder.png")}
+          />
+          <div className="mt-4 text-center">
+            <p className="md:text-4xl font-bold text-green-700">{title}</p>
+            <p className="md:text-lg text-gray-700"><span>Location: </span>{address}</p>
+            <p className="md:text-lg text-gray-700"><span>Project Type: </span>{Projecttype}</p>
+          </div>
+          <div className="flex gap-5 justify-center mt-4">
+            <button
+              className="text-white bg-green-400 rounded-full text-3xl font-bold px-4"
+              onClick={prevImage}
+            >
+              {"<"}
+            </button>
+            <button
+              className="text-white bg-green-400 rounded-full text-2xl font-bold px-4"
+              onClick={nextImage}
+            >
+              {">"}
+            </button>
           </div>
         </div>
-      </motion.div>
-    </div>
+      </div>
+    </motion.div>
   );
 };

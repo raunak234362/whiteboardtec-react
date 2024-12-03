@@ -14,7 +14,9 @@ const sds = [
   {
     src: "../../../public/assets/sds/LUBBOCK/model (30).png",
     title: "LUBBOCK Medical Examniner's Office",
-    images: [
+    address:" ",
+Projecttype:" ",
+images: [
       {
         src: "../../../public/assets/sds/LUBBOCK/model (31).png",
       },
@@ -29,13 +31,15 @@ const sds = [
       },
       {
         src: "../../../public/assets/sds/LUBBOCK/model (30).png",
-      }
+      },
     ],
   },
   {
     src: "../../../public/assets/sds/R.L.COUSINS-COMMUNITY-CENTER/Exported View 1.png",
     title: "R.L. Cousins Renovation & Community Center",
-    images: [
+    address:" ",
+Projecttype:" ",
+images: [
       {
         src: "../../../public/assets/sds/R.L.COUSINS-COMMUNITY-CENTER/Exported View 2.png",
       },
@@ -44,13 +48,15 @@ const sds = [
       },
       {
         src: "../../../public/assets/sds/R.L.COUSINS-COMMUNITY-CENTER/Exported View 1.png",
-      }
+      },
     ],
   },
   {
     src: "../../../public/assets/sds/RANCHO/Exported View 1.png",
     title: "RANCHO Delrey Building",
-    images: [
+    address:" ",
+Projecttype:" ",
+images: [
       {
         src: "../../../public/assets/sds/RANCHO/Exported View 2.png",
       },
@@ -59,13 +65,15 @@ const sds = [
       },
       {
         src: "../../../public/assets/sds/RANCHO/Exported View 1.png",
-      }
+      },
     ],
   },
   {
     src: "../../../public/assets/sds/STAHL/Exported View 1.png",
     title: "STAHL Mezzanine",
-    images: [
+    address:" ",
+Projecttype:" ",
+images: [
       {
         src: "../../../public/assets/sds/STAHL/Exported View 2.png",
       },
@@ -74,13 +82,15 @@ const sds = [
       },
       {
         src: "../../../public/assets/sds/STAHL/Exported View 1.png",
-      }
+      },
     ],
   },
   {
     src: "../../../public/assets/sds/TINKER/Exported View 1.png",
     title: "Project TINKER",
-    images: [
+    address:" ",
+Projecttype:" ",
+images: [
       {
         src: "../../../public/assets/sds/TINKER/Exported View 2.png",
       },
@@ -89,30 +99,36 @@ const sds = [
       },
       {
         src: "../../../public/assets/sds/TINKER/Exported View 1.png",
-      }
+      },
     ],
   },
   {
     src: "../../../public/assets/sds/Trinity/Exported View 1.png",
     title: "Project Trinity",
-    images: [
+    address:" ",
+Projecttype:" ",
+images: [
       {
         src: "../../../public/assets/sds/Trinity/Exported View.png",
       },
       {
         src: "../../../public/assets/sds/Trinity/Exported View 1.png",
-      }
+      },
     ],
   },
   {
     src: "../../../public/assets/sds/Yarbrough/9.png",
     title: "Yarbrough Warehouse",
-    images: [{ src: "../../../public/assets/sds/Yarbrough/9.png" }],
+    address:" ",
+Projecttype:" ",
+images: [{ src: "../../../public/assets/sds/Yarbrough/9.png" }],
   },
   {
     src: "../../../public/assets/sds/Harrison/Exported View 1.png",
     title: "Harrison Middle School",
-    images: [
+    address:" ",
+Projecttype:" ",
+images: [
       {
         src: "../../../public/assets/sds/Harrison/Exported View.png",
       },
@@ -128,18 +144,36 @@ function SDS() {
     null
   );
   const [popupTitle, setPopupTitle] = useState<string | null>(null);
+  const [popupAddress, setPopupAddress] = useState<string | null>(null);
+  const [popupProjectType, setPopupProjectType] = useState<string | null>(null);
   const [popupIndex, setPopupIndex] = useState<number>(0);
 
-  const openPopup = (images: { src: string }[], title: string) => {
+  const preloadImages = (images: { src: string }[]) => {
+    images.forEach((image) => {
+      const img = new Image();
+      img.src = image.src;
+    });
+  };
+
+  const openPopup = (
+    images: { src: string }[],
+    title: string,
+    address: string,
+    projectType: string
+  ) => {
+    preloadImages(images);
     setPopupImages(images);
     setPopupTitle(title);
-    setPopupIndex(0); // Start from the first image
+    setPopupAddress(address);
+    setPopupProjectType(projectType);
+    setPopupIndex(0);
   };
 
   const closePopup = () => {
     setPopupImages(null);
     setPopupTitle(null);
-    setPopupIndex(0);
+    setPopupAddress(null);
+    setPopupProjectType(null);
   };
 
   return (
@@ -156,7 +190,14 @@ function SDS() {
           >
             <div
               className="h-full justify-center text-center cursor-pointer"
-              onClick={() => openPopup(item?.images, item?.title)}
+              onClick={() =>
+                openPopup(
+                  item.images,
+                  item.title,
+                  item.address || "Unknown address",
+                  item.Projecttype
+                )
+              }
             >
               <img src={item?.src} alt={item?.title} />
               <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 hover:opacity-50 transition duration-300 flex items-center justify-center rounded-lg">
@@ -174,6 +215,8 @@ function SDS() {
         <ImageModal
           images={popupImages}
           title={popupTitle}
+          address={popupAddress || ""}
+          Projecttype={popupProjectType || ""}
           initialIndex={popupIndex}
           onClose={closePopup}
         />

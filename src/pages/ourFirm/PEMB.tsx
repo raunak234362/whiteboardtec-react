@@ -12,141 +12,171 @@ const banner: BannerPropType = {
 
 const pembImg = [
   {
-    src: "../../../public/assets/PEMB/3D Building Systems (Brownwood ISD - Practice Facility)/Exported View 1.png",
+    src: "../../../assets/PEMB/3D Building Systems (Brownwood ISD - Practice Facility)/Exported View 1.png",
     title: "3D Building Systems (Brownwood ISD - Practice Facility)",
+    address: "Brpwnwood, Texas",
+    Projecttype: "Commercial",
     images: [
       {
-        src: "../../../public/assets/PEMB/3D Building Systems (Brownwood ISD - Practice Facility)/Exported View 1.png",
+        src: "../../../assets/PEMB/3D Building Systems (Brownwood ISD - Practice Facility)/Exported View 1.png",
       },
       {
-        src: "../../../public/assets/PEMB/3D Building Systems (Brownwood ISD - Practice Facility)/Exported View 2.png",
+        src: "../../../assets/PEMB/3D Building Systems (Brownwood ISD - Practice Facility)/Exported View 2.png",
       },
       {
-        src: "../../../public/assets/PEMB/3D Building Systems (Brownwood ISD - Practice Facility)/Exported View 3.png",
+        src: "../../../assets/PEMB/3D Building Systems (Brownwood ISD - Practice Facility)/Exported View 3.png",
       },
     ],
   },
   {
-    src:"../../../public/assets/PEMB/Berry and Clay (Bartlett ISD Cafeteria and Kitchen)/Exported View 1.png",
+    src: "../../../assets/PEMB/Berry and Clay (Bartlett ISD Cafeteria and Kitchen)/Exported View 1.png",
     title: "Berry and Clay (Bartlett ISD Cafeteria and Kitchen)",
+    address: "Barlett, Texas",
+    Projecttype: "Institute",
     images: [
-        {
-            src: "../../../public/assets/PEMB/Berry and Clay (Bartlett ISD Cafeteria and Kitchen)/Exported View 1.png",
-        },
-        {
-            src: "../../../public/assets/PEMB/Berry and Clay (Bartlett ISD Cafeteria and Kitchen)/Exported View 2.png",
-        },
-        {
-            src: "../../../public/assets/PEMB/Berry and Clay (Bartlett ISD Cafeteria and Kitchen)/Exported View 3.png",
-        }
-    ]
+      {
+        src: "../../../assets/PEMB/Berry and Clay (Bartlett ISD Cafeteria and Kitchen)/Exported View 1.png",
+      },
+      {
+        src: "../../../assets/PEMB/Berry and Clay (Bartlett ISD Cafeteria and Kitchen)/Exported View 2.png",
+      },
+      {
+        src: "../../../assets/PEMB/Berry and Clay (Bartlett ISD Cafeteria and Kitchen)/Exported View 3.png",
+      },
+    ],
   },
   {
-    src:"../../../public/assets/PEMB/Crossland Construction Company (Rollertown Beerworks Brewery)/Exported View 1.png",
+    src: "../../../assets/PEMB/Crossland Construction Company (Rollertown Beerworks Brewery)/Exported View 1.png",
     title: "Crossland Construction Company (Rollertown Beerworks Brewery)",
-    images: [
-        {
-            src: "../../../public/assets/PEMB/Crossland Construction Company (Rollertown Beerworks Brewery)/Exported View 1.png",
-        },
-        {
-            src: "../../../public/assets/PEMB/Crossland Construction Company (Rollertown Beerworks Brewery)/Exported View 2.png",
-        },
-        {
-            src: "../../../public/assets/PEMB/Crossland Construction Company (Rollertown Beerworks Brewery)/Exported View 3.png",
-        }
-    ]
-  },
-  {
-    src:"../../../public/assets/PEMB/Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)/Exported View 1.png",
-    title: "Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)",
+    address: "Frisco, Texas",
+    Projecttype: "Commercial",
     images: [
       {
-        src: "../../../public/assets/PEMB/Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)/Exported View 1.png",
+        src: "../../../assets/PEMB/Crossland Construction Company (Rollertown Beerworks Brewery)/Exported View 1.png",
       },
       {
-        src: "../../../public/assets/PEMB/Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)/Exported View 2.png",
-      }
-    ]
+        src: "../../../assets/PEMB/Crossland Construction Company (Rollertown Beerworks Brewery)/Exported View 2.png",
+      },
+      {
+        src: "../../../assets/PEMB/Crossland Construction Company (Rollertown Beerworks Brewery)/Exported View 3.png",
+      },
+    ],
   },
   {
-    src:"../../../public/assets/PEMB/East Chambers-New Junior High School/Exported View 1.png",
+    src: "../../../assets/PEMB/Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)/Exported View 1.png",
+    title:
+      "Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)",
+    address: "Wichita Falls, Texas",
+    Projecttype: "Commercial",
+    images: [
+      {
+        src: "../../../assets/PEMB/Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)/Exported View 1.png",
+      },
+      {
+        src: "../../../assets/PEMB/Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)/Exported View 2.png",
+      },
+    ],
+  },
+  {
+    src: "../../../assets/PEMB/East Chambers-New Junior High School/Exported View 1.png",
     title: "East Chambers-New Junior High School",
+    address: "Winnie, Texas",
+    Projecttype: "Institute",
     images: [
       {
-        src: "../../../public/assets/PEMB/East Chambers-New Junior High School/Exported View 1.png",
+        src: "../../../assets/PEMB/East Chambers-New Junior High School/Exported View 1.png",
       },
       {
-        src: "../../../public/assets/PEMB/East Chambers-New Junior High School/Exported View 2.png",
+        src: "../../../assets/PEMB/East Chambers-New Junior High School/Exported View 2.png",
       },
       {
-        src: "../../../public/assets/PEMB/East Chambers-New Junior High School/Exported View 3.png",
-      }
-    ]
+        src: "../../../assets/PEMB/East Chambers-New Junior High School/Exported View 3.png",
+      },
+    ],
   },
   {
-    src:"../../../public/assets/PEMB/Fort Construction (Emmanuel Chin Baptist Church)/Exported View 1.png",
+    src: "../../../assets/PEMB/Fort Construction (Emmanuel Chin Baptist Church)/Exported View 1.png",
     title: "Fort Construction (Emmanuel Chin Baptist Church)",
+    address: "Denton, Texas",
+    Projecttype: "Worship",
     images: [
       {
-        src: "../../../public/assets/PEMB/Fort Construction (Emmanuel Chin Baptist Church)/Exported View 1.png",
+        src: "../../../assets/PEMB/Fort Construction (Emmanuel Chin Baptist Church)/Exported View 1.png",
       },
       {
-        src: "../../../public/assets/PEMB/Fort Construction (Emmanuel Chin Baptist Church)/Exported View 2.png",
+        src: "../../../assets/PEMB/Fort Construction (Emmanuel Chin Baptist Church)/Exported View 2.png",
       },
       {
-        src: "../../../public/assets/PEMB/Fort Construction (Emmanuel Chin Baptist Church)/Exported View 3.png",
-      }
-    ]
+        src: "../../../assets/PEMB/Fort Construction (Emmanuel Chin Baptist Church)/Exported View 3.png",
+      },
+    ],
   },
   {
-    src:"../../../public/assets/PEMB/Jackson Construction (Chapel Hill ISD Operations-Transportation)/Exported View 1.png",
+    src: "../../../assets/PEMB/Jackson Construction (Chapel Hill ISD Operations-Transportation)/Exported View 1.png",
     title: "Jackson Construction (Chapel Hill ISD Operations-Transportation)",
+    address: "Tyler, Texas",
+    Projecttype: "Education",
     images: [
       {
-        src: "../../../public/assets/PEMB/Jackson Construction (Chapel Hill ISD Operations-Transportation)/Exported View 1.png",
+        src: "../../../assets/PEMB/Jackson Construction (Chapel Hill ISD Operations-Transportation)/Exported View 1.png",
       },
       {
-        src: "../../../public/assets/PEMB/Jackson Construction (Chapel Hill ISD Operations-Transportation)/Exported View 2.png",
+        src: "../../../assets/PEMB/Jackson Construction (Chapel Hill ISD Operations-Transportation)/Exported View 2.png",
       },
       {
-        src: "../../../public/assets/PEMB/Jackson Construction (Chapel Hill ISD Operations-Transportation)/Exported View 3.png",
-      }
-    ]
+        src: "../../../assets/PEMB/Jackson Construction (Chapel Hill ISD Operations-Transportation)/Exported View 3.png",
+      },
+    ],
   },
   {
-    src:"../../../public/assets/PEMB/Pat Williams Construction (Lake Charles Airport Hangar )/Exported View 1.png",
+    src: "../../../assets/PEMB/Pat Williams Construction (Lake Charles Airport Hangar )/Exported View 1.png",
     title: "Pat Williams Construction (Lake Charles Airport Hangar )",
+    address: "Lake Charles, Louisiana",
+    Projecttype: "Hangar",
     images: [
       {
-        src: "../../../public/assets/PEMB/Pat Williams Construction (Lake Charles Airport Hangar )/Exported View 1.png",
-      },
-      {
-        src: "../../../public/assets/PEMB/Pat Williams Construction (Lake Charles Airport Hangar )/Exported View 2.png",
-      },
-      {
-        src: "../../../public/assets/PEMB/Pat Williams Construction (Lake Charles Airport Hangar )/Exported View 3.png",
+        src: "../../../assets/PEMB/Pat Williams Construction (Lake Charles Airport Hangar )/Exported View 1.png",
       }
-    ]
-  }
+    ],
+  },
 ];
 
 function PEMB() {
-  const [popupImages, setPopupImages] = useState<{ src: string }[] | null>(null);
+  const [popupImages, setPopupImages] = useState<{ src: string }[] | null>(
+    null
+  );
   const [popupTitle, setPopupTitle] = useState<string | null>(null);
+  const [popupAddress, setPopupAddress] = useState<string | null>(null);
+  const [popupProjectType, setPopupProjectType] = useState<string | null>(null);
   const [popupIndex, setPopupIndex] = useState<number>(0);
 
-  const openPopup = (images: { src: string }[], title: string) => {
+  const preloadImages = (images: { src: string }[]) => {
+    images.forEach((image) => {
+      const img = new Image();
+      img.src = image.src;
+    });
+  };
+
+  const openPopup = (
+    images: { src: string }[],
+    title: string,
+    address: string,
+    projectType: string
+  ) => {
+    preloadImages(images);
     setPopupImages(images);
     setPopupTitle(title);
-    setPopupIndex(0); // Start from the first image
+    setPopupAddress(address);
+    setPopupProjectType(projectType);
+    setPopupIndex(0);
   };
 
   const closePopup = () => {
     setPopupImages(null);
     setPopupTitle(null);
-    setPopupIndex(0);
+    setPopupAddress(null);
+    setPopupProjectType(null);
   };
-
   return (
     <div className="pemb">
       <PageBanner {...banner} />
@@ -161,12 +191,23 @@ function PEMB() {
           >
             <div
               className="h-full justify-center text-center cursor-pointer"
-              onClick={() => openPopup(item?.images, item?.title)}
+              onClick={() =>
+                openPopup(
+                  item.images,
+                  item.title,
+                  item.address || "Unknown address",
+                  item.Projecttype
+                )
+              }
             >
-              <img src={item?.src} alt={item?.title} />
+              <img
+                src={item.src}
+                alt={item.title}
+                className="rounded-lg shadow-md"
+              />
               <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 hover:opacity-50 transition duration-300 flex items-center justify-center rounded-lg">
                 <span className="text-white text-xl font-bold">
-                  {item?.title}
+                  {item.title}
                 </span>
               </div>
             </div>
@@ -174,11 +215,12 @@ function PEMB() {
         ))}
       </div>
 
-      {/* Popup View */}
-      {popupImages && popupTitle && (
+      {popupImages && popupTitle && popupAddress && popupProjectType && (
         <ImageModal
           images={popupImages}
           title={popupTitle}
+          address={popupAddress}
+          Projecttype={popupProjectType}
           initialIndex={popupIndex}
           onClose={closePopup}
         />
