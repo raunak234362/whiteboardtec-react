@@ -13,7 +13,7 @@ const banner: BannerPropType = {
 const pembImg = [
   {
     src: "../../../assets/PEMB/3D Building Systems (Brownwood ISD - Practice Facility)/Exported View 1.png",
-    title: "3D Building Systems (Brownwood ISD - Practice Facility)",
+    title: "Brownwood ISD - Practice Facility",
     address: "Brpwnwood, Texas",
     Projecttype: "Commercial",
     images: [
@@ -30,7 +30,7 @@ const pembImg = [
   },
   {
     src: "../../../assets/PEMB/Berry and Clay (Bartlett ISD Cafeteria and Kitchen)/Exported View 1.png",
-    title: "Berry and Clay (Bartlett ISD Cafeteria and Kitchen)",
+    title: "Bartlett ISD Cafeteria and Kitchen",
     address: "Barlett, Texas",
     Projecttype: "Institute",
     images: [
@@ -47,7 +47,7 @@ const pembImg = [
   },
   {
     src: "../../../assets/PEMB/Crossland Construction Company (Rollertown Beerworks Brewery)/Exported View 1.png",
-    title: "Crossland Construction Company (Rollertown Beerworks Brewery)",
+    title: "Rollertown Beerworks Brewery",
     address: "Frisco, Texas",
     Projecttype: "Commercial",
     images: [
@@ -96,7 +96,7 @@ const pembImg = [
   },
   {
     src: "../../../assets/PEMB/Fort Construction (Emmanuel Chin Baptist Church)/Exported View 1.png",
-    title: "Fort Construction (Emmanuel Chin Baptist Church)",
+    title: "Emmanuel Chin Baptist Church",
     address: "Denton, Texas",
     Projecttype: "Worship",
     images: [
@@ -113,7 +113,7 @@ const pembImg = [
   },
   {
     src: "../../../assets/PEMB/Jackson Construction (Chapel Hill ISD Operations-Transportation)/Exported View 1.png",
-    title: "Jackson Construction (Chapel Hill ISD Operations-Transportation)",
+    title: "Chapel Hill ISD Operations-Transportation",
     address: "Tyler, Texas",
     Projecttype: "Education",
     images: [
@@ -130,12 +130,18 @@ const pembImg = [
   },
   {
     src: "../../../assets/PEMB/Pat Williams Construction (Lake Charles Airport Hangar )/Exported View 1.png",
-    title: "Pat Williams Construction (Lake Charles Airport Hangar )",
+    title: "Lake Charles Airport Hangar",
     address: "Lake Charles, Louisiana",
     Projecttype: "Hangar",
     images: [
       {
         src: "../../../assets/PEMB/Pat Williams Construction (Lake Charles Airport Hangar )/Exported View 1.png",
+      },
+      {
+        src: "../../../assets/PEMB/Pat Williams Construction (Lake Charles Airport Hangar )/Exported View 2.png",
+      },
+      {
+        src: "../../../assets/PEMB/Pat Williams Construction (Lake Charles Airport Hangar )/Exported View 3.png",
       }
     ],
   },
