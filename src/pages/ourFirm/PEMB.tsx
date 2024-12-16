@@ -14,6 +14,7 @@ const pembImg = [
   {
     src: "../../../assets/PEMB/3D Building Systems (Brownwood ISD - Practice Facility)/Exported View 3.png",
     title: "Brownwood ISD - Practice Facility",
+    software: "",
     address: "Brpwnwood, Texas",
     Projecttype: "Commercial",
     images: [
@@ -31,6 +32,7 @@ const pembImg = [
   {
     src: "../../../assets/PEMB/Berry and Clay (Bartlett ISD Cafeteria and Kitchen)/Exported View 1.png",
     title: "Bartlett ISD Cafeteria and Kitchen",
+    software: "",
     address: "Barlett, Texas",
     Projecttype: "Institute",
     images: [
@@ -48,6 +50,7 @@ const pembImg = [
   {
     src: "../../../assets/PEMB/Crossland Construction Company (Rollertown Beerworks Brewery)/Exported View 1.png",
     title: "Rollertown Beerworks Brewery",
+    software: "",
     address: "Frisco, Texas",
     Projecttype: "Commercial",
     images: [
@@ -64,8 +67,8 @@ const pembImg = [
   },
   {
     src: "../../../assets/PEMB/Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)/Exported View 1.png",
-    title:
-      "Lonestar Truck Wichita Falls Service Facility",
+    title: "Lonestar Truck Wichita Falls Service Facility",
+    software: "",
     address: "Wichita Falls, Texas",
     Projecttype: "Commercial",
     images: [
@@ -77,12 +80,13 @@ const pembImg = [
       },
       {
         src: "../../../assets/PEMB/Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)/Exported View 3.png",
-      }
+      },
     ],
   },
   {
     src: "../../../assets/PEMB/East Chambers-New Junior High School/Exported View 1.png",
     title: "East Chambers-New Junior High School",
+    software: "",
     address: "Winnie, Texas",
     Projecttype: "Institute",
     images: [
@@ -100,6 +104,7 @@ const pembImg = [
   {
     src: "../../../assets/PEMB/Fort Construction (Emmanuel Chin Baptist Church)/Exported View 3.png",
     title: "Emmanuel Chin Baptist Church",
+    software: "",
     address: "Denton, Texas",
     Projecttype: "Worship",
     images: [
@@ -117,6 +122,7 @@ const pembImg = [
   {
     src: "../../../assets/PEMB/Jackson Construction (Chapel Hill ISD Operations-Transportation)/Exported View 1.png",
     title: "Chapel Hill ISD Operations-Transportation",
+    software: "",
     address: "Tyler, Texas",
     Projecttype: "Education",
     images: [
@@ -134,6 +140,7 @@ const pembImg = [
   {
     src: "../../../assets/PEMB/Pat Williams Construction (Lake Charles Airport Hangar )/Exported View 1.png",
     title: "Lake Charles Airport Hangar",
+    software: "",
     address: "Lake Charles, Louisiana",
     Projecttype: "Hangar",
     images: [
@@ -145,7 +152,7 @@ const pembImg = [
       },
       {
         src: "../../../assets/PEMB/Pat Williams Construction (Lake Charles Airport Hangar )/Exported View 3.png",
-      }
+      },
     ],
   },
 ];
@@ -158,6 +165,7 @@ function PEMB() {
   const [popupAddress, setPopupAddress] = useState<string | null>(null);
   const [popupProjectType, setPopupProjectType] = useState<string | null>(null);
   const [popupIndex, setPopupIndex] = useState<number>(0);
+  const [popupSoftware, setPopupSoftware] = useState<string | null>(null);
 
   const preloadImages = (images: { src: string }[]) => {
     images.forEach((image) => {
@@ -170,12 +178,14 @@ function PEMB() {
     images: { src: string }[],
     title: string,
     address: string,
+    software: string,
     projectType: string
   ) => {
     preloadImages(images);
     setPopupImages(images);
     setPopupTitle(title);
     setPopupAddress(address);
+    setPopupSoftware(software);
     setPopupProjectType(projectType);
     setPopupIndex(0);
   };
@@ -184,6 +194,7 @@ function PEMB() {
     setPopupImages(null);
     setPopupTitle(null);
     setPopupAddress(null);
+    setPopupSoftware(null);
     setPopupProjectType(null);
   };
   return (
@@ -205,7 +216,8 @@ function PEMB() {
                   item.images,
                   item.title,
                   item.address || "Unknown address",
-                  item.Projecttype
+                  item.software || "Unknown",
+                  item.Projecttype,
                 )
               }
             >
@@ -228,8 +240,9 @@ function PEMB() {
         <ImageModal
           images={popupImages}
           title={popupTitle}
-          address={popupAddress}
-          Projecttype={popupProjectType}
+          address={popupAddress || ""}
+          software={popupSoftware || ""}
+          Projecttype={popupProjectType || ""}
           initialIndex={popupIndex}
           onClose={closePopup}
         />

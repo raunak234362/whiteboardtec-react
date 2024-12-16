@@ -13,6 +13,7 @@ const tekla = [
   {
     src: "../../../assets/tekla/CHAMISA/img1.png",
     title: "Chamisa Elementary School Replacement",
+    software: "",
     address: "White Rock, New Mexio",
     Projecttype: "Institute",
     images: [
@@ -47,6 +48,7 @@ const tekla = [
   {
     src: "../../../assets/tekla/MCS-G1/img1.png",
     title: "MCA G1 Plant Expansion",
+    software: "",
     address: "Hogansville, Georgia",
     Projecttype: "Facility Expension",
     images: [
@@ -75,6 +77,7 @@ const tekla = [
   {
     src: "../../../assets/tekla/PUEBLO/img1.png",
     title: "The PUEBLO of Sandia Child Development Center",
+    software: "",
     address: "Albuquerque, New Mexico",
     Projecttype: "Commercial",
     images: [
@@ -103,6 +106,7 @@ const tekla = [
   {
     src: "../../../assets/tekla/WAUSAU/img1.png",
     title: "WAUSAU West High School",
+    software: "",
     address: "Wausau, Wisconsin",
     Projecttype: "Institute",
     images: [
@@ -120,6 +124,7 @@ const tekla = [
   {
     src: "../../../assets/tekla/WRIGHTSTOWN/img1.png",
     title: "WRIGTHSTOWN SWEF & State Patrol Post Facility",
+    software: "",
     address: "Wrightstown, Wisconsin",
     Projecttype: "Commercial",
     images: [
@@ -131,6 +136,140 @@ const tekla = [
       },
     ],
   },
+  {
+    src: "../../../assets/sds/LUBBOCK/model (30).png",
+    title: "LUBBOCK Medical Examniner's Office",
+    software: "",
+    address: "Lubbock, Texas",
+    Projecttype: "Commercial",
+    images: [
+      {
+        src: "../../../assets/sds/LUBBOCK/model (31).png",
+      },
+      {
+        src: "../../../assets/sds/LUBBOCK/model (32).png",
+      },
+      {
+        src: "../../../assets/sds/LUBBOCK/model (33).png",
+      },
+      {
+        src: "../../../assets/sds/LUBBOCK/model (34).png",
+      },
+      {
+        src: "../../../assets/sds/LUBBOCK/model (30).png",
+      },
+    ],
+  },
+  {
+    src: "../../../assets/sds/R.L.COUSINS-COMMUNITY-CENTER/Exported View 1.png",
+    title: "R.L. Cousins Renovation & Community Center",
+    software: "",
+    address: "Covington, Georgia",
+    Projecttype: "Commercial",
+    images: [
+      {
+        src: "../../../assets/sds/R.L.COUSINS-COMMUNITY-CENTER/Exported View 2.png",
+      },
+      {
+        src: "../../../assets/sds/R.L.COUSINS-COMMUNITY-CENTER/Exported View 3.png",
+      },
+      {
+        src: "../../../assets/sds/R.L.COUSINS-COMMUNITY-CENTER/Exported View 1.png",
+      },
+    ],
+  },
+  {
+    src: "../../../assets/sds/RANCHO/Exported View 1.png",
+    title: "RANCHO Delrey Building",
+    software: "",
+    address: "El Paso, Texas",
+    Projecttype: "Commercial",
+    images: [
+      {
+        src: "../../../assets/sds/RANCHO/Exported View 2.png",
+      },
+      {
+        src: "../../../assets/sds/RANCHO/Exported View.png",
+      },
+      {
+        src: "../../../assets/sds/RANCHO/Exported View 1.png",
+      },
+    ],
+  },
+  {
+    src: "../../../assets/sds/STAHL/Exported View 1.png",
+    title: "STAHL Mezzanine",
+    software: "",
+    address: "Calhoun, Georgia",
+    Projecttype: "Industrial",
+    images: [
+      {
+        src: "../../../assets/sds/STAHL/Exported View 2.png",
+      },
+      {
+        src: "../../../assets/sds/STAHL/Exported View.png",
+      },
+      {
+        src: "../../../assets/sds/STAHL/Exported View 1.png",
+      },
+    ],
+  },
+  {
+    src: "../../../assets/sds/TINKER/Exported View 1.png",
+    title: "Project TINKER",
+    software: "",
+    address: "Roonak, Virginia",
+    Projecttype: "Commercial",
+    images: [
+      {
+        src: "../../../assets/sds/TINKER/Exported View 2.png",
+      },
+      {
+        src: "../../../assets/sds/TINKER/Exported View.png",
+      },
+      {
+        src: "../../../assets/sds/TINKER/Exported View 1.png",
+      },
+    ],
+  },
+  {
+    src: "../../../assets/sds/Trinity/Exported View 1.png",
+    title: "Project Trinity",
+    software: "",
+    address: "Trinity, Alabama",
+    Projecttype: "Industrial",
+    images: [
+      {
+        src: "../../../assets/sds/Trinity/Exported View.png",
+      },
+      {
+        src: "../../../assets/sds/Trinity/Exported View 1.png",
+      },
+    ],
+  },
+  {
+    src: "../../../assets/sds/Yarbrough/9.png",
+    title: "Yarbrough Warehouse",
+    software: "",
+    address: "Shreveport, Louisiana",
+    Projecttype: "Commercial(Warehouse)",
+    images: [{ src: "../../../assets/sds/Yarbrough/9.png" }],
+  },
+  {
+    src: "../../../assets/sds/Harrison/Exported View 1.png",
+    title: "Harrison Middle School",
+    software: "",
+    address: "Albuquerque, New Mexico",
+    Projecttype: "Institute",
+    images: [
+      {
+        src: "../../../assets/sds/Harrison/Exported View.png",
+      },
+      {
+        src: "../../../assets/sds/Harrison/Exported View 1.png",
+      },
+    ],
+  },
 ];
 
 function Tekla() {
@@ -139,6 +278,7 @@ function Tekla() {
   );
   const [popupTitle, setPopupTitle] = useState<string | null>(null);
   const [popupAddress, setPopupAddress] = useState<string | null>(null);
+  const [popupSoftware, setPopupSoftware] = useState<string | null>(null);
   const [popupProjectType, setPopupProjectType] = useState<string | null>(null);
   const [popupIndex, setPopupIndex] = useState<number>(0);
 
@@ -153,12 +293,14 @@ function Tekla() {
     images: { src: string }[],
     title: string,
     address: string,
+    software: string,
     projectType: string
   ) => {
     preloadImages(images);
     setPopupImages(images);
     setPopupTitle(title);
     setPopupAddress(address);
+    setPopupSoftware(software);
     setPopupProjectType(projectType);
     setPopupIndex(0);
   };
@@ -167,6 +309,7 @@ function Tekla() {
     setPopupImages(null);
     setPopupTitle(null);
     setPopupAddress(null);
+    setPopupSoftware(null);
     setPopupProjectType(null);
   };
   return (
@@ -183,8 +326,15 @@ function Tekla() {
           >
             <div
               className="h-full justify-center text-center cursor-pointer"
-              onClick={() => openPopup(item.images, item.title, item.address || "Unknown address", item.Projecttype)}
-
+              onClick={() =>
+                openPopup(
+                  item.images,
+                  item.title,
+                  item.address || "Unknown address",
+                  item.software || "Unknown software",
+                  item.Projecttype,
+                )
+              }
             >
               <img
                 src={item.src}
@@ -207,6 +357,7 @@ function Tekla() {
           title={popupTitle}
           Projecttype={popupProjectType || ""}
           address={popupAddress || ""}
+          software={popupSoftware || ""}
           initialIndex={popupIndex}
           onClose={closePopup}
         />

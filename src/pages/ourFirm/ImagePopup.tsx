@@ -5,6 +5,7 @@ interface ImageModalProps {
   images: { src: string }[];
   title: string;
   address: string | "Image not available";
+  software: string | "Unknown";
   Projecttype: string | "Image not available";
   initialIndex: number;
   onClose: () => void;
@@ -61,6 +62,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
             <p className="md:text-4xl font-bold text-green-700">{title}</p>
             <p className="md:text-lg text-gray-700"><span>Location: </span>{address}</p>
             <p className="md:text-lg text-gray-700"><span>Project Type: </span>{Projecttype}</p>
+            <p className="md:text-lg text-gray-700"><span>Software Used: </span>{Projecttype}</p>
           </div>
           <div className="flex gap-5 justify-center mt-4">
             <button
