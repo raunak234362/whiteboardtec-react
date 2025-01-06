@@ -38,7 +38,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
 
   return (
     <motion.div
-      className="fixed inset-0 bg-slate-950 bg-opacity-75 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-slate-950 bg-opacity-90 flex items-center justify-center z-50"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
