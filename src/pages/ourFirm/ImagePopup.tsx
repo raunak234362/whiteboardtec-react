@@ -59,7 +59,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
             onError={(e) => (e.currentTarget.src = "/assets/placeholder.png")}
           />
           <div className="mt-4 text-center">
-            <p className="md:text-4xl font-bold text-green-700">{title}</p>
+            <p className="md:text-4xl font-bold text-green-700">{title.toUpperCase()}</p>
             <p className="md:text-lg text-gray-700"><span>Location: </span>{address}</p>
             <p className="md:text-lg text-gray-700"><span>Project Type: </span>{Projecttype}</p>
             <p className="md:text-lg text-gray-700"><span>Software Used: </span>{Projecttype}</p>
