@@ -16,6 +16,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
   title,
   address,
   Projecttype,
+  software,
   initialIndex,
   onClose,
 }) => {
@@ -60,9 +61,9 @@ export const ImageModal: React.FC<ImageModalProps> = ({
           />
           <div className="mt-4 text-center">
             <p className="md:text-4xl font-bold text-green-700">{title.toUpperCase()}</p>
-            <p className="md:text-lg text-gray-700"><span>Location: </span>{address}</p>
-            <p className="md:text-lg text-gray-700"><span>Project Type: </span>{Projecttype}</p>
-            <p className="md:text-lg text-gray-700"><span>Software Used: </span>{Projecttype}</p>
+            <p className="md:text-lg text-gray-700"><span>Location: </span>{address.toUpperCase()}</p>
+            <p className="md:text-lg text-gray-700"><span>Project Type: </span>{Projecttype.toUpperCase()}</p>
+            <p className="md:text-lg text-gray-700"><span>Software Used: </span>{software.toUpperCase()}</p>
           </div>
           <div className="flex gap-5 justify-center mt-4">
             <button

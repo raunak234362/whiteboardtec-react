@@ -13,7 +13,7 @@ const tekla = [
   {
     src: "../../../assets/tekla/CHAMISA/img1.png",
     title: "Chamisa Elementary School Replacement",
-    software: "",
+    software: "tekla Structural",
     address: "White Rock, New Mexio",
     Projecttype: "Institute",
     images: [
@@ -28,6 +28,7 @@ const tekla = [
   {
     src: "../../../assets/tekla/CNM-FILM-SCHOOL-IFC/img1.png",
     title: "CNM Film School",
+    software: "tekla Structural",
     address: "Albuquerque, New Mexico",
     Projecttype: "Institute",
     images: [
@@ -48,7 +49,7 @@ const tekla = [
   {
     src: "../../../assets/tekla/MCS-G1/img1.png",
     title: "MCA G1 Plant Expansion",
-    software: "",
+    software: "tekla Structural",
     address: "Hogansville, Georgia",
     Projecttype: "Facility Expension",
     images: [
@@ -63,6 +64,7 @@ const tekla = [
   {
     src: "../../../assets/tekla/PINON/img1.png",
     title: "PINON Elementary School",
+    software: "tekla Structural",
     address: "White Rock, New Mexico",
     Projecttype: "Institute",
     images: [
@@ -77,7 +79,7 @@ const tekla = [
   {
     src: "../../../assets/tekla/PUEBLO/img1.png",
     title: "The PUEBLO of Sandia Child Development Center",
-    software: "",
+    software: "tekla Structural",
     address: "Albuquerque, New Mexico",
     Projecttype: "Commercial",
     images: [
@@ -92,6 +94,7 @@ const tekla = [
   {
     src: "../../../assets/tekla/WINDSOR/img1.png",
     title: "WINDSOR Municipal Building",
+    software: "tekla Structural",
     address: "Windsor, Wisconsin",
     Projecttype: "Commercial",
     images: [
@@ -106,7 +109,7 @@ const tekla = [
   {
     src: "../../../assets/tekla/WAUSAU/img1.png",
     title: "WAUSAU West High School",
-    software: "",
+    software: "tekla Structural",
     address: "Wausau, Wisconsin",
     Projecttype: "Institute",
     images: [
@@ -124,7 +127,7 @@ const tekla = [
   {
     src: "../../../assets/tekla/WRIGHTSTOWN/img1.png",
     title: "WRIGTHSTOWN SWEF & State Patrol Post Facility",
-    software: "",
+    software: "tekla Structural",
     address: "Wrightstown, Wisconsin",
     Projecttype: "Commercial",
     images: [
@@ -139,7 +142,7 @@ const tekla = [
   {
     src: "../../../assets/sds/LUBBOCK/model (30).png",
     title: "LUBBOCK Medical Examniner's Office",
-    software: "",
+    software: "SDS/2",
     address: "Lubbock, Texas",
     Projecttype: "Commercial",
     images: [
@@ -163,7 +166,7 @@ const tekla = [
   {
     src: "../../../assets/sds/R.L.COUSINS-COMMUNITY-CENTER/Exported View 1.png",
     title: "R.L. Cousins Renovation & Community Center",
-    software: "",
+    software: "SDS/2",
     address: "Covington, Georgia",
     Projecttype: "Commercial",
     images: [
@@ -181,7 +184,7 @@ const tekla = [
   {
     src: "../../../assets/sds/RANCHO/Exported View 1.png",
     title: "RANCHO Delrey Building",
-    software: "",
+    software: "SDS/2",
     address: "El Paso, Texas",
     Projecttype: "Commercial",
     images: [
@@ -199,7 +202,7 @@ const tekla = [
   {
     src: "../../../assets/sds/STAHL/Exported View 1.png",
     title: "STAHL Mezzanine",
-    software: "",
+    software: "SDS/2",
     address: "Calhoun, Georgia",
     Projecttype: "Industrial",
     images: [
@@ -217,7 +220,7 @@ const tekla = [
   {
     src: "../../../assets/sds/TINKER/Exported View 1.png",
     title: "Project TINKER",
-    software: "",
+    software: "SDS/2",
     address: "Roonak, Virginia",
     Projecttype: "Commercial",
     images: [
@@ -235,7 +238,7 @@ const tekla = [
   {
     src: "../../../assets/sds/Trinity/Exported View 1.png",
     title: "Project Trinity",
-    software: "",
+    software: "SDS/2",
     address: "Trinity, Alabama",
     Projecttype: "Industrial",
     images: [
@@ -250,7 +253,7 @@ const tekla = [
   {
     src: "../../../assets/sds/Yarbrough/9.png",
     title: "Yarbrough Warehouse",
-    software: "",
+    software: "SDS/2",
     address: "Shreveport, Louisiana",
     Projecttype: "Commercial(Warehouse)",
     images: [{ src: "../../../assets/sds/Yarbrough/9.png" }],
@@ -258,7 +261,7 @@ const tekla = [
   {
     src: "../../../assets/sds/Harrison/Exported View 1.png",
     title: "Harrison Middle School",
-    software: "",
+    software: "SDS/2",
     address: "Albuquerque, New Mexico",
     Projecttype: "Institute",
     images: [
