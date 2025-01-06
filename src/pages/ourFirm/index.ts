@@ -5,7 +5,6 @@ import BusiessModel from "./BusinessModel";
 import PEMB from "./PEMB";
 import Structural from "./Structural";
 import Tekla from "./Tekla";
-import SDS from "./SDS";
 
 type LeaderDetailType = {
     name: string;
@@ -27,5 +26,4 @@ export {
     PEMB,
     Structural,
     Tekla,
-    SDS,
 }
