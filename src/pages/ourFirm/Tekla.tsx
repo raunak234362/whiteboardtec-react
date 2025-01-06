@@ -344,7 +344,7 @@ function Tekla() {
                 alt={item.title}
                 className="rounded-lg shadow-md"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 hover:opacity-50 transition duration-300 flex items-center justify-center rounded-lg">
+              <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 hover:opacity-75 transition duration-300 flex items-center justify-center rounded-lg">
                 <span className="text-white text-xl font-bold">
                   {item.title.toUpperCase()}
                 </span>
