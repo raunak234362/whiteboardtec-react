@@ -155,6 +155,51 @@ const pembImg = [
       },
     ],
   },
+  {
+    src: "../../../assets/PEMB/Benning Construction Company/img1.png",
+    title: "Benning Construction Company",
+    software: "",
+    address: "",
+    Projecttype: "",
+    images: [
+      {
+        src: "../../../assets/PEMB/Benning Construction Company/img1.png",
+      },
+      {
+        src: "../../../assets/PEMB/Benning Construction Company/img2.png",
+      },
+      {
+        src: "../../../assets/PEMB/Benning Construction Company/img3.png",
+      },
+      {
+        src: "../../../assets/PEMB/Benning Construction Company/img4.png",
+      },
+      {
+        src: "../../../assets/PEMB/Benning Construction Company/img5.png",
+      },
+      {
+        src: "../../../assets/PEMB/Benning Construction Company/img6.png",
+      },
+      {
+        src: "../../../assets/PEMB/Benning Construction Company/img7.png",
+      },
+      {
+        src: "../../../assets/PEMB/Benning Construction Company/img8.png",
+      },
+    ],
+  },
+  {
+    src:"../../../assets/BWC Education/img1.png",
+    title: "BWC Education",
+    software: "",
+    address: "",
+    Projecttype: "",
+    images:[
+      {
+        src: "../../../assets/BWC Education/img1.png",
+      }
+    ]
+  }
 ];
 
 function PEMB() {
@@ -217,7 +262,7 @@ function PEMB() {
                   item.title,
                   item.address || "Unknown address",
                   item.software || "Unknown",
-                  item.Projecttype,
+                  item.Projecttype
                 )
               }
             >
