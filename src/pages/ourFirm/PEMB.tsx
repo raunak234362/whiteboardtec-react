@@ -189,17 +189,67 @@ const pembImg = [
     ],
   },
   {
-    src:"../../../assets/BWC Education/img1.png",
+    src:"../../../assets/PEMB/BWC Education/img1.png",
     title: "BWC Education",
     software: "",
     address: "",
     Projecttype: "",
     images:[
       {
-        src: "../../../assets/BWC Education/img1.png",
-      }
-    ]
-  }
+        src: "../../../assets/PEMB/BWC Education/img1.png",
+      },
+      {
+        src: "../../../assets/PEMB/BWC Education/img2.png",
+      },
+      {
+        src: "../../../assets/PEMB/BWC Education/img3.png",
+      },
+    ],
+  },
+  {
+    src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img0.png",
+    title: "Commercial Construction & Maintenance, Inc.",
+    software: "",
+    address: "",
+    Projecttype: "",
+    images: [
+      { src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img1.png" },
+      { src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img2.png" },
+      { src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img3.png" },
+      { src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img4.png" },
+    ],
+  },
+  {
+    src: "../../../assets/PEMB/Mac's Construction Company, Inc/img0.png",
+    title: "Mac's Contruction Company, Inc",
+    software: "",
+    address: "",
+    Projecttype: "",
+    images: [
+      { src: "../../../assets/PEMB/Mac's Construction Company, Inc/img1.png" },
+      { src: "../../../assets/PEMB/Mac's Construction Company, Inc/img2.png" },
+      { src: "../../../assets/PEMB/Mac's Construction Company, Inc/img3.png" },
+      { src: "../../../assets/PEMB/Mac's Construction Company, Inc/img4.png" },
+    ],
+  },
+  {
+    src: "../../../assets/PEMB/Pogue Construction/img0.png",
+    title: "Pogue Construction",
+    software: "",
+    address: "",
+    Projecttype: "",
+    images: [
+      { src: "../../../assets/PEMB/Pogue Construction/img0.png" },
+      { src: "../../../assets/PEMB/Pogue Construction/img1.png" },
+      { src: "../../../assets/PEMB/Pogue Construction/img2.png" },
+      { src: "../../../assets/PEMB/Pogue Construction/img3.png" },
+      { src: "../../../assets/PEMB/Pogue Construction/img4.png" },
+      { src: "../../../assets/PEMB/Pogue Construction/img5.png" },
+      { src: "../../../assets/PEMB/Pogue Construction/img6.png" },
+      { src: "../../../assets/PEMB/Pogue Construction/img7.png" },
+    ],
+  },
+
 ];
 
 function PEMB() {
@@ -226,6 +276,7 @@ function PEMB() {
     software: string,
     projectType: string
   ) => {
+    console.log('Opening popup with:', { images, title, address, software, projectType });
     preloadImages(images);
     setPopupImages(images);
     setPopupTitle(title);
@@ -242,6 +293,14 @@ function PEMB() {
     setPopupSoftware(null);
     setPopupProjectType(null);
   };
+
+  console.log('Render state:', {
+    hasImages: !!popupImages,
+    hasTitle: !!popupTitle,
+    hasAddress: !!popupAddress,
+    hasProjectType: !!popupProjectType
+  });
+
   return (
     <div className="pemb">
       <PageBanner {...banner} />
