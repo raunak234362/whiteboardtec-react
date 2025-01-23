@@ -15,6 +15,7 @@ const pembImg = [
     src: "../../../assets/PEMB/3D Building Systems (Brownwood ISD - Practice Facility)/Exported View 3.png",
     title: "Brownwood ISD - Practice Facility",
     software: "",
+    ProjectStatus: "Completed",
     address: "Brpwnwood, Texas",
     Projecttype: "Commercial",
     images: [
@@ -33,6 +34,7 @@ const pembImg = [
     src: "../../../assets/PEMB/Berry and Clay (Bartlett ISD Cafeteria and Kitchen)/Exported View 1.png",
     title: "Bartlett ISD Cafeteria and Kitchen",
     software: "",
+    ProjectStatus: "Completed",
     address: "Barlett, Texas",
     Projecttype: "Institute",
     images: [
@@ -158,9 +160,9 @@ const pembImg = [
   {
     src: "../../../assets/PEMB/Benning Construction Company/img1.png",
     title: "Benning Construction Company",
-    software: "",
-    address: "",
-    Projecttype: "",
+    software: "Tekla Structural",
+    address: "Delton Georgia",
+    Projecttype: "Commercial",
     images: [
       {
         src: "../../../assets/PEMB/Benning Construction Company/img1.png",
@@ -189,12 +191,12 @@ const pembImg = [
     ],
   },
   {
-    src:"../../../assets/PEMB/BWC Education/img1.png",
+    src: "../../../assets/PEMB/BWC Education/img1.png",
     title: "BWC Education",
-    software: "",
-    address: "",
-    Projecttype: "",
-    images:[
+    software: "Tekla Structural",
+    address: "Denton, Texas",
+    Projecttype: "Educational",
+    images: [
       {
         src: "../../../assets/PEMB/BWC Education/img1.png",
       },
@@ -204,51 +206,288 @@ const pembImg = [
       {
         src: "../../../assets/PEMB/BWC Education/img3.png",
       },
+      {
+        src: "../../../assets/PEMB/BWC Education/img4.png",
+      },
+      {
+        src: "../../../assets/PEMB/BWC Education/img5.png",
+      },
+      {
+        src: "../../../assets/PEMB/BWC Education/img6.png",
+      },
+      {
+        src: "../../../assets/PEMB/BWC Education/img7.png",
+      },
+      {
+        src: "../../../assets/PEMB/BWC Education/img8.png",
+      },
     ],
   },
   {
-    src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img0.png",
-    title: "Commercial Construction & Maintenance, Inc.",
-    software: "",
-    address: "",
-    Projecttype: "",
+    src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img1.png",
+    title: "Commercial Construction & Maintenance, Inc",
+    software: "Tekla Structural",
+    address: "Manvel, Texas",
+    Projecttype: "Commercial",
     images: [
-      { src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img1.png" },
-      { src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img2.png" },
-      { src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img3.png" },
-      { src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img4.png" },
+      {
+        src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img1.png",
+      },
+      {
+        src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img2.png",
+      },
+      {
+        src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img3.png",
+      },
+      {
+        src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img4.png",
+      },
+      {
+        src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img5.png",
+      },
+      {
+        src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img6.png",
+      },
+      {
+        src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img7.png",
+      },
+      {
+        src: "../../../assets/PEMB/Commercial Construction & Maintenance, Inc/img8.png",
+      },
     ],
   },
   {
-    src: "../../../assets/PEMB/Mac's Construction Company, Inc/img0.png",
-    title: "Mac's Contruction Company, Inc",
-    software: "",
-    address: "",
-    Projecttype: "",
+    src: "../../../assets/PEMB/Mac's Construction Company, Inc/img1.png",
+    title: "Mac's Construction Company, Inc",
+    software: "Tekla Structural",
+    address: "Wiggins, Mississippi",
+    Projecttype: "Educational",
     images: [
-      { src: "../../../assets/PEMB/Mac's Construction Company, Inc/img1.png" },
-      { src: "../../../assets/PEMB/Mac's Construction Company, Inc/img2.png" },
-      { src: "../../../assets/PEMB/Mac's Construction Company, Inc/img3.png" },
-      { src: "../../../assets/PEMB/Mac's Construction Company, Inc/img4.png" },
+      {
+        src: "../../../assets/PEMB/Mac's Construction Company, Inc/img1.png",
+      },
+      {
+        src: "../../../assets/PEMB/Mac's Construction Company, Inc/img2.png",
+      },
+      {
+        src: "../../../assets/PEMB/Mac's Construction Company, Inc/img3.png",
+      },
+      {
+        src: "../../../assets/PEMB/Mac's Construction Company, Inc/img4.png",
+      },
+      {
+        src: "../../../assets/PEMB/Mac's Construction Company, Inc/img5.png",
+      },
+      {
+        src: "../../../assets/PEMB/Mac's Construction Company, Inc/img6.png",
+      },
+      {
+        src: "../../../assets/PEMB/Mac's Construction Company, Inc/img7.png",
+      },
+      {
+        src: "../../../assets/PEMB/Mac's Construction Company, Inc/img8.png",
+      },
     ],
   },
   {
-    src: "../../../assets/PEMB/Pogue Construction/img0.png",
+    src: "../../../assets/PEMB/N&T Construction Co, Inc/img1.png",
+    title: "N&T Construction Co, Inc",
+    software: "Tekla Structural",
+    address: "Port Arthur, Texas",
+    Projecttype: "Educational",
+    images: [
+      {
+        src: "../../../assets/PEMB/N&T Construction Co, Inc/img1.png",
+      },
+      {
+        src: "../../../assets/PEMB/N&T Construction Co, Inc/img2.png",
+      },
+      {
+        src: "../../../assets/PEMB/N&T Construction Co, Inc/img3.png",
+      },
+      {
+        src: "../../../assets/PEMB/N&T Construction Co, Inc/img4.png",
+      },
+      {
+        src: "../../../assets/PEMB/N&T Construction Co, Inc/img5.png",
+      },
+      {
+        src: "../../../assets/PEMB/N&T Construction Co, Inc/img6.png",
+      },
+      {
+        src: "../../../assets/PEMB/N&T Construction Co, Inc/img7.png",
+      },
+      {
+        src: "../../../assets/PEMB/N&T Construction Co, Inc/img9.png",
+      },
+    ],
+  },
+  {
+    src: "../../../assets/PEMB/Pogue Construction/img1.png",
     title: "Pogue Construction",
-    software: "",
-    address: "",
-    Projecttype: "",
+    software: "Tekla Structural",
+    address: "Collin, Texas",
+    Projecttype: "Commercial",
     images: [
-      { src: "../../../assets/PEMB/Pogue Construction/img0.png" },
-      { src: "../../../assets/PEMB/Pogue Construction/img1.png" },
-      { src: "../../../assets/PEMB/Pogue Construction/img2.png" },
-      { src: "../../../assets/PEMB/Pogue Construction/img3.png" },
-      { src: "../../../assets/PEMB/Pogue Construction/img4.png" },
-      { src: "../../../assets/PEMB/Pogue Construction/img5.png" },
-      { src: "../../../assets/PEMB/Pogue Construction/img6.png" },
-      { src: "../../../assets/PEMB/Pogue Construction/img7.png" },
+      {
+        src: "../../../assets/PEMB/Pogue Construction/img1.png",
+      },
+      {
+        src: "../../../assets/PEMB/Pogue Construction/img2.png",
+      },
+      {
+        src: "../../../assets/PEMB/Pogue Construction/img3.png",
+      },
+      {
+        src: "../../../assets/PEMB/Pogue Construction/img4.png",
+      },
+      {
+        src: "../../../assets/PEMB/Pogue Construction/img5.png",
+      },
+      {
+        src: "../../../assets/PEMB/Pogue Construction/img6.png",
+      },
+      {
+        src: "../../../assets/PEMB/Pogue Construction/img7.png",
+      },
+      {
+        src: "../../../assets/PEMB/Pogue Construction/img9.png",
+      },
     ],
   },
+  {
+    src: "../../../assets/PEMB/Rudick Construction Group/img1.png",
+    title: "Rudick Construction Group",
+    software: "Tekla Structural",
+    address: "Fannin, Texas",
+    Projecttype: "Commercial",
+    images: [
+      {
+        src: "../../../assets/PEMB/Rudick Construction Group/img1.png",
+      },
+      {
+        src: "../../../assets/PEMB/Rudick Construction Group/img2.png",
+      },
+      {
+        src: "../../../assets/PEMB/Rudick Construction Group/img3.png",
+      },
+      {
+        src: "../../../assets/PEMB/Rudick Construction Group/img4.png",
+      },
+      {
+        src: "../../../assets/PEMB/Rudick Construction Group/img5.png",
+      },
+      {
+        src: "../../../assets/PEMB/Rudick Construction Group/img6.png",
+      },
+      {
+        src: "../../../assets/PEMB/Rudick Construction Group/img7.png",
+      },
+      {
+        src: "../../../assets/PEMB/Rudick Construction Group/img9.png",
+      },
+    ],
+  },
+  {
+    src: "../../../assets/PEMB/Voelkel McWilliams Construction, LLC/img.png",
+    title: "Rudick Construction Group",
+    software: "Tekla Structural",
+    address: "Saint John, Lousiana",
+    Projecttype: "Commercial",
+    images: [
+      {
+        src: "../../../assets/PEMB/Voelkel McWilliams Construction, LLC/img.png",
+      },
+      {
+        src: "../../../assets/PEMB/Voelkel McWilliams Construction, LLC/img2.png",
+      },
+      {
+        src: "../../../assets/PEMB/Voelkel McWilliams Construction, LLC/img3.png",
+      },
+      {
+        src: "../../../assets/PEMB/Voelkel McWilliams Construction, LLC/img4.png",
+      },
+      {
+        src: "../../../assets/PEMB/Voelkel McWilliams Construction, LLC/img5.png",
+      },
+      {
+        src: "../../../assets/PEMB/Voelkel McWilliams Construction, LLC/img6.png",
+      },
+      {
+        src: "../../../assets/PEMB/Voelkel McWilliams Construction, LLC/img7.png",
+      },
+      {
+        src: "../../../assets/PEMB/Voelkel McWilliams Construction, LLC/img9.png",
+      },
+    ],
+  },
+  {
+    src: "../../../assets/PEMB/Waldrop Construction/img0.png",
+    title: "Waldrop Construction",
+    software: "Tekla Structural",
+    address: "Edwards, Texas",
+    Projecttype: "Educational",
+    images: [
+      {
+        src: "../../../assets/PEMB/Waldrop Construction/img.png",
+      },
+      {
+        src: "../../../assets/PEMB/Waldrop Construction/img2.png",
+      },
+      {
+        src: "../../../assets/PEMB/Waldrop Construction/img3.png",
+      },
+      {
+        src: "../../../assets/PEMB/Waldrop Construction/img4.png",
+      },
+      {
+        src: "../../../assets/PEMB/Waldrop Construction/img5.png",
+      },
+      {
+        src: "../../../assets/PEMB/Waldrop Construction/img6.png",
+      },
+      {
+        src: "../../../assets/PEMB/Waldrop Construction/img7.png",
+      },
+      {
+        src: "../../../assets/PEMB/Waldrop Construction/img9.png",
+      },
+    ],
+  },
+  {
+    src: "../../../assets/PEMB/Warren Construction INC/img0.png",
+    title: "Warren Construction INC",
+    software: "Tekla Structural",
+    address: "Dona Ana, New Mexico",
+    Projecttype: "Educational",
+    images: [
+      {
+        src: "../../../assets/PEMB/Warren Construction INC/img0.png",
+      },
+      {
+        src: "../../../assets/PEMB/Warren Construction INC/img1.png",
+      },
+      {
+        src: "../../../assets/PEMB/Warren Construction INC/img3.png",
+      },
+      {
+        src: "../../../assets/PEMB/Warren Construction INC/img4.png",
+      },
+      {
+        src: "../../../assets/PEMB/Warren Construction INC/img5.png",
+      },
+      {
+        src: "../../../assets/PEMB/Warren Construction INC/img6.png",
+      },
+      {
+        src: "../../../assets/PEMB/Warren Construction INC/img7.png",
+      },
+      {
+        src: "../../../assets/PEMB/Warren Construction INC/img9.png",
+      },
+    ],
+  },
+ 
 
 ];
 
@@ -259,6 +498,7 @@ function PEMB() {
   const [popupTitle, setPopupTitle] = useState<string | null>(null);
   const [popupAddress, setPopupAddress] = useState<string | null>(null);
   const [popupProjectType, setPopupProjectType] = useState<string | null>(null);
+  const [popupProjectStatus, setPopupProjectStatus] = useState<string | null>(null);
   const [popupIndex, setPopupIndex] = useState<number>(0);
   const [popupSoftware, setPopupSoftware] = useState<string | null>(null);
 
@@ -274,7 +514,8 @@ function PEMB() {
     title: string,
     address: string,
     software: string,
-    projectType: string
+    projectType: string,
+    projectStatus: string
   ) => {
     console.log('Opening popup with:', { images, title, address, software, projectType });
     preloadImages(images);
@@ -283,6 +524,7 @@ function PEMB() {
     setPopupAddress(address);
     setPopupSoftware(software);
     setPopupProjectType(projectType);
+    setPopupProjectStatus(projectStatus);
     setPopupIndex(0);
   };
 
@@ -292,13 +534,15 @@ function PEMB() {
     setPopupAddress(null);
     setPopupSoftware(null);
     setPopupProjectType(null);
+    setPopupProjectStatus(null);
   };
 
   console.log('Render state:', {
     hasImages: !!popupImages,
     hasTitle: !!popupTitle,
     hasAddress: !!popupAddress,
-    hasProjectType: !!popupProjectType
+    hasProjectType: !!popupProjectType,
+    hasProjectStatus: !!popupProjectStatus
   });
 
   return (
@@ -317,11 +561,12 @@ function PEMB() {
               className="h-full justify-center text-center cursor-pointer"
               onClick={() =>
                 openPopup(
-                  item.images,
-                  item.title,
-                  item.address || "Unknown address",
-                  item.software || "Unknown",
-                  item.Projecttype
+                  item?.images,
+                  item?.title,
+                  item?.address || "Unknown address",
+                  item?.software || "Unknown",
+                  item?.Projecttype,
+                  item?.ProjectStatus || "Status not available"
                 )
               }
             >
@@ -347,6 +592,7 @@ function PEMB() {
           address={popupAddress || ""}
           software={popupSoftware || ""}
           Projecttype={popupProjectType || ""}
+          ProjectStatus={popupProjectStatus || ""}
           initialIndex={popupIndex}
           onClose={closePopup}
         />

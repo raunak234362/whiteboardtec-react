@@ -7,6 +7,7 @@ interface ImageModalProps {
   address: string | "Image not available";
   software: string | "Unknown";
   Projecttype: string | "Image not available";
+  ProjectStatus: string | "Status not available";
   initialIndex: number;
   onClose: () => void;
 }
@@ -16,6 +17,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
   title,
   address,
   Projecttype,
+  ProjectStatus,
   software,
   initialIndex,
   onClose,
@@ -63,6 +65,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
             <p className="md:text-4xl font-bold text-green-700">{title.toUpperCase()}</p>
             <p className="md:text-lg text-gray-700"><span>Location: </span>{address.toUpperCase()}</p>
             <p className="md:text-lg text-gray-700"><span>Project Type: </span>{Projecttype.toUpperCase()}</p>
+            <p className="md:text-lg text-gray-700"><span>Project Status: </span>{ProjectStatus.toUpperCase()}</p>
             <p className="md:text-lg text-gray-700"><span>Software Used: </span>{software.toUpperCase()}</p>
           </div>
           <div className="flex gap-5 justify-center mt-4">
