@@ -435,7 +435,10 @@ const pembImg = [
     Projecttype: "Educational",
     images: [
       {
-        src: "../../../assets/PEMB/Waldrop Construction/img.png",
+        src: "../../../assets/PEMB/Waldrop Construction/img0.png",
+      },
+      {
+        src: "../../../assets/PEMB/Waldrop Construction/img1.png",
       },
       {
         src: "../../../assets/PEMB/Waldrop Construction/img2.png",
@@ -451,9 +454,6 @@ const pembImg = [
       },
       {
         src: "../../../assets/PEMB/Waldrop Construction/img6.png",
-      },
-      {
-        src: "../../../assets/PEMB/Waldrop Construction/img7.png",
       },
       {
         src: "../../../assets/PEMB/Waldrop Construction/img9.png",
