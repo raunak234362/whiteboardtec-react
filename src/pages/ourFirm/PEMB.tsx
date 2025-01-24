@@ -15,7 +15,7 @@ const pembImg = [
     src: "../../../assets/PEMB/3D Building Systems (Brownwood ISD - Practice Facility)/Exported View 3.png",
     title: "Brownwood ISD - Practice Facility",
     software: "",
-    ProjectStatus: "Completed",
+    ProjectStatus: "",
     address: "Brpwnwood, Texas",
     Projecttype: "Commercial",
     images: [
@@ -34,7 +34,7 @@ const pembImg = [
     src: "../../../assets/PEMB/Berry and Clay (Bartlett ISD Cafeteria and Kitchen)/Exported View 1.png",
     title: "Bartlett ISD Cafeteria and Kitchen",
     software: "",
-    ProjectStatus: "Completed",
+    ProjectStatus: "",
     address: "Barlett, Texas",
     Projecttype: "Institute",
     images: [
@@ -53,6 +53,7 @@ const pembImg = [
     src: "../../../assets/PEMB/Crossland Construction Company (Rollertown Beerworks Brewery)/Exported View 1.png",
     title: "Rollertown Beerworks Brewery",
     software: "",
+    ProjectStatus: "",
     address: "Frisco, Texas",
     Projecttype: "Commercial",
     images: [
@@ -71,6 +72,7 @@ const pembImg = [
     src: "../../../assets/PEMB/Cunningham Clark Construction (Lonestar Truck Wichita Falls Service Facility)/Exported View 1.png",
     title: "Lonestar Truck Wichita Falls Service Facility",
     software: "",
+    ProjectStatus: "",
     address: "Wichita Falls, Texas",
     Projecttype: "Commercial",
     images: [
@@ -89,6 +91,7 @@ const pembImg = [
     src: "../../../assets/PEMB/East Chambers-New Junior High School/Exported View 1.png",
     title: "East Chambers-New Junior High School",
     software: "",
+    ProjectStatus: "",
     address: "Winnie, Texas",
     Projecttype: "Institute",
     images: [
@@ -107,6 +110,7 @@ const pembImg = [
     src: "../../../assets/PEMB/Fort Construction (Emmanuel Chin Baptist Church)/Exported View 3.png",
     title: "Emmanuel Chin Baptist Church",
     software: "",
+    ProjectStatus: "",
     address: "Denton, Texas",
     Projecttype: "Worship",
     images: [
@@ -125,6 +129,7 @@ const pembImg = [
     src: "../../../assets/PEMB/Jackson Construction (Chapel Hill ISD Operations-Transportation)/Exported View 1.png",
     title: "Chapel Hill ISD Operations-Transportation",
     software: "",
+    ProjectStatus: "",
     address: "Tyler, Texas",
     Projecttype: "Education",
     images: [
@@ -143,6 +148,7 @@ const pembImg = [
     src: "../../../assets/PEMB/Pat Williams Construction (Lake Charles Airport Hangar )/Exported View 1.png",
     title: "Lake Charles Airport Hangar",
     software: "",
+    ProjectStatus: "",
     address: "Lake Charles, Louisiana",
     Projecttype: "Hangar",
     images: [
@@ -487,8 +493,6 @@ const pembImg = [
       },
     ],
   },
- 
-
 ];
 
 function PEMB() {
@@ -498,7 +502,9 @@ function PEMB() {
   const [popupTitle, setPopupTitle] = useState<string | null>(null);
   const [popupAddress, setPopupAddress] = useState<string | null>(null);
   const [popupProjectType, setPopupProjectType] = useState<string | null>(null);
-  const [popupProjectStatus, setPopupProjectStatus] = useState<string | null>(null);
+  const [popupProjectStatus, setPopupProjectStatus] = useState<string | null>(
+    null
+  );
   const [popupIndex, setPopupIndex] = useState<number>(0);
   const [popupSoftware, setPopupSoftware] = useState<string | null>(null);
 
@@ -517,7 +523,13 @@ function PEMB() {
     projectType: string,
     projectStatus: string
   ) => {
-    console.log('Opening popup with:', { images, title, address, software, projectType });
+    console.log("Opening popup with:", {
+      images,
+      title,
+      address,
+      software,
+      projectType,
+    });
     preloadImages(images);
     setPopupImages(images);
     setPopupTitle(title);
@@ -537,12 +549,12 @@ function PEMB() {
     setPopupProjectStatus(null);
   };
 
-  console.log('Render state:', {
+  console.log("Render state:", {
     hasImages: !!popupImages,
     hasTitle: !!popupTitle,
     hasAddress: !!popupAddress,
     hasProjectType: !!popupProjectType,
-    hasProjectStatus: !!popupProjectStatus
+    hasProjectStatus: !!popupProjectStatus,
   });
 
   return (
