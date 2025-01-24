@@ -15,6 +15,7 @@ const tekla = [
     title: "Chamisa Elementary School Replacement",
     software: "tekla Structural",
     address: "White Rock, New Mexio",
+    ProjectStatus: "",
     Projecttype: "Institute",
     images: [
       {
@@ -30,6 +31,7 @@ const tekla = [
     title: "CNM Film School",
     software: "tekla Structural",
     address: "Albuquerque, New Mexico",
+    ProjectStatus: "",
     Projecttype: "Institute",
     images: [
       {
@@ -51,6 +53,7 @@ const tekla = [
     title: "MCA G1 Plant Expansion",
     software: "tekla Structural",
     address: "Hogansville, Georgia",
+    ProjectStatus: "",
     Projecttype: "Facility Expension",
     images: [
       {
@@ -66,6 +69,7 @@ const tekla = [
     title: "PINON Elementary School",
     software: "tekla Structural",
     address: "White Rock, New Mexico",
+    ProjectStatus: "",
     Projecttype: "Institute",
     images: [
       {
@@ -81,6 +85,7 @@ const tekla = [
     title: "The PUEBLO of Sandia Child Development Center",
     software: "tekla Structural",
     address: "Albuquerque, New Mexico",
+    ProjectStatus: "",
     Projecttype: "Commercial",
     images: [
       {
@@ -96,6 +101,7 @@ const tekla = [
     title: "WINDSOR Municipal Building",
     software: "tekla Structural",
     address: "Windsor, Wisconsin",
+    ProjectStatus: "",
     Projecttype: "Commercial",
     images: [
       {
@@ -111,6 +117,7 @@ const tekla = [
     title: "WAUSAU West High School",
     software: "tekla Structural",
     address: "Wausau, Wisconsin",
+    ProjectStatus: "",
     Projecttype: "Institute",
     images: [
       {
@@ -129,6 +136,7 @@ const tekla = [
     title: "WRIGTHSTOWN SWEF & State Patrol Post Facility",
     software: "tekla Structural",
     address: "Wrightstown, Wisconsin",
+    ProjectStatus: "",
     Projecttype: "Commercial",
     images: [
       {
@@ -144,6 +152,7 @@ const tekla = [
     title: "LUBBOCK Medical Examniner's Office",
     software: "SDS/2",
     address: "Lubbock, Texas",
+    ProjectStatus: "",
     Projecttype: "Commercial",
     images: [
       {
@@ -168,6 +177,7 @@ const tekla = [
     title: "R.L. Cousins Renovation & Community Center",
     software: "SDS/2",
     address: "Covington, Georgia",
+    ProjectStatus: "",
     Projecttype: "Commercial",
     images: [
       {
@@ -186,6 +196,7 @@ const tekla = [
     title: "RANCHO Delrey Building",
     software: "SDS/2",
     address: "El Paso, Texas",
+    ProjectStatus: "",
     Projecttype: "Commercial",
     images: [
       {
@@ -204,6 +215,7 @@ const tekla = [
     title: "STAHL Mezzanine",
     software: "SDS/2",
     address: "Calhoun, Georgia",
+    ProjectStatus: "",
     Projecttype: "Industrial",
     images: [
       {
@@ -222,6 +234,7 @@ const tekla = [
     title: "Project TINKER",
     software: "SDS/2",
     address: "Roonak, Virginia",
+    ProjectStatus: "",
     Projecttype: "Commercial",
     images: [
       {
@@ -240,6 +253,7 @@ const tekla = [
     title: "Project Trinity",
     software: "SDS/2",
     address: "Trinity, Alabama",
+    ProjectStatus: "",
     Projecttype: "Industrial",
     images: [
       {
@@ -255,6 +269,7 @@ const tekla = [
     title: "Yarbrough Warehouse",
     software: "SDS/2",
     address: "Shreveport, Louisiana",
+    ProjectStatus: "",
     Projecttype: "Commercial(Warehouse)",
     images: [{ src: "../../../assets/sds/Yarbrough/9.png" }],
   },
@@ -263,6 +278,7 @@ const tekla = [
     title: "Harrison Middle School",
     software: "SDS/2",
     address: "Albuquerque, New Mexico",
+    ProjectStatus: "",
     Projecttype: "Institute",
     images: [
       {
@@ -283,6 +299,9 @@ function Tekla() {
   const [popupAddress, setPopupAddress] = useState<string | null>(null);
   const [popupSoftware, setPopupSoftware] = useState<string | null>(null);
   const [popupProjectType, setPopupProjectType] = useState<string | null>(null);
+  const [popupProjectStatus, setPopupProjectStatus] = useState<string | null>(
+    null
+  );
   const [popupIndex, setPopupIndex] = useState<number>(0);
 
   const preloadImages = (images: { src: string }[]) => {
@@ -297,14 +316,23 @@ function Tekla() {
     title: string,
     address: string,
     software: string,
-    projectType: string
+    projectType: string,
+    projectStatus: string
   ) => {
+    console.log("Opening popup with:", {
+      images,
+      title,
+      address,
+      software,
+      projectType,
+    });
     preloadImages(images);
     setPopupImages(images);
     setPopupTitle(title);
     setPopupAddress(address);
     setPopupSoftware(software);
     setPopupProjectType(projectType);
+    setPopupProjectStatus(projectStatus);
     setPopupIndex(0);
   };
 
@@ -312,8 +340,8 @@ function Tekla() {
     setPopupImages(null);
     setPopupTitle(null);
     setPopupAddress(null);
-    setPopupSoftware(null);
     setPopupProjectType(null);
+    setPopupProjectStatus(null);
   };
   return (
     <div className="tekla">
@@ -331,11 +359,12 @@ function Tekla() {
               className="h-full justify-center text-center cursor-pointer"
               onClick={() =>
                 openPopup(
-                  item.images,
-                  item.title,
-                  item.address || "Unknown address",
-                  item.software || "Unknown software",
-                  item.Projecttype,
+                  item?.images,
+                  item?.title,
+                  item?.address || "Unknown address",
+                  item?.software || "Unknown",
+                  item?.Projecttype,
+                  item?.ProjectStatus || "Status not available"
                 )
               }
             >
@@ -358,9 +387,10 @@ function Tekla() {
         <ImageModal
           images={popupImages}
           title={popupTitle}
-          Projecttype={popupProjectType || ""}
           address={popupAddress || ""}
           software={popupSoftware || ""}
+          Projecttype={popupProjectType || ""}
+          ProjectStatus={popupProjectStatus || ""}
           initialIndex={popupIndex}
           onClose={closePopup}
         />
