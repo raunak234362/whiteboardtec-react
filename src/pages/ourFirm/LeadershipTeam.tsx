@@ -16,7 +16,8 @@ const team : LeaderDetailType[] = [
       "A spirited human being known as much for his wit as for his unbridled passion and commitment towards work. For him, people come first and that reflects in his ideology of a customer-focused delivery system. For over 15 years, Vishal has been a keen observer and a contributor to the Engineering Services Outsourcing (ESO) industry. Prior to founding Whiteboard Technologies, he spent several years working with multiple engineering service firms, taking them from start-up stages to established multi-million dollar enterprises. Be it sales & marketing, account management or technical detailing, Vishal always has a string of fresh, apt and highly valuable ideas brought to the table.",
       "It is no overstatement to say; he predicts key industry trends and insights before they evolve as trends. He has a Master’s Degree in Business Administration in International Marketing from the University of Queensland, Australia."
     ],
-    sociallink: "https://www.linkedin.com/in/vishallk/"
+    sociallink: "https://www.linkedin.com/in/vishallk/",
+    image:""
   },
   {
     name: "Rajeshwari V Khandappanavar",
@@ -24,7 +25,8 @@ const team : LeaderDetailType[] = [
     thoughts: [
       "As managing director at Whiteboard technologies, Rajeshwari has many hats to fill. Although what drives her profound passion for work is more than her title, it lies in discovering engineering complexities and finding innovative solutions for her clients. Prior to assuming the strategic seat at Whiteboard Technologies, she worked with multiple technology and media companies. From handling Key accounts at an interactive solutions company to working as a Sr. Copy Editor/Reporter for one of India’s largest media house, she has always taken on challenging projects and performed to the highest level of professionalism. As her team describes, she’s a burst of fresh energy and a people person by heart. Rajeshwari completed her MBA in Marketing from JNNCE, Shimoga. When off work, she loves gardening and practicing yoga."
     ],
-    sociallink: "https://www.linkedin.com/in/rajeshwari-k-4b46818/"
+    sociallink: "https://www.linkedin.com/in/rajeshwari-k-4b46818/",
+    image:""
   }
 ]
 

@@ -11,6 +11,7 @@ type LeaderDetailType = {
     designation: string;
     thoughts: string[];
     sociallink: string;
+    image: string;
 }
 
 export type {
