@@ -47,19 +47,19 @@ function App(): JSX.Element {
         </div>
         {showPopup && ( // Add popup image with close button
           <div className=" popup z-50 absolute top-0 overflow-x-hidden h-screen w-screen bg-black/50">
-            <div className="p-10 flex justify-center items-center h-full rounded-2xl">
-              <img
-                src={popupImg}
-                alt="Popup"
-                className="h-[95%] items-center w-[100%] rounded-2xl"
-              />
-            </div>
+            <div className="md:p-28 mt-10 flex justify-center items-center h-full rounded-2xl">
             <button
               onClick={() => setShowPopup(false)}
-              className="absolute top-2 right-10 p-3 rounded-full text-white bg-red-500"
+              className="absolute md:top-[10vh] top-[35vh] md:right-[15vw] right-[1vh] p-3 rounded-full text-white bg-red-500"
             >
               Close
             </button>
+              <img
+                src={popupImg}
+                alt="Popup"
+                className="md:h-[95%] items-center w-auto rounded-2xl"
+              />
+            </div>
           </div>
         )}
         <Outlet />
