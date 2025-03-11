@@ -49,7 +49,7 @@ function LeadershipTeam() {
                 >
                   <div className="flex flex-row items-center justify-between">
                     <div>
-                      <div className="text-[#6abd45] font-semibold text-4xl flex flex-wrap flex-col">
+                      <div className="text-[#6abd45] font-semibold text-4xl gap-5 flex flex-wrap flex-col">
                         {leader.name}
                       </div>
                       <div className="text-black font-semibold texl-2xl">
