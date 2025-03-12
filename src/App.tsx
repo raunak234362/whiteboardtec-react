@@ -50,7 +50,7 @@ function App(): JSX.Element {
             <div className="md:p-16 mt-10 flex justify-center items-center h-full rounded-2xl">
             <button
               onClick={() => setShowPopup(false)}
-              className="absolute md:top-[8vh] top-[35vh] md:right-[9vw] right-[1vh] p-3 rounded-full text-white bg-red-500"
+              className="absolute md:top-[8vh] top-[35vh] md:right-[9vw] right-[1vh] p-3 rounded-2xl text-white bg-red-500"
             >
               Close
             </button>
