@@ -15,7 +15,7 @@ export type ImagePortfolioPropType = {
     id: string,
     title: string,
     description: string,
-    images: string,
+    img: string,
     location: string,
     projectType: string,
     softwareUsed: string,

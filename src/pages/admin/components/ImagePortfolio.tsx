@@ -23,7 +23,7 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
   const [projectStatus, setProjectStatus] = useState(
     props.projectStatus || "In Progress"
   );
-  const [image, setImage] = useState<any>(null);
+  const [img, setImage] = useState<any>(null);
   const [progress, setProgress] = useState<number>(0);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +55,7 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
     setProjectType(props.projectType || "");
     setSoftwareUsed(props.softwareUsed || "");
     setProjectStatus(props.projectStatus || "In Progress");
-    setImage(null);
+    setImage(props.img);
     // setStatus(props.status || false);
     setProgress(0);
   };
@@ -69,15 +69,15 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
         projectType: projectType.trim(),
         softwareUsed: softwareUsed.trim(),
         projectStatus: projectStatus,
-        img: props.image || null,
+        img: props.img || null,
         status: status,
         updatedAt: new Date().toISOString(),
       };
 
-      if (image && props.image) {
+      if (img && props.img) {
         // Delete old image
         try {
-          const oldImageRef = ref(storage, props.image.split("?")[0]);
+          const oldImageRef = ref(storage, props.img.split("?")[0]);
           await deleteObject(oldImageRef);
           console.log("Old image deleted");
         } catch (err) {
@@ -89,7 +89,7 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
           storage,
           `Gallery/${title.replace(/\s+/g, "_")}_${v4()}`
         );
-        const snapshot = await uploadBytes(imgFile, image);
+        const snapshot = await uploadBytes(imgFile, img);
         const url = await getDownloadURL(snapshot.ref);
         data.img = url;
       }
@@ -115,7 +115,7 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
     ) {
       try {
         // Delete image from storage
-        if (props.image) {
+        if (props.img) {
           try {
             const imageRef = ref(storage, props.img.split("?")[0]);
             await deleteObject(imageRef);
@@ -435,9 +435,9 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
                 </button>
               </div>
               <div className="p-4">
-                {props.image ? (
+                {props.img ? (
                   <img
-                    src={props.image}
+                    src={props.img}
                     alt={props.title}
                     className="w-full h-auto max-h-[70vh] object-contain rounded"
                   />
@@ -502,7 +502,7 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
           </div>
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-center">
-          {props.image ? (
+          {props.img ? (
             <button
               onClick={() => setImageOpen(true)}
               className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
