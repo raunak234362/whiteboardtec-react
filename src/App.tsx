@@ -12,7 +12,7 @@ import popupImg from "/popup.png";
 
 function App(): JSX.Element {
   const [updated, setUpdated] = useState<boolean>(false);
-  const [showPopup, setShowPopup] = useState<boolean>(true); // Add state for popup visibility
+  const [showPopup, setShowPopup] = useState<boolean>(false); // Add state for popup visibility
 
   useEffect(() => {
     // console.log('App loaded')

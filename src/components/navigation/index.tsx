@@ -3,6 +3,7 @@ import Home from "./Home";
 import { NavBar } from "./NavBar";
 import { useState } from "react";
 import ExtraHeader from "../header/ExtraHeader";
+// import popupimage from "../../../public/popup.png"; // Adjust the path as necessary
 
 type NavRouteType = {
   name: string;
@@ -181,7 +182,7 @@ const NavigationBar = (): JSX.Element => {
 };
 
 const HomeNav = (): JSX.Element => {
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState(true);
 
   return (
     <>
