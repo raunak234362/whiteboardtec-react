@@ -15,7 +15,6 @@ import {
   LeadershipTeam,
   Gallery,
   PEMB as PEMBGallery,
-  Tekla,
 } from './pages/ourFirm'
 
 import {
@@ -55,8 +54,7 @@ const route = createBrowserRouter(
     <Route path="/" element={<App />}>
       <Route path="/our-firm" element={<OurFirm />} />
       <Route path="/our-firm/gallery" element={<Gallery />} />
-      <Route path="/our-firm/gallery/PEMB" element={<PEMBGallery />} />
-      <Route path="/our-firm/gallery/Structural" element={<Tekla />} />
+      <Route path="/our-firm/gallery/pemb" element={<PEMBGallery />} />
       <Route path="/our-firm/leadership-teams" element={<LeadershipTeam />} />
       <Route path="/our-firm/business-model" element={<BusiessModel />} />
       <Route path="/services" element={<StructuralSteel />} />

@@ -13,12 +13,14 @@ const galleryImages = [
   {
     src: "../../assets/Tekla.jpg",
     title: "Structural Steel Detailing Project",
-    url: "/our-firm/gallery/Structural",
+    // url: "/our-firm/gallery/Structural",
+    projectDepartment: "Structural",
   },
   {
     src: "../../assets/pembIMG.jpg",
     title: "PEMB Designing and Detailing",
-    url: "/our-firm/gallery/PEMB",
+    url: "/our-firm/gallery/pemb",
+    projectDepartment: "PEMB",
   },
 ];
 function Gallery() {

@@ -23,28 +23,33 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
   const [projectStatus, setProjectStatus] = useState(
     props.projectStatus || "In Progress"
   );
-  const [img, setImage] = useState<any>(null);
+  console.log("Project Status:", props);
+  const [img, setImage] = useState<any[]>([]);
   const [progress, setProgress] = useState<number>(0);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProgress(0);
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const fileArr = Array.from(files);
+      setImage(fileArr);
 
-      reader.onprogress = (event) => {
-        if (event.lengthComputable) {
-          const percentLoaded = (event.loaded / event.total) * 100;
-          setProgress(percentLoaded);
-        }
-      };
+      let totalLoaded = 0;
+      const totalSize = fileArr.reduce((sum, file) => sum + file.size, 0);
 
-      reader.onloadend = () => {
-        setProgress(100);
-        setImage(file);
-      };
-
-      reader.readAsDataURL(file);
+      fileArr.forEach((file) => {
+        const reader = new FileReader();
+        reader.onprogress = (event) => {
+          if (event.lengthComputable) {
+            totalLoaded += event.loaded;
+            const percent = (totalLoaded / totalSize) * 100;
+            setProgress(percent);
+          }
+        };
+        reader.onloadend = () => {
+          // Optional: log or preview here
+        };
+        reader.readAsDataURL(file);
+      });
     }
   };
 
@@ -55,7 +60,7 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
     setProjectType(props.projectType || "");
     setSoftwareUsed(props.softwareUsed || "");
     setProjectStatus(props.projectStatus || "In Progress");
-    setImage(props.img);
+    setImage(props.img ? [props.img] : []);
     // setStatus(props.status || false);
     setProgress(0);
   };
@@ -74,24 +79,30 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
         updatedAt: new Date().toISOString(),
       };
 
-      if (img && props.img) {
-        // Delete old image
-        try {
-          const oldImageRef = ref(storage, props.img.split("?")[0]);
-          await deleteObject(oldImageRef);
-          console.log("Old image deleted");
-        } catch (err) {
-          console.log("Error deleting old image:", err);
+      if (img && img.length > 0) {
+        // Optionally delete old images if needed
+        if (props.img) {
+          try {
+            const oldImageRef = ref(storage, props.img.split("?")[0]);
+            await deleteObject(oldImageRef);
+            console.log("Old image deleted");
+          } catch (err) {
+            console.log("Error deleting old image:", err);
+          }
         }
 
-        // Upload new image
-        const imgFile = ref(
-          storage,
-          `Gallery/${title.replace(/\s+/g, "_")}_${v4()}`
-        );
-        const snapshot = await uploadBytes(imgFile, img);
-        const url = await getDownloadURL(snapshot.ref);
-        data.img = url;
+        // Upload new images
+        const urls: string[] = [];
+        for (const file of img) {
+          const imgFile = ref(
+            storage,
+            `Gallery/${title.replace(/\s+/g, "_")}_${v4()}`
+          );
+          const snapshot = await uploadBytes(imgFile, file);
+          const url = await getDownloadURL(snapshot.ref);
+          urls.push(url);
+        }
+        data.img = urls.length > 0 ? urls[0] : null;
       }
 
       const portfolioRef = doc(db, "gallery", props.id);
@@ -133,15 +144,6 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
         console.error("Error deleting portfolio:", error);
         alert("Error deleting portfolio. Please try again.");
       }
-    }
-  };
-
-  const formatDate = (dateString: string) => {
-    if (!dateString) return "N/A";
-    try {
-      return new Date(dateString).toLocaleDateString();
-    } catch {
-      return "N/A";
     }
   };
 
@@ -313,15 +315,17 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
                       htmlFor="edit-img"
                       className="block text-sm font-medium text-gray-700 mb-1"
                     >
-                      Update Project Image
+                      Software/Technologies Used
                     </label>
                     <input
                       type="file"
                       id="edit-img"
                       accept="image/*"
+                      multiple
                       onChange={handleFileChange}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                     />
+
                     {progress > 0 && progress <= 100 && (
                       <div className="mt-2">
                         <div className="bg-gray-200 rounded-full h-2.5">
@@ -339,6 +343,18 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
                       Leave empty to keep current image
                     </p>
                   </div>
+                  {img.length > 0 && (
+                    <div className="flex gap-2 mt-2 flex-wrap">
+                      {img.map((file, index) => (
+                        <img
+                          key={index}
+                          src={URL.createObjectURL(file)}
+                          alt={`Preview ${index}`}
+                          className="w-24 h-24 object-cover rounded-md border"
+                        />
+                      ))}
+                    </div>
+                  )}
 
                   {/* <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">

@@ -17,11 +17,13 @@ function AdminGallery() {
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [projectType, setProjectType] = useState("");
+  const [projectDepartment, setProjectDepartment] = useState("");
   const [softwareUsed, setSoftwareUsed] = useState("");
   const [projectStatus, setProjectStatus] = useState("In Progress");
-  const [img, setImg] = useState<any>(null);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [status, setStatus] = useState(false);
-  const [progress, setProgress] = useState<number>(0);
+  const [uploadProgress, setUploadProgress] = useState<number[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
 
   const fetchPortfolio = useCallback(async () => {
     const career = collection(db, "gallery");
@@ -33,26 +35,21 @@ function AdminGallery() {
     setGallery(data as PortfolioPropType[]); // Fix: Cast 'data' as 'JobDescType[]'
   }, []);
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProgress(0);
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onprogress = (event) => {
-        if (event.lengthComputable) {
-          const percentLoaded = (event.loaded / event.total) * 100;
-          setProgress(percentLoaded);
-        }
-      };
-
-      reader.onloadend = () => {
-        setProgress(100); // Set progress to 100% when loading is complete
-        setImg(file);
-      };
-
-      reader.readAsDataURL(file);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length > 0) {
+      setSelectedFiles(files);
+      setUploadProgress(new Array(files.length).fill(0));
     }
+  };
+
+  const removeFile = (indexToRemove: number) => {
+    setSelectedFiles((prev) =>
+      prev.filter((_, index) => index !== indexToRemove)
+    );
+    setUploadProgress((prev) =>
+      prev.filter((_, index) => index !== indexToRemove)
+    );
   };
 
   const resetForm = () => {
@@ -60,17 +57,55 @@ function AdminGallery() {
     setDescription("");
     setLocation("");
     setProjectType("");
+    setProjectDepartment("");
     setSoftwareUsed("");
     setProjectStatus("In Progress");
-    setImg(null);
+    setSelectedFiles([]);
     setStatus(false);
-    setProgress(0);
+    setUploadProgress([]);
+    setIsUploading(false);
+  };
+
+  const uploadMultipleImages = async (
+    files: File[],
+    projectTitle: string
+  ): Promise<string[]> => {
+    const uploadPromises = files.map(async (file, index) => {
+      const fileRef = ref(
+        storage,
+        `Gallery/${projectTitle.replace(/\s+/g, "_")}_${v4()}_${file.name}`
+      );
+
+      return new Promise<string>((resolve, reject) => {
+        const uploadTask = uploadBytes(fileRef, file);
+
+        uploadTask
+          .then((snapshot) => {
+            // Update progress for this specific file
+            setUploadProgress((prev) => {
+              const newProgress = [...prev];
+              newProgress[index] = 100;
+              return newProgress;
+            });
+
+            return getDownloadURL(snapshot.ref);
+          })
+          .then((downloadURL) => {
+            resolve(downloadURL);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    });
+
+    return Promise.all(uploadPromises);
   };
 
   const handleSubmit = useCallback(async () => {
     // Validation
-    if (!img) {
-      alert("Please upload an image file");
+    if (selectedFiles.length === 0) {
+      alert("Please upload at least one image file");
       return;
     }
     if (!title.trim()) {
@@ -82,39 +117,54 @@ function AdminGallery() {
       return;
     }
 
-    const data = {
-      title: title.trim(),
-      description: description.trim(),
-      location: location.trim(),
-      projectType: projectType.trim(),
-      softwareUsed: softwareUsed.trim(),
-      projectStatus: projectStatus,
-      img: "",
-      status: status,
-      createdAt: new Date().toISOString(),
-    };
+    setIsUploading(true);
 
     try {
-      const imgFile = ref(
-        storage,
-        `Gallery/${title.replace(/\s+/g, "_")}_${v4()}`
+      // Upload all images and get their URLs
+      const imageUrls = await uploadMultipleImages(selectedFiles, title);
+
+      const data = {
+        title: title.trim(),
+        description: description.trim(),
+        location: location.trim(),
+        projectType: projectType.trim(),
+        projectDepartment: projectDepartment.trim(),
+        softwareUsed: softwareUsed.trim(),
+        projectStatus: projectStatus,
+        images: imageUrls, // Store array of image URLs
+        img: imageUrls[0], // Keep the first image as main image for backward compatibility
+        status: status,
+        createdAt: new Date().toISOString(),
+        imageCount: imageUrls.length,
+      };
+
+      const portfolio = collection(db, "gallery");
+      await addDoc(portfolio, data);
+
+      alert(
+        `Portfolio project with ${imageUrls.length} images successfully added!`
       );
-      await uploadBytes(imgFile, img).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((url) => {
-          data.img = url;
-          const portfolio = collection(db, "gallery");
-          addDoc(portfolio, data);
-        });
-      });
-      alert("New Portfolio Project Successfully Added");
       fetchPortfolio();
       resetForm();
       setOpen(false);
     } catch (error) {
       console.error("Error adding portfolio:", error);
       alert("Error adding portfolio. Please try again.");
+    } finally {
+      setIsUploading(false);
     }
-  }, [title, description, location, projectType, softwareUsed, projectStatus, img, status, fetchPortfolio]);
+  }, [
+    title,
+    description,
+    location,
+    projectType,
+    projectDepartment,
+    softwareUsed,
+    projectStatus,
+    selectedFiles,
+    status,
+    fetchPortfolio,
+  ]);
 
   useEffect(() => {
     document.title = "Admin | Dashboard - Whiteboard";
@@ -147,6 +197,7 @@ function AdminGallery() {
                       resetForm();
                     }}
                     className="text-gray-400 hover:text-gray-800"
+                    disabled={isUploading}
                   >
                     <span className="sr-only">Close</span>
                     <svg
@@ -171,7 +222,10 @@ function AdminGallery() {
                   {/* Left Column */}
                   <div className="space-y-4">
                     <div>
-                      <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label
+                        htmlFor="title"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
                         Project Title *
                       </label>
                       <input
@@ -183,11 +237,15 @@ function AdminGallery() {
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         placeholder="Enter project title"
                         required
+                        disabled={isUploading}
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label
+                        htmlFor="description"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
                         Description *
                       </label>
                       <textarea
@@ -199,11 +257,15 @@ function AdminGallery() {
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         placeholder="Enter project description"
                         required
+                        disabled={isUploading}
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label
+                        htmlFor="location"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
                         Location
                       </label>
                       <input
@@ -214,11 +276,15 @@ function AdminGallery() {
                         onChange={(e) => setLocation(e.target.value)}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         placeholder="Project location"
+                        disabled={isUploading}
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="projectType" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label
+                        htmlFor="projectType"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
                         Project Type
                       </label>
                       <select
@@ -227,13 +293,36 @@ function AdminGallery() {
                         value={projectType}
                         onChange={(e) => setProjectType(e.target.value)}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                        disabled={isUploading}
                       >
                         <option value="">Select project type</option>
                         <option value="Institute">Institute</option>
                         <option value="Commercial">Commercial</option>
-                        <option value="Facility Expension">Facility Expension</option>
+                        <option value="Facility Expension">
+                          Facility Expension
+                        </option>
                         <option value="Industrial">Industrial</option>
                         <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="projectDepartment"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
+                        Project Department
+                      </label>
+                      <select
+                        name="projectDepartment"
+                        id="projectDepartment"
+                        value={projectDepartment}
+                        onChange={(e) => setProjectDepartment(e.target.value)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                        disabled={isUploading}
+                      >
+                        <option value="">Select project Department</option>
+                        <option value="Structural">Structural</option>
+                        <option value="PEMB">PEMB</option>
                       </select>
                     </div>
                   </div>
@@ -241,7 +330,10 @@ function AdminGallery() {
                   {/* Right Column */}
                   <div className="space-y-4">
                     <div>
-                      <label htmlFor="softwareUsed" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label
+                        htmlFor="softwareUsed"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
                         Software/Technologies Used
                       </label>
                       <input
@@ -252,11 +344,15 @@ function AdminGallery() {
                         onChange={(e) => setSoftwareUsed(e.target.value)}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         placeholder="e.g., Tekla, SDS-2"
+                        disabled={isUploading}
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="projectStatus" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label
+                        htmlFor="projectStatus"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
                         Project Status
                       </label>
                       <select
@@ -265,6 +361,7 @@ function AdminGallery() {
                         value={projectStatus}
                         onChange={(e) => setProjectStatus(e.target.value)}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                        disabled={isUploading}
                       >
                         <option value="Planning">Planning</option>
                         <option value="In Progress">In Progress</option>
@@ -275,32 +372,116 @@ function AdminGallery() {
                     </div>
 
                     <div>
-                      <label htmlFor="img" className="block text-sm font-medium text-gray-700 mb-1">
-                        Project Image *
+                      <label
+                        htmlFor="images"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
+                        Project Images * (Multiple files supported)
                       </label>
                       <input
                         type="file"
-                        name="img"
-                        id="img"
+                        name="images"
+                        id="images"
                         accept="image/*"
+                        multiple
                         onChange={handleFileChange}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         required
+                        disabled={isUploading}
                       />
-                      {progress > 0 && progress <= 100 && (
-                        <div className="mt-2">
-                          <div className="bg-gray-200 rounded-full h-2.5">
-                            <div
-                              className="bg-green-600 h-2.5 rounded-full transition-all duration-300"
-                              style={{ width: `${progress}%` }}
-                            ></div>
-                          </div>
-                          <span className="text-sm text-gray-600 mt-1 block">{progress.toFixed(0)}% uploaded</span>
-                        </div>
-                      )}
+                      <p className="text-sm text-gray-500 mt-1">
+                        Select multiple images to upload for this project
+                      </p>
                     </div>
 
-                   
+                    {/* Selected Files Preview */}
+                    {selectedFiles.length > 0 && (
+                      <div className="mt-4">
+                        <h4 className="text-sm font-medium text-gray-700 mb-2">
+                          Selected Files ({selectedFiles.length})
+                        </h4>
+                        <div className="space-y-2 max-h-32 overflow-y-auto">
+                          {selectedFiles.map((file, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center justify-between bg-gray-50 p-2 rounded"
+                            >
+                              <div className="flex-1">
+                                <span className="text-sm text-gray-800 truncate block">
+                                  {file.name}
+                                </span>
+                                <span className="text-xs text-gray-500">
+                                  {(file.size / 1024 / 1024).toFixed(2)} MB
+                                </span>
+                                {isUploading && (
+                                  <div className="mt-1">
+                                    <div className="bg-gray-200 rounded-full h-1.5">
+                                      <div
+                                        className="bg-green-600 h-1.5 rounded-full transition-all duration-300"
+                                        style={{
+                                          width: `${
+                                            uploadProgress[index] || 0
+                                          }%`,
+                                        }}
+                                      ></div>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                              {!isUploading && (
+                                <button
+                                  type="button"
+                                  onClick={() => removeFile(index)}
+                                  className="ml-2 text-red-500 hover:text-red-700"
+                                >
+                                  <svg
+                                    className="h-4 w-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M6 18L18 6M6 6l12 12"
+                                    />
+                                  </svg>
+                                </button>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Overall Upload Progress */}
+                    {isUploading && (
+                      <div className="mt-4">
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-sm text-gray-600">
+                            Uploading images...
+                          </span>
+                          <span className="text-sm text-gray-600">
+                            {uploadProgress.filter((p) => p === 100).length} /{" "}
+                            {selectedFiles.length} completed
+                          </span>
+                        </div>
+                        <div className="bg-gray-200 rounded-full h-2">
+                          <div
+                            className="bg-green-600 h-2 rounded-full transition-all duration-300"
+                            style={{
+                              width: `${
+                                (uploadProgress.filter((p) => p === 100)
+                                  .length /
+                                  selectedFiles.length) *
+                                100
+                              }%`,
+                            }}
+                          ></div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -309,9 +490,10 @@ function AdminGallery() {
                   <button
                     type="button"
                     onClick={handleSubmit}
-                    className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors"
+                    disabled={isUploading || selectedFiles.length === 0}
+                    className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                   >
-                    Add Portfolio Project
+                    {isUploading ? "Uploading..." : "Add Portfolio Project"}
                   </button>
                   <button
                     type="button"
@@ -319,7 +501,8 @@ function AdminGallery() {
                       setOpen(false);
                       resetForm();
                     }}
-                    className="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
+                    disabled={isUploading}
+                    className="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
                   >
                     Cancel
                   </button>
@@ -370,7 +553,7 @@ function AdminGallery() {
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                     >
-                      Image
+                      Images
                     </th>
                     <th
                       scope="col"
@@ -382,12 +565,19 @@ function AdminGallery() {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {gallery?.map((portfolio, index) => (
-                    <ImagePortfolio key={portfolio.id || index} {...portfolio} />
+                    <ImagePortfolio
+                      key={portfolio.id || index}
+                      {...portfolio}
+                    />
                   ))}
                   {gallery?.length === 0 && (
                     <tr>
-                      <td colSpan={4} className="px-6 py-4 text-center text-gray-500">
-                        No portfolio projects found. Add your first project to get started.
+                      <td
+                        colSpan={4}
+                        className="px-6 py-4 text-center text-gray-500"
+                      >
+                        No portfolio projects found. Add your first project to
+                        get started.
                       </td>
                     </tr>
                   )}

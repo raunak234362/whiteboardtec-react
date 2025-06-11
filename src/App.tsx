@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { database } from "./config/firebase";
 import { onValue, ref, set } from "firebase/database";
-import GoTo from "./components/goto/GoTo";
+// import GoTo from "./components/goto/GoTo";
 import popupImg from "/popup.png";
 
 function App(): JSX.Element {
@@ -63,7 +63,7 @@ function App(): JSX.Element {
           </div>
         )}
         <Outlet />
-        {location.pathname !== "/" && <GoTo props={reference} />}
+        {/* {location.pathname !== "/" && <GoTo props={reference} />} */}
         <Footer />
       </>
     );

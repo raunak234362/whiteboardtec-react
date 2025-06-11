@@ -1,11 +1,11 @@
 import { auth } from "../../../config/firebase"
 import { HeaderProp } from "."
 import { signOut } from "firebase/auth"
-import { useNavigate } from "react-router-dom"
+// import { useNavigate } from "react-router-dom"
 
 
 function Header(prop: HeaderProp) {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const handleLogOut = async() => {
         await signOut(auth)

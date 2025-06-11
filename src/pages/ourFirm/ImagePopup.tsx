@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 interface ImageModalProps {
   images: { src: string }[];
   title: string;
-  address: string | "Image not available";
-  software: string | "Unknown";
+  location: string | "Image not available";
+  softwareUsed: string | "Unknown";
   Projecttype: string | "Image not available";
   ProjectStatus: string | "Status not available";
   initialIndex: number;
@@ -15,10 +15,10 @@ interface ImageModalProps {
 export const ImageModal: React.FC<ImageModalProps> = ({
   images,
   title,
-  address,
+  location,
   Projecttype,
   ProjectStatus,
-  software,
+  softwareUsed,
   initialIndex,
   onClose,
 }) => {
@@ -67,7 +67,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
             </p>
             <p className="md:text-lg text-gray-700">
               <span>Location: </span>
-              {address}
+              {location}
             </p>
             <p className="md:text-lg text-gray-700">
               <span>Project Type: </span>
@@ -75,7 +75,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
             </p>
             <p className="md:text-lg text-gray-700">
               <span>Software Used: </span>
-              {software}
+              {softwareUsed}
             </p>
             <p className="md:text-lg text-gray-700">
               <span>Project Status: </span>
