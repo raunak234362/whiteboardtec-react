@@ -8,11 +8,9 @@ import { useEffect, useRef, useState } from "react";
 import { database } from "./config/firebase";
 import { onValue, ref, set } from "firebase/database";
 // import GoTo from "./components/goto/GoTo";
-import popupImg from "/popup.png";
 
 function App(): JSX.Element {
   const [updated, setUpdated] = useState<boolean>(false);
-  const [showPopup, setShowPopup] = useState<boolean>(false); // Add state for popup visibility
 
   useEffect(() => {
     // console.log('App loaded')
@@ -45,23 +43,6 @@ function App(): JSX.Element {
           <HeaderHome />
           {location.pathname === "/" ? <HomeNav /> : <NavigationBar />}
         </div>
-        {showPopup && ( // Add popup image with close button
-          <div className=" popup z-50 absolute top-0 overflow-x-hidden h-screen w-screen bg-black/50">
-            <div className="md:p-16 mt-10 flex justify-center items-center h-full rounded-2xl">
-            <button
-              onClick={() => setShowPopup(false)}
-              className="absolute md:top-[8vh] top-[35vh] md:right-[9vw] right-[1vh] p-3 rounded-2xl text-white bg-red-500"
-            >
-              Close
-            </button>
-              <img
-                src={popupImg}
-                alt="Popup"
-                className="md:h-[95%] items-center w-auto rounded-2xl"
-              />
-            </div>
-          </div>
-        )}
         <Outlet />
         {/* {location.pathname !== "/" && <GoTo props={reference} />} */}
         <Footer />

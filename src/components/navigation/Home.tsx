@@ -7,7 +7,6 @@ function Home(props: NavRouteType): JSX.Element {
   useEffect(()=> {
     document.title = "Whiteboard Technologies-Structural Steel Detailing|USA|Canada";
   });
-
   return (
     <>
       <NavLink
