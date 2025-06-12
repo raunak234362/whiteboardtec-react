@@ -39,7 +39,7 @@ function Structural() {
     try {
       const q = query(
         collection(db, "gallery"),
-        where("projectDepartment", "==", "PEMB")
+        where("projectDepartment", "==", "Structural")
       );
       const snapshot = await getDocs(q);
       const fetchedImages = snapshot.docs.map((doc) => {
