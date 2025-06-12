@@ -121,9 +121,9 @@ const NavRoute: NavRouteType[] = [
 ];
 
 const Notification: NotificationType = {
-  title: "NASCC - The Steel Conference 2024",
+  title: "NASCC - The Steel Conference 2025",
   description:
-    "We are exhibiting at NASCC - The Steel Conference 2024, at booth number 1623. Click Here to see the floor plan to reach us at the show.",
+    "We are exhibiting at NASCC - The Steel Conference 2025, at booth number 1623. Click Here to see the floor plan to reach us at the show.",
   link: "https://nascc24.mapyourshow.com/8_0/floorplan/?hallID=A&selectedBooth=1623",
   image: "https://images.unsplash.com/photo-1617854818583-09e7f077a156?q=80",
 };

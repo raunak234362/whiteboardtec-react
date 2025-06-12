@@ -13,7 +13,7 @@ const galleryImages = [
   {
     src: "../../assets/Tekla.jpg",
     title: "Structural Steel Detailing Project",
-    // url: "/our-firm/gallery/Structural",
+    url: "/our-firm/gallery/Structural",
     projectDepartment: "Structural",
   },
   {

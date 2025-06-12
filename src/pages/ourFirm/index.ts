@@ -3,6 +3,7 @@ import Gallery from "./Gallery";
 import LeadershipTeam from "./LeadershipTeam";
 import BusiessModel from "./BusinessModel";
 import PEMB from "./PEMB";
+import Structural from "./Structural";
 
 type LeaderDetailType = {
     name: string;
@@ -22,5 +23,6 @@ export {
     Gallery,
     LeadershipTeam,
     BusiessModel,
-    PEMB
+    PEMB,
+    Structural
 }
