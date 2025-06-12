@@ -24,7 +24,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(initialIndex);
   const modalRef = useRef<HTMLDivElement>(null);
-
+  console.log("ImageModal rendered with images:", images);
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
   };
@@ -45,7 +45,11 @@ export const ImageModal: React.FC<ImageModalProps> = ({
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  if (images.length > 0 && currentIndex >= 0 && currentIndex < images.length) {
+  if (
+    images?.length > 0 &&
+    currentIndex >= 0 &&
+    currentIndex < images?.length
+  ) {
     console.log(
       "Current image index and src:",
       currentIndex,

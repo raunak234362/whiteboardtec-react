@@ -83,7 +83,7 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
         // Optionally delete old images if needed
         if (props.img) {
           try {
-            const oldImageRef = ref(storage, props.img.split("?")[0]);
+            const oldImageRef = ref(storage, props.img[0]);
             await deleteObject(oldImageRef);
             console.log("Old image deleted");
           } catch (err) {
@@ -128,7 +128,7 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
         // Delete image from storage
         if (props.img) {
           try {
-            const imageRef = ref(storage, props.img.split("?")[0]);
+            const imageRef = ref(storage, props.img[0]);
             await deleteObject(imageRef);
             console.log("Image deleted from storage");
           } catch (err) {
@@ -453,7 +453,7 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
               <div className="p-4">
                 {props.img ? (
                   <img
-                    src={props.img}
+                    src={Array.isArray(props.img) ? props.img[0] : props.img}
                     alt={props.title}
                     className="w-full h-auto max-h-[70vh] object-contain rounded"
                   />

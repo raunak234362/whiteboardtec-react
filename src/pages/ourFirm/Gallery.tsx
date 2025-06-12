@@ -54,7 +54,7 @@ function Gallery() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className="h-full cursor-pointer" onClick={() => navigate(image.url)}>
+                <div className="h-full cursor-pointer" onClick={() => image.url && navigate(image.url)}>
                   <img
                     src={image.src}
                     alt={image.title}

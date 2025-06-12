@@ -4,19 +4,16 @@ import { PageBanner, BannerPropType } from "../../components/banner";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import { ImageModal } from "./ImagePopup";
-import { ImagePortfolioPropType } from "../ourWork";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../config/firebase";
 
 const banner: BannerPropType = {
   header: "Gallery",
   image: "../../assets/gall.jpg",
-}
+};
 
 function PEMB() {
-  const [popupImages, setPopupImages] = useState<
-    ImagePortfolioPropType[] | null
-  >(null);
+  const [popupImages, setPopupImages] = useState<any|null>(null);
   const [popupTitle, setPopupTitle] = useState<string | null>(null);
   const [popupAddress, setPopupAddress] = useState<string | null>(null);
   const [popupProjectType, setPopupProjectType] = useState<string | null>(null);
@@ -26,16 +23,17 @@ function PEMB() {
   const [popupIndex, setPopupIndex] = useState<number>(0);
   const [popupSoftware, setPopupSoftware] = useState<string | null>(null);
 
-  const [galleryImages, setGalleryImages] =
-    useState<{
+  const [galleryImages, setGalleryImages] = useState<
+    {
       src: string;
       title: string;
       softwareUsed: string;
       ProjectStatus: string;
       location: string;
       Projecttype: string;
-      images: { src: string }[];
-    }[]>([]);
+      images: string[];
+    }[]
+  >([]);
 
   const fetchGalleryImages = useCallback(async () => {
     try {
@@ -47,7 +45,7 @@ function PEMB() {
       const fetchedImages = snapshot.docs.map((doc) => {
         const data = doc.data();
         return {
-          src:  data.images?.[0]?.src || data.img || "", // fallback if no image
+          src: data.images?.[0]?.src || data.img || "", // fallback if no image
           title: data.title || "Untitled",
           softwareUsed: data.softwareUsed || "Unknown",
           ProjectStatus: data.projectStatus || "Unknown",
@@ -67,15 +65,15 @@ function PEMB() {
     fetchGalleryImages();
   }, [fetchGalleryImages]);
 
-  const preloadImages = (images: { src: string }[]) => {
-    images.forEach((image) => {
+  const preloadImages = (images: string[]) => {
+    images.forEach((image: string) => {
       const img = new Image();
-      img.src = image.src;
+      img.src = image;
     });
   };
 
   const openPopup = (
-    images: { src: string }[],
+    images: string[],
     title: string,
     location: string,
     softwareUsed: string,
@@ -88,6 +86,7 @@ function PEMB() {
       location,
       softwareUsed,
       projectType,
+      popupImages,
     });
     preloadImages(images);
     setPopupImages(images);
@@ -156,13 +155,13 @@ function PEMB() {
         ))}
       </div>
 
-      {popupImages && popupTitle && popupAddress && popupProjectType && (
+      {popupTitle && popupAddress && popupProjectType && (
         <ImageModal
           images={popupImages}
           title={popupTitle}
           location={popupAddress || ""}
           softwareUsed={popupSoftware || ""}
-          Projecttype={popupProjectType || ""}
+          projectType={popupProjectType || ""}
           ProjectStatus={popupProjectStatus || ""}
           initialIndex={popupIndex}
           onClose={closePopup}
