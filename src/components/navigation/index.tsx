@@ -120,13 +120,13 @@ const NavRoute: NavRouteType[] = [
   },
 ];
 
-// const Notification: NotificationType = {
-//   title: "NASCC - The Steel Conference 2026",
-//   description:
-//     "We are exhibiting at NASCC - The Steel Conference 2026. Click Here to see the floor plan to reach us at the show.",
-//   link: "https://www.nascc.aisc.org/",
-//   image: "https://i.pinimg.com/736x/6a/1b/c0/6a1bc0f2324eb0c143533419ad4c86f5.jpg",
-// };
+const Notification: NotificationType = {
+  title: "NASCC - The Steel Conference 2026",
+  description:
+    "We are exhibiting at NASCC - The Steel Conference 2026. Click Here to see the floor plan to reach us at the show.",
+  // link: "https://www.nascc.aisc.org/",
+  image: "https://i.pinimg.com/736x/6a/1b/c0/6a1bc0f2324eb0c143533419ad4c86f5.jpg",
+};
 
 const NavigationBar = (): JSX.Element => {
   const [display] = useState<boolean>(window.innerWidth <= 768);
@@ -182,7 +182,7 @@ const NavigationBar = (): JSX.Element => {
 };
 
 const HomeNav = (): JSX.Element => {
-  const [isOpen, setOpen] = useState(true);
+  const [isOpen, setOpen] = useState(false);
 
   return (
     <>
@@ -193,7 +193,7 @@ const HomeNav = (): JSX.Element => {
       >
         <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
         <div className="fixed inset-0 w-screen overflow-y-auto">
-          {/* <div className="flex min-h-full items-center justify-center p-4">
+          <div className="flex min-h-full items-center justify-center p-4">
             <Dialog.Panel className="bg-white w-3/5 h-3/4 rounded-3xl p-5 bg-opacity-60 border-slate-800 border-[3px] drop-shadow-lg shadow-inner">
               <Dialog.Title className="font-extrabold text-2xl">
                 {Notification.title}
@@ -227,7 +227,7 @@ const HomeNav = (): JSX.Element => {
                 </button>
               </div>
             </Dialog.Panel>
-          </div> */}
+          </div>
         </div>
       </Dialog>
 
