@@ -185,9 +185,9 @@ function AdminGallery() {
         >
           <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
           <div className="fixed inset-0 w-screen overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4">
+            <div className="flex items-center justify-center min-h-full p-4">
               <div className="bg-white w-full max-w-6xl p-6 rounded-lg shadow-lg flex flex-col max-h-[90vh] overflow-y-auto">
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex items-center justify-between mb-4">
                   <Dialog.Title className="text-lg font-semibold">
                     Add New Portfolio Project
                   </Dialog.Title>
@@ -201,7 +201,7 @@ function AdminGallery() {
                   >
                     <span className="sr-only">Close</span>
                     <svg
-                      className="h-6 w-6"
+                      className="w-6 h-6"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -218,13 +218,13 @@ function AdminGallery() {
                   </button>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                   {/* Left Column */}
                   <div className="space-y-4">
                     <div>
                       <label
                         htmlFor="title"
-                        className="block text-sm font-medium text-gray-700 mb-1"
+                        className="block mb-1 text-sm font-medium text-gray-700"
                       >
                         Project Title *
                       </label>
@@ -244,7 +244,7 @@ function AdminGallery() {
                     <div>
                       <label
                         htmlFor="description"
-                        className="block text-sm font-medium text-gray-700 mb-1"
+                        className="block mb-1 text-sm font-medium text-gray-700"
                       >
                         Description *
                       </label>
@@ -264,7 +264,7 @@ function AdminGallery() {
                     <div>
                       <label
                         htmlFor="location"
-                        className="block text-sm font-medium text-gray-700 mb-1"
+                        className="block mb-1 text-sm font-medium text-gray-700"
                       >
                         Location
                       </label>
@@ -283,7 +283,7 @@ function AdminGallery() {
                     <div>
                       <label
                         htmlFor="projectType"
-                        className="block text-sm font-medium text-gray-700 mb-1"
+                        className="block mb-1 text-sm font-medium text-gray-700"
                       >
                         Project Type
                       </label>
@@ -308,7 +308,7 @@ function AdminGallery() {
                     <div>
                       <label
                         htmlFor="projectDepartment"
-                        className="block text-sm font-medium text-gray-700 mb-1"
+                        className="block mb-1 text-sm font-medium text-gray-700"
                       >
                         Project Department
                       </label>
@@ -332,7 +332,7 @@ function AdminGallery() {
                     <div>
                       <label
                         htmlFor="softwareUsed"
-                        className="block text-sm font-medium text-gray-700 mb-1"
+                        className="block mb-1 text-sm font-medium text-gray-700"
                       >
                         Software/Technologies Used
                       </label>
@@ -351,7 +351,7 @@ function AdminGallery() {
                     <div>
                       <label
                         htmlFor="projectStatus"
-                        className="block text-sm font-medium text-gray-700 mb-1"
+                        className="block mb-1 text-sm font-medium text-gray-700"
                       >
                         Project Status
                       </label>
@@ -374,7 +374,7 @@ function AdminGallery() {
                     <div>
                       <label
                         htmlFor="images"
-                        className="block text-sm font-medium text-gray-700 mb-1"
+                        className="block mb-1 text-sm font-medium text-gray-700"
                       >
                         Project Images * (Multiple files supported)
                       </label>
@@ -389,7 +389,7 @@ function AdminGallery() {
                         required
                         disabled={isUploading}
                       />
-                      <p className="text-sm text-gray-500 mt-1">
+                      <p className="mt-1 text-sm text-gray-500">
                         Select multiple images to upload for this project
                       </p>
                     </div>
@@ -397,17 +397,17 @@ function AdminGallery() {
                     {/* Selected Files Preview */}
                     {selectedFiles.length > 0 && (
                       <div className="mt-4">
-                        <h4 className="text-sm font-medium text-gray-700 mb-2">
+                        <h4 className="mb-2 text-sm font-medium text-gray-700">
                           Selected Files ({selectedFiles.length})
                         </h4>
-                        <div className="space-y-2 max-h-32 overflow-y-auto">
+                        <div className="space-y-2 overflow-y-auto max-h-32">
                           {selectedFiles.map((file, index) => (
                             <div
                               key={index}
-                              className="flex items-center justify-between bg-gray-50 p-2 rounded"
+                              className="flex items-center justify-between p-2 rounded bg-gray-50"
                             >
                               <div className="flex-1">
-                                <span className="text-sm text-gray-800 truncate block">
+                                <span className="block text-sm text-gray-800 truncate">
                                   {file.name}
                                 </span>
                                 <span className="text-xs text-gray-500">
@@ -435,7 +435,7 @@ function AdminGallery() {
                                   className="ml-2 text-red-500 hover:text-red-700"
                                 >
                                   <svg
-                                    className="h-4 w-4"
+                                    className="w-4 h-4"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -458,7 +458,7 @@ function AdminGallery() {
                     {/* Overall Upload Progress */}
                     {isUploading && (
                       <div className="mt-4">
-                        <div className="flex justify-between items-center mb-2">
+                        <div className="flex items-center justify-between mb-2">
                           <span className="text-sm text-gray-600">
                             Uploading images...
                           </span>
@@ -467,9 +467,9 @@ function AdminGallery() {
                             {selectedFiles.length} completed
                           </span>
                         </div>
-                        <div className="bg-gray-200 rounded-full h-2">
+                        <div className="h-2 bg-gray-200 rounded-full">
                           <div
-                            className="bg-green-600 h-2 rounded-full transition-all duration-300"
+                            className="h-2 transition-all duration-300 bg-green-600 rounded-full"
                             style={{
                               width: `${
                                 (uploadProgress.filter((p) => p === 100)
@@ -486,12 +486,12 @@ function AdminGallery() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex justify-center space-x-4 mt-6 pt-4 border-t">
+                <div className="flex justify-center pt-4 mt-6 space-x-4 border-t">
                   <button
                     type="button"
                     onClick={handleSubmit}
                     disabled={isUploading || selectedFiles.length === 0}
-                    className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+                    className="px-6 py-2 text-white transition-colors bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
                   >
                     {isUploading ? "Uploading..." : "Add Portfolio Project"}
                   </button>
@@ -502,7 +502,7 @@ function AdminGallery() {
                       resetForm();
                     }}
                     disabled={isUploading}
-                    className="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+                    className="px-6 py-2 text-white transition-colors bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
                   >
                     Cancel
                   </button>
@@ -518,12 +518,12 @@ function AdminGallery() {
           </div>
           <div className="flex flex-col flex-wrap">
             <Header {...header} />
-            <div className="flex flex-wrap flex-row m-4 items-center justify-between">
+            <div className="flex flex-row flex-wrap items-center justify-between m-4">
               <h1 className="text-xl font-semibold text-gray-800">
                 Portfolio Management
               </h1>
               <button
-                className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors"
+                className="px-4 py-2 text-white transition-colors bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                 onClick={(e) => {
                   e.preventDefault();
                   setOpen(true);
@@ -533,31 +533,31 @@ function AdminGallery() {
               </button>
             </div>
 
-            <div className="mx-4 bg-white rounded-lg shadow overflow-hidden">
+            <div className="mx-4 overflow-hidden bg-white rounded-lg shadow">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-green-500">
                   <tr>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase"
                     >
                       Project Details
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase"
                     >
                       Type & Status
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                      className="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase"
                     >
                       Images
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider"
+                      className="px-6 py-3 text-xs font-medium tracking-wider text-center text-white uppercase"
                     >
                       Actions
                     </th>
