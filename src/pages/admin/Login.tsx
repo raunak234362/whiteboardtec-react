@@ -14,7 +14,7 @@ function Login() {
 
     const handleLogin = async () => {
         try {
-            const response = AuthService.login({ username, password })
+            AuthService.login({ username, password })
             navigate("/admin/dashboard");
         } catch (error) {
             console.log(error)
