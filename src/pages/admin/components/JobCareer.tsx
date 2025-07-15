@@ -9,6 +9,7 @@ import { CandidateApplication } from ".";
 import { JobPortalInterface } from "../../../config/interface";
 
 const JobCareer: React.FC<JobPortalInterface> = (props) => {
+  console.log(props)
   const [isOpenJob, setOpenJob] = useState(false);
   const [isOpenApp, setOpenApp] = useState(false);
   const [Role, setRole] = useState(props.Role);

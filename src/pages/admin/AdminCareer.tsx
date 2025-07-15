@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header, HeaderProp, Sidebar } from "./components";
 import JobCareer from "./components/JobCareer";
 import { Dialog } from "@headlessui/react";
@@ -18,7 +18,7 @@ function AdminCareer() {
   const [jd, setJD] = useState<any>(null);
   const [status, setStatus] = useState(false);
   const [progress, setProgress] = useState<number>(0);
-
+  const [gettingdata, setgettingdata] = useState<any>(null);
 
   const JobForm = async (data: JobPortalInterface) => {
     console.log("Form data:", data);
@@ -37,8 +37,8 @@ function AdminCareer() {
     // Append file(s)
     if (jd && jd.length > 0) {
       Array.from(jd as FileList).forEach((file: File) => {
-              formData.append("jd", file); // For multiple files
-            });
+        formData.append("jd", file); // For multiple files
+      });
     }
 
     try {
@@ -50,6 +50,15 @@ function AdminCareer() {
     }
   };
 
+  const fetchJob = async () => {
+    const response = await Service.getJob()
+    setgettingdata(response)
+    console.log(response)
+  }
+  useEffect(() => {
+    fetchJob()
+  }, [])
+  console.log(gettingdata);
 
   const [isOpen, setOpen] = useState(false);
 
@@ -302,7 +311,7 @@ function AdminCareer() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 ">
-              {job?.map((job, index) => (
+              {gettingdata?.map(({job}:any, {index}:any) => (
                 <JobCareer key={index} {...job} />
               ))}
             </tbody>
