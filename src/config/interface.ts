@@ -4,5 +4,5 @@ export interface JobPortalInterface {
   type: string;
   qualification: string;
   status:boolean;
-  files:JSON|File
+  jd: any[];
 }

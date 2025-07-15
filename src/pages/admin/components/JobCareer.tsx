@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
-import { JobDescType } from "../../careers";
-import { Dialog } from "@headlessui/react";
-import { useEffect, useState } from "react";
-import { collection, deleteDoc, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
-import { db, storage } from "../../../config/firebase";
-import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { v4 } from "uuid";
-import { CandidateApplication } from ".";
 
-function JobCareer(props: JobDescType) {
+import { Dialog } from "@headlessui/react";
+import {  useState } from "react";
+// import { collection, deleteDoc, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+// import { db, storage } from "../../../config/firebase";
+// import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { CandidateApplication } from ".";
+import { JobPortalInterface } from "../../../config/interface";
+
+const JobCareer: React.FC<JobPortalInterface> = (props) => {
   const [isOpenJob, setOpenJob] = useState(false);
   const [isOpenApp, setOpenApp] = useState(false);
-  const [role, setRole] = useState(props.role);
+  const [Role, setRole] = useState(props.Role);
   const [location, setLocation] = useState(props.location);
   const [type0, setType] = useState(props.type);
   const [qualification, setQualification] = useState(props.qualification);
@@ -44,95 +44,95 @@ function JobCareer(props: JobDescType) {
 
   const handleUpdate = async () => {
     const data = {
-      role: (props.role !== role) ? role : props.role,
+      Role: (props.Role !== Role) ? Role : props.Role,
       location: (props.location !== location) ? location : props.location,
       type: (props.type !== type0) ? type0 : props.type,
       qualification: (props.qualification !== qualification) ? qualification : props.qualification,
-      jd: props.jd,
       status: (props.status !== status) ? status : props.status,
     }
 
   
-    if (jd) {
-      const reference = ref(storage, props.jd.split("?")[0]);
-      await deleteObject(reference).then(() => {
-        console.log("Old JD Deleted");
-      }).catch((err)=>[
-        console.log(err)
-      ])
-      const jobDesc = ref(storage, `Careers/${role.replace(" ", "_")}_${v4()}`);
-      await uploadBytes(jobDesc, jd).then((val) => {
-        getDownloadURL(val.ref).then((url) => {
-          data.jd = url;
-          const job = doc(db, "career", props.id)
-          updateDoc(job, data);
-        });
-      });
-    } else {
-      const job = doc(db, "career", props.id)
-      updateDoc(job, data);
+    //   if (jd) {
+    //     const reference = ref(storage, props.jd.split("?")[0]);
+    //     await deleteObject(reference).then(() => {
+    //       console.log("Old JD Deleted");
+    //     }).catch((err)=>[
+    //       console.log(err)
+    //     ])
+    //     const jobDesc = ref(storage, `Careers/${Role.replace(" ", "_")}_${v4()}`);
+    //     await uploadBytes(jobDesc, jd).then((val) => {
+    //       getDownloadURL(val.ref).then((url) => {
+    //         data.jd = url;
+    //         const job = doc(db, "career", props.id)
+    //         updateDoc(job, data);
+    //       });
+    //     });
+    //   } else {
+    //     const job = doc(db, "career", props.id)
+    //     updateDoc(job, data);
+    //   }
+    //   alert("Job Details updated successfully");
+    //   setOpenJob(false);
+    // }
+
+    // const handleDelete = async () => {
+    //   const reference = ref(storage, props.jd.split("?")[0]);
+    //   await deleteObject(reference).then(() => {
+    //     console.log("Old JD Deleted");
+    //   }).catch((err)=>[
+    //     console.log(err)
+    //   ])
+    //   await deleteDoc(doc(db, "career", props.id));
+    //   fetchApplications();
+    // }
+
+    // const handleApplicationConnect = async (application: CandidateApplication) => {
+    const handleApplicationConnect = async () => {
+      alert("Currently No Option to Connect to Candidate");
     }
-    alert("Job Details updated successfully");
-    setOpenJob(false);
+
+    // const handleApplicationDelete = async (application: CandidateApplication) => {
+    //   const reference = ref(storage, application.resume.split("?")[0]);
+    //   await deleteObject(reference).then(() => {
+    //     console.log("Old Application Resume Deleted");
+    //   }).catch((err)=>[
+    //     console.log(err)
+    //   ])
+    //   await deleteDoc(doc(db, "application", application.id));
+    //   alert("Application Deleted Successfully");
+    //   fetchApplications();
+    // }
+
+    // const fetchApplications = async () => {
+    //   const application = collection(db, "application");
+    //   const career_application = query(application, where("jobId", "==", props.id));
+    //   const querySnapshot = await getDocs(career_application);
+    //   const data = querySnapshot.docs.map((doc) => ({
+    //     id: String(doc.id),
+    //     ...doc.data(),
+    //   }));
+    //   setApp(data as CandidateApplication[]);
+    // }
+
+    // useEffect(() => {
+    //   fetchApplications();
+    // }, []);
+
   }
-
-  const handleDelete = async () => {
-    const reference = ref(storage, props.jd.split("?")[0]);
-    await deleteObject(reference).then(() => {
-      console.log("Old JD Deleted");
-    }).catch((err)=>[
-      console.log(err)
-    ])
-    await deleteDoc(doc(db, "career", props.id));
-    fetchApplications();
-  }
-
-  // const handleApplicationConnect = async (application: CandidateApplication) => {
-  const handleApplicationConnect = async () => {
-    alert("Currently No Option to Connect to Candidate");
-  }
-
-  const handleApplicationDelete = async (application: CandidateApplication) => {
-    const reference = ref(storage, application.resume.split("?")[0]);
-    await deleteObject(reference).then(() => {
-      console.log("Old Application Resume Deleted");
-    }).catch((err)=>[
-      console.log(err)
-    ])
-    await deleteDoc(doc(db, "application", application.id));
-    alert("Application Deleted Successfully");
-    fetchApplications();
-  }
-
-  const fetchApplications = async () => {
-    const application = collection(db, "application");
-    const career_application = query(application, where("jobId", "==", props.id));
-    const querySnapshot = await getDocs(career_application);
-    const data = querySnapshot.docs.map((doc) => ({
-      id: String(doc.id),
-      ...doc.data(),
-    }));
-    setApp(data as CandidateApplication[]);
-  }
-
-  useEffect(() => {
-    fetchApplications();
-  }, []);
-
-  return (
-    <>
+    return (
+      <>
         <Dialog
           open={isOpenJob}
           onClose={() => setOpenJob(false)}
           className="relative z-50"
         >
           <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
-          <div className="fixed inset-1 w-screen overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4">
-              <div className="bg-white w-full max-w-4xl p-6 rounded-lg shadow-lg flex flex-col">
+          <div className="fixed w-screen overflow-y-auto inset-1">
+            <div className="flex items-center justify-center min-h-full p-4">
+              <div className="flex flex-col w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg">
                 <div className="flex justify-between">
                   <Dialog.Title className="text-lg font-semibold">
-                    Edit Job Role for {props.role}
+                    Edit Job Role for {props.Role}
                   </Dialog.Title>
                   <button
                     onClick={() => setOpenJob(false)}
@@ -140,7 +140,7 @@ function JobCareer(props: JobDescType) {
                   >
                     <span className="sr-only">Close</span>
                     <svg
-                      className="h-6 w-6"
+                      className="w-6 h-6"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -157,7 +157,7 @@ function JobCareer(props: JobDescType) {
                   </button>
                 </div>
 
-                <table className="mt-4 mx-10 border-separate border-spacing-y-4">
+                <table className="mx-10 mt-4 border-separate border-spacing-y-4">
                   <tr>
                     <td>
                       <label htmlFor="Role" className="text-sm text-gray-800">
@@ -169,9 +169,9 @@ function JobCareer(props: JobDescType) {
                         type="text"
                         name="Role"
                         id="Role"
-                        value={role}
-                        onChange={(e) => {setRole(e.target.value)}}
-                        className="border-2 border-gray-200 rounded-md mx-4 w-full px-2"
+                        value={Role}
+                        onChange={(e) => { setRole(e.target.value) }}
+                        className="w-full px-2 mx-4 border-2 border-gray-200 rounded-md"
                       />
                     </td>
                   </tr>
@@ -190,8 +190,8 @@ function JobCareer(props: JobDescType) {
                         name="Location"
                         id="Location"
                         value={location}
-                        onChange={(e) => {setLocation(e.target.value)}}
-                        className="border-2 border-gray-200 rounded-md mx-4 w-full px-2"
+                        onChange={(e) => { setLocation(e.target.value) }}
+                        className="w-full px-2 mx-4 border-2 border-gray-200 rounded-md"
                       />
                     </td>
                   </tr>
@@ -207,8 +207,8 @@ function JobCareer(props: JobDescType) {
                         name="Type"
                         id="Type"
                         value={type0}
-                        onChange={(e) => {setType(e.target.value)}}
-                        className="border-2 border-gray-200 rounded-md mx-4 w-full px-2"
+                        onChange={(e) => { setType(e.target.value) }}
+                        className="w-full px-2 mx-4 border-2 border-gray-200 rounded-md"
                       />
                     </td>
                   </tr>
@@ -227,8 +227,8 @@ function JobCareer(props: JobDescType) {
                         name="Qualification"
                         id="Qualification"
                         value={qualification}
-                        onChange={(e) => {setQualification(e.target.value)}}
-                        className="border-2 border-gray-200 rounded-md mx-4 w-full px-2"
+                        onChange={(e) => { setQualification(e.target.value) }}
+                        className="w-full px-2 mx-4 border-2 border-gray-200 rounded-md"
                       />
                     </td>
                   </tr>
@@ -245,7 +245,7 @@ function JobCareer(props: JobDescType) {
                         id="JD"
                         accept="application/pdf"
                         onChange={handleFileChange}
-                        className="border-2 border-gray-200 rounded-md mx-4 w-full"
+                        className="w-full mx-4 border-2 border-gray-200 rounded-md"
                       />
                       {progress > 0 && progress <= 100 && (
                         <span className="mx-3 text-gray-600">{progress}%</span>
@@ -259,16 +259,16 @@ function JobCareer(props: JobDescType) {
                       </label>
                     </td>
                     <td>
-                    <input
-                      type="checkbox"
-                      name="Active"
-                      id="Active"
-                      checked={status}
-                      onChange={() =>
-                        setStatus(!status)
-                      }
-                      className="border-2 border-gray-200 rounded-md mx-4 custom-checkbox"
-                    />
+                      <input
+                        type="checkbox"
+                        name="Active"
+                        id="Active"
+                        checked={status}
+                        onChange={() =>
+                          setStatus(!status)
+                        }
+                        className="mx-4 border-2 border-gray-200 rounded-md custom-checkbox"
+                      />
                       {
                         status ? (
                           <label className="text-[#6abd45]" htmlFor="Active">Active</label>
@@ -279,36 +279,36 @@ function JobCareer(props: JobDescType) {
                     </td>
                   </tr>
                 </table>
-                <div className="flex flex-wrap justify-center flex-row">
-                <button
-                  type="submit"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleUpdate();
-                  }}
-                  className=" px-4 border-2 rounded-md bg-green-500 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
-                >
-                  Update
-                </button>
-                <button
-                  type="submit"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleDelete();
-                  }}
-                  className=" px-4 border-2 rounded-md bg-red-600 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-red-600 hover:text-red-600 hover:bg-white"
-                >
-                  Delete
-                </button>
-                <button
-                  type="submit"
-                  onClick={() => {
-                    setOpenJob(false);
-                  }}
-                  className=" px-4 border-2 rounded-md bg-slate-600 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-slate-600 hover:text-slate-600 hover:bg-white"
-                >
-                  Cancel
-                </button>
+                <div className="flex flex-row flex-wrap justify-center">
+                  <button
+                    type="submit"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleUpdate();
+                    }}
+                    className=" px-4 border-2 rounded-md bg-green-500 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
+                  >
+                    Update
+                  </button>
+                  <button
+                    type="submit"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      // handleDelete();
+                    }}
+                    className="px-4 mx-3 text-lg text-white bg-red-600 border-2 border-white rounded-md drop-shadow-lg hover:border-red-600 hover:text-red-600 hover:bg-white"
+                  >
+                    Delete
+                  </button>
+                  <button
+                    type="submit"
+                    onClick={() => {
+                      setOpenJob(false);
+                    }}
+                    className="px-4 mx-3 text-lg text-white border-2 border-white rounded-md bg-slate-600 drop-shadow-lg hover:border-slate-600 hover:text-slate-600 hover:bg-white"
+                  >
+                    Cancel
+                  </button>
 
                 </div>
               </div>
@@ -322,12 +322,12 @@ function JobCareer(props: JobDescType) {
           className="relative z-50"
         >
           <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
-          <div className="fixed inset-1 w-screen overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4">
-              <div className="bg-white w-full max-w-4xl p-6 rounded-lg shadow-lg flex flex-col">
-              <div className="flex justify-between">
+          <div className="fixed w-screen overflow-y-auto inset-1">
+            <div className="flex items-center justify-center min-h-full p-4">
+              <div className="flex flex-col w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg">
+                <div className="flex justify-between">
                   <Dialog.Title className="text-lg font-semibold">
-                    Job Applications for {props.role}
+                    Job Applications for {props.Role}
                   </Dialog.Title>
                   <button
                     onClick={() => setOpenApp(false)}
@@ -335,7 +335,7 @@ function JobCareer(props: JobDescType) {
                   >
                     <span className="sr-only">Close</span>
                     <svg
-                      className="h-6 w-6"
+                      className="w-6 h-6"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -353,91 +353,91 @@ function JobCareer(props: JobDescType) {
                 </div>
 
                 <table className="mx-4 divide-y divide-gray-200">
-              <thead className="bg-[#6abd45] text-white">
-                <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-start pl-20 text-xs font-medium uppercase"
-                  >
-                    Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-start text-xs font-medium  uppercase"
-                  >
-                    Email
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-start text-xs font-medium  uppercase"
-                  >
-                    Phone
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium  uppercase"
-                  >
-                    Resume
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3 text-center text-xs font-medium  uppercase"
-                  >
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 ">
-                {
-                  app?.map((application) => (
-                    <>
-                      <tr className="hover:bg-gray-100">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 ">
-                            {application.name}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                          <Link to={`mailto:${application.email}`} className="text-blue-600 hover:text-blue-800" target="_blank">{application.email}</Link>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 ">
-                          <Link to={`tel:${application.phone}`} className="text-blue-600 hover:text-blue-800" target="_blank">{application.phone}</Link>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-800 ">
-                          <Link to={application.resume} target="_blank"
-                          className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">
-                            View Resume
-                          </Link>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium flex flex-row">
-                          <button
-                            type="button" onClick={(e) => {e.preventDefault(); handleApplicationConnect();}}
-                            className=" px-4 border-2 rounded-md bg-green-500 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
-                          >
-                            Connect
-                          </button>
+                  <thead className="bg-[#6abd45] text-white">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 pl-20 text-xs font-medium uppercase text-start"
+                      >
+                        Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium uppercase text-start"
+                      >
+                        Email
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium uppercase text-start"
+                      >
+                        Phone
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium text-center uppercase"
+                      >
+                        Resume
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-3 py-3 text-xs font-medium text-center uppercase"
+                      >
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200 ">
+                    {
+                      app?.map((application) => (
+                        <>
+                          <tr className="hover:bg-gray-100">
+                            <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
+                              {application.name}
+                            </td>
+                            <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                              <Link to={`mailto:${application.email}`} className="text-blue-600 hover:text-blue-800" target="_blank">{application.email}</Link>
+                            </td>
+                            <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap ">
+                              <Link to={`tel:${application.phone}`} className="text-blue-600 hover:text-blue-800" target="_blank">{application.phone}</Link>
+                            </td>
+                            <td className="px-6 py-4 text-sm text-center text-gray-800 whitespace-nowrap ">
+                              <Link to={application.resume} target="_blank"
+                                className="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">
+                                View Resume
+                              </Link>
+                            </td>
+                            <td className="flex flex-row px-6 py-4 text-sm font-medium text-center whitespace-nowrap">
+                              <button
+                                // type="button" onClick={(e) => { e.preventDefault(); handleApplicationConnect(); }}
+                                className=" px-4 border-2 rounded-md bg-green-500 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
+                              >
+                                Connect
+                              </button>
 
-                          <button
-                            type="button" onClick={(e) => {e.preventDefault(); handleApplicationDelete(application);}}
-                            className=" px-4 border-2 rounded-md bg-red-600 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-red-600 hover:text-red-600 hover:bg-white"
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    </>
-                  ))
-                }
-              </tbody>
-            </table>
-                <div className="flex flex-wrap justify-center flex-row">
-                <button
-                  type="submit"
-                  onClick={() => {
-                    setOpenApp(false);
-                  }}
-                  className=" px-4 border-2 rounded-md bg-red-600 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-red-600 hover:text-red-600 hover:bg-white"
-                >
-                  Cancel
-                </button>
+                              <button
+                                // type="button" onClick={(e) => {e.preventDefault(); handleApplicationDelete(application);}}
+                                className="px-4 mx-3 text-lg text-white bg-red-600 border-2 border-white rounded-md drop-shadow-lg hover:border-red-600 hover:text-red-600 hover:bg-white"
+                              >
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        </>
+                      ))
+                    }
+                  </tbody>
+                </table>
+                <div className="flex flex-row flex-wrap justify-center">
+                  <button
+                    type="submit"
+                    onClick={() => {
+                      setOpenApp(false);
+                    }}
+                    className="px-4 mx-3 text-lg text-white bg-red-600 border-2 border-white rounded-md drop-shadow-lg hover:border-red-600 hover:text-red-600 hover:bg-white"
+                  >
+                    Cancel
+                  </button>
 
                 </div>
               </div>
@@ -445,41 +445,41 @@ function JobCareer(props: JobDescType) {
           </div>
         </Dialog>
 
-      <tr className="hover:bg-gray-100">
-        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 ">
-            {props.role}
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-          {props.location}
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 ">
-          {props.type}
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-800 ">
-          <Link to={props.jd} target="_blank"
-          className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">
-            View JD
-          </Link>
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-          <button
-            type="button" onClick={(e) => {e.preventDefault(); setOpenApp(false); setOpenJob(true);}}
-            className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
-          >
-            More
-          </button>
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-          <button
-            type="button" onClick={(e) => {e.preventDefault(); setOpenJob(false); setOpenApp(true);}}
-            className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
-          >
-            Applications
-          </button>
-        </td>
-      </tr>
-    </>
-  );
+        <tr className="hover:bg-gray-100">
+          <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
+            {props.Role}
+          </td>
+          <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+            {props.location}
+          </td>
+          <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap ">
+            {props.type}
+          </td>
+          <td className="px-6 py-4 text-sm text-center text-gray-800 whitespace-nowrap ">
+            {/* <Link to={props.jd} target="_blank"
+              className="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">
+              View JD
+            </Link> */}
+          </td>
+          <td className="px-6 py-4 text-sm font-medium text-center whitespace-nowrap">
+            <button
+              type="button" onClick={(e) => { e.preventDefault(); setOpenApp(false); setOpenJob(true); }}
+              className="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
+            >
+              More
+            </button>
+          </td>
+          <td className="px-6 py-4 text-sm font-medium text-center whitespace-nowrap">
+            <button
+              type="button" onClick={(e) => { e.preventDefault(); setOpenJob(false); setOpenApp(true); }}
+              className="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
+            >
+              Applications
+            </button>
+          </td>
+        </tr>
+      </>
+    );
 }
 
 export default JobCareer;

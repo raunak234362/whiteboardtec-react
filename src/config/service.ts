@@ -1,17 +1,21 @@
-import { JobPortalInterface } from "./index";
+import { JobPortalInterface } from "./interface";
 import api from "./api";
-class Service{
- static async JobPortal({data}:JobPortalInterface){
+
+class Service {
+  static async JobPortal(payload: FormData) {
     try {
-        const response = await api.post("/jobportal", data,{
-            headers: {
-                "Content-Type": "multipart/form-data"
-            }
-        });
-        return response.data;
+      const token = sessionStorage.getItem("token");
+      const response = await api.post(`/jobrole/create`, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
     } catch (error) {
-        alert("Something went wrong, Please try again later")
+      console.log(error);
+      alert("Something went wrong, Please try again later");
     }
+  }
 }
-}
-export default Service
+export default Service;
