@@ -270,46 +270,7 @@ function AdminCareer() {
           </div>
 
           <table className="mx-4 divide-y divide-gray-200">
-            <thead className="bg-[#6abd45] text-white">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-3 pl-20 text-xs font-medium uppercase text-start"
-                >
-                  Role
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-xs font-medium uppercase text-start"
-                >
-                  Location
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-xs font-medium uppercase text-start"
-                >
-                  Type
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-xs font-medium text-center uppercase"
-                >
-                  Job Description
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-xs font-medium text-center uppercase"
-                >
-                  Action
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-xs font-medium text-center uppercase"
-                >
-                  Applications
-                </th>
-              </tr>
-            </thead>
+            
             <tbody className="divide-y divide-gray-200 ">
               {gettingdata?.map(({job}:any, {index}:any) => (
                 <JobCareer key={index} {...job} />

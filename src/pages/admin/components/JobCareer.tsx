@@ -159,7 +159,47 @@ const JobCareer: React.FC<JobPortalInterface> = (props) => {
                 </div>
 
                 <table className="mx-10 mt-4 border-separate border-spacing-y-4">
-                  <tr>
+                  <thead className="bg-[#6abd45] text-white">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 pl-20 text-xs font-medium uppercase text-start"
+                      >
+                        Role
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium uppercase text-start"
+                      >
+                        Location
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium uppercase text-start"
+                      >
+                        Type
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium text-center uppercase"
+                      >
+                        Job Description
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-3 py-3 text-xs font-medium text-center uppercase"
+                      >
+                        Action
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-3 py-3 text-xs font-medium text-center uppercase"
+                      >
+                        Applications
+                      </th>
+                    </tr>
+                  </thead>
+                  {/* <tr>
                     <td>
                       <label htmlFor="Role" className="text-sm text-gray-800">
                         Role
@@ -171,7 +211,9 @@ const JobCareer: React.FC<JobPortalInterface> = (props) => {
                         name="Role"
                         id="Role"
                         value={Role}
-                        onChange={(e) => { setRole(e.target.value) }}
+                        onChange={(e) => {
+                          setRole(e.target.value);
+                        }}
                         className="w-full px-2 mx-4 border-2 border-gray-200 rounded-md"
                       />
                     </td>
@@ -191,7 +233,9 @@ const JobCareer: React.FC<JobPortalInterface> = (props) => {
                         name="Location"
                         id="Location"
                         value={location}
-                        onChange={(e) => { setLocation(e.target.value) }}
+                        onChange={(e) => {
+                          setLocation(e.target.value);
+                        }}
                         className="w-full px-2 mx-4 border-2 border-gray-200 rounded-md"
                       />
                     </td>
@@ -208,7 +252,9 @@ const JobCareer: React.FC<JobPortalInterface> = (props) => {
                         name="Type"
                         id="Type"
                         value={type0}
-                        onChange={(e) => { setType(e.target.value) }}
+                        onChange={(e) => {
+                          setType(e.target.value);
+                        }}
                         className="w-full px-2 mx-4 border-2 border-gray-200 rounded-md"
                       />
                     </td>
@@ -228,7 +274,9 @@ const JobCareer: React.FC<JobPortalInterface> = (props) => {
                         name="Qualification"
                         id="Qualification"
                         value={qualification}
-                        onChange={(e) => { setQualification(e.target.value) }}
+                        onChange={(e) => {
+                          setQualification(e.target.value);
+                        }}
                         className="w-full px-2 mx-4 border-2 border-gray-200 rounded-md"
                       />
                     </td>
@@ -265,20 +313,20 @@ const JobCareer: React.FC<JobPortalInterface> = (props) => {
                         name="Active"
                         id="Active"
                         checked={status}
-                        onChange={() =>
-                          setStatus(!status)
-                        }
+                        onChange={() => setStatus(!status)}
                         className="mx-4 border-2 border-gray-200 rounded-md custom-checkbox"
                       />
-                      {
-                        status ? (
-                          <label className="text-[#6abd45]" htmlFor="Active">Active</label>
-                        ) : (
-                          <label className="text-red-600" htmlFor="Active">Inactive</label>
-                        )
-                      }
+                      {status ? (
+                        <label className="text-[#6abd45]" htmlFor="Active">
+                          Active
+                        </label>
+                      ) : (
+                        <label className="text-red-600" htmlFor="Active">
+                          Inactive
+                        </label>
+                      )}
                     </td>
-                  </tr>
+                  </tr> */}
                 </table>
                 <div className="flex flex-row flex-wrap justify-center">
                   <button
@@ -310,7 +358,6 @@ const JobCareer: React.FC<JobPortalInterface> = (props) => {
                   >
                     Cancel
                   </button>
-
                 </div>
               </div>
             </div>
@@ -389,44 +436,57 @@ const JobCareer: React.FC<JobPortalInterface> = (props) => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 ">
-                    {
-                      app?.map((application) => (
-                        <>
-                          <tr className="hover:bg-gray-100">
-                            <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
-                              {application.name}
-                            </td>
-                            <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                              <Link to={`mailto:${application.email}`} className="text-blue-600 hover:text-blue-800" target="_blank">{application.email}</Link>
-                            </td>
-                            <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap ">
-                              <Link to={`tel:${application.phone}`} className="text-blue-600 hover:text-blue-800" target="_blank">{application.phone}</Link>
-                            </td>
-                            <td className="px-6 py-4 text-sm text-center text-gray-800 whitespace-nowrap ">
-                              <Link to={application.resume} target="_blank"
-                                className="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">
-                                View Resume
-                              </Link>
-                            </td>
-                            <td className="flex flex-row px-6 py-4 text-sm font-medium text-center whitespace-nowrap">
-                              <button
-                                // type="button" onClick={(e) => { e.preventDefault(); handleApplicationConnect(); }}
-                                className=" px-4 border-2 rounded-md bg-green-500 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
-                              >
-                                Connect
-                              </button>
+                    {app?.map((application) => (
+                      <>
+                        <tr className="hover:bg-gray-100">
+                          <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
+                            {application.name}
+                          </td>
+                          <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                            <Link
+                              to={`mailto:${application.email}`}
+                              className="text-blue-600 hover:text-blue-800"
+                              target="_blank"
+                            >
+                              {application.email}
+                            </Link>
+                          </td>
+                          <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap ">
+                            <Link
+                              to={`tel:${application.phone}`}
+                              className="text-blue-600 hover:text-blue-800"
+                              target="_blank"
+                            >
+                              {application.phone}
+                            </Link>
+                          </td>
+                          <td className="px-6 py-4 text-sm text-center text-gray-800 whitespace-nowrap ">
+                            <Link
+                              to={application.resume}
+                              target="_blank"
+                              className="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
+                            >
+                              View Resume
+                            </Link>
+                          </td>
+                          <td className="flex flex-row px-6 py-4 text-sm font-medium text-center whitespace-nowrap">
+                            <button
+                              // type="button" onClick={(e) => { e.preventDefault(); handleApplicationConnect(); }}
+                              className=" px-4 border-2 rounded-md bg-green-500 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
+                            >
+                              Connect
+                            </button>
 
-                              <button
-                                // type="button" onClick={(e) => {e.preventDefault(); handleApplicationDelete(application);}}
-                                className="px-4 mx-3 text-lg text-white bg-red-600 border-2 border-white rounded-md drop-shadow-lg hover:border-red-600 hover:text-red-600 hover:bg-white"
-                              >
-                                Delete
-                              </button>
-                            </td>
-                          </tr>
-                        </>
-                      ))
-                    }
+                            <button
+                              // type="button" onClick={(e) => {e.preventDefault(); handleApplicationDelete(application);}}
+                              className="px-4 mx-3 text-lg text-white bg-red-600 border-2 border-white rounded-md drop-shadow-lg hover:border-red-600 hover:text-red-600 hover:bg-white"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      </>
+                    ))}
                   </tbody>
                 </table>
                 <div className="flex flex-row flex-wrap justify-center">
@@ -439,7 +499,6 @@ const JobCareer: React.FC<JobPortalInterface> = (props) => {
                   >
                     Cancel
                   </button>
-
                 </div>
               </div>
             </div>
@@ -464,7 +523,12 @@ const JobCareer: React.FC<JobPortalInterface> = (props) => {
           </td>
           <td className="px-6 py-4 text-sm font-medium text-center whitespace-nowrap">
             <button
-              type="button" onClick={(e) => { e.preventDefault(); setOpenApp(false); setOpenJob(true); }}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenApp(false);
+                setOpenJob(true);
+              }}
               className="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
             >
               More
@@ -472,7 +536,12 @@ const JobCareer: React.FC<JobPortalInterface> = (props) => {
           </td>
           <td className="px-6 py-4 text-sm font-medium text-center whitespace-nowrap">
             <button
-              type="button" onClick={(e) => { e.preventDefault(); setOpenJob(false); setOpenApp(true); }}
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenJob(false);
+                setOpenApp(true);
+              }}
               className="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
             >
               Applications
