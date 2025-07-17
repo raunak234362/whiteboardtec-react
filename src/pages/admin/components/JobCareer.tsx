@@ -1,555 +1,150 @@
-import { Link } from "react-router-dom";
-
 import { Dialog } from "@headlessui/react";
-import {  useState } from "react";
-// import { collection, deleteDoc, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
-// import { db, storage } from "../../../config/firebase";
-// import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { CandidateApplication } from ".";
+import { useState } from "react";
 import { JobPortalInterface } from "../../../config/interface";
+import Service from "../../../config/service";
+import JobForm from "./JobForm"; // Import the JobForm component
 
-const JobCareer: React.FC<JobPortalInterface> = (props) => {
-  console.log(props)
+interface JobCareerProps {
+  job: JobPortalInterface[];
+}
+
+const JobCareer = ({ job }: JobCareerProps) => {
   const [isOpenJob, setOpenJob] = useState(false);
-  const [isOpenApp, setOpenApp] = useState(false);
-  const [Role, setRole] = useState(props.Role);
-  const [location, setLocation] = useState(props.location);
-  const [type0, setType] = useState(props.type);
-  const [qualification, setQualification] = useState(props.qualification);
-  const [jd, setJD] = useState<any>(null);
-  const [status, setStatus] = useState(props.status);
-  const [app, setApp] = useState<CandidateApplication[]>([]);
-  const [progress, setProgress] = useState<number>(0);
+  const [selectedJob, setSelectedJob] = useState<JobPortalInterface | null>(
+    null
+  );
+  const [loading, setLoading] = useState(false);
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProgress(0);
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
+  const handleEditClick = (jobItem: JobPortalInterface) => {
+    setSelectedJob(jobItem);
+    setOpenJob(true);
+  };
 
-      reader.onprogress = (event) => {
-        if (event.lengthComputable) {
-          const percentLoaded = (event.loaded / event.total) * 100;
-          setProgress(percentLoaded);
-        }
-      };
+  const handleUpdate = async (data: JobPortalInterface) => {
+    if (!selectedJob) return;
+    const formData = new FormData();
+    formData.append("Role", data.Role);
+    formData.append("location", data.location);
+    formData.append("type", data.type);
+    formData.append("qualification", data.qualification);
+    formData.append("status", data.status ? "active" : "inactive");
 
-      reader.onloadend = () => {
-        setProgress(100); // Set progress to 100% when loading is complete
-        setJD(file);
-      };
-
-      reader.readAsDataURL(file);
+    try {
+      setLoading(true);
+      await Service.editJob(selectedJob.id!, formData); // Update job via API
+      alert("Job updated successfully");
+      setOpenJob(false);
+    } catch (error) {
+      console.error("Error updating job:", error);
+      alert("Failed to update job");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleUpdate = async () => {
-    const data = {
-      Role: (props.Role !== Role) ? Role : props.Role,
-      location: (props.location !== location) ? location : props.location,
-      type: (props.type !== type0) ? type0 : props.type,
-      qualification: (props.qualification !== qualification) ? qualification : props.qualification,
-      status: (props.status !== status) ? status : props.status,
+  const handleDelete = async (id: number) => {
+    if (!window.confirm("Are you sure you want to delete this job?")) return;
+    try {
+      setLoading(true);
+      await Service.deleteJob(id); // Call delete API
+      alert("Job deleted successfully");
+    } catch (error) {
+      console.error("Error deleting job:", error);
+      alert("Failed to delete job");
+    } finally {
+      setLoading(false);
     }
+  };
 
-  
-    //   if (jd) {
-    //     const reference = ref(storage, props.jd.split("?")[0]);
-    //     await deleteObject(reference).then(() => {
-    //       console.log("Old JD Deleted");
-    //     }).catch((err)=>[
-    //       console.log(err)
-    //     ])
-    //     const jobDesc = ref(storage, `Careers/${Role.replace(" ", "_")}_${v4()}`);
-    //     await uploadBytes(jobDesc, jd).then((val) => {
-    //       getDownloadURL(val.ref).then((url) => {
-    //         data.jd = url;
-    //         const job = doc(db, "career", props.id)
-    //         updateDoc(job, data);
-    //       });
-    //     });
-    //   } else {
-    //     const job = doc(db, "career", props.id)
-    //     updateDoc(job, data);
-    //   }
-    //   alert("Job Details updated successfully");
-    //   setOpenJob(false);
-    // }
-
-    // const handleDelete = async () => {
-    //   const reference = ref(storage, props.jd.split("?")[0]);
-    //   await deleteObject(reference).then(() => {
-    //     console.log("Old JD Deleted");
-    //   }).catch((err)=>[
-    //     console.log(err)
-    //   ])
-    //   await deleteDoc(doc(db, "career", props.id));
-    //   fetchApplications();
-    // }
-
-    // const handleApplicationConnect = async (application: CandidateApplication) => {
-    const handleApplicationConnect = async () => {
-      alert("Currently No Option to Connect to Candidate");
-    }
-
-    // const handleApplicationDelete = async (application: CandidateApplication) => {
-    //   const reference = ref(storage, application.resume.split("?")[0]);
-    //   await deleteObject(reference).then(() => {
-    //     console.log("Old Application Resume Deleted");
-    //   }).catch((err)=>[
-    //     console.log(err)
-    //   ])
-    //   await deleteDoc(doc(db, "application", application.id));
-    //   alert("Application Deleted Successfully");
-    //   fetchApplications();
-    // }
-
-    // const fetchApplications = async () => {
-    //   const application = collection(db, "application");
-    //   const career_application = query(application, where("jobId", "==", props.id));
-    //   const querySnapshot = await getDocs(career_application);
-    //   const data = querySnapshot.docs.map((doc) => ({
-    //     id: String(doc.id),
-    //     ...doc.data(),
-    //   }));
-    //   setApp(data as CandidateApplication[]);
-    // }
-
-    // useEffect(() => {
-    //   fetchApplications();
-    // }, []);
-
-  }
-    return (
-      <>
-        <Dialog
-          open={isOpenJob}
-          onClose={() => setOpenJob(false)}
-          className="relative z-50"
-        >
-          <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
-          <div className="fixed w-screen overflow-y-auto inset-1">
-            <div className="flex items-center justify-center min-h-full p-4">
-              <div className="flex flex-col w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg">
-                <div className="flex justify-between">
-                  <Dialog.Title className="text-lg font-semibold">
-                    Edit Job Role for {props.Role}
-                  </Dialog.Title>
-                  <button
-                    onClick={() => setOpenJob(false)}
-                    className="text-gray-400 hover:text-gray-800"
+  return (
+    <>
+      {/* Edit Job Dialog */}
+      <Dialog
+        open={isOpenJob}
+        onClose={() => setOpenJob(false)}
+        className="relative z-50"
+      >
+        <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
+        <div className="fixed w-screen overflow-y-auto inset-1">
+          <div className="flex items-center justify-center min-h-full p-4">
+            <div className="flex flex-col w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg">
+              <div className="flex justify-between">
+                <Dialog.Title className="text-lg font-semibold">
+                  Edit Job Role: {selectedJob?.Role}
+                </Dialog.Title>
+                <button
+                  onClick={() => setOpenJob(false)}
+                  className="text-gray-400 hover:text-gray-800"
+                >
+                  <span className="sr-only">Close</span>
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
-                    <span className="sr-only">Close</span>
-                    <svg
-                      className="w-6 h-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
-                </div>
-
-                <table className="mx-10 mt-4 border-separate border-spacing-y-4">
-                  <thead className="bg-[#6abd45] text-white">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 pl-20 text-xs font-medium uppercase text-start"
-                      >
-                        Role
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium uppercase text-start"
-                      >
-                        Location
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium uppercase text-start"
-                      >
-                        Type
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium text-center uppercase"
-                      >
-                        Job Description
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3 text-xs font-medium text-center uppercase"
-                      >
-                        Action
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3 text-xs font-medium text-center uppercase"
-                      >
-                        Applications
-                      </th>
-                    </tr>
-                  </thead>
-                  {/* <tr>
-                    <td>
-                      <label htmlFor="Role" className="text-sm text-gray-800">
-                        Role
-                      </label>
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        name="Role"
-                        id="Role"
-                        value={Role}
-                        onChange={(e) => {
-                          setRole(e.target.value);
-                        }}
-                        className="w-full px-2 mx-4 border-2 border-gray-200 rounded-md"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label
-                        htmlFor="Location"
-                        className="text-sm text-gray-800"
-                      >
-                        Location
-                      </label>
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        name="Location"
-                        id="Location"
-                        value={location}
-                        onChange={(e) => {
-                          setLocation(e.target.value);
-                        }}
-                        className="w-full px-2 mx-4 border-2 border-gray-200 rounded-md"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label htmlFor="Type" className="text-sm text-gray-800">
-                        Type
-                      </label>
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        name="Type"
-                        id="Type"
-                        value={type0}
-                        onChange={(e) => {
-                          setType(e.target.value);
-                        }}
-                        className="w-full px-2 mx-4 border-2 border-gray-200 rounded-md"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label
-                        htmlFor="Qualification"
-                        className="text-sm text-gray-800"
-                      >
-                        Qualification
-                      </label>
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        name="Qualification"
-                        id="Qualification"
-                        value={qualification}
-                        onChange={(e) => {
-                          setQualification(e.target.value);
-                        }}
-                        className="w-full px-2 mx-4 border-2 border-gray-200 rounded-md"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label htmlFor="JD" className="text-sm text-gray-800">
-                        Job Description
-                      </label>
-                    </td>
-                    <td>
-                      <input
-                        type="file"
-                        name="JD"
-                        id="JD"
-                        accept="application/pdf"
-                        onChange={handleFileChange}
-                        className="w-full mx-4 border-2 border-gray-200 rounded-md"
-                      />
-                      {progress > 0 && progress <= 100 && (
-                        <span className="mx-3 text-gray-600">{progress}%</span>
-                      )}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label htmlFor="Active" className="text-sm text-gray-800">
-                        Status
-                      </label>
-                    </td>
-                    <td>
-                      <input
-                        type="checkbox"
-                        name="Active"
-                        id="Active"
-                        checked={status}
-                        onChange={() => setStatus(!status)}
-                        className="mx-4 border-2 border-gray-200 rounded-md custom-checkbox"
-                      />
-                      {status ? (
-                        <label className="text-[#6abd45]" htmlFor="Active">
-                          Active
-                        </label>
-                      ) : (
-                        <label className="text-red-600" htmlFor="Active">
-                          Inactive
-                        </label>
-                      )}
-                    </td>
-                  </tr> */}
-                </table>
-                <div className="flex flex-row flex-wrap justify-center">
-                  <button
-                    type="submit"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleUpdate();
-                    }}
-                    className=" px-4 border-2 rounded-md bg-green-500 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
-                  >
-                    Update
-                  </button>
-                  <button
-                    type="submit"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      // handleDelete();
-                    }}
-                    className="px-4 mx-3 text-lg text-white bg-red-600 border-2 border-white rounded-md drop-shadow-lg hover:border-red-600 hover:text-red-600 hover:bg-white"
-                  >
-                    Delete
-                  </button>
-                  <button
-                    type="submit"
-                    onClick={() => {
-                      setOpenJob(false);
-                    }}
-                    className="px-4 mx-3 text-lg text-white border-2 border-white rounded-md bg-slate-600 drop-shadow-lg hover:border-slate-600 hover:text-slate-600 hover:bg-white"
-                  >
-                    Cancel
-                  </button>
-                </div>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
               </div>
+
+              {/* Job Form */}
+              {selectedJob && (
+                <JobForm
+                  selectedJob={selectedJob}
+                  onSubmit={handleUpdate}
+                  loading={loading}
+                />
+              )}
             </div>
           </div>
-        </Dialog>
+        </div>
+      </Dialog>
 
-        <Dialog
-          open={isOpenApp}
-          onClose={() => setOpenApp(false)}
-          className="relative z-50"
-        >
-          <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
-          <div className="fixed w-screen overflow-y-auto inset-1">
-            <div className="flex items-center justify-center min-h-full p-4">
-              <div className="flex flex-col w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg">
-                <div className="flex justify-between">
-                  <Dialog.Title className="text-lg font-semibold">
-                    Job Applications for {props.Role}
-                  </Dialog.Title>
-                  <button
-                    onClick={() => setOpenApp(false)}
-                    className="text-gray-400 hover:text-gray-800"
-                  >
-                    <span className="sr-only">Close</span>
-                    <svg
-                      className="w-6 h-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
-                </div>
-
-                <table className="mx-4 divide-y divide-gray-200">
-                  <thead className="bg-[#6abd45] text-white">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 pl-20 text-xs font-medium uppercase text-start"
-                      >
-                        Name
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium uppercase text-start"
-                      >
-                        Email
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium uppercase text-start"
-                      >
-                        Phone
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium text-center uppercase"
-                      >
-                        Resume
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3 text-xs font-medium text-center uppercase"
-                      >
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200 ">
-                    {app?.map((application) => (
-                      <>
-                        <tr className="hover:bg-gray-100">
-                          <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
-                            {application.name}
-                          </td>
-                          <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                            <Link
-                              to={`mailto:${application.email}`}
-                              className="text-blue-600 hover:text-blue-800"
-                              target="_blank"
-                            >
-                              {application.email}
-                            </Link>
-                          </td>
-                          <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap ">
-                            <Link
-                              to={`tel:${application.phone}`}
-                              className="text-blue-600 hover:text-blue-800"
-                              target="_blank"
-                            >
-                              {application.phone}
-                            </Link>
-                          </td>
-                          <td className="px-6 py-4 text-sm text-center text-gray-800 whitespace-nowrap ">
-                            <Link
-                              to={application.resume}
-                              target="_blank"
-                              className="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
-                            >
-                              View Resume
-                            </Link>
-                          </td>
-                          <td className="flex flex-row px-6 py-4 text-sm font-medium text-center whitespace-nowrap">
-                            <button
-                              // type="button" onClick={(e) => { e.preventDefault(); handleApplicationConnect(); }}
-                              className=" px-4 border-2 rounded-md bg-green-500 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
-                            >
-                              Connect
-                            </button>
-
-                            <button
-                              // type="button" onClick={(e) => {e.preventDefault(); handleApplicationDelete(application);}}
-                              className="px-4 mx-3 text-lg text-white bg-red-600 border-2 border-white rounded-md drop-shadow-lg hover:border-red-600 hover:text-red-600 hover:bg-white"
-                            >
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      </>
-                    ))}
-                  </tbody>
-                </table>
-                <div className="flex flex-row flex-wrap justify-center">
-                  <button
-                    type="submit"
-                    onClick={() => {
-                      setOpenApp(false);
-                    }}
-                    className="px-4 mx-3 text-lg text-white bg-red-600 border-2 border-white rounded-md drop-shadow-lg hover:border-red-600 hover:text-red-600 hover:bg-white"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Dialog>
-
-        <tr className="hover:bg-gray-100">
-          <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
-            {props.Role}
-          </td>
-          <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-            {props.location}
-          </td>
-          <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap ">
-            {props.type}
-          </td>
-          <td className="px-6 py-4 text-sm text-center text-gray-800 whitespace-nowrap ">
-            {/* <Link to={props.jd} target="_blank"
-              className="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">
-              View JD
-            </Link> */}
-          </td>
-          <td className="px-6 py-4 text-sm font-medium text-center whitespace-nowrap">
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                setOpenApp(false);
-                setOpenJob(true);
-              }}
-              className="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
-            >
-              More
-            </button>
-          </td>
-          <td className="px-6 py-4 text-sm font-medium text-center whitespace-nowrap">
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                setOpenJob(false);
-                setOpenApp(true);
-              }}
-              className="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
-            >
-              Applications
-            </button>
-          </td>
-        </tr>
-      </>
-    );
-}
+      {/* Job Table */}
+      <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-[#6abd45] text-white">
+          <tr>
+            <th className="px-6 py-3 text-left">Role</th>
+            <th className="px-6 py-3 text-left">Location</th>
+            <th className="px-6 py-3 text-left">Type</th>
+            <th className="px-6 py-3 text-left">Qualification</th>
+            <th className="px-6 py-3 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {job.map((jobItem) => (
+            <tr key={jobItem.id} className="hover:bg-gray-100">
+              <td className="px-6 py-4">{jobItem.Role}</td>
+              <td className="px-6 py-4">{jobItem.location}</td>
+              <td className="px-6 py-4">{jobItem.type}</td>
+              <td className="px-6 py-4">{jobItem.qualification}</td>
+              <td className="px-6 py-4 space-x-2 text-center">
+                <button
+                  className="px-2 py-1 text-sm text-blue-600 border border-blue-600 rounded hover:bg-blue-50"
+                  onClick={() => handleEditClick(jobItem)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="px-2 py-1 text-sm text-red-600 border border-red-600 rounded hover:bg-red-50"
+                  onClick={() => handleDelete(jobItem.id)}
+                  disabled={loading}
+                >
+                  {loading ? "Deleting..." : "Delete"}
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
+  );
+};
 
 export default JobCareer;

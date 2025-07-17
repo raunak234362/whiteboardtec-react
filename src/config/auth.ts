@@ -6,7 +6,8 @@ class AuthService {
   }: {
     username: string;
     password: string;
-  }) {
+    }) {
+    console.log("Logging in with:", { username, password });
     try {
       const userData = { username, password };
       const response = await api.post(`/user/login`,

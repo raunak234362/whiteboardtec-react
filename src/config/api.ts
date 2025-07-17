@@ -3,7 +3,7 @@ import axios from "axios";
 const instance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
 });
-
+console.log("API base URL:", instance.defaults.baseURL);
 instance.interceptors.request.use((config) => {
   // Ensure headers exists
   config.headers = config.headers ?? {};
