@@ -22,10 +22,11 @@ export interface ApiResponse<Type> {
   message: string;
   data: Type;
 } 
-export interface portfolioInterface{
+export interface PortfolioInterface{
   id: string;
   title: string;
   description: string;
   file: any[];
   status: boolean;
+ // Assuming pdf is a string URL or path
 }

@@ -8,7 +8,7 @@ export type PortfolioPropType = {
   description: string;
   pdf: string;
   images?: CarouselPropType[];
-  status?: boolean;
+  status: "active" | "inactive" | boolean;
 };
 
 export type ImagePortfolioPropType = {
