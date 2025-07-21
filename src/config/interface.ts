@@ -22,6 +22,7 @@ export interface ApiResponse<Type> {
   message: string;
   data: Type;
 } 
+
 export interface PortfolioInterface{
   id: string;
   title: string;

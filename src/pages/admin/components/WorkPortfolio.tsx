@@ -2,7 +2,6 @@ import { useState } from "react";
 import { PortfolioPropType } from "../../ourWork";
 import { Link } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
-import { set } from "firebase/database";
 
 interface WorkPortfolioProps extends PortfolioPropType {
   onEdit:(portfolio: PortfolioPropType) => void;
@@ -26,6 +25,7 @@ function WorkPortfolio({
   const [status, setStatus] = useState(initialStatus); 
   const [progress, setProgress] = useState<number>(0);
   
+console.log(initialPdfUrl[0]?.secureUrl);
 
   const handleFileChange =  (e: React.ChangeEvent<HTMLInputElement>) => {
     setProgress(0);
@@ -42,17 +42,6 @@ function WorkPortfolio({
     }
   };
 
-  const handleOpenEditModal = () => {
-    onEdit({
-      id,
-      title: initialTitle,
-      description: initialDescription,
-      pdf: initialPdfUrl,
-      status: initialStatus,
-      
-    });
-  };
-  
 
 return (
     <>
@@ -64,7 +53,7 @@ return (
         <td className="px-6 py-4 text-sm text-center text-gray-800 whitespace-nowrap ">
           {initialPdfUrl ? (
             <Link
-              to={initialPdfUrl} 
+              to={initialPdfUrl[0]?.secureUrl || "#"} 
               target="_blank"
               className="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
             >
