@@ -31,3 +31,39 @@ export interface PortfolioInterface{
   status: boolean;
  // Assuming pdf is a string URL or path
 }
+export type ProjectType =
+  | "Institute"
+  | "Commercial"
+  | "Facility Expension"
+  | "Industrial"
+  | "Other";
+export type ProjectStatus =
+  | "Planning"
+  | "In Progress"
+  | "Completed"
+  | "On Hold"
+  | "Cancelled";
+// Define ProjectType
+
+export interface IProject {
+  id: string;
+  title: string;
+  description: string;
+  location: string;
+  type: ProjectType;
+  technologyused: string;
+  status: ProjectStatus;
+  images: any[];
+  createdAt?: string; 
+  updatedAt?: string;
+  __v?: number;
+}
+export interface GalleryProjectFrontend
+  extends Omit<IProject, "id" | "status" | "type" | "technologyused"> {
+  id: string;
+  type: ProjectType; 
+  status: ProjectStatus;
+  technologyused: string;
+  onUpdateSuccess: (updatedItem: GalleryProjectFrontend) => void;
+  onDeleteSuccess: (deletedId: string) => void;
+}

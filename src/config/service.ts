@@ -4,6 +4,10 @@ import {
   JobPortalResponse,
   ApiResponse,
   PortfolioInterface,
+  IProject,
+  GalleryProjectFrontend,
+  ProjectType,
+  ProjectStatus,
 } from "./interface";
 import api from "./api";
 
@@ -77,7 +81,6 @@ class Service {
           "Content-Type": "multipart/form-data",
         },
       });
-      
     } catch (error) {
       console.log(error);
       alert("Something went wrong, Please try again later");
@@ -101,17 +104,14 @@ class Service {
       throw error; // Propagate the error for handling
     }
   }
-  static async updatePortfolio(
-    id: string,
-    payload: FormData
-  ): Promise<void> {
+  static async updatePortfolio(id: string, payload: FormData): Promise<void> {
     try {
       const token = sessionStorage.getItem("token");
       await api.put(`portfolioWork/update/${id}`, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
-        }
+        },
       });
     } catch (error) {
       console.log(error);
@@ -129,7 +129,75 @@ class Service {
       });
     } catch (error) {
       console.log(error);
-      alert("something went wrong while delelting portfolio")
+      alert("something went wrong while delelting portfolio");
+      throw error;
+    }
+  }
+  static async createGallery(payload: FormData): Promise<void> {
+    try {
+      const token = sessionStorage.getItem("token");
+      await api.post(`/project/create`, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      alert("Gallery created successfully");
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong while creating the gallery");
+      throw error;
+    }
+  }
+  static async getGallery(): Promise<IProject[]> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.get<ApiResponse<IProject[]>>("/project/all", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("Gallery data:", response.data);
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      throw error; // Propagate the error for handling
+    }
+  }
+
+  static async updateGallery(id: string, payload: FormData): Promise<IProject> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.put<ApiResponse<IProject>>(
+        `/project/update/${id}`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      alert("Gallery updated successfully");
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong while updating the gallery");
+      throw error;
+    }
+  }
+  static async deleteGallery(id: string): Promise<void> {
+    try {
+      const token = sessionStorage.getItem("token");
+      await api.delete(`/project/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      alert("Gallery project deleted successfully!");
+    } catch (error) {
+      console.error("Error deleting gallery project:", error);
+      alert("Something went wrong while deleting the gallery project.");
       throw error;
     }
   }
