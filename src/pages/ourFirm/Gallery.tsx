@@ -4,6 +4,7 @@ import { PageBanner, BannerPropType } from "../../components/banner";
 import { Modal } from "../../pages/ourFirm/Modal"; // Assuming Modal is implemented separately to handle image viewing
 import { motion } from "framer-motion"; // Import Framer Motion for animation
 import { useNavigate } from "react-router-dom";
+import GalleryImages from "./GalleryImages";
 const banner: BannerPropType = {
   header: "Gallery",
   image: "../../assets/gall.jpg",
@@ -14,7 +15,7 @@ const galleryImages = [
     src: "../../assets/Tekla.jpg",
     title: "Structural Steel Detailing Project",
     url: "/our-firm/gallery/Structural",
-    projectDepartment: "Structural",
+    projectDepartment: "STRUCTURAL",
   },
   {
     src: "../../assets/pembIMG.jpg",
@@ -32,9 +33,11 @@ function Gallery() {
 
   const navigate = useNavigate();
 
-  // const openModal = (image: string) => {
-  //   setSelectedImage(image);
-  // };
+  const openModal = (image: string) => {
+    setSelectedImage(image);
+  };
+
+  console.log("Selected Image:", selectedImage);
 
   const closeModal = () => {
     setSelectedImage(null);
@@ -43,9 +46,9 @@ function Gallery() {
   return (
     <div>
       <PageBanner {...banner} />
-      <section className="py-10 px-5">
+      <section className="px-5 py-10">
         <div className="container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {galleryImages.map((image, index) => (
               <motion.div
                 key={index}
@@ -54,16 +57,17 @@ function Gallery() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className="h-full cursor-pointer" onClick={() => image.url && navigate(image.url)}>
+                <div
+                  className="h-full cursor-pointer"
+                  onClick={() => openModal(image?.projectDepartment)}
+                >
                   <img
                     src={image.src}
                     alt={image.title}
-                    className="w-full h-full object-cover rounded-lg cursor-pointer"
+                    className="object-cover w-full h-full rounded-lg cursor-pointer"
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 hover:opacity-50 transition duration-300 flex items-center justify-center rounded-lg">
-                    <span
-                      className="text-white text-xl font-bold"
-                    >
+                  <div className="absolute inset-0 flex items-center justify-center transition duration-300 bg-black rounded-lg opacity-0 bg-opacity-70 hover:opacity-50">
+                    <span className="text-xl font-bold text-white">
                       {image.title}
                     </span>
                   </div>
@@ -74,7 +78,9 @@ function Gallery() {
         </div>
       </section>
 
-      {selectedImage && <Modal image={selectedImage} onClose={closeModal} />}
+      {selectedImage && <GalleryImages department={selectedImage} />}
+
+      {/* {selectedImage && <Modal image={selectedImage} onClose={closeModal} />} */}
     </div>
   );
 }

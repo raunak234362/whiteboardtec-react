@@ -168,7 +168,7 @@ class Service {
   static async updateGallery(id: string, payload: FormData): Promise<IProject> {
     try {
       const token = sessionStorage.getItem("token");
-      const response = await api.put<ApiResponse<IProject>>(
+      const response = await api.patch<ApiResponse<IProject>>(
         `/project/update/${id}`,
         payload,
         {
@@ -199,6 +199,21 @@ class Service {
       console.error("Error deleting gallery project:", error);
       alert("Something went wrong while deleting the gallery project.");
       throw error;
+    }
+  }
+  static async Gallery(department:string): Promise<IProject[]> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.get<ApiResponse<IProject[]>>(`/project/sampleFiles/${department}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("Gallery data:", response.data);
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      throw error; // Propagate the error for handling
     }
   }
 }

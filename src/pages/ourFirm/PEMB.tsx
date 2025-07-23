@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ImageModal } from "./ImagePopup";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../config/firebase";
+import Service from "../../config/service";
 
 const banner: BannerPropType = {
   header: "Gallery",
@@ -34,6 +35,13 @@ function PEMB() {
       images: string[];
     }[]
   >([]);
+
+  const fetchGalleryImage = async() => {
+    // const response = await Service
+  }
+  useEffect(() => { 
+    fetchGalleryImage();
+  }, []);
 
   const fetchGalleryImages = useCallback(async () => {
     try {
@@ -118,7 +126,7 @@ function PEMB() {
   return (
     <div className="pemb">
       <PageBanner {...banner} />
-      <div className="grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-6 px-5 py-10">
+      <div className="grid grid-cols-2 gap-6 px-5 py-10 lg:grid-cols-4 md:grid-cols-3">
         {galleryImages.map((item, index) => (
           <motion.div
             key={index}
@@ -128,7 +136,7 @@ function PEMB() {
             transition={{ duration: 0.5, delay: index * 0.1 }}
           >
             <div
-              className="h-full justify-center text-center cursor-pointer"
+              className="justify-center h-full text-center cursor-pointer"
               onClick={() =>
                 openPopup(
                   item?.images,
@@ -145,8 +153,8 @@ function PEMB() {
                 alt={item.title}
                 className="rounded-lg shadow-md"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 hover:opacity-75 transition duration-300 flex items-center justify-center rounded-lg">
-                <span className="text-white text-xl font-bold">
+              <div className="absolute inset-0 flex items-center justify-center transition duration-300 bg-black rounded-lg opacity-0 bg-opacity-70 hover:opacity-75">
+                <span className="text-xl font-bold text-white">
                   {item.title.toUpperCase()}
                 </span>
               </div>

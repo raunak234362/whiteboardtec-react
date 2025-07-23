@@ -56,19 +56,7 @@ console.log("----------",portfolios);
     }
   };
   
-  //   const handleJdFileChange = async (
-  //     e: React.ChangeEvent<HTMLInputElement>
-  //   ) => {
-  //     setJdProgress(0);
-  //     const file = e.target.files?.[0];
-  //     if (file) {
-  //       setJdPdf(file);
-  //       setJdProgress(100);
-  //     } else {
-  //       setJdPdf(null);
-  //       setJdProgress(0);
-  //     }
-  //   };
+
 
   const handleAddSubmit = useCallback(async () => {
     console.log(pdf);

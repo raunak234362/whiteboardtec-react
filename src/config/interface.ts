@@ -53,9 +53,10 @@ export interface IProject {
   type: ProjectType;
   technologyused: string;
   status: ProjectStatus;
-  images: any[];
+  images:string;
   createdAt?: string; 
   updatedAt?: string;
+  department: string;
   __v?: number;
 }
 export interface GalleryProjectFrontend
