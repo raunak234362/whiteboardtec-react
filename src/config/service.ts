@@ -164,6 +164,22 @@ class Service {
       throw error; // Propagate the error for handling
     }
   }
+  static async getGalleryByDepartment(department : any): Promise<IProject[]> {
+    console.log("Fetching gallery for department:", department);
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.get<ApiResponse<IProject[]>>(`/project/sampleFiles/${department}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("Gallery data:", response.data);
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      throw error; // Propagate the error for handling
+    }
+  }
 
   static async updateGallery(id: string, payload: FormData): Promise<IProject> {
     try {
@@ -201,14 +217,17 @@ class Service {
       throw error;
     }
   }
-  static async Gallery(department:string): Promise<IProject[]> {
+  static async Gallery(department: string): Promise<IProject[]> {
     try {
       const token = sessionStorage.getItem("token");
-      const response = await api.get<ApiResponse<IProject[]>>(`/project/sampleFiles/${department}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await api.get<ApiResponse<IProject[]>>(
+        `/project/sampleFiles/${department}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log("Gallery data:", response.data);
       return response.data.data;
     } catch (error) {

@@ -53,11 +53,13 @@ export interface IProject {
   type: ProjectType;
   technologyused: string;
   status: ProjectStatus;
-  images:string;
-  createdAt?: string; 
+  images?: string[];
+  file: string[];
+  createdAt?: string;
   updatedAt?: string;
   department: string;
   __v?: number;
+  secureUrl?: string;
 }
 export interface GalleryProjectFrontend
   extends Omit<IProject, "id" | "status" | "type" | "technologyused"> {
@@ -67,4 +69,8 @@ export interface GalleryProjectFrontend
   technologyused: string;
   onUpdateSuccess: (updatedItem: GalleryProjectFrontend) => void;
   onDeleteSuccess: (deletedId: string) => void;
+}
+
+export interface GalleryImagesProps {
+  department: string;
 }
