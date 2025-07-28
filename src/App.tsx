@@ -21,7 +21,7 @@ function App(): JSX.Element {
       </>
     );
   } else {
-    // console.log("Appppp Loooadded")
+    console.log("khul gaya jo kholna chahte thhhhe")
     return (
       <>
 
