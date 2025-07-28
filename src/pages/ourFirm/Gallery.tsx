@@ -1,27 +1,27 @@
-// src/pages/ourFirm/Gallery.tsx (Main Gallery page)
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useEffect, useState } from "react";
 import { PageBanner, BannerPropType } from "../../components/banner";
-import { motion } from "framer-motion"; // Import Framer Motion for animation
+import { motion } from "framer-motion"; 
 import { useNavigate } from "react-router-dom";
 // import GalleryImages from "./GalleryImages"; // REMOVE THIS IMPORT
 
 const banner: BannerPropType = {
   header: "Gallery",
-  image: "../../assets/gall.jpg", // Ensure this path is correct
+  image:
+    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753686686/manage/gall_rr1yxc.jpg",
 };
 
 const galleryCategories = [
-  // Renamed for clarity, as these are categories, not individual images
+  
   {
-    src: "../../assets/Tekla.jpg", // Ensure this path is correct
+    src: "../../assets/Tekla.jpg", 
     title: "Structural Steel Detailing Project",
-    department: "STRUCTURAL", // Use 'department' directly for consistency
+    department: "STRUCTURAL", 
   },
   {
-    src: "../../assets/pembIMG.jpg", // Ensure this path is correct
+    src: "../../assets/pembIMG.jpg", 
     title: "PEMB Designing and Detailing",
-    department: "PEMB", // Use 'department' directly for consistency
+    department: "PEMB",
   },
 ];
 
@@ -30,17 +30,15 @@ function Gallery() {
     document.title = "Gallery - Whiteboard Tech";
   }, []);
 
-  // No longer need departmentType state here as navigation handles the state
-  // const [departmentType, setDepartmentType] = useState<string | null>("");
   const navigate = useNavigate();
 
   const handleCategoryClick = (department: string) => {
     console.log("Navigating to department:", department);
-    // This will navigate to /our-firm/gallery/images?department=STRUCTURAL or PEMB
+  
     navigate(`/our-firm/gallery/images?department=${department}`);
   };
 
-  // No longer need closeModal or console.log("Selected Image:") here as GalleryImages handles its own state
+
 
   return (
     <div>
@@ -51,7 +49,7 @@ function Gallery() {
             {galleryCategories.map(
               (
                 category,
-                index // Use 'category' for clarity
+                index 
               ) => (
                 <motion.div
                   key={index}
@@ -62,7 +60,7 @@ function Gallery() {
                 >
                   <div
                     className="h-full cursor-pointer"
-                    onClick={() => handleCategoryClick(category.department)} // Pass the department
+                    onClick={() => handleCategoryClick(category.department)} 
                   >
                     <img
                       src={category.src}
@@ -82,8 +80,7 @@ function Gallery() {
         </div>
       </section>
 
-      {/* GalleryImages will be rendered by your router on a different route */}
-      {/* {selectedImage && <GalleryImages department={selectedImage} />} */}
+      
     </div>
   );
 }

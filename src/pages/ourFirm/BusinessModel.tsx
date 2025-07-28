@@ -2,11 +2,12 @@ import { PageBanner, BannerPropType } from "../../components/banner";
 import Estimate from "../../components/estimation/Estimate";
 import { useEffect } from "react";
 
-const banner : BannerPropType = {
-    header: "Business",
-    subheader: "Model",
-    image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fbusiness-model-banner.jpg?alt=media&token=a0893110-8c75-4aab-99d5-29cf829048f3",
-}
+const banner: BannerPropType = {
+  header: "Business",
+  subheader: "Model",
+  image:
+    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685620/banner-image/business-model-banner_m8ujfv.jpg",
+};
 
 const treeData = [
   {
@@ -35,7 +36,7 @@ function BusiessModel() {
     <>
         < PageBanner {...banner}/>
         <div className="pt-3 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
-        <section className="mt-3 mb-10 p-2 grid grid-cols-1 gap-y-10 gap-x-0 md:gap-y-5 md:gap-x-10 md:grid-cols-2">
+        <section className="grid grid-cols-1 p-2 mt-3 mb-10 gap-y-10 gap-x-0 md:gap-y-5 md:gap-x-10 md:grid-cols-2">
         <Estimate head="Choose a model that suits your project requirements. Yes. You heard us right!" />
           {treeData.map((data, index) => {
             return data && (
@@ -43,12 +44,12 @@ function BusiessModel() {
                 key={index}
                 className={`rounded-xl border-2 shadow-lg drop-shadow-lg bg-white order-${index}`}
               >
-                <div className="m-5 p-3">
-                  <div className="text-black text-2xl ">
+                <div className="p-3 m-5">
+                  <div className="text-2xl text-black ">
                     <img src={data.icon} alt="icon" className="w-16 h-16" />
                     {data.head}
                   </div>
-                  <div className="my-2 text-gray-700 text-lg text-justify">
+                  <div className="my-2 text-lg text-justify text-gray-700">
                     {data.body}
                   </div>
                 </div>

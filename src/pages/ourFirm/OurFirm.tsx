@@ -4,7 +4,8 @@ import { PageBanner, BannerPropType } from "../../components/banner";
 const banner: BannerPropType = {
   header: "Simplicity",
   subheader: "is the key to our success",
-  image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Four-firm-banner.jpg?alt=media&token=99474f57-1520-4e97-bf86-1fd838e8e4c7",
+  image:
+    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685617/banner-image/our-firm-banner_ccgusr.jpg",
 };
 
 const treeData = [
@@ -37,19 +38,19 @@ function OurFirm() {
   return (
     <>
       <PageBanner {...banner} />
-      <div className="m-28 my-0 mx-auto  lg:max-w-screen-lg xl:max-w-screen-xl">
+      <div className="mx-auto my-0 m-28 lg:max-w-screen-lg xl:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-4 p-2 grid grid-cols-[60%_40%] gap-3 shadow-xl drop-shadow-xl max-md:grid-cols-1">
-          <div className="m-4 pt-2 pl-4 order-1 max-md:order-2">
+          <div className="order-1 pt-2 pl-4 m-4 max-md:order-2">
             <div className="text-3xl font-bold my-2 text-[#6abd45]">
               We understand how dynamic the structural steel industry is.
             </div>
-            <p className="text-justify text-lg leading-relaxed">
+            <p className="text-lg leading-relaxed text-justify">
               The constant design shifts, compliance, and adoption of modern
               software technologies have left the fabricators under immense
               pressure. Because we understand the challenges you are up against,
               we approach steel detailing through your lens.
             </p>
-            <p className="text-justify text-lg leading-relaxed">
+            <p className="text-lg leading-relaxed text-justify">
               For over two decades, we have perfected the art of professional
               Steel Design and Detailing with an unwavering focus on Quality and
               Design-Based thinking in all of our projects. We invest heavily in
@@ -65,18 +66,18 @@ function OurFirm() {
 
           <div className="flex flex-wrap justify-center order-2 max-md:order-1">
             <div className="bg-[#6abd45] rounded-xl flex flex-wrap flex-col w-full h-fit shadow-2xl m-4 mr-8 p-4">
-              <h1 className="text-white text-3xl font-semibold px-4 pt-2">
+              <h1 className="px-4 pt-2 text-3xl font-semibold text-white">
                 Vision
               </h1>
-              <p className="text-justify text-md text-white px-4">
+              <p className="px-4 text-justify text-white text-md">
                 To achieve a Top position in providing Engineering Services &
                 Solutions spread through Civil / Mechanical and other ITES
                 verticals.
               </p>
-              <h1 className="text-white text-3xl font-semibold px-4 pt-4">
+              <h1 className="px-4 pt-4 text-3xl font-semibold text-white">
                 Mission
               </h1>
-              <p className="text-justify text-md text-white px-4 pb-4">
+              <p className="px-4 pb-4 text-justify text-white text-md">
                 To provide high-quality Engineering Services to our clients that
                 adhere to industry's best project management practices driven by
                 a skilled group of diverse teams who are committed to a service
@@ -89,9 +90,9 @@ function OurFirm() {
       </div>
 
       <div className="bg-gray-100">
-        <div className=" mx-auto lg:max-w-screen-lg xl:max-w-screen-xl pt-3">
+        <div className="pt-3 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
           <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 -gap-x-80 md:grid-cols-[20%_80%] lg:grid-cols-2">
-            <div className="py-4 my-2 flex flex-row items-center justify-center">
+            <div className="flex flex-row items-center justify-center py-4 my-2">
               <img
                 src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Fproject-in-mind.jpg?alt=media&token=31be1cd7-e919-45ae-ae67-4fa80a8b6b02"
                 alt="Have a large project in mind?"
@@ -102,20 +103,20 @@ function OurFirm() {
               <div className="text-4xl text-[#6abd45] m-2">
                 Have a <strong>large project</strong> in mind?
               </div>
-              <div className="text-2xl m-2 my-5 font-bold text-gray-500">
+              <div className="m-2 my-5 text-2xl font-bold text-gray-500">
                 We can ramp up our internal resources faster at rocket speeds
                 and still deliver responsibly.
               </div>
-              <div className="text-md m-2 my-5 text-justify">
+              <div className="m-2 my-5 text-justify text-md">
                 Our success also comes from the fact that we leverage the most
                 up to date, new age 3D softwares in the market to produce the
                 most advanced shop drawings covering all critical aspects of the
                 fabrication process.
               </div>
-              <div className="text-2xl font-bold mx-2 mt-8 text-justify">
+              <div className="mx-2 mt-8 text-2xl font-bold text-justify">
                 Count on us to get your job done.
               </div>
-              <div className="text-2xl font-bold mx-2 text-justify">
+              <div className="mx-2 text-2xl font-bold text-justify">
                 On-time, every time!
               </div>
             </div>
@@ -123,23 +124,23 @@ function OurFirm() {
         </div>
       </div>
 
-      <div className=" mx-auto lg:max-w-screen-lg xl:max-w-screen-xl pt-3">
+      <div className="pt-3 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
         <div className="text-4xl font-semibold my-2 text-[#6abd45] mt-7">
           Our Key Differentiators
         </div>
-        <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 gap-x-10 md:grid-cols-2">
+        <section className="grid grid-cols-1 p-2 mt-3 gap-y-5 gap-x-10 md:grid-cols-2">
           {treeData.map((data, index) => {
             return (
               <div
                 key={index}
-                className="rounded-3xl border-2 shadow-lg drop-shadow-lg bg-white"
+                className="bg-white border-2 shadow-lg rounded-3xl drop-shadow-lg"
               >
-                <div className="m-5 p-3">
-                  <div className="text-black text-2xl font-medium">
+                <div className="p-3 m-5">
+                  <div className="text-2xl font-medium text-black">
                     <img src={data.icon} alt="icon" className="w-14 h-14" />
                     {data.head}
                   </div>
-                  <div className="my-2 text-gray-700 text-md text-justify">
+                  <div className="my-2 text-justify text-gray-700 text-md">
                     {data.body}
                   </div>
                 </div>
@@ -150,13 +151,13 @@ function OurFirm() {
       </div>
 
       <div className="bg-[#6abd45]">
-        <div className=" mx-auto lg:max-w-screen-lg xl:max-w-screen-xl pt-2 mt-3">
+        <div className="pt-2 mx-auto mt-3 lg:max-w-screen-lg xl:max-w-screen-xl">
           <section className="mt-3 p-2 grid grid-cols-1 gap-y-0 gap-x-0 md:gap-y-5 md:gap-x-10 md:grid-cols-[45%_55%] lg:grid-cols-2">
-            <div className="py-2 my-7 text-white">
+            <div className="py-2 text-white my-7">
               <div className="text-3xl font-bold">
                 Project Management further simplified
               </div>
-              <div className="text-lg my-3 text-justify">
+              <div className="my-3 text-lg text-justify">
                 No more attachment size restrictions or adding documents on
                 multiple email drives. Upload all your project documents,
                 drawings, track and manage your projects all from a single
@@ -166,12 +167,12 @@ function OurFirm() {
                 said, we keep complexities to a minuscule or almost none.
               </div>
               <div className="text-2xl font-bold">Features</div>
-              <div className="text-lg my-2 text-justify">
+              <div className="my-2 text-lg text-justify">
                 <ul className="list-none list-inside">
-                  <li className="flex-row flex justify-start mr-2 my-1">
+                  <li className="flex flex-row justify-start my-1 mr-2">
                     <span className="m-1 mt-0.5">
                       <svg
-                        className="h-4 w-4 text-white"
+                        className="w-4 h-4 text-white"
                         width="24"
                         height="24"
                         viewBox="0 0 24 24"
@@ -190,13 +191,15 @@ function OurFirm() {
                       </svg>
                     </span>
                     <span>
-                      <span className="flex">Quick View of all your projects in one snapshot</span>
+                      <span className="flex">
+                        Quick View of all your projects in one snapshot
+                      </span>
                     </span>
                   </li>
-                  <li className="flex-row flex justify-start mr-2 my-1">
+                  <li className="flex flex-row justify-start my-1 mr-2">
                     <span className="m-1 mt-0.5">
                       <svg
-                        className="h-4 w-4 text-white"
+                        className="w-4 h-4 text-white"
                         width="24"
                         height="24"
                         viewBox="0 0 24 24"
@@ -215,13 +218,15 @@ function OurFirm() {
                       </svg>
                     </span>
                     <span>
-                      <span className="flex">Live Tracking of projects. Assign and modify deadlines</span>
+                      <span className="flex">
+                        Live Tracking of projects. Assign and modify deadlines
+                      </span>
                     </span>
                   </li>
-                  <li className="flex-row flex justify-start mr-2 my-1">
+                  <li className="flex flex-row justify-start my-1 mr-2">
                     <span className="m-1 mt-0.5">
                       <svg
-                        className="h-4 w-4 text-white"
+                        className="w-4 h-4 text-white"
                         width="24"
                         height="24"
                         viewBox="0 0 24 24"
@@ -240,13 +245,16 @@ function OurFirm() {
                       </svg>
                     </span>
                     <span>
-                      <span className="flex">Collaborate with the WBT teams by sending feedback through direct messages</span>
+                      <span className="flex">
+                        Collaborate with the WBT teams by sending feedback
+                        through direct messages
+                      </span>
                     </span>
                   </li>
-                  <li className="flex-row flex justify-start items-start mr-2 my-1">
+                  <li className="flex flex-row items-start justify-start my-1 mr-2">
                     <span className="m-1 mt-0.5">
                       <svg
-                        className="h-4 w-4 text-white"
+                        className="w-4 h-4 text-white"
                         width="24"
                         height="24"
                         viewBox="0 0 24 24"
@@ -265,17 +273,19 @@ function OurFirm() {
                       </svg>
                     </span>
                     <span>
-                      <span className="flex">Upload and transfer big files between teams on the go</span>
+                      <span className="flex">
+                        Upload and transfer big files between teams on the go
+                      </span>
                     </span>
                   </li>
                 </ul>
               </div>
             </div>
 
-            <div className="md:py-4 md:m-2 mb-10">
+            <div className="mb-10 md:py-4 md:m-2">
               <img
-                className="shadow-lg drop-shadow-lg border-2 border-white rounded-md md:m-2"
-                src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Fsimplified.jpg?alt=media&token=aeadf659-35d3-45c1-befd-1f452c8ba5bf"
+                className="border-2 border-white rounded-md shadow-lg drop-shadow-lg md:m-2"
+                src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753698359/banner-image/c9c368d7-5e65-4718-9da0-3baf162d84f6.png"
                 alt="Our Firm"
               />
             </div>

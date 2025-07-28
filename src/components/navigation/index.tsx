@@ -24,7 +24,7 @@ const NavRoute: NavRouteType[] = [
     name: "Our Firm",
     path: "/our-firm",
     image:
-      "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Froute-image%2Four-firm.jpg?alt=media&token=f4f4ff27-0291-4589-80a6-b709eae3ed4a",
+      "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685708/route-image/our-firm_qbwtod.jpg",
     child: [
       {
         name: "Business Model",
@@ -44,7 +44,7 @@ const NavRoute: NavRouteType[] = [
     name: "Services",
     path: "/services",
     image:
-      "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Froute-image%2Fservices.jpg?alt=media&token=1235bf26-7bc6-4286-b3d0-2bb0e76c838b",
+      "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685704/route-image/services_cmbnnq.jpg",
     child: [
       {
         name: "Structural Steel Detailing",
@@ -76,7 +76,7 @@ const NavRoute: NavRouteType[] = [
     name: "Our Work",
     path: "/our-work",
     image:
-      "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Froute-image%2Four-work.jpg?alt=media&token=62137c19-1c2a-41cf-b724-e6b4ff227835",
+      "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685705/route-image/our-work_vjdmss.jpg",
     child: [
       {
         name: "Project Portfolio",
@@ -88,7 +88,7 @@ const NavRoute: NavRouteType[] = [
     name: "Resources",
     path: "/resources",
     image:
-      "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Froute-image%2Fresources.jpg?alt=media&token=0faa19f8-10a9-42fe-8396-717ae696dca7",
+      "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685704/route-image/resources_twem7r.jpg",
     child: [
       {
         name: "WBT Blog",
@@ -104,19 +104,19 @@ const NavRoute: NavRouteType[] = [
     name: "Portal",
     path: "/portal",
     image:
-      "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Froute-image%2Fportal.jpg?alt=media&token=ffdd2739-0f5e-4195-96ab-91f5f23bc533",
+      "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685704/route-image/portal_nn6wrw.jpg",
   },
   {
     name: "Career",
     path: "/career",
     image:
-      "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Froute-image%2Fcareers.jpg?alt=media&token=f6b3ff73-f527-4d81-a378-d9ad538bcd5c",
+      "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685704/route-image/services_cmbnnq.jpg",
   },
   {
     name: "Connect",
     path: "/connect",
     image:
-      "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Froute-image%2Fconnect.jpg?alt=media&token=91e42cd8-3d01-4cdb-97e8-a7d1a8bb4851",
+      "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685709/route-image/connect_rrusr9.jpg",
   },
 ];
 
@@ -125,7 +125,8 @@ const Notification: NotificationType = {
   description:
     "We are exhibiting at NASCC - The Steel Conference 2026. Click Here to see the floor plan to reach us at the show.",
   // link: "https://www.nascc.aisc.org/",
-  image: "https://i.pinimg.com/736x/6a/1b/c0/6a1bc0f2324eb0c143533419ad4c86f5.jpg",
+  image:
+    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685709/route-image/careers_jvwsl8.jpg",
 };
 
 const NavigationBar = (): JSX.Element => {
@@ -144,7 +145,7 @@ const NavigationBar = (): JSX.Element => {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="h-8 w-8"
+          className="w-8 h-8"
         >
           <path
             d="M4 18L20 18"
@@ -167,10 +168,10 @@ const NavigationBar = (): JSX.Element => {
         </svg>
       </div>
       <nav
-        className="flex flex-wrap md:justify-end mx-auto lg:max-w-screen-lg xl:max-w-screen-xl max-md:justify-start"
+        className="flex flex-wrap mx-auto md:justify-end lg:max-w-screen-lg xl:max-w-screen-xl max-md:justify-start"
         style={{ display: display && !navShow ? "none" : "" }}
       >
-        <ul className="flex md:flex-row mx-5 flex-wrap text-md flex-col max-md:w-full">
+        <ul className="flex flex-col flex-wrap mx-5 md:flex-row text-md max-md:w-full">
           {window.innerWidth <= 768 && <ExtraHeader />}
           {NavRoute.map((route) => (
             <NavBar key={route.name} {...route} navShow={setnavShow}/>
@@ -193,35 +194,35 @@ const HomeNav = (): JSX.Element => {
       >
         <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
         <div className="fixed inset-0 w-screen overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4">
+          <div className="flex items-center justify-center min-h-full p-4">
             <Dialog.Panel className="bg-white w-3/5 h-3/4 rounded-3xl p-5 bg-opacity-60 border-slate-800 border-[3px] drop-shadow-lg shadow-inner">
-              <Dialog.Title className="font-extrabold text-2xl">
+              <Dialog.Title className="text-2xl font-extrabold">
                 {Notification.title}
               </Dialog.Title>
-              <Dialog.Description className="text-justify my-3">
+              <Dialog.Description className="my-3 text-justify">
                 {Notification.description}
               </Dialog.Description>
               {Notification.image && (
-                <div className="items-center flex flex-wrap justify-center">
+                <div className="flex flex-wrap items-center justify-center">
                   <img
                     src={Notification.image}
                     alt={Notification.title}
-                    className="h-auto w-5/6 rounded-2xl"
+                    className="w-5/6 h-auto rounded-2xl"
                   />
                 </div>
               )}
-              <div className="items-center flex flex-wrap justify-center my-3">
+              <div className="flex flex-wrap items-center justify-center my-3">
                 {Notification.link && (
                   <button
                     onClick={() => window.open(Notification.link, "_blank")}
-                    className="px-4 mx-5 border-2 border-green-600 bg-green-600 rounded-md font-semibold text-xl text-white hover:bg-slate-200 hover:border-green-600 hover:text-green-600"
+                    className="px-4 mx-5 text-xl font-semibold text-white bg-green-600 border-2 border-green-600 rounded-md hover:bg-slate-200 hover:border-green-600 hover:text-green-600"
                   >
                     View
                   </button>
                 )}
                 <button
                   onClick={() => setOpen(false)}
-                  className="px-4 mx-5 border-red-600 bg-red-600 rounded-md font-semibold text-xl text-white hover:bg-slate-200 hover:border-red-600 border-2 hover:text-red-600"
+                  className="px-4 mx-5 text-xl font-semibold text-white bg-red-600 border-2 border-red-600 rounded-md hover:bg-slate-200 hover:border-red-600 hover:text-red-600"
                 >
                   Close
                 </button>
@@ -233,7 +234,7 @@ const HomeNav = (): JSX.Element => {
 
       <div className="relative flex item-center md:h-[83vh]">
         <div
-          className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth no-scrollbar overflow-y-hidden max-md:grid max-md:grid-col-1"
+          className="w-full h-full overflow-x-scroll overflow-y-hidden scroll whitespace-nowrap scroll-smooth no-scrollbar max-md:grid max-md:grid-col-1"
           onWheel={(e) => {
             e.preventDefault();
             const container = e.currentTarget;

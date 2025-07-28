@@ -1,13 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { PageBanner, BannerPropType } from "../../components/banner";
 import Newsletter from "../../components/newsletter/Newsletter";
 import Estimate from "../../components/estimation/Estimate";
 import { CarouselDefault, CarouselPropType } from "../../components/Carousel/CarouselDefault";
+import Service from "../../config/service";
 
 const banner: BannerPropType = {
   header: "Structural Steel",
   subheader: "Detailing",
-  image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fstructural-stell-banner.jpg?alt=media&token=14415ab1-9e18-4dca-9f61-51ee82b0450c",
+  image:
+    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685614/banner-image/services_wmb8hr.jpg",
 };
 
 const headSection: string[] = [
@@ -35,7 +37,7 @@ const portfolio: string[] = [
   "Senior Living Developments"
 ]
 
-const service_images : CarouselPropType[] =  [
+const service_image : CarouselPropType[] =  [
   {
     url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FLOVES-894-ISO.png?alt=media&token=ca13ee2a-781c-4516-bbb5-6a6604506c73",
   },
@@ -84,22 +86,37 @@ const service_images : CarouselPropType[] =  [
 ]
 
 function StructuralSteel() {
+  const [service_images, setServiceImages] = useState<CarouselPropType[]>(service_image);
   useEffect(() => {
     document.title = "Structural Steel Detailing - Whiteboard Tech";
   });
 
+  const fetchAllGalleryImages = async () => {
+    const response = await Service.getGalleryByDepartment("STRUCTURAL");
+    const images = response.map((img: any) => ({
+      url: img.file.secureUrl,
+      title: img.title,
+    }));
+    setServiceImages(images);
+    console.log("Fetched Gallery Images:", response);
+  }
+  
+  useEffect(() => {
+    fetchAllGalleryImages();
+  }, []);
+
   return (
     <>
       <PageBanner {...banner} />
-      <div className="m-28 my-0 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
+      <div className="mx-auto my-0 m-28 lg:max-w-screen-lg xl:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-2 p-2 grid grid-cols-[60%_40%] gap-3 shadow-md max-md:grid-cols-1">
-          <div className="m-4 leading-loose text-gray-700 order-1 max-md:order-2">
+          <div className="order-1 m-4 leading-loose text-gray-700 max-md:order-2">
             <div className="text-3xl font-bold my-2 text-[#6abd45]">
               Steel industry continues to evolve
             </div>
             {headSection?.map((desc, index) => {
               return (
-                <p key={index} className="text-justify text-lg leading-relaxed">
+                <p key={index} className="text-lg leading-relaxed text-justify">
                   {desc}
                 </p>
               );
@@ -109,18 +126,18 @@ function StructuralSteel() {
         </section>
       </div>
 
-      <div className="bg-gray-100 shadow-md drop-shadow-md pb-16">
-        <div className="mx-auto max-md:mx-0 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl pt-3 my-10 pl-16 max-md:px-5">
+      <div className="pb-16 bg-gray-100 shadow-md drop-shadow-md">
+        <div className="pt-3 pl-16 mx-auto my-10 max-md:mx-0 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl max-md:px-5">
           <div className="text-4xl font-bold my-2 text-[#6abd45] mt-5">
             Our Services
           </div>
-          <section className="mt-3 flex flex-wrap flex-row max-md:flex-col">
-            <div className="mt-3 p-2 h-fit flex flex-wrap flex-col lg:w-3/5 md:flex-row">
+          <section className="flex flex-row flex-wrap mt-3 max-md:flex-col">
+            <div className="flex flex-col flex-wrap p-2 mt-3 h-fit lg:w-3/5 md:flex-row">
               {services.map((detail, index) => {
                 return (
                   <span
                     key={index}
-                    className=" h-fit w-1/2 max-md:w-full my-2 flex flex-wrap flex-row items-center"
+                    className="flex flex-row flex-wrap items-center w-1/2 my-2 h-fit max-md:w-full"
                   >
                     <svg
                       className="h-6 w-6 text-[#6abd45] inline-flex"
@@ -140,12 +157,12 @@ function StructuralSteel() {
                         transform="rotate(90 12 12)"
                       />
                     </svg>
-                    <span className="text-lg inline-flex">{detail}</span>
+                    <span className="inline-flex text-lg">{detail}</span>
                   </span>
                 );
               })}
             </div>
-            <div className="flex flex-wrap item-center justify-center m-5 ">
+            <div className="flex flex-wrap justify-center m-5 item-center ">
               <img
                 src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Four-services.jpg?alt=media&token=56d33c91-c20d-4d23-bdc3-9d8cae9bb336"
                 alt="Equal Opportunity"
@@ -154,18 +171,18 @@ function StructuralSteel() {
           </section>
         </div>
 
-        <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl py-3 rounded-3xl border-2 shadow-md bg-white">
+        <div className="py-3 mx-auto bg-white border-2 shadow-md lg:max-w-screen-lg xl:max-w-screen-xl rounded-3xl">
           <section className="px-10">
             <div className="text-4xl font-bold mb-0 text-[#6abd45] mt-3">
               Our Portfolio
             </div>
-            <section className="p-2 flex flex-wrap md:flex-row flex-col">
-              <div className="p-2 h-fit flex flex-wrap flex-col md:flex-row">
+            <section className="flex flex-col flex-wrap p-2 md:flex-row">
+              <div className="flex flex-col flex-wrap p-2 h-fit md:flex-row">
                 {portfolio.map((detail, index) => {
                   return (
                     <div
                       key={index}
-                      className=" h-fit w-1/3 max-md:w-full my-2 flex flex-wrap flex-row items-center"
+                      className="flex flex-row flex-wrap items-center w-1/3 my-2 h-fit max-md:w-full"
                     >
                       <svg
                         className="h-6 w-6 text-[#6abd45] inline-flex"
@@ -185,7 +202,7 @@ function StructuralSteel() {
                           transform="rotate(90 12 12)"
                         />
                       </svg>
-                      <p className="text-lg inline-flex">{detail}</p>
+                      <p className="inline-flex text-lg">{detail}</p>
                     </div>
                   );
                 })}
@@ -193,7 +210,7 @@ function StructuralSteel() {
             </section>
           </section>
           <div className="flex flex-wrap items-center justify-center">
-            <div className="h-96 w-1/2 max-md:w-full">
+            <div className="w-1/2 h-96 max-md:w-full">
             <CarouselDefault images={service_images} />
             </div>
           </div>

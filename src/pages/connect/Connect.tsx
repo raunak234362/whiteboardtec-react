@@ -37,7 +37,8 @@ const data: DataType = {
   banner: {
     header: "Connect",
     subheader: "with us",
-    image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fcontact-banner.jpg?alt=media&token=ba0feeb4-fb01-48d6-a89a-05eef618023a",
+    image:
+      "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685619/banner-image/contact-banner_xlqqbi.jpg",
   },
   context: {
     heading: "We’d love to hear from you.",
@@ -111,22 +112,22 @@ function Connect() {
     <>
       <PageBanner {...data.banner} />
       <section className="rounded-3xl m-40 border-2 p-4 grid grid-cols-[62%_38%] max-md:grid-cols-1 gap-3 shadow-md mx-auto my-10 lg:max-w-screen-lg xl:max-w-screen-xl">
-        <div className="m-4 pr-10 order-1 max-md:order-2">
+        <div className="order-1 pr-10 m-4 max-md:order-2">
           <div>
             <div className="text-3xl font-bold my-2 text-[#6abd45]">
               {data.context.heading}
             </div>
-            <p className="text-justify text-lg leading-relaxed">
+            <p className="text-lg leading-relaxed text-justify">
               {data.context.body}
             </p>
           </div>
 
-          <div className="flex flex-wrap flex-row justify-start my-3 mx-3 max-md:mx-0">
+          <div className="flex flex-row flex-wrap justify-start mx-3 my-3 max-md:mx-0">
             {data.context.phone?.map((phone, index) => {
               return (
                 <>
-                  <div key={index} className="flex-row flex items-center mr-5">
-                    <span className="text-gray-700 m-2">
+                  <div key={index} className="flex flex-row items-center mr-5">
+                    <span className="m-2 text-gray-700">
                       <svg
                         className="h-8 w-8 text-[#6abd45]"
                         viewBox="0 0 24 24"
@@ -160,8 +161,8 @@ function Connect() {
             })}
           </div>
 
-          <div className="flex flex-wrap flex-row items-center my-3 mx-3 max-md:mx-0">
-            <span className="text-gray-700 m-2 max-md:m-1">
+          <div className="flex flex-row flex-wrap items-center mx-3 my-3 max-md:mx-0">
+            <span className="m-2 text-gray-700 max-md:m-1">
               <svg
                 className="h-10 w-10 text-[#6abd45]"
                 width="24"
@@ -179,11 +180,11 @@ function Connect() {
                 <polyline points="3 7 12 13 21 7" />
               </svg>
             </span>
-            <div className="flex-col flex items-start mr-5">
+            <div className="flex flex-col items-start mr-5">
               {data.context.mail?.map((mail, index) => {
                 return (
                   <>
-                    <span key={index} className="text-gray-500 my-1">
+                    <span key={index} className="my-1 text-gray-500">
                       <span className="flex text-lg text-start">
                         <a href={`mailto:${mail.email}`} target="_blank">
                           {mail.email}
@@ -196,11 +197,11 @@ function Connect() {
             </div>
           </div>
 
-          <div className="flex flex-wrap flex-col justify-start my-3">
+          <div className="flex flex-col flex-wrap justify-start my-3">
             {data.context.address?.map((addr, index) => {
               return (
                 <>
-                  <div key={index} className="flex-col flex my-3">
+                  <div key={index} className="flex flex-col my-3">
                     <span className="text-black">
                       <span className="flex text-3xl font-bold">
                         {addr.title}
@@ -215,8 +216,8 @@ function Connect() {
                         <span className="flex text-lg">{addr.addrLine3}</span>
                       )}
                       {addr.phone && (
-                        <span className="flex flex-row text-sm items-center">
-                          <span className="text-gray-700 m-2">
+                        <span className="flex flex-row items-center text-sm">
+                          <span className="m-2 text-gray-700">
                             <svg
                               className="h-8 w-8 text-[#6abd45]"
                               viewBox="0 0 24 24"
@@ -231,7 +232,7 @@ function Connect() {
                             </svg>
                           </span>
                           <span className="text-gray-500">
-                          <span className="flex items-center text-lg justify-start">
+                          <span className="flex items-center justify-start text-lg">
                             <a href={`tel:${addr.phone}`} target="_blank">
                               {addr.phone}
                             </a>

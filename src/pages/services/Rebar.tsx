@@ -6,7 +6,8 @@ import Newsletter from "../../components/newsletter/Newsletter";
 const banner: BannerPropType = {
   header: "Rebar Estimation",
   subheader: "and Detailing",
-  image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Freber-banner.jpg?alt=media&token=aab957bb-df5b-486f-b8dd-4d12968001d8",
+  image:
+    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685614/banner-image/reber-banner_uigcbv.jpg",
 };
 
 const headSection = {
@@ -99,12 +100,12 @@ function Rebar() {
   return (
     <>
       <PageBanner {...banner} />
-      <div className="m-28 my-0 mx-auto md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
+      <div className="mx-auto my-0 m-28 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-2 p-2 grid grid-cols-[60%_40%] gap-3 shadow-md max-md:grid-cols-1">
-          <div className="m-4 leading-loose text-gray-700 order-1 max-md:order-2">
+          <div className="order-1 m-4 leading-loose text-gray-700 max-md:order-2">
             {headSection.description?.map((desc, index) => {
               return (
-                <p key={index} className="text-justify text-lg leading-relaxed">
+                <p key={index} className="text-lg leading-relaxed text-justify">
                   {desc}
                 </p>
               );
@@ -118,16 +119,16 @@ function Rebar() {
       </div>
 
       <div className="bg-gray-100">
-        <div className="mx-auto md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl pt-3 my-10">
+        <div className="pt-3 mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
           <div className="text-4xl font-bold my-2 text-[#6abd45] mt-5 max-md:mx-2">
             Rebar Detailing
           </div>
-          <section className="mt-3 p-2 grid grid-cols-1 md:gap-x-10 md:grid-cols-2">
+          <section className="grid grid-cols-1 p-2 mt-3 md:gap-x-10 md:grid-cols-2">
             {rebarDetailing.map((detail, index) => {
               return (
                 <div
                   key={index}
-                  className="py-1 md:py-2 flex flex-wrap flex-row items-start"
+                  className="flex flex-row flex-wrap items-start py-1 md:py-2"
                 >
                   <svg
                     className="h-6 w-6 text-[#6abd45]"
@@ -155,8 +156,8 @@ function Rebar() {
         </div>
       </div>
 
-      <div className="m-28 my-0 mx-auto md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
-        <section className="rounded-3xl mt-3 border-2 p-2 grid grid-cols-1 md:grid-cols-2 gap-3 shadow-md">
+      <div className="mx-auto my-0 m-28 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
+        <section className="grid grid-cols-1 gap-3 p-2 mt-3 border-2 shadow-md rounded-3xl md:grid-cols-2">
           <div className="m-10 mr-4 leading-loose text-gray-700 max-md:m-4">
             <div className="text-3xl font-bold my-2 text-[#6abd45] max-md:mx-1">
               {rebarEstimation.title}
@@ -165,7 +166,7 @@ function Rebar() {
               return (
                 <div
                   key={index}
-                  className="py-1 md:py-2 flex flex-wrap flex-row items-start"
+                  className="flex flex-row flex-wrap items-start py-1 md:py-2"
                 >
                   <svg
                     className="h-6 w-6 text-[#6abd45]"
@@ -199,7 +200,7 @@ function Rebar() {
               return (
                 <div
                   key={index}
-                  className="py-1 md:py-2 flex flex-wrap flex-row items-start"
+                  className="flex flex-row flex-wrap items-start py-1 md:py-2"
                 >
                   <svg
                     className="h-6 w-6 text-[#6abd45]"
@@ -227,17 +228,17 @@ function Rebar() {
         </section>
       </div>
 
-      <div className="mx-auto md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl pt-3 mt-5">
+      <div className="pt-3 mx-auto mt-5 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
           <div className="text-3xl font-semibold my-2 text-[#6abd45] mt-5 max-md:mx-2">
           Rebar Estimation work done
           </div>
-          <section className="mt-3 p-2 grid grid-cols-1 md:gap-x-10 md:grid-cols-2">
+          <section className="grid grid-cols-1 p-2 mt-3 md:gap-x-10 md:grid-cols-2">
             {workDone.map((detail, index) => {
               return (
                 <div
                   className="py-1 mx-4 my-1 md:py-2 flex flex-wrap flex-col items-start max-md:w-[90%]"
                   key={index} >
-                  <p className="text-lg flex">{detail.title}</p>
+                  <p className="flex text-lg">{detail.title}</p>
                   <p className="text-md flex text-[#6abd45]">{detail.desc}</p>
                 </div>
               );
@@ -246,16 +247,16 @@ function Rebar() {
         </div>
 
         <div className="bg-gray-100 shadow-md drop-shadow-md">
-        <div className="mx-auto md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl pt-3 my-10">
+        <div className="pt-3 mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
           <div className="text-3xl font-semibold my-2 text-[#6abd45] mt-5 max-md:mx-2">
           Job Done By Our Teams
           </div>
-          <section className="mt-3 p-2 grid grid-cols-1 md:gap-x-10 md:grid-cols-2">
+          <section className="grid grid-cols-1 p-2 mt-3 md:gap-x-10 md:grid-cols-2">
             {jobDone.map((detail, index) => {
               return (
                 <div
                   key={index}
-                  className="py-1 md:py-2 flex flex-wrap flex-row items-start"
+                  className="flex flex-row flex-wrap items-start py-1 md:py-2"
                 >
                   <svg
                     className="h-6 w-6 text-[#6abd45]"

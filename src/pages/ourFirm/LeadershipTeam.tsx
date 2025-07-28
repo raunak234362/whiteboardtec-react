@@ -5,7 +5,7 @@ const banner: BannerPropType = {
   header: "Leadership",
   subheader: "Team",
   image:
-    "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fteam-banner.jpg?alt=media&token=9345d405-1069-4bd1-a467-c3679f352096",
+    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685611/banner-image/team-banner_p2bvys.jpg",
 };
 
 const team: LeaderDetailType[] = [
@@ -17,7 +17,8 @@ const team: LeaderDetailType[] = [
       "It is no overstatement to say; he predicts key industry trends and insights before they evolve as trends. He has a Master’s Degree in Business Administration in International Marketing from the University of Queensland, Australia.",
     ],
     sociallink: "https://www.linkedin.com/in/vishallk/",
-    image: "/assets/Vishal.jpg",
+    image:
+      "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753686747/manage/Vishal_mwspqx.jpg",
   },
   {
     name: "Rajeshwari V Khandappanavar",
@@ -25,7 +26,8 @@ const team: LeaderDetailType[] = [
     thoughts: [
       "As managing director at Whiteboard technologies, Rajeshwari has many hats to fill. Although what drives her profound passion for work is more than her title, it lies in discovering engineering complexities and finding innovative solutions for her clients. Prior to assuming the strategic seat at Whiteboard Technologies, she worked with multiple technology and media companies. From handling Key accounts at an interactive solutions company to working as a Sr. Copy Editor/Reporter for one of India’s largest media house, she has always taken on challenging projects and performed to the highest level of professionalism. As her team describes, she’s a burst of fresh energy and a people person by heart. Rajeshwari completed her MBA in Marketing from JNNCE, Shimoga. When off work, she loves gardening and practicing yoga.",
     ],
-    sociallink: "https://www.linkedin.com/in/rajeshwari-k-4b46818/",
+    sociallink:
+      "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753686659/manage/Raj_dxyw5k.jpg",
     image: "/assets/Raj.jpg",
   },
 ];
@@ -38,21 +40,21 @@ function LeadershipTeam() {
   return (
     <>
       <PageBanner {...banner} />
-      <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl my-3">
-        <section className="mt-3 mb-10 p-2 grid grid-cols-1 gap-y-0 gap-x-0 max-md:gap-y-12 md:gap-x-10 md:grid-cols-2">
+      <div className="mx-auto my-3 lg:max-w-screen-lg xl:max-w-screen-xl">
+        <section className="grid grid-cols-1 p-2 mt-3 mb-10 gap-y-0 gap-x-0 max-md:gap-y-12 md:gap-x-10 md:grid-cols-2">
           {team.map((leader, index) => {
             return (
               <>
                 <div
                   key={index}
-                  className="rounded-xl border-2 shadow-lg drop-shadow-lg bg-white p-7"
+                  className="bg-white border-2 shadow-lg rounded-xl drop-shadow-lg p-7"
                 >
                   <div className="flex flex-row items-center justify-between">
                     <div>
                       <div className="text-[#6abd45] font-semibold text-4xl gap-5 flex flex-wrap flex-col">
                         {leader.name}
                       </div>
-                      <div className="text-black font-semibold texl-2xl">
+                      <div className="font-semibold text-black texl-2xl">
                         {leader.designation}
                       </div>
                     </div>
@@ -61,7 +63,7 @@ function LeadershipTeam() {
                       <img src={leader?.image} alt="leaders" className="h-44 rounded-xl" />
                     </div>
                   </div>
-                  <div className="font-normal text-lg text-justify text-gray-700 leading-relaxed">
+                  <div className="text-lg font-normal leading-relaxed text-justify text-gray-700">
                     {leader.thoughts.map((thought, index) => {
                       return (
                         <p key={index} className="my-2">
@@ -70,7 +72,7 @@ function LeadershipTeam() {
                       );
                     })}
                   </div>
-                  <div className="font-normal text-lg mt-8 text-justify text-gray-700 leading-relaxed">
+                  <div className="mt-8 text-lg font-normal leading-relaxed text-justify text-gray-700">
                     <p className="my-2">Say Hello</p>
                   </div>
                   <div>
