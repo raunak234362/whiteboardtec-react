@@ -1,10 +1,8 @@
 
 import { HeaderProp } from "."
-import { useNavigate } from "react-router-dom"
 
 
 function Header(prop: HeaderProp) {
-    const navigate = useNavigate();
 
     const handleLogOut = async() => {
        

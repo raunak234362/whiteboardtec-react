@@ -6,7 +6,6 @@ import { useCallback, useEffect, useState } from "react";
 import { ImageModal } from "./ImagePopup";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../config/firebase";
-import Service from "../../config/service";
 
 const banner: BannerPropType = {
   header: "Gallery",
@@ -14,7 +13,7 @@ const banner: BannerPropType = {
 };
 
 function PEMB() {
-  const [popupImages, setPopupImages] = useState<any|null>(null);
+  const [popupImages, setPopupImages] = useState<string[] | null>(null);
   const [popupTitle, setPopupTitle] = useState<string | null>(null);
   const [popupAddress, setPopupAddress] = useState<string | null>(null);
   const [popupProjectType, setPopupProjectType] = useState<string | null>(null);
@@ -165,7 +164,7 @@ function PEMB() {
 
       {popupTitle && popupAddress && popupProjectType && (
         <ImageModal
-          images={popupImages}
+          images={popupImages || []}
           title={popupTitle}
           location={popupAddress || ""}
           softwareUsed={popupSoftware || ""}

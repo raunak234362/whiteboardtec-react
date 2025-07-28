@@ -24,7 +24,7 @@ const data: PortalPropType = {
   banner: {
     header: "Portal",
     image:
-      "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685612/banner-image/resource_lixfvx.jpg",
+      "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685614/banner-image/portal-banner_fg0eae.jpg",
   },
   context: {
     title:
@@ -39,32 +39,30 @@ const data: PortalPropType = {
   },
   portal: [
     {
-      url: "/web/#",
+      url: "https://projectstation.whiteboardtec.com/",
       device: "web",
       image:
-        "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fweb.png?alt=media&token=27bf29ed-2d7b-405a-bc74-fe5c0cf6989c",
+        "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685577/icons/web_z2njle.png",
     },
     {
       url: "/android/#",
       device: "android",
       image:
-        "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fandroid.png?alt=media&token=7e6f8195-2f90-4003-bdc8-80b1f682271d",
+        "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685582/icons/android_btqlkn.png",
     },
     {
       url: "/ios/#",
       device: "ios",
       image:
-        "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fios.png?alt=media&token=cf2c825a-40dd-4904-9055-b26d6aaaa62d",
+        "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685580/icons/ios_mgzs3c.png",
     },
   ],
 };
 
 function Portal() {
-
-
   useEffect(() => {
     document.title = "Portal - Whiteboard";
-  })
+  });
 
   return (
     <>
@@ -77,7 +75,10 @@ function Portal() {
             </div>
             <ul>
               {data.context.description.map((item, index) => (
-                <div key={index} className="flex flex-row justify-start my-2 mr-2">
+                <div
+                  key={index}
+                  className="flex flex-row justify-start my-2 mr-2"
+                >
                   <span className="m-1 mt-1 text-gray-700">
                     <svg
                       className="h-6 w-6 text-[#6abd45]"
@@ -108,7 +109,9 @@ function Portal() {
 
           <div className="flex flex-wrap justify-center order-2 max-md:order-1">
             <div className="bg-[#6abd45] rounded-xl flex flex-wrap flex-col w-full h-fit shadow-2xl mx-4">
-            <h1 className="p-4 pb-2 text-2xl text-white">Bridge all gaps and supercharge your projects on the fly.</h1>
+              <h1 className="p-4 pb-2 text-2xl text-white">
+                Bridge all gaps and supercharge your projects on the fly.
+              </h1>
               <div className="flex flex-col flex-wrap justify-center mx-2 mb-2">
                 {data.portal.map((item, index) => {
                   return (

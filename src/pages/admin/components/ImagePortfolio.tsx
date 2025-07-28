@@ -9,68 +9,30 @@ import { GalleryProjectFrontend, IProject } from "../../../config/interface";
 import { useForm } from "react-hook-form";
 
 import { Link } from "react-router-dom";
+interface ImagePortfolioProps extends IProject {
+  onUpdateSuccess: (updatedItem: GalleryProjectFrontend) => void;
+  onDeleteSuccess: (deletedId: string) => void;
+}
 
-function ImagePortfolio(props: IProject) {
+function ImagePortfolio(props: ImagePortfolioProps) {
   const [isOpenJob, setOpenJob] = useState(false);
 
   const [isImageOpen, setImageOpen] = useState(false);
 
-  const { register, handleSubmit, reset } = useForm<GalleryProjectFrontend>();
+  const [newSelectedFiles, setNewSelectedFiles] = useState<File[]>([]);
+  const [progress, setProgress] = useState<number>(0);
 
-  const [title, setTitle] = useState(props.title || "");
-
-  const [description, setDescription] = useState(props.description || "");
-
-  const [location, setLocation] = useState(props.location || "");
-
-  const [projectType, setProjectType] = useState(props.type || "");
-
-  const [technologyUsed, setTechnologyUsed] = useState(
-    props.technologyused || ""
-  );
-
-  const [projectStatus, setProjectStatus] = useState(
-    props.status || "In Progress"
-  );
+  const { register } = useForm<GalleryProjectFrontend>();
 
   console.log(props);
 
-  const [selectedFiles, setSelectedFiles] = useState<File[]>(
-    props.images[0] || []
-  );
+  // Removed unused selectedFiles state
 
-  console.log(selectedFiles);
+  // Removed unused progress state
 
-  const [newSelectedFiles, setNewSelectedFiles] = useState<File[]>([]);
 
-  const [progress, setProgress] = useState<number>(0);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-
-    setNewSelectedFiles(files);
-
-    setProgress(files.length > 0 ? 100 : 0);
-  };
-
-  const resetForm = () => {
-    setTitle(props.title || "");
-
-    setDescription(props.description || "");
-
-    setLocation(props.location || "");
-
-    setProjectType(props.type || "");
-
-    setTechnologyUsed(props.technologyused || "");
-
-    setProjectStatus(props.status || "In Progress");
-
-    setNewSelectedFiles([]);
-
-    setProgress(0);
-  };
-
+ 
   // const handleUpdate = async () => {
 
   // if (
@@ -186,7 +148,6 @@ function ImagePortfolio(props: IProject) {
 
         setOpenJob(false);
 
-        props.onDeleteSuccess(props.id);
       } catch (error) {
         console.error("Error deleting gallery project:", error);
       }
@@ -202,7 +163,6 @@ function ImagePortfolio(props: IProject) {
         onClose={() => {
           setOpenJob(false);
 
-          resetForm();
         }}
         className="relative z-50"
       >
@@ -219,8 +179,6 @@ function ImagePortfolio(props: IProject) {
                 <button
                   onClick={() => {
                     setOpenJob(false);
-
-                    resetForm();
                   }}
                   className="text-gray-400 hover:text-gray-800"
                 >
@@ -356,7 +314,6 @@ function ImagePortfolio(props: IProject) {
 
                     <select
                       id="edit-projectStatus"
-                      value={projectStatus}
                       {...register("status", { required: true })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                     >
@@ -379,7 +336,6 @@ function ImagePortfolio(props: IProject) {
                     >
                       Project Images (Upload new to replace)
                     </label>
-
                     <input
                       type="file"
                       id="edit-images"
@@ -387,17 +343,23 @@ function ImagePortfolio(props: IProject) {
                       multiple
                       {...register("images")}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      onChange={(e) => {
+                        const files = e.target.files ? Array.from(e.target.files) : [];
+                        setNewSelectedFiles(files);
+                        setProgress(files.length > 0 ? 100 : 0);
+                      }}
                     />
+                    
 
                     {newSelectedFiles.length === 0 &&
                       props.images &&
                       props.images.length > 0 && (
                         <div className="flex flex-wrap gap-2 mt-2">
                           {props.images.map(
-                            ({ image }: any, { index }: any) => (
+                            (imgObj: string | { image: string }, index: number) => (
                               <img
                                 key={index}
-                                src={image}
+                                src={typeof imgObj === "string" ? imgObj : imgObj.image}
                                 alt={`Current Image ${index}`}
                                 className="object-cover w-24 h-24 border rounded-md"
                               />
@@ -467,8 +429,6 @@ function ImagePortfolio(props: IProject) {
                   type="button"
                   onClick={() => {
                     setOpenJob(false);
-
-                    resetForm();
                   }}
                   className="px-6 py-2 text-white transition-colors bg-gray-500 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
                 >
@@ -652,7 +612,13 @@ View Image
 
         <td className="px-6 py-4 text-sm text-center text-gray-800 whitespace-nowrap ">
           <Link
-            to={selectedFiles?.secureUrl || "#"}
+            to={
+              props.images && props.images.length > 0
+                ? (typeof props.images[0] === "string"
+                    ? props.images[0]
+                    : (props.images[0] as { image: string }).image)
+                : "#"
+            }
             target="_blank"
             className="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
           >

@@ -1,13 +1,9 @@
 
 import {
-  JobPortalInterface,
   JobPortalResponse,
   ApiResponse,
   PortfolioInterface,
   IProject,
-  GalleryProjectFrontend,
-  ProjectType,
-  ProjectStatus,
 } from "./interface";
 import api from "./api";
 
@@ -164,7 +160,7 @@ class Service {
       throw error; // Propagate the error for handling
     }
   }
-  static async getGalleryByDepartment(department : any): Promise<IProject[]> {
+  static async getGalleryByDepartment(department: string): Promise<IProject[]> {
     console.log("Fetching gallery for department:", department);
     try {
       const token = sessionStorage.getItem("token");

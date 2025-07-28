@@ -24,7 +24,6 @@ function AdminGallery() {
     register,
     handleSubmit,
     reset,
-    watch,
     formState: { errors },
   } = useForm<IProject>({
     defaultValues: {
@@ -50,6 +49,7 @@ function AdminGallery() {
         technologyused: item.technologyused,
         status: item.status,
         images: item.images,
+        file: [], // Provide an empty array to satisfy the required 'file' property
         onUpdateSuccess: handleUpdateGalleryItem,
         onDeleteSuccess: handleDeleteGalleryItem,
       }));

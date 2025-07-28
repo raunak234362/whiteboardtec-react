@@ -31,9 +31,11 @@ function AdminPortfolio() {
       console.log("Fetched Portfolio:", response);
       setPortfolio(
         response.map((portfolio: any) => ({
-          ...portfolio,
-          pdf: portfolio.file || "",
-          // jdPdf: portfolio.jdPdf || "",
+          id: portfolio.id,
+          title: portfolio.title,
+          description: portfolio.description,
+          status: portfolio.status,
+          pdf: portfolio.pdf || "",
         }))
       );
  
@@ -271,6 +273,8 @@ console.log("----------",portfolios);
                           setDescription(e.target.value);
                         }}
                         className="w-full px-2 mx-4 border-2 border-gray-200 rounded-md"
+                        placeholder="Enter description"
+                        title="Description"
                       />
                     </td>
                   </tr>
@@ -289,6 +293,8 @@ console.log("----------",portfolios);
                         accept="application/pdf"
                         onChange={handleFileChange}
                         className="w-full mx-4 border-2 border-gray-200 rounded-md"
+                        placeholder="Upload PDF file"
+                        title="Upload PDF file"
                       />
                       {progress > 0 && progress <= 100 && (
                         <span className="mx-3 text-gray-600">

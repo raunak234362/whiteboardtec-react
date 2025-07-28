@@ -4,14 +4,13 @@ import JobCareer from "./components/JobCareer";
 import { Dialog } from "@headlessui/react";
 import { useForm } from "react-hook-form";
 import Service from "../../config/service";
-import { ApiResponse, JobPortalResponse } from "../../config/interface";
+import { JobPortalResponse } from "../../config/interface";
 
 function AdminCareer() {
   const { register, handleSubmit, reset } = useForm<JobPortalResponse>();
   const [gettingdata, setGettingData] = useState<JobPortalResponse[]>([]);
   const [jd, setJD] = useState<FileList | null>(null);
   const [status, setStatus] = useState(false);
-  const [progress, setProgress] = useState<number>(0);
   const [isOpen, setOpen] = useState(false);
 
   const header: HeaderProp = {

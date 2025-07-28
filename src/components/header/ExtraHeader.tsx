@@ -29,17 +29,17 @@ function ExtraHeader() {
           </div>
           <div className="inline-flex ml-3 max-md:my-2">
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2FAISC-Detailer-logo.png?alt=media&token=362f27a4-bad8-47d2-95e3-1100853fd01e"
+              src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685731/logos/AISC-Detailer-logo_zkosis.png"
               alt="AISC Detailer"
               className="md:h-12 max-md:h-8 m-0.5"
             />
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2FTekla_Structures_logo.png?alt=media&token=66ac8212-267c-47bd-8291-29aeeaa9c4b8"
+              src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685729/logos/Tekla_Structures_logo_sc2vxa.png"
               alt="Tekla Structures"
               className="md:h-12 max-md:h-8 m-0.5"
             />
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2FSDS2-logo.png?alt=media&token=32ae59c8-1f15-49f3-9cc3-324e3efe8389"
+              src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685730/logos/SDS2-logo_x6urbe.png"
               alt="SDS2 Logo"
               className="md:h-12 max-md:h-8 m-0.5"
             />

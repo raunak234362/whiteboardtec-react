@@ -11,17 +11,17 @@ const banner: BannerPropType = {
 
 const treeData = [
   {
-    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fpre-agreed.png?alt=media&token=a294ad43-6b05-45e4-ae6e-2d32cd9f0c5b",
+    icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685579/icons/pre-agreed_hgpaic.png",
     head: "Pre Agreed Project Model",
     body: "A preferred model amongst our clients. We engage on a very specific, pre-defined scope, on a project to project basis. We will provide a clear execution strategy along with a detailed statement of work for your review. We begin once the SOW is signed off. While the advantages of this model are many, we secure you with a pre-negotiated price that locks project cost overruns. Plus, there is complete transparency throughout the execution phase.",
   },
   {
-    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Ftime-meterial.png?alt=media&token=99248588-7e7d-4000-b689-1fcd7cd0fd28",
+    icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685578/icons/process_skpasx.png",
     head: "Time-and-Material Model",
     body: "We built this model to provide flexibility to our clients to modify the scope of varying workloads with repetitive work. The model works best with long/short-term contracts when using on-site or overseas labour at a fixed cost per month. The main advantage of this model is the availability of a team or a single resource at your disposal without incurring overheads needed to run the end-to-end execution of your project.",
   },
   {
-    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fsatellite-model.png?alt=media&token=9b61a659-6b47-4073-a76d-4fc51a4dde35",
+    icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685578/icons/satellite-model_sb69ip.png",
     head: "Satellite Office Model",
     body: "The advantage of having a global presence has a direct impact on business operations profitability and P&L statements. An extended / satellite office can go a long way in improving your business investments such as excellent utilization of location specific resources. Additionally, these well qualified talented teams are available to you at lower captive costs than an onshore model.",
   },

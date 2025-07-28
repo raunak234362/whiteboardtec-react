@@ -10,22 +10,22 @@ const banner: BannerPropType = {
 
 const treeData = [
   {
-    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fprocess.png?alt=media&token=624a0811-2b04-4672-bfa0-7071e4ee601e",
+    icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685578/icons/process_skpasx.png",
     head: "Process",
     body: "From ideation, design to execution, expect clarity and consistency in our execution workflow. Attuned to the AISC standards and adherence to a meticulous “Project Management Strategy” we methodically approach the shop drawings.",
   },
   {
-    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Ftech-icon.png?alt=media&token=07fa5299-c7bf-42c3-86a8-7290b5030897",
+    icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685577/icons/tech-icon_e2gofv.png",
     head: "Technology",
     body: "Leveraging the latest 3D BIM modeling tools, we can produce the most advanced 3D models and shop drawings. These drawings ensure that the fabrication process is executed effortlessly, reducing rework and extended lead times.",
   },
   {
-    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fassociate-members.png?alt=media&token=bdd733ec-5576-414d-8e2f-138e30db7e03",
+    icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685582/icons/associate-members_itbnq7.png",
     head: "AISC Associate Members",
     body: "We are committed to providing our clients with an exceptional level of service at all times. Our industry affiliation with AISC as an associate member reinforces our commitment to you.",
   },
   {
-    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Ftimeliness.png?alt=media&token=1fe6ff23-c664-4b6c-80bb-986536a3979e",
+    icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685577/icons/time-meterial_hdzt3j.png",
     head: "Timeliness",
     body: "A critical KPI but often overlooked or compromised. Today, many customers stand as advocates for us when it comes to operating in strict, committed and responsible timelines. Our Project Portal ensures your documents reach us seamlessly, collaborate online, track progress of your tasks and more.",
   },
@@ -94,7 +94,7 @@ function OurFirm() {
           <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 -gap-x-80 md:grid-cols-[20%_80%] lg:grid-cols-2">
             <div className="flex flex-row items-center justify-center py-4 my-2">
               <img
-                src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Fproject-in-mind.jpg?alt=media&token=31be1cd7-e919-45ae-ae67-4fa80a8b6b02"
+                src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685669/insite-images/connection-design_byqy7o.png"
                 alt="Have a large project in mind?"
               />
             </div>

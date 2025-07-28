@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { PageBanner, BannerPropType } from "../../components/banner";
 import { motion } from "framer-motion"; 
 import { useNavigate } from "react-router-dom";

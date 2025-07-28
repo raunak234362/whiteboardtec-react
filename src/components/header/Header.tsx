@@ -4,35 +4,33 @@ import ExtraHeader from "./ExtraHeader";
 const HeaderHome = (): JSX.Element => {
   return (
     <>
-      <div className="flex items-center lg:max-w-screen-lg xl:max-w-screen-xl md:mx-auto justify-between" id="header">
+      <div
+        className="flex items-center lg:max-w-screen-lg xl:max-w-screen-xl md:mx-auto justify-between"
+        id="header"
+      >
         <Link to="/" className="inline-flex">
           <img
-            src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2Fwhiteboardtec-logo.png?alt=media&token=f73c5257-9b47-4139-84d9-08a1b058d7e9"
+            src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685727/logos/whiteboardtec-logo_oztrhh.png"
             alt="logo"
             className="m-2 h-28 max-md:h-20"
           />
         </Link>
-        {
-          (window.innerWidth >= 768) && (
-            <ExtraHeader />
-          )
-        }
+        {window.innerWidth >= 768 && <ExtraHeader />}
       </div>
     </>
   );
 };
 
 const HeaderBase = (): JSX.Element => {
-
   const handleReload = () => {
     window.location.reload();
-  }
+  };
   return (
     <>
       <div className="flex items-center justify-center" id="header">
         <Link to="/" onClick={handleReload} className="inline-flex">
           <img
-            src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2Fwhiteboardtec-logo.png?alt=media&token=f73c5257-9b47-4139-84d9-08a1b058d7e9"
+            src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685727/logos/whiteboardtec-logo_oztrhh.png"
             alt="logo"
             className="m-2 h-24"
           />
@@ -64,17 +62,17 @@ const HeaderBase = (): JSX.Element => {
           </div>
           <div className="inline-flex ml-3">
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2FAISC-Detailer-logo.png?alt=media&token=362f27a4-bad8-47d2-95e3-1100853fd01e"
+              src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685731/logos/AISC-Detailer-logo_zkosis.png"
               alt="AISC Detailer"
               className="h-12 m-0.5"
             />
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2FTekla_Structures_logo.png?alt=media&token=66ac8212-267c-47bd-8291-29aeeaa9c4b8"
+              src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685729/logos/Tekla_Structures_logo_sc2vxa.png"
               alt="Tekla Structures"
               className="h-12 m-0.5"
             />
             <img
-              src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Flogo%2FSDS2-logo.png?alt=media&token=32ae59c8-1f15-49f3-9cc3-324e3efe8389"
+              src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685730/logos/SDS2-logo_x6urbe.png"
               alt="SDS2 Logo"
               className="h-12 m-0.5"
             />

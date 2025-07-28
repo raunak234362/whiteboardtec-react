@@ -21,7 +21,7 @@ function GalleryImages() {
     setError(null);
 
     try {
-      const allProjects = await Service.getGalleryByDepartment(department);
+      const allProjects = await Service.getGalleryByDepartment(department ?? "");
       setGalleryImg(allProjects);
     } catch (err) {
       console.error("Error fetching projects:", err);
@@ -43,8 +43,8 @@ function GalleryImages() {
       images:
         project.images && project.images.length > 0
           ? project.images
-          : project.file?.secureUrl
-          ? [project.file.secureUrl]
+          : typeof project.file === "object" && !Array.isArray(project.file) && (project.file as { secureUrl?: string })?.secureUrl
+          ? [(project.file as { secureUrl: string }).secureUrl]
           : [],
     };
     setSelectedProject(projectWithImages);
@@ -94,7 +94,11 @@ function GalleryImages() {
               onClick={() => openProjectDetailsModal(project)}
             >
               <img
-                src={project.file?.secureUrl}
+                src={
+                  Array.isArray(project.file)
+                    ? project.file[0]
+                    : (project.file as { secureUrl?: string })?.secureUrl
+                }
                 alt={project.title}
                 className="object-cover w-full h-48"
               />
@@ -165,7 +169,7 @@ function GalleryImages() {
                       onClick={() =>
                         setCurrentImageIndex((prev) =>
                           prev === 0
-                            ? selectedProject.images.length - 1
+                            ? (selectedProject.images ? selectedProject.images.length - 1 : 0)
                             : prev - 1
                         )
                       }
@@ -176,7 +180,7 @@ function GalleryImages() {
                       className="absolute right-0 p-2 transform -translate-y-1/2 bg-white rounded-full shadow top-1/2 bg-opacity-70 hover:bg-opacity-100"
                       onClick={() =>
                         setCurrentImageIndex((prev) =>
-                          prev === selectedProject.images.length - 1
+                          selectedProject.images && prev === selectedProject.images.length - 1
                             ? 0
                             : prev + 1
                         )

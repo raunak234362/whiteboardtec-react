@@ -37,17 +37,17 @@ const headSection: HeadSectionType = {
 
 const treeData = [
   {
-    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fpeople-icon.png?alt=media&token=b32abb2d-08f8-4703-8a60-93a1b07cc9cf",
+    icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685580/icons/people-icon_o8b5nn.png",
     head: "Our People",
     body: "Work with the best and the brightest minds in the industry. Imagine having everyday access to thought leaders and process champions who have been pivotal in driving sustainable construction technologies. At the heart of who we are today, are our people. People who have shared the vision with us and continue to push the frontiers of innovation in our industry.",
   },
   {
-    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fwork-icon.png?alt=media&token=8eecf9dd-f504-467c-b7e7-b0750d3b3542",
+    icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685576/icons/work-icon_qbsh4o.png",
     head: "Work Environment",
     body: "A state-of-the-art facility that fosters innovation and promotes healthy productivity. A transparent office space that doesn't confine your creative juices and promotes interaction with our awesome community of people. Plus, who doesn't like a good blend of carefully sourced caffeine and a fully loaded pantry with cookies on us round the clock?",
   },
   {
-    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Ftech-icon.png?alt=media&token=07fa5299-c7bf-42c3-86a8-7290b5030897",
+    icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685577/icons/tech-icon_e2gofv.png",
     head: "Tools & Technology",
     body: "Get trained and hands-on with every modern software and tools that are used in our tradecraft. We believe if the right people are given the right tools, there is no definitive limit to what they can go out and achieve. From modern BIM tools to contemporary 3D modeling software, we work only with the best to drive outcomes for our clients.",
   },
