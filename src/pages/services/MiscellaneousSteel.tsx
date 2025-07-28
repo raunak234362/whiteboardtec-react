@@ -3,11 +3,12 @@ import { PageBanner, BannerPropType } from "../../components/banner";
 import Newsletter from "../../components/newsletter/Newsletter";
 import Estimate from "../../components/estimation/Estimate";
 
-const banner : BannerPropType = {
+const banner: BannerPropType = {
   header: "Miscellaneous",
   subheader: "Steel Detailing",
-  image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fmisc-banner.jpg?alt=media&token=9443301c-f646-47b9-9df4-c40bfd6b0b73"
-}
+  image:
+    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685618/banner-image/misc-banner_x3hbow.jpg",
+};
 
 const headSection:string[] = [
   "Our portfolio spans across structural steel elements such as complex staircases, hand-railings and other intricate misc. steel construction items. We understand the detailing needs from a fabrication point of view and execute comprehensive drawings that are conformed to your unique requirements.",
@@ -71,15 +72,15 @@ function MiscellaneousSteel() {
   return (
     <>
       <PageBanner {...banner} />
-      <div className="m-28 my-0 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
+      <div className="mx-auto my-0 m-28 lg:max-w-screen-lg xl:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-2 p-2 grid grid-cols-[60%_40%] gap-3 shadow-md max-md:grid-cols-1">
-          <div className="m-4 leading-loose text-gray-700 order-1 max-md:order-2">
-            <div className="text-xl font-semibold my-2 text-Black">
+          <div className="order-1 m-4 leading-loose text-gray-700 max-md:order-2">
+            <div className="my-2 text-xl font-semibold text-Black">
             We specialize in miscellaneous steel detailing for residential, commercial and industrial projects.
             </div>
             {headSection?.map((desc, index) => {
               return (
-                <p key={index} className="text-justify text-lg leading-relaxed">
+                <p key={index} className="text-lg leading-relaxed text-justify">
                   {desc}
                 </p>
               );
@@ -90,16 +91,16 @@ function MiscellaneousSteel() {
       </div>
 
       <div className="bg-gray-100">
-        <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl pt-3 my-10 pb-7">
+        <div className="pt-3 mx-auto my-10 lg:max-w-screen-lg xl:max-w-screen-xl pb-7">
           <div className="text-3xl font-semibold my-2 text-[#6abd45] mt-5 max-md:mx-3">
           Miscellaneous Detailing team Capabilities
           </div>
-          <section className="mt-3 p-2 grid grid-cols-1 md:gap-x-10 md:grid-cols-2">
+          <section className="grid grid-cols-1 p-2 mt-3 md:gap-x-10 md:grid-cols-2">
             {MiscCapability.map((detail, index) => {
               return (
                 <span
                   key={index}
-                  className="max-md:py-1 py-2 flex flex-wrap flex-row items-start"
+                  className="flex flex-row flex-wrap items-start py-2 max-md:py-1"
                 >
                   <svg
                     className="h-6 w-6 text-[#6abd45] inline-flex"
@@ -127,8 +128,8 @@ function MiscellaneousSteel() {
         </div>
       </div>
 
-      <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl mb-10">
-        <section className="rounded-3xl mt-3 border-2 p-2 grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-2 shadow-md">
+      <div className="mx-auto mb-10 lg:max-w-screen-lg xl:max-w-screen-xl">
+        <section className="grid grid-cols-1 gap-2 p-2 mt-3 border-2 shadow-md rounded-3xl md:grid-cols-4 lg:grid-cols-4">
           {
             MiscType?.map((type, index) => {
               return(
@@ -140,7 +141,7 @@ function MiscellaneousSteel() {
                     return (
                       <div
                         key={index}
-                        className="py-1 md:py-2 flex flex-wrap flex-row items-center"
+                        className="flex flex-row flex-wrap items-center py-1 md:py-2"
                       >
                         <svg
                           className="h-6 w-6 text-[#6abd45]"
@@ -160,7 +161,7 @@ function MiscellaneousSteel() {
                             transform="rotate(90 12 12)"
                           />
                         </svg>
-                        <p className="text-lg flex">{detail}</p>
+                        <p className="flex text-lg">{detail}</p>
                       </div>
                     );
                   })}

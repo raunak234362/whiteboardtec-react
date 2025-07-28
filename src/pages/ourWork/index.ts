@@ -1,14 +1,13 @@
 import OurWork from "./OurWork";
 import Portfolio from "./Portfolio";
-import { CarouselPropType } from "../../components/Carousel/CarouselDefault";
 
 export type PortfolioPropType = {
   id: string;
   title: string;
   description: string;
   pdf: string;
-  images?: CarouselPropType[];
-  status?: boolean;
+  // images?: CarouselPropType[];
+  status: "active" | "inactive" | boolean;
 };
 
 export type ImagePortfolioPropType = {

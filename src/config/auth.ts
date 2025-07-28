@@ -6,11 +6,11 @@ class AuthService {
   }: {
     username: string;
     password: string;
-  }) {
+    }) {
+    console.log("Logging in with:", { username, password });
     try {
       const userData = { username, password };
-      const response = await api.post(
-        `${import.meta.env.VITE_BASE_URL}/user/login`,
+      const response = await api.post(`/user/login`,
         userData,
         {
           headers: {
@@ -18,8 +18,11 @@ class AuthService {
           },
         }
       );        
+      console.log(response)
       return response
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 export default AuthService;

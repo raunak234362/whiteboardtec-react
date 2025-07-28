@@ -8,7 +8,7 @@ import PortfolioPdf from "./PortfolioPdf";
 
 const bannerData: BannerPropType = {
   header: "Our Portfolio",
-  image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fportfolio-banner.jpg?alt=media&token=f540249a-168e-4932-b6ec-3e448450b88b",
+  image: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685614/banner-image/portfolio-banner_hziqaf.jpg",
 };
 
 function Portfolio() {

@@ -14,8 +14,21 @@ function Login() {
 
     const handleLogin = async () => {
         try {
-            const response = AuthService.login({ username, password })
+          const response :any = await AuthService.login({ username, password });
+          console.log(response);
+            const token = response?.data?.data;
+            console.log(token);
+          
+          if (response?.status === 200) {
+            sessionStorage.setItem("token",token)
             navigate("/admin/dashboard");
+            alert("login successful")
+          }
+          else if (response?.status === 401 || response?.status === 400) {
+            alert("invalid credential")
+            
+          }
+          else(response)
         } catch (error) {
             console.log(error)
         }

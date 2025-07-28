@@ -4,8 +4,9 @@ import { useEffect } from 'react';
 
 const banner: BannerPropType = {
   header: "Resources",
-  image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fresource.jpg?alt=media&token=6d7ac0e9-0716-4c6d-8a83-acc05d210682",
-}
+  image:
+    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685612/banner-image/resource_lixfvx.jpg",
+};
 
 const data = [
   {
@@ -31,12 +32,12 @@ function Resources() {
   return (
     <>
       <PageBanner {...banner} />
-      <section className="rounded-3xl m-28 p-2 grid grid-cols-2 max-md:grid-cols-1 gap-10 mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
+      <section className="grid grid-cols-2 gap-10 p-2 mx-auto my-10 rounded-3xl m-28 max-md:grid-cols-1 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
         {data.map((item, index) => (
-          <div key={index} className='rounded-3xl shadow-md border-2'>
+          <div key={index} className='border-2 shadow-md rounded-3xl'>
             <div>
               <h2 className="text-3xl m-4 mb-2 font-bold text-[#6abd45]">{item.head}</h2>
-              <div className='m-4 mt-0 truncate text-lg'>
+              <div className='m-4 mt-0 text-lg truncate'>
                 {item.desc}
               </div>
               <Link to={item.link}>

@@ -3,11 +3,12 @@ import { PageBanner, BannerPropType } from "../../components/banner";
 import Newsletter from "../../components/newsletter/Newsletter";
 import Estimate from "../../components/estimation/Estimate";
 
-const banner : BannerPropType = {
+const banner: BannerPropType = {
   header: "Architectural",
   subheader: "BIM services",
-  image: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fbim-banner.jpg?alt=media&token=ba0bb96a-e69c-47b3-b85d-7efa1336bf0e"
-}
+  image:
+    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685621/banner-image/bim-banner_utszir.jpg",
+};
 
 const headSection:string[] = [
   "As one of the early adopters of the Building Information Modeling (BIM) system we understand how an elaborate 3D architectural design can set a conceptual project to life. As a matter of fact, our virtual models are so detailed that you can actually assess the feasibility and performance of a design even before the project execution. Putting to work the most up to date BIM tools combined with a design-thinking perspective, we generate stunning visual prototypes that count!",
@@ -31,17 +32,17 @@ function ArchitecturalBIM() {
   return (
     <>
       <PageBanner {...banner} />
-      <div className="m-28 my-0 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl ">
+      <div className="mx-auto my-0 m-28 lg:max-w-screen-lg xl:max-w-screen-xl ">
         <section className="rounded-3xl mt-3 border-2 p-2 grid grid-cols-[60%_40%] gap-3 shadow-md max-md:grid-cols-1">
-          <div className="m-4 leading-loose text-gray-700 order-1 max-md:order-2">
+          <div className="order-1 m-4 leading-loose text-gray-700 max-md:order-2">
             {headSection?.map((desc, index) => {
               return (
-                <p key={index} className="text-justify text-lg leading-relaxed">
+                <p key={index} className="text-lg leading-relaxed text-justify">
                   {desc}
                 </p>
               );
             })}
-            <div className="text-xl font-semibold my-2 text-Black">
+            <div className="my-2 text-xl font-semibold text-Black">
             Collaborate seamlessly with all stakeholders at every touch point, mitigate risks and impact overall revenues.
             </div>
           </div>
@@ -50,16 +51,16 @@ function ArchitecturalBIM() {
       </div>
 
       <div className="bg-gray-100">
-        <div className=" pt-3 my-10 pb-7 mx-auto md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
+        <div className="pt-3 mx-auto my-10  pb-7 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
           <div className="text-3xl font-semibold my-2 text-[#6abd45] mt-5 max-md:mx-2">
           Our BIM Architectural Service Offerings
           </div>
-          <section className="mt-3 p-2 grid grid-cols-1 md:gap-x-10 md:grid-cols-2">
+          <section className="grid grid-cols-1 p-2 mt-3 md:gap-x-10 md:grid-cols-2">
             {BIMDetailing.map((detail, index) => {
               return (
                 <div
                   key={index}
-                  className="py-1 md:py-2 flex flex-wrap flex-row items-center"
+                  className="flex flex-row flex-wrap items-center py-1 md:py-2"
                 >
                   <svg
                     className="h-6 w-6 text-[#6abd45] inline-flex"

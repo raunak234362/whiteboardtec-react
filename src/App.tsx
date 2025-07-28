@@ -4,15 +4,12 @@ import { HeaderHome } from "./components/header/Header";
 import { Footer } from "./components/footer/Footer";
 import { NavigationBar, HomeNav } from "./components/navigation";
 import { useLocation } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
 // import GoTo from "./components/goto/GoTo";
 
 function App(): JSX.Element {
-  const [updated, setUpdated] = useState<boolean>(false);
 
 
   const location = useLocation();
-  const reference = useRef<HTMLDivElement>(null);
   if (location.pathname.startsWith("/admin")) {
     return (
       <>
@@ -21,7 +18,7 @@ function App(): JSX.Element {
       </>
     );
   } else {
-    // console.log("Appppp Loooadded")
+    console.log("khul gaya jo kholna chahte thhhhe")
     return (
       <>
 

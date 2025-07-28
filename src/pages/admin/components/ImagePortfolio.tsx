@@ -1,148 +1,155 @@
 import { useState } from "react";
-import { ImagePortfolioPropType } from "../../ourWork";
-// import { Link } from "react-router-dom";
-import { Dialog } from "@headlessui/react";
-import { storage, db } from "../../../config/firebase";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytes,
-} from "firebase/storage";
-import { deleteDoc, doc, updateDoc } from "firebase/firestore";
-import { v4 } from "uuid";
 
-function ImagePortfolio(props: ImagePortfolioPropType) {
+import { Dialog } from "@headlessui/react";
+
+import Service from "../../../config/service";
+
+import { GalleryProjectFrontend, IProject } from "../../../config/interface";
+
+import { useForm } from "react-hook-form";
+
+import { Link } from "react-router-dom";
+interface ImagePortfolioProps extends IProject {
+  onUpdateSuccess: (updatedItem: GalleryProjectFrontend) => void;
+  onDeleteSuccess: (deletedId: string) => void;
+}
+
+function ImagePortfolio(props: ImagePortfolioProps) {
   const [isOpenJob, setOpenJob] = useState(false);
+
   const [isImageOpen, setImageOpen] = useState(false);
-  const [title, setTitle] = useState(props.title || "");
-  const [description, setDescription] = useState(props.description || "");
-  const [location, setLocation] = useState(props.location || "");
-  const [projectType, setProjectType] = useState(props.projectType || "");
-  const [softwareUsed, setSoftwareUsed] = useState(props.softwareUsed || "");
-  const [projectStatus, setProjectStatus] = useState(
-    props.projectStatus || "In Progress"
-  );
-  console.log("Project Status:", props);
-  const [img, setImage] = useState<any[]>([]);
+
+  const [newSelectedFiles, setNewSelectedFiles] = useState<File[]>([]);
   const [progress, setProgress] = useState<number>(0);
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files && files.length > 0) {
-      const fileArr = Array.from(files);
-      setImage(fileArr);
+  const { register } = useForm<GalleryProjectFrontend>();
 
-      let totalLoaded = 0;
-      const totalSize = fileArr.reduce((sum, file) => sum + file.size, 0);
+  console.log(props);
 
-      fileArr.forEach((file) => {
-        const reader = new FileReader();
-        reader.onprogress = (event) => {
-          if (event.lengthComputable) {
-            totalLoaded += event.loaded;
-            const percent = (totalLoaded / totalSize) * 100;
-            setProgress(percent);
-          }
-        };
-        reader.onloadend = () => {
-          // Optional: log or preview here
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-  };
+  // Removed unused selectedFiles state
 
-  const resetForm = () => {
-    setTitle(props.title || "");
-    setDescription(props.description || "");
-    setLocation(props.location || "");
-    setProjectType(props.projectType || "");
-    setSoftwareUsed(props.softwareUsed || "");
-    setProjectStatus(props.projectStatus || "In Progress");
-    setImage(props.img ? [props.img] : []);
-    // setStatus(props.status || false);
-    setProgress(0);
-  };
+  // Removed unused progress state
 
-  const handleUpdate = async () => {
-    try {
-      const data = {
-        title: title.trim(),
-        description: description.trim(),
-        location: location.trim(),
-        projectType: projectType.trim(),
-        softwareUsed: softwareUsed.trim(),
-        projectStatus: projectStatus,
-        img: props.img || null,
-        status: status,
-        updatedAt: new Date().toISOString(),
-      };
 
-      if (img && img.length > 0) {
-        // Optionally delete old images if needed
-        if (props.img) {
-          try {
-            const oldImageRef = ref(storage, props.img[0]);
-            await deleteObject(oldImageRef);
-            console.log("Old image deleted");
-          } catch (err) {
-            console.log("Error deleting old image:", err);
-          }
-        }
 
-        // Upload new images
-        const urls: string[] = [];
-        for (const file of img) {
-          const imgFile = ref(
-            storage,
-            `Gallery/${title.replace(/\s+/g, "_")}_${v4()}`
-          );
-          const snapshot = await uploadBytes(imgFile, file);
-          const url = await getDownloadURL(snapshot.ref);
-          urls.push(url);
-        }
-        data.img = urls.length > 0 ? urls[0] : null;
-      }
+ 
+  // const handleUpdate = async () => {
 
-      const portfolioRef = doc(db, "gallery", props.id);
-      await updateDoc(portfolioRef, data);
+  // if (
 
-      alert("Portfolio project updated successfully");
-      setOpenJob(false);
-      setProgress(0);
-      window.location.reload(); // Refresh to show updated data
-    } catch (error) {
-      console.error("Error updating portfolio:", error);
-      alert("Error updating portfolio. Please try again.");
-    }
-  };
+  // !title.trim() ||
+
+  // !description.trim() ||
+
+  // !location.trim() ||
+
+  // !technologyUsed.trim()
+
+  // ) {
+
+  // alert(
+
+  // "Please fill in all required fields (Title, Description, Location, Software/Technologies Used)."
+
+  // );
+
+  // return;
+
+  // }
+
+  // try {
+
+  // const formData = new FormData();
+
+  // formData.append("title", title.trim());
+
+  // formData.append("description", description.trim());
+
+  // formData.append("location", location.trim());
+
+  // formData.append("type", projectType);
+
+  // formData.append("technologyused", technologyUsed.trim());
+
+  // formData.append("status", projectStatus);
+
+  // if (
+
+  // newSelectedFiles.length === 0 &&
+
+  // props.images &&
+
+  // props.images.length > 0
+
+  // ) {
+
+  // props.images.forEach((imageUrl) =>
+
+  // formData.append("existingImages", imageUrl)
+
+  // );
+
+  // } else {
+
+  // newSelectedFiles.forEach((file) => formData.append("images", file));
+
+  // }
+
+  // const updatedProject = await Service.updateGallery(props.id, formData);
+
+  // alert("Gallery project updated successfully");
+
+  // setOpenJob(false);
+
+  // resetForm();
+
+  // props.onUpdateSuccess({
+
+  // id: props.id,
+
+  // title: updatedProject.title,
+
+  // description: updatedProject.description,
+
+  // location: updatedProject.location,
+
+  // type: updatedProject.type,
+
+  // technologyused: updatedProject.technologyused,
+
+  // status: updatedProject.status,
+
+  // images: updatedProject.images,
+
+  // onUpdateSuccess: props.onUpdateSuccess,
+
+  // onDeleteSuccess: props.onDeleteSuccess,
+
+  // });
+
+  // } catch (error) {
+
+  // console.error("Error updating gallery project:", error);
+
+  // }
+
+  // };
 
   const handleDelete = async () => {
     if (
       window.confirm(
-        "Are you sure you want to delete this portfolio project? This action cannot be undone."
+        "Are you sure you want to delete this gallery project? This action cannot be undone."
       )
     ) {
       try {
-        // Delete image from storage
-        if (props.img) {
-          try {
-            const imageRef = ref(storage, props.img[0]);
-            await deleteObject(imageRef);
-            console.log("Image deleted from storage");
-          } catch (err) {
-            console.log("Error deleting image:", err);
-          }
-        }
+        await Service.deleteGallery(props.id);
 
-        // Delete document from Firestore
-        await deleteDoc(doc(db, "gallery", props.id));
-        alert("Portfolio project deleted successfully");
-        window.location.reload(); // Refresh to show updated list
+        alert("Gallery project deleted successfully");
+
+        setOpenJob(false);
+
       } catch (error) {
-        console.error("Error deleting portfolio:", error);
-        alert("Error deleting portfolio. Please try again.");
+        console.error("Error deleting gallery project:", error);
       }
     }
   };
@@ -150,32 +157,35 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
   return (
     <>
       {/* Edit Modal */}
+
       <Dialog
         open={isOpenJob}
         onClose={() => {
           setOpenJob(false);
-          resetForm();
+
         }}
         className="relative z-50"
       >
         <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
+
         <div className="fixed inset-0 w-screen overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4">
+          <div className="flex items-center justify-center min-h-full p-4">
             <div className="bg-white w-full max-w-6xl p-6 rounded-lg shadow-lg flex flex-col max-h-[90vh] overflow-y-auto">
-              <div className="flex justify-between items-center mb-4">
+              <div className="flex items-center justify-between mb-4">
                 <Dialog.Title className="text-lg font-semibold">
-                  Edit Portfolio: {props.title}
+                  Edit Gallery: {props.title}
                 </Dialog.Title>
+
                 <button
                   onClick={() => {
                     setOpenJob(false);
-                    resetForm();
                   }}
                   className="text-gray-400 hover:text-gray-800"
                 >
                   <span className="sr-only">Close</span>
+
                   <svg
-                    className="h-6 w-6"
+                    className="w-6 h-6"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -192,21 +202,20 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Left Column */}
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div className="space-y-4">
                   <div>
                     <label
                       htmlFor="edit-title"
-                      className="block text-sm font-medium text-gray-700 mb-1"
+                      className="block mb-1 text-sm font-medium text-gray-700"
                     >
                       Project Title *
                     </label>
+
                     <input
                       type="text"
                       id="edit-title"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
+                      {...register("title", { required: true })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                       required
                     />
@@ -215,15 +224,15 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
                   <div>
                     <label
                       htmlFor="edit-description"
-                      className="block text-sm font-medium text-gray-700 mb-1"
+                      className="block mb-1 text-sm font-medium text-gray-700"
                     >
                       Description *
                     </label>
+
                     <textarea
                       id="edit-description"
                       rows={3}
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
+                      {...register("description", { required: true })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                       required
                     />
@@ -232,99 +241,147 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
                   <div>
                     <label
                       htmlFor="edit-location"
-                      className="block text-sm font-medium text-gray-700 mb-1"
+                      className="block mb-1 text-sm font-medium text-gray-700"
                     >
-                      Location
+                      Location *
                     </label>
+
                     <input
                       type="text"
                       id="edit-location"
-                      value={location}
-                      onChange={(e) => setLocation(e.target.value)}
+                      {...register("location", { required: true })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      required
                     />
                   </div>
 
                   <div>
                     <label
                       htmlFor="edit-projectType"
-                      className="block text-sm font-medium text-gray-700 mb-1"
+                      className="block mb-1 text-sm font-medium text-gray-700"
                     >
                       Project Type
                     </label>
+
                     <select
                       id="edit-projectType"
-                      value={projectType}
-                      onChange={(e) => setProjectType(e.target.value)}
+                      {...register("type", { required: true })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                     >
                       <option value="">Select project type</option>
+
                       <option value="Institute">Institute</option>
+
                       <option value="Commercial">Commercial</option>
+
                       <option value="Facility Expension">
                         Facility Expension
                       </option>
+
                       <option value="Industrial">Industrial</option>
+
                       <option value="Other">Other</option>
                     </select>
                   </div>
                 </div>
 
-                {/* Right Column */}
                 <div className="space-y-4">
                   <div>
                     <label
-                      htmlFor="edit-softwareUsed"
-                      className="block text-sm font-medium text-gray-700 mb-1"
+                      htmlFor="edit-technologyUsed"
+                      className="block mb-1 text-sm font-medium text-gray-700"
                     >
-                      Software/Technologies Used
+                      Software/Technologies Used *
                     </label>
+
                     <input
                       type="text"
-                      id="edit-softwareUsed"
-                      value={softwareUsed}
-                      onChange={(e) => setSoftwareUsed(e.target.value)}
+                      id="edit-technologyUsed"
+                      {...register("technologyused", { required: true })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                      placeholder="e.g., React, Node.js, Figma, Photoshop"
+                      placeholder="e.g., Tekla, SDS-2"
+                      required
                     />
                   </div>
 
                   <div>
                     <label
                       htmlFor="edit-projectStatus"
-                      className="block text-sm font-medium text-gray-700 mb-1"
+                      className="block mb-1 text-sm font-medium text-gray-700"
                     >
                       Project Status
                     </label>
+
                     <select
                       id="edit-projectStatus"
-                      value={projectStatus}
-                      onChange={(e) => setProjectStatus(e.target.value)}
+                      {...register("status", { required: true })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                     >
-                      <option value="Planning">Planning</option>
-                      <option value="In Progress">In Progress</option>
-                      <option value="Completed">Completed</option>
-                      <option value="On Hold">On Hold</option>
-                      <option value="Cancelled">Cancelled</option>
+                      <option value="PLANNING">Planning</option>
+
+                      <option value="IN_PROGRESS">In Progress</option>
+
+                      <option value="COMPLETED">Completed</option>
+
+                      <option value="ON_HOLD">On Hold</option>
+
+                      <option value="CANCELLED">Cancelled</option>
                     </select>
                   </div>
 
                   <div>
                     <label
-                      htmlFor="edit-img"
-                      className="block text-sm font-medium text-gray-700 mb-1"
+                      htmlFor="edit-images"
+                      className="block mb-1 text-sm font-medium text-gray-700"
                     >
-                      Software/Technologies Used
+                      Project Images (Upload new to replace)
                     </label>
                     <input
                       type="file"
-                      id="edit-img"
+                      id="edit-images"
                       accept="image/*"
                       multiple
-                      onChange={handleFileChange}
+                      {...register("images")}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      onChange={(e) => {
+                        const files = e.target.files ? Array.from(e.target.files) : [];
+                        setNewSelectedFiles(files);
+                        setProgress(files.length > 0 ? 100 : 0);
+                      }}
                     />
+                    
+
+                    {newSelectedFiles.length === 0 &&
+                      props.images &&
+                      props.images.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {props.images.map(
+                            (imgObj: string | { image: string }, index: number) => (
+                              <img
+                                key={index}
+                                src={typeof imgObj === "string" ? imgObj : imgObj.image}
+                                alt={`Current Image ${index}`}
+                                className="object-cover w-24 h-24 border rounded-md"
+                              />
+                            )
+                          )}
+                        </div>
+                      )}
+
+                    {/* Show preview of newly selected files */}
+
+                    {newSelectedFiles.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {newSelectedFiles.map((file, index) => (
+                          <img
+                            key={index}
+                            src={URL.createObjectURL(file)}
+                            alt={`New Preview ${index}`}
+                            className="object-cover w-24 h-24 border rounded-md"
+                          />
+                        ))}
+                      </div>
+                    )}
 
                     {progress > 0 && progress <= 100 && (
                       <div className="mt-2">
@@ -334,78 +391,46 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
                             style={{ width: `${progress}%` }}
                           ></div>
                         </div>
-                        <span className="text-sm text-gray-600 mt-1 block">
-                          {progress.toFixed(0)}% uploaded
+
+                        <span className="block mt-1 text-sm text-gray-600">
+                          {progress.toFixed(0)}% selected
                         </span>
                       </div>
                     )}
-                    <p className="text-xs text-gray-500 mt-1">
-                      Leave empty to keep current image
+
+                    <p className="mt-1 text-xs text-gray-500">
+                      Upload new images to replace existing ones.
                     </p>
                   </div>
-                  {img.length > 0 && (
-                    <div className="flex gap-2 mt-2 flex-wrap">
-                      {img.map((file, index) => (
-                        <img
-                          key={index}
-                          src={URL.createObjectURL(file)}
-                          alt={`Preview ${index}`}
-                          className="w-24 h-24 object-cover rounded-md border"
-                        />
-                      ))}
-                    </div>
-                  )}
-
-                  {/* <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Visibility Status
-                    </label>
-                    <div className="flex items-center space-x-3">
-                      <input
-                        type="checkbox"
-                        id="edit-status"
-                        checked={status}
-                        onChange={() => setStatus(!status)}
-                        className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-                      />
-                      <label
-                        htmlFor="edit-status"
-                        className={`text-sm font-medium ${
-                          status ? "text-green-600" : "text-red-600"
-                        }`}
-                      >
-                        {status
-                          ? "Active (Visible to public)"
-                          : "Inactive (Hidden from public)"}
-                      </label>
-                    </div>
-                  </div> */}
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex justify-center space-x-4 mt-6 pt-4 border-t">
+
+              <div className="flex justify-center pt-4 mt-6 space-x-4 border-t">
                 <button
                   type="button"
-                  onClick={handleUpdate}
-                  className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors"
+                  // onClick={handleUpdate}
+
+                  className="px-6 py-2 text-white transition-colors bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                 >
                   Update Project
                 </button>
+
                 <button
                   type="button"
                   onClick={handleDelete}
-                  className="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
+                  className="px-6 py-2 text-white transition-colors bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                 >
                   Delete Project
                 </button>
+
                 <button
                   type="button"
                   onClick={() => {
                     setOpenJob(false);
-                    resetForm();
                   }}
-                  className="px-6 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors"
+                  className="px-6 py-2 text-white transition-colors bg-gray-500 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
                 >
                   Cancel
                 </button>
@@ -416,26 +441,30 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
       </Dialog>
 
       {/* Image Viewer Modal */}
+
       <Dialog
         open={isImageOpen}
         onClose={() => setImageOpen(false)}
         className="relative z-50"
       >
         <div className="fixed inset-0 bg-black/75" aria-hidden="true" />
+
         <div className="fixed inset-0 w-screen overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4">
+          <div className="flex items-center justify-center min-h-full p-4">
             <div className="bg-white rounded-lg shadow-lg max-w-4xl max-h-[90vh] overflow-hidden">
-              <div className="flex justify-between items-center p-4 border-b">
+              <div className="flex items-center justify-between p-4 border-b">
                 <Dialog.Title className="text-lg font-semibold">
                   {props.title}
                 </Dialog.Title>
+
                 <button
                   onClick={() => setImageOpen(false)}
                   className="text-gray-400 hover:text-gray-800"
                 >
                   <span className="sr-only">Close</span>
+
                   <svg
-                    className="h-6 w-6"
+                    className="w-6 h-6"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -450,10 +479,13 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
                   </svg>
                 </button>
               </div>
+
               <div className="p-4">
-                {props.img ? (
+                {props.images && props.images.length > 0 ? (
+                  // Display the first image or iterate if you want a carousel
+
                   <img
-                    src={Array.isArray(props.img) ? props.img[0] : props.img}
+                    src={props.images[0]}
                     alt={props.title}
                     className="w-full h-auto max-h-[70vh] object-contain rounded"
                   />
@@ -469,85 +501,137 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
       </Dialog>
 
       {/* Table Row */}
+
       <tr className="hover:bg-gray-50">
         <td className="px-6 py-4 whitespace-nowrap">
           <div>
             <div className="text-sm font-medium text-gray-900">
               {props.title}
             </div>
-            <div className="text-sm text-gray-500 max-w-xs truncate">
+
+            <div className="max-w-xs text-sm text-gray-500 truncate">
               {props.description}
             </div>
+
             {props.location && (
-              <div className="text-xs text-gray-400 mt-1">
+              <div className="mt-1 text-xs text-gray-400">
                 📍 {props.location}
               </div>
             )}
           </div>
         </td>
+
         <td className="px-6 py-4 whitespace-nowrap">
           <div className="text-sm text-gray-900">
-            {props.projectType && (
+            {props.type && ( // Changed to props.type
               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mb-1">
-                {props.projectType}
+                {props.type}
               </span>
             )}
+
             <div className="text-xs text-gray-500">
               Status:{" "}
               <span
                 className={`font-medium ${
-                  props.projectStatus === "Completed"
+                  props.status === "Completed" // Changed to props.status
                     ? "text-green-600"
-                    : props.projectStatus === "In Progress"
+                    : props.status === "In Progress"
                     ? "text-blue-600"
-                    : props.projectStatus === "On Hold"
+                    : props.status === "On Hold"
                     ? "text-yellow-600"
-                    : props.projectStatus === "Cancelled"
+                    : props.status === "Cancelled"
                     ? "text-red-600"
                     : "text-gray-600"
                 }`}
               >
-                {props.projectStatus || "N/A"}
+                {props.status || "N/A"}
               </span>
             </div>
-            {props.softwareUsed && (
-              <div className="text-xs text-gray-400 mt-1">
-                Tools: {props.softwareUsed}
+
+            {props.technologyused && ( // Changed to props.technologyused
+              <div className="mt-1 text-xs text-gray-400">
+                Tools: {props.technologyused}
               </div>
             )}
           </div>
         </td>
-        <td className="px-6 py-4 whitespace-nowrap text-center">
-          {props.img ? (
-            <button
-              onClick={() => setImageOpen(true)}
-              className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-              View Image
-            </button>
-          ) : (
-            <span className="text-gray-400 text-sm">No image</span>
-          )}
+
+        {/* <td className="px-6 py-4 text-center whitespace-nowrap">
+
+{props.images && props.images.length > 0 ? ( // Changed to props.images
+
+<button
+
+onClick={() => setImageOpen(true)}
+
+className="inline-flex items-center text-sm font-semibold text-blue-600 transition-colors border border-transparent rounded-lg gap-x-2 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+>
+
+<svg
+
+className="w-4 h-4"
+
+fill="none"
+
+stroke="currentColor"
+
+viewBox="0 0 24 24"
+
+>
+
+<path
+
+strokeLinecap="round"
+
+strokeLinejoin="round"
+
+strokeWidth={2}
+
+d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+
+/>
+
+</svg>
+
+View Image
+
+</button>
+
+) : (
+
+<span className="text-sm text-gray-400">No image</span>
+
+)}
+
+</td> */}
+
+        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
+          {props.title || "No Title"}
         </td>
-        <td className="px-6 py-4 whitespace-nowrap text-center">
+
+        <td className="px-6 py-4 text-sm text-center text-gray-800 whitespace-nowrap ">
+          <Link
+            to={
+              props.images && props.images.length > 0
+                ? (typeof props.images[0] === "string"
+                    ? props.images[0]
+                    : (props.images[0] as { image: string }).image)
+                : "#"
+            }
+            target="_blank"
+            className="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
+          >
+            View Image
+          </Link>
+        </td>
+
+        <td className="px-6 py-4 text-center whitespace-nowrap">
           <div className="flex items-center justify-center space-x-2">
             <button
               type="button"
               onClick={() => setOpenJob(true)}
-              className="inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+              className="inline-flex items-center text-sm font-semibold text-blue-600 transition-colors border border-transparent rounded-lg gap-x-1 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <svg
                 className="w-4 h-4"
@@ -564,15 +648,6 @@ function ImagePortfolio(props: ImagePortfolioPropType) {
               </svg>
               Edit
             </button>
-            {/* <div
-              className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                props.status
-                  ? "bg-green-100 text-green-800"
-                  : "bg-red-100 text-red-800"
-              }`}
-            >
-              {props.status ? "Active" : "Inactive"}
-            </div> */}
           </div>
         </td>
       </tr>

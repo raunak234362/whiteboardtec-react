@@ -1,25 +1,16 @@
-import { auth } from "../../../config/firebase"
+
 import { HeaderProp } from "."
-import { signOut } from "firebase/auth"
-import { useNavigate } from "react-router-dom"
 
 
 function Header(prop: HeaderProp) {
-    const navigate = useNavigate();
 
     const handleLogOut = async() => {
-        await signOut(auth)
-        .then(()=> {
-            alert("Logged Out Successfully");
-            navigate("/admin");
-        }).catch((error) => {
-            alert(error.message);
-        })
+       
     }
 
 return (
     <>
-            <div className="w-full bg-gray-800 mt-0 px-3 py-1 items-center flex flex-wrap justify-between">
+            <div className="flex flex-wrap items-center justify-between w-full px-3 py-1 mt-0 bg-gray-800">
                     <div className="text-2xl font-bold text-[#6abd45] mx-3">
                             {prop.head}
                     </div>

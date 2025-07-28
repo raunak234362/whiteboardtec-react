@@ -10,7 +10,7 @@ const banner: BannerPropType = {
   header: "Careers at",
   subheader: "Whiteboard",
   image:
-    "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Fbanner-image%2Fcareer-banner.jpg?alt=media&token=1f9ef382-ebae-4663-aec6-927f675d26be",
+    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685619/banner-image/career-banner_ccqwcf.jpg",
 };
 
 
@@ -37,17 +37,17 @@ const headSection: HeadSectionType = {
 
 const treeData = [
   {
-    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fpeople-icon.png?alt=media&token=b32abb2d-08f8-4703-8a60-93a1b07cc9cf",
+    icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685580/icons/people-icon_o8b5nn.png",
     head: "Our People",
     body: "Work with the best and the brightest minds in the industry. Imagine having everyday access to thought leaders and process champions who have been pivotal in driving sustainable construction technologies. At the heart of who we are today, are our people. People who have shared the vision with us and continue to push the frontiers of innovation in our industry.",
   },
   {
-    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Fwork-icon.png?alt=media&token=8eecf9dd-f504-467c-b7e7-b0750d3b3542",
+    icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685576/icons/work-icon_qbsh4o.png",
     head: "Work Environment",
     body: "A state-of-the-art facility that fosters innovation and promotes healthy productivity. A transparent office space that doesn't confine your creative juices and promotes interaction with our awesome community of people. Plus, who doesn't like a good blend of carefully sourced caffeine and a fully loaded pantry with cookies on us round the clock?",
   },
   {
-    icon: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Ficon%2Ftech-icon.png?alt=media&token=07fa5299-c7bf-42c3-86a8-7290b5030897",
+    icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685577/icons/tech-icon_e2gofv.png",
     head: "Tools & Technology",
     body: "Get trained and hands-on with every modern software and tools that are used in our tradecraft. We believe if the right people are given the right tools, there is no definitive limit to what they can go out and achieve. From modern BIM tools to contemporary 3D modeling software, we work only with the best to drive outcomes for our clients.",
   },
@@ -77,13 +77,13 @@ function Careers() {
       <PageBanner {...banner} />
       <div className="mx-auto my-0 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-2 p-2 grid grid-cols-[60%_40%] gap-3 shadow-md max-md:grid-cols-1">
-          <div className="m-4 leading-loose order-1 max-md:order-2">
+          <div className="order-1 m-4 leading-loose max-md:order-2">
             <div className="text-3xl font-bold my-2 text-[#6abd45]">
               {headSection.title}
             </div>
             {headSection.description?.map((desc, index) => {
               return (
-                <p key={index} className="text-justify text-lg leading-relaxed">
+                <p key={index} className="text-lg leading-relaxed text-justify">
                   {desc}
                 </p>
               );
@@ -94,7 +94,7 @@ function Careers() {
             <div className="bg-[#6abd45] rounded-xl flex flex-wrap flex-col w-full h-fit shadow-2xl m-4 mr-8">
               {headSection.tagline?.map((tag, index) => {
                 return (
-                  <h1 key={index} className="text-white text-2xl p-4 pb-2">
+                  <h1 key={index} className="p-4 pb-2 text-2xl text-white">
                     {tag}
                   </h1>
                 );
@@ -104,41 +104,41 @@ function Careers() {
         </section>
       </div>
       <div className="bg-gray-100">
-        <div className="pt-3 my-10 mx-auto md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
-          <div className="text-4xl font-semibold my-2 text-black mt-7">
+        <div className="pt-3 mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
+          <div className="my-2 text-4xl font-semibold text-black mt-7">
             Current Openings
           </div>
 
-          <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 gap-x-10 md:grid-cols-2">
+          <section className="grid grid-cols-1 p-2 mt-3 gap-y-5 gap-x-10 md:grid-cols-2">
             {(job.length > 0 &&
               job?.map((job, index) => {
                 return job.status && <JobBox key={index} {...job} />;
               })) || (
-              <p className="text-lg my-2 text-black mt-3">
+              <p className="my-2 mt-3 text-lg text-black">
                 No openings at the moment
               </p>
             )}
           </section>
 
-          <div className="text-4xl font-semibold my-2 text-black mt-7">
+          <div className="my-2 text-4xl font-semibold text-black mt-7">
             Campus Recruitment
           </div>
-          <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 gap-x-10 md:grid-cols-2">
-            <div className="rounded-3xl border-2 shadow-md drop-shadow-md bg-white">
-              <div className="m-5 p-3">
+          <section className="grid grid-cols-1 p-2 mt-3 gap-y-5 gap-x-10 md:grid-cols-2">
+            <div className="bg-white border-2 shadow-md rounded-3xl drop-shadow-md">
+              <div className="p-3 m-5">
                 <div className="text-[#6abd45] text-2xl font-semibold">{`Campus Recruitment`}</div>
                 <div className="my-2">
-                  <div className="text-gray-700 text-lg">
+                  <div className="text-lg text-gray-700">
                     Location: {`Bengaluru,India`}
                   </div>
-                  <div className="text-gray-700 text-lg">
+                  <div className="text-lg text-gray-700">
                     Job Type: {`Full Time`}
                   </div>
-                  <div className="text-gray-700 text-lg">
+                  <div className="text-lg text-gray-700">
                     Qualification: {`Degree`}
                   </div>
                 </div>
-                <div className="mt-5 mb-0 flex flex-wrap flex-col md:flex-row justify-evenly">
+                <div className="flex flex-col flex-wrap mt-5 mb-0 md:flex-row justify-evenly">
                   <Link
                     to={`http://106.51.141.125:808/#/register`}
                     target="_blank"
@@ -156,21 +156,21 @@ function Careers() {
                 </div>
               </div>
             </div>
-            {/* <div className="rounded-3xl border-2 shadow-md drop-shadow-md bg-white">
-              <div className="m-5 h-full flex flex-row items-center justify-center">
+            {/* <div className="bg-white border-2 shadow-md rounded-3xl drop-shadow-md">
+              <div className="flex flex-row items-center justify-center h-full m-5">
                 {approveImg?.map((image, index) => (
-                  <div key={index} className="w-full h-28 flex justify-center items-center object-cover rounded-3xl">
-                    <img src={image.src} alt="image" className="w-auto h-full object-cover rounded" />
+                  <div key={index} className="flex items-center justify-center object-cover w-full h-28 rounded-3xl">
+                    <img src={image.src} alt="image" className="object-cover w-auto h-full rounded" />
                   </div>
                 ))}
               </div>
             </div> */}
           </section>
 
-          <div className="text-lg my-2 text-black mt-3 max-md:mx-2">
+          <div className="my-2 mt-3 text-lg text-black max-md:mx-2">
             We might just be a part of the recruitment drive at your college.
             Follow our social handles for more information on campus events.
-            <div className="flex-row flex items-center ml-2">
+            <div className="flex flex-row items-center ml-2">
               <span className="[&>svg]:h-5 [&>svg]:w-5 m-2">
                 <button
                   type="button"
@@ -250,23 +250,23 @@ function Careers() {
           </div>
         </div>
       </div>
-      <div className="pt-3 my-10 mx-auto md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
-        <div className="text-3xl font-semibold my-2 text-black mt-7">
+      <div className="pt-3 mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
+        <div className="my-2 text-3xl font-semibold text-black mt-7">
           We continue to attract and retain the best talent because of
         </div>
-        <section className="mt-3 p-2 grid grid-cols-1 gap-y-5 gap-x-10 md:grid-cols-3">
+        <section className="grid grid-cols-1 p-2 mt-3 gap-y-5 gap-x-10 md:grid-cols-3">
           {treeData.map((data, index) => {
             return (
               <div
                 key={index}
-                className="rounded-3xl border-2 shadow-md  bg-white"
+                className="bg-white border-2 shadow-md rounded-3xl"
               >
-                <div className="m-5 p-3">
-                  <div className="text-black text-xl font-semibold">
+                <div className="p-3 m-5">
+                  <div className="text-xl font-semibold text-black">
                     <img src={data.icon} alt="icon" className="w-14 h-14" />
                     {data.head}
                   </div>
-                  <div className="my-2 text-gray-700 text-md text-justify">
+                  <div className="my-2 text-justify text-gray-700 text-md">
                     {data.body}
                   </div>
                 </div>
@@ -277,19 +277,19 @@ function Careers() {
       </div>
 
       <div className="bg-gray-100">
-        <div className="pt-3 mt-10 mx-auto md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
+        <div className="pt-3 mx-auto mt-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
           <section className="mt-3p-2 grid grid-cols-[35%_65%] gap-3 max-md:grid-cols-1">
-            <div className="flex flex-wrap item-center justify-center m-5 max-md:h-1/2">
+            <div className="flex flex-wrap justify-center m-5 item-center max-md:h-1/2">
               <img
-                src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Fequal-opportunity.png?alt=media&token=5a88a52e-4519-426c-967f-8ff0e5226f18"
+                src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753698627/banner-image/a7cd38ce-7cdf-4b7e-b843-52cbbe584baf.png"
                 alt="Equal Opportunity"
               />
             </div>
-            <div className="flex flex-wrap flex-col justify-center">
+            <div className="flex flex-col flex-wrap justify-center">
               <div className="text-[#6abd45] text-3xl font-semibold">
                 Equal Opportunity Employer
               </div>
-              <div className="text-lg text-justify my-2 mr-10">
+              <div className="my-2 mr-10 text-lg text-justify">
                 Whiteboard is an Equal Opportunity Employer and provides equal
                 opportunities to all its employees regardless of their race,
                 color, religion, gender, age, disability or marital status. We
