@@ -4,6 +4,7 @@ import {
   ApiResponse,
   PortfolioInterface,
   IProject,
+  PortfolioPropType,
 } from "./interface";
 import api from "./api";
 
@@ -164,11 +165,14 @@ class Service {
     console.log("Fetching gallery for department:", department);
     try {
       const token = sessionStorage.getItem("token");
-      const response = await api.get<ApiResponse<IProject[]>>(`/project/sampleFiles/${department}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await api.get<ApiResponse<IProject[]>>(
+        `/project/sampleFiles/${department}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log("Gallery data:", response.data);
       return response.data.data;
     } catch (error) {
@@ -229,6 +233,42 @@ class Service {
     } catch (error) {
       console.log(error);
       throw error; // Propagate the error for handling
+    }
+  }
+  static async getPortfolioPdf({id}:any, {file_id}:any): Promise<PortfolioPropType[]> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.get<ApiResponse<PortfolioPropType[]>>(
+        `/portfolioWork/viewFile/${id}/${file_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("PDF data:", response.data);
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+  static async getCareersPdf(): Promise<PortfolioPropType[]> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.get<ApiResponse<PortfolioPropType[]>>(
+        "/project/all",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("PDF data:", response.data);
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   }
 }

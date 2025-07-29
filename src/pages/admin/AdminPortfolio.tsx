@@ -44,6 +44,16 @@ function AdminPortfolio() {
       setPortfolio([]);
     }
   };
+
+  const fetchPortfolioFile = async () => {
+    try {
+      const response = await Service.getPortfolioPdf(id, file_id)
+      console.log(response)
+    } catch (error) {
+      alert("Bhaang Bhosda Hogya")
+    }
+  }
+  
 console.log("----------",portfolios);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

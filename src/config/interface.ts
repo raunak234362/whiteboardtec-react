@@ -74,3 +74,11 @@ export interface GalleryProjectFrontend
 export interface GalleryImagesProps {
   department: string;
 }
+export interface PortfolioPropType {
+  id?: string;
+  title: string;
+  description: string;
+  pdf?: string;
+  file?: any;
+  status: boolean;
+}

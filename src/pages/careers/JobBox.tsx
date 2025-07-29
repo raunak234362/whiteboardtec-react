@@ -2,11 +2,6 @@ import { Link } from "react-router-dom";
 import { JobDescType } from ".";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { db, storage } from "../../config/firebase";
-import { v4 } from "uuid";
-import { addDoc, collection } from "firebase/firestore";
-// import nodemailer from 'nodemailer';
 
 function JobBox(job: JobDescType) {
   const [isOpenJob, setOpenJob] = useState(false);
@@ -45,26 +40,26 @@ function JobBox(job: JobDescType) {
       return;
     }
 
-    const data = {
-      name: name,
-      email: email,
-      phone: phone,
-      resume: "",
-      jobId: job.id,
-    };
+    // const data = {
+    //   name: name,
+    //   email: email,
+    //   phone: phone,
+    //   resume: "",
+    //   jobId: job.id,
+    // };
 
-    const profileDesc = ref(
-      storage,
-      `Application/${name.replace(" ", "_")}_${v4()}`
-    );
-    await uploadBytes(profileDesc, resume).then((val) => {
-      getDownloadURL(val.ref).then((url) => {
-        data.resume = url;
-        const application = collection(db, "application");
-        addDoc(application, data);
-      });
-    });
-    alert("Application Successfully Submitted")
+    // const profileDesc = ref(
+    //   Storage,
+    //   `Application/${name.replace(" ", "_")}_${v4()}`
+    // );
+    // await uploadBytes(profileDesc, resume).then((val) => {
+    //   // getDownloadURL(val.ref).then((url) => {
+    //   //   data.resume = url;
+    //   //   const application = collection(db, "application");
+    //   //   addDoc(application, data);
+    //   // });
+    // });
+    alert("Application Successfully Submitted");
     setOpenJob(false);
   };
 
@@ -76,9 +71,9 @@ function JobBox(job: JobDescType) {
         className="relative z-50"
       >
         <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
-        <div className="fixed inset-1 w-screen overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4">
-            <div className="bg-white w-full max-w-4xl p-6 rounded-lg shadow-lg flex flex-col">
+        <div className="fixed w-screen overflow-y-auto inset-1">
+          <div className="flex items-center justify-center min-h-full p-4">
+            <div className="flex flex-col w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg">
               <div className="flex justify-between">
                 <Dialog.Title className="text-2xl font-semibold">
                   Apply for {job.role}
@@ -89,7 +84,7 @@ function JobBox(job: JobDescType) {
                 >
                   <span className="sr-only">Close</span>
                   <svg
-                    className="h-6 w-6"
+                    className="w-6 h-6"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -106,7 +101,7 @@ function JobBox(job: JobDescType) {
                 </button>
               </div>
 
-              <table className="mt-4 mx-10 border-separate border-spacing-y-4">
+              <table className="mx-10 mt-4 border-separate border-spacing-y-4">
                 <tr>
                   <td>
                     <label htmlFor="Name" className="text-lg text-gray-800">
@@ -122,7 +117,7 @@ function JobBox(job: JobDescType) {
                       onChange={(e) => {
                         setName(e.target.value);
                       }}
-                      className="border-2 border-gray-200 rounded-md mx-4 w-full px-2 text-lg"
+                      className="w-full px-2 mx-4 text-lg border-2 border-gray-200 rounded-md"
                     />
                   </td>
                 </tr>
@@ -141,7 +136,7 @@ function JobBox(job: JobDescType) {
                       onChange={(e) => {
                         setEmail(e.target.value);
                       }}
-                      className="border-2 border-gray-200 rounded-md mx-4 w-full px-2 text-lg"
+                      className="w-full px-2 mx-4 text-lg border-2 border-gray-200 rounded-md"
                     />
                   </td>
                 </tr>
@@ -160,7 +155,7 @@ function JobBox(job: JobDescType) {
                       onChange={(e) => {
                         setPhone(e.target.value);
                       }}
-                      className="border-2 border-gray-200 rounded-md mx-4 w-full px-2 text-lg"
+                      className="w-full px-2 mx-4 text-lg border-2 border-gray-200 rounded-md"
                     />
                   </td>
                 </tr>
@@ -176,15 +171,15 @@ function JobBox(job: JobDescType) {
                       name="resume"
                       id="resume"
                       onChange={handleFileChange}
-                      className="border-2 border-gray-200 rounded-md mx-4 w-full text-lg"
+                      className="w-full mx-4 text-lg border-2 border-gray-200 rounded-md"
                     />
                     {progress > 0 && progress <= 100 && (
-                        <span className="mx-3 text-gray-600">{progress}%</span>
-                      )}
+                      <span className="mx-3 text-gray-600">{progress}%</span>
+                    )}
                   </td>
                 </tr>
               </table>
-              <div className="flex flex-wrap justify-center flex-row">
+              <div className="flex flex-row flex-wrap justify-center">
                 <button
                   type="submit"
                   onClick={(e) => {
@@ -200,7 +195,7 @@ function JobBox(job: JobDescType) {
                   onClick={() => {
                     setOpenJob(false);
                   }}
-                  className=" px-4 border-2 rounded-md bg-red-600 text-white text-xl border-white drop-shadow-lg mx-3 hover:border-red-500 hover:text-red-500  hover:bg-white"
+                  className="px-4 mx-3 text-xl text-white bg-red-600 border-2 border-white rounded-md drop-shadow-lg hover:border-red-500 hover:text-red-500 hover:bg-white"
                 >
                   Cancel
                 </button>
@@ -210,19 +205,21 @@ function JobBox(job: JobDescType) {
         </div>
       </Dialog>
 
-      <div className="rounded-3xl border-2 shadow-md drop-shadow-md bg-white">
-        <div className="m-5 p-3">
-          <div className="text-[#6abd45] text-2xl font-semibold">{job.role}</div>
+      <div className="bg-white border-2 shadow-md rounded-3xl drop-shadow-md">
+        <div className="p-3 m-5">
+          <div className="text-[#6abd45] text-2xl font-semibold">
+            {job.role}
+          </div>
           <div className="my-2">
-            <div className="text-gray-700 text-lg">
+            <div className="text-lg text-gray-700">
               Location: {job.location}
             </div>
-            <div className="text-gray-700 text-lg">Job Type: {job.type}</div>
-            <div className="text-gray-700 text-lg">
+            <div className="text-lg text-gray-700">Job Type: {job.type}</div>
+            <div className="text-lg text-gray-700">
               Qualification: {job.qualification}
             </div>
           </div>
-          <div className="mt-5 mb-0 flex flex-wrap flex-col md:flex-row justify-evenly">
+          <div className="flex flex-col flex-wrap mt-5 mb-0 md:flex-row justify-evenly">
             <Link
               to={job.jd}
               target="_blank"

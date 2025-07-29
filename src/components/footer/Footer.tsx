@@ -1,31 +1,16 @@
-// import { analytics } from "../../config/firebase";
-// import { getDatabase } from "firebase/database";
-import { useEffect, useState } from "react";
-// import { db } from "../../config/firebase";
-// import { collection, getDocs } from "firebase/firestore";
-import { database } from "../../config/firebase";
-import { onValue, ref } from "firebase/database";
+
 
 const Footer = (): JSX.Element => {
-  const [view, setView] = useState<number>()
-  
-  useEffect(() => {
-    const countView = ref(database, "/view");
-  onValue(countView, (snapshot) => {
-    setView(snapshot.val())
-  })
-  }, [])
 
   return (
     <>
-    <div className="bottom-0 relative w-full bg-black">
+    <div className="relative bottom-0 w-full bg-black">
       <div className="text-[#FFF] h-fit py-2 max-md:py-7 items-center flex text-[13px] justify-between mx-auto lg:max-w-screen-lg xl:max-w-screen-xl md:flex-row flex-col">
         <div className="flex text-center">
           Copyright © 2023 by Whiteboard Technologies Pvt. Ltd. All rights
           reserved.
         </div>
-        <div className="flex justify-center max-md:mt-5">{view}</div>
-        <div className="flex-row flex items-center max-md:mt-5">
+        <div className="flex flex-row items-center max-md:mt-5">
           <span className="[&>svg]:h-3 [&>svg]:w-3 m-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"

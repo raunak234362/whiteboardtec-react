@@ -30,26 +30,26 @@ function CarouselDefault({ images }: { images: CarouselPropType[] | any }) {
   // }, [])
 
   return (
-    <div className="w-full h-full m-auto mt-0 relative group">
+    <div className="relative w-full h-full m-auto mt-0 group">
       <div
         style={{
-          backgroundImage: `url(${images[currentIndex].url})`,
+          backgroundImage: `url(${images[currentIndex]?.url})`,
           backgroundPosition: "center center",
           backgroundRepeat: "no-repeat",
           backgroundSize: "contain",
         }}
-        className="w-full h-full rounded-lg bg-center bg-cover duration-500" />
+        className="w-full h-full duration-500 bg-center bg-cover rounded-lg" />
       <div className="hidden group-hover:block max-md:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
         <BsChevronCompactLeft onClick={prevSlide} size={30} />
       </div>
       <div className="hidden group-hover:block max-md:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
         <BsChevronCompactRight onClick={nextSlide} size={30} />
       </div>
-      {images[currentIndex].title && (
-        <div className="absolute bottom-0 left-0 right-0 bg-black/30 text-white p-2 text-lg text-center">
-          {images[currentIndex].title}
+      {/* {images[currentIndex]?.title && (
+        <div className="absolute bottom-0 left-0 right-0 p-2 text-lg text-center text-white bg-black/30">
+          {images[currentIndex]?.title}
         </div>
-      )}
+      )} */}
     </div>
   );
 }
