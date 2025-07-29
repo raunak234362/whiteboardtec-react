@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { PageBanner, BannerPropType } from "../../components/banner";
 import Newsletter from "../../components/newsletter/Newsletter";
@@ -116,7 +117,7 @@ function StructuralSteel() {
             </div>
             <div className="flex flex-wrap justify-center m-5 item-center ">
               <img
-                src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Four-services.jpg?alt=media&token=56d33c91-c20d-4d23-bdc3-9d8cae9bb336"
+                src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685663/insite-images/our-services_qnqsre.jpg"
                 alt="Equal Opportunity"
               />
             </div>
@@ -163,7 +164,7 @@ function StructuralSteel() {
           </section>
           <div className="flex flex-wrap items-center justify-center">
             <div className="w-1/2 h-96 max-md:w-full">
-            <CarouselDefault images={service_images} />
+            <CarouselDefault images={service_images ?? []} />
             </div>
           </div>
         </div>

@@ -1,108 +1,31 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { pdfjs } from "react-pdf"; // Still good to keep if you plan to use react-pdf for more advanced features later
 import { PortfolioPropType } from "../../config/interface";
-import Service from "../../config/service";
-
 // Set the worker source using a local worker (important for react-pdf)
 pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.js";
 
-// Define the type for a single PDF file object, assuming it comes from Cloudinary or similar
-interface PdfFile {
-  fileName: string;
-  originalName: string;
-  path: string;
-  public_id: string;
-  secureUrl: string; // This is the URL we'll use
-  // Add any other properties your file objects might have
-}
-
 // Update the prop type to be an array of PdfFile objects
-function PortfolioPdf({ pdfFiles }: { pdfFiles: PortfolioPropType[] }) {
-  const id = pdfFiles?.id;
-  const file_id= pdfFiles?.file?.id
-  const fetchPortfolioFile = async () => {
-    try {
-      const response = await Service.getPortfolioPdf(id, file_id);
-      console.log(response);
-    } catch (error) {
-      alert("Bhaang Bhosda Hogya");
-    }
-  };
+function PortfolioPdf({ portfolio }: { portfolio: PortfolioPropType[] }) {
+  // Example: Use the first item in the array (adjust logic as needed)
+  const firstPdf = portfolio && portfolio.length > 0 ? portfolio[0] : undefined;
+  console.log("PortfolioPdf component loaded with pdfFiles:", firstPdf);
+  const id = firstPdf?.id;
+  const file_id = firstPdf?.file[0]?.fileName?.replace(/\.pdf$/i, "");
 
-  useEffect(() => {
-    fetchPortfolioFile
-  },[])
-  // Renamed pdfURL to pdfFiles for clarity
-  console.log("Loading PDF from:", pdfFiles);
+  console.log(
+    "PortfolioPdf component loaded with id:",
+    id,
+    "and file_id:",
+    file_id
+  );
 
-  const [displayPdfUrl, setDisplayPdfUrl] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   setError(null);
-  //   setDisplayPdfUrl(null); // Reset for new pdfFiles prop
-
-  //   if (!pdfFiles || pdfFiles.length === 0) {
-  //     setError("No PDF files provided.");
-  //     setLoading(false);
-  //     return;
-  //   }
-
-  // Safely access the secureUrl from the first item in the array
-  // const candidatePdfUrl = pdfFiles[0]?.secureUrl;
-
-  // if (!candidatePdfUrl) {
-  //   setError("The first PDF file object is missing a 'secureUrl'.");
-  //   setLoading(false);
-  //   return;
-  // }
-
-  // Basic validation to check if it looks like a PDF URL
-  // if (
-  //   !candidatePdfUrl.endsWith(".pdf") &&
-  //   !candidatePdfUrl.includes("type=pdf")
-  // ) {
-  //   console.warn("The provided URL might not be a PDF:", candidatePdfUrl);
-  // You might set an error here too if you strictly only want PDFs
-  // setError(`URL does not appear to be a PDF: ${candidatePdfUrl}`);
-  // setLoading(false);
-  // return;
-  // }
-
-  // Check if the URL is valid by trying to fetch its headers (HEAD request is more efficient)
-  //   fetch(candidatePdfUrl, { method: "HEAD" })
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! status: ${response.status}`);
-  //       }
-  //       const contentType = response.headers.get("Content-Type");
-  //       if (contentType && !contentType.includes("application/pdf")) {
-  //         console.warn(
-  //           `URL ${candidatePdfUrl} returned Content-Type: ${contentType}, expected application/pdf.`
-  //         );
-  //         // You might still show it in an iframe, but warn the developer
-  //         // setError(`URL does not appear to be a PDF (Content-Type: ${contentType}).`);
-  //       }
-  //       setDisplayPdfUrl(candidatePdfUrl); // Set the URL to be used in the iframe
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       setError(
-  //         `Failed to access PDF URL: ${error.message}. Please check the URL and network.`
-  //       );
-  //       setLoading(false);
-  //     });
-  // }, [pdfFiles]); // Depend on pdfFiles prop
-
-  // if (loading) {
-  //   return (
-  //     <div className="relative flex items-center justify-center w-full h-full">
-  //       <p>Loading PDF...</p>
-  //     </div>
-  //   );
-  // }
+  const [error] = useState<string | null>(null);
+  const pdfURL =
+    firstPdf?.file[0]?.path
+      ? `${import.meta.env.VITE_IMG_URL}${firstPdf.file[0].path}`
+      : "";
+ 
 
   return (
     <div className="relative w-full h-full">
@@ -113,10 +36,10 @@ function PortfolioPdf({ pdfFiles }: { pdfFiles: PortfolioPropType[] }) {
       )}
 
       {/* PDF Viewer - only render iframe if no fatal error and a URL is set */}
-      {displayPdfUrl && !error ? (
+      {pdfURL && !error ? (
         <div className="flex items-center justify-center w-full h-full">
           <iframe
-            src={displayPdfUrl + "#toolbar=0&navpanes=0&scrollbar=1&zoom=auto"}
+            src={pdfURL + "#toolbar=0&navpanes=0&scrollbar=1&zoom=auto"}
             width="100%"
             height="100%"
             style={{ border: "none" }}
@@ -124,7 +47,7 @@ function PortfolioPdf({ pdfFiles }: { pdfFiles: PortfolioPropType[] }) {
             allowFullScreen
           >
             Your browser does not support PDFs. You can{" "}
-            <a href={displayPdfUrl} target="_blank" rel="noopener noreferrer">
+            <a href={pdfURL} target="_blank" rel="noopener noreferrer">
               download the PDF
             </a>{" "}
             instead.

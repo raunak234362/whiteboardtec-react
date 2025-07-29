@@ -8,8 +8,16 @@ export type CarouselPropType = {
   alt?: string;
 };
 
-function CarouselDefault({ images }: { images: CarouselPropType[] | any }) {
+function CarouselDefault({ images }: { images: CarouselPropType[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  if (!images || images.length === 0) {
+    return (
+      <div className="relative w-full h-full m-auto mt-0 group flex items-center justify-center">
+        <span className="text-gray-500">No images to display</span>
+      </div>
+    );
+  }
 
   const prevSlide = () => {
     const isFirstSlide = currentIndex === 0;

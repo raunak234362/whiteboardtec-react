@@ -43,7 +43,7 @@ function Portfolio() {
             className="rounded-3xl mt-10 h-[60vh] max-md:h-[90vh] border-2 p-2 grid grid-cols-[60%_40%] gap-3 shadow-md max-md:grid-cols-1 relative"
           >
             <div className="order-1 my-2 ml-6 overflow-y-hidden max-md:ml-0 max-md:order-2">
-              {portfolio && <PortfolioPdf pdfFiles={portfolio} />}
+              {portfolio && <PortfolioPdf portfolio={portfolios} />}
             </div>
             <div className="order-2 max-md:order-1">
               <PortfolioInfo
