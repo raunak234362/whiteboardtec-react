@@ -46,6 +46,7 @@ function AdminPortfolio() {
   };
 
 
+  
 console.log("----------",portfolios);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -184,9 +185,9 @@ console.log("----------",portfolios);
         open={isOpen}
         onClose={() => {
           setOpen(false);
-          setIsEditMode(false); 
+          setIsEditMode(false);
           setCurrentPortfolio(null);
-          setTitle(""); 
+          setTitle("");
           setDescription("");
           setPdf(null);
           setStatus(false);
@@ -201,7 +202,6 @@ console.log("----------",portfolios);
               <div className="flex justify-between">
                 <Dialog.Title className="text-lg font-semibold">
                   {isEditMode ? "Edit Portfolio" : "Add New Portfolio"}{" "}
-               
                 </Dialog.Title>
                 <button
                   onClick={() => {
@@ -353,9 +353,9 @@ console.log("----------",portfolios);
                   onClick={(e) => {
                     e.preventDefault();
                     if (isEditMode) {
-                      handleUpdateSubmit(); 
+                      handleUpdateSubmit();
                     } else {
-                      handleAddSubmit(); 
+                      handleAddSubmit();
                     }
                   }}
                   className=" px-4 border-2 rounded-md bg-green-500 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
@@ -401,13 +401,13 @@ console.log("----------",portfolios);
                 e.preventDefault();
                 setOpen(true);
                 setIsEditMode(false);
-               
+
                 setTitle("");
                 setDescription("");
                 setPdf(null);
                 setStatus(false);
                 setProgress(0);
-                setCurrentPortfolio(null); 
+                setCurrentPortfolio(null);
               }}
             >
               Add New
@@ -427,6 +427,12 @@ console.log("----------",portfolios);
                   scope="col"
                   className="px-6 py-3 text-xs font-medium text-center uppercase"
                 >
+                  Description
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-xs font-medium text-center uppercase"
+                >
                   Portfolio PDF
                 </th>
                 <th
@@ -438,18 +444,14 @@ console.log("----------",portfolios);
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 ">
-              {portfolios?.map(
-                (
-                  portfolio 
-                ) => (
-                  <WorkPortfolio
-                    key={portfolio.id} 
-                    {...portfolio}
-                    onEdit={handleEdit} 
-                    onDelete={handleDelete} 
-                  />
-                )
-              )}
+              {portfolios?.map((portfolio) => (
+                <WorkPortfolio
+                  key={portfolio.id}
+                  {...portfolio}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                />
+              ))}
             </tbody>
           </table>
         </div>
