@@ -2,7 +2,7 @@ import { Dialog } from "@headlessui/react";
 import { useState } from "react";
 import { JobPortalInterface } from "../../../config/interface";
 import Service from "../../../config/service";
-import JobForm from "./JobForm"; // Import the JobForm component
+import JobForm from "./JobForm";
 
 interface JobCareerProps {
   job: JobPortalInterface[];
@@ -14,11 +14,13 @@ const JobCareer = ({ job }: JobCareerProps) => {
     null
   );
   const [loading, setLoading] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 
   const handleEditClick = (jobItem: JobPortalInterface) => {
     setSelectedJob(jobItem);
     setOpenJob(true);
   };
+  console.log(selectedJob)
 
   const handleUpdate = async (data: JobPortalInterface) => {
     if (!selectedJob) return;
@@ -31,7 +33,7 @@ const JobCareer = ({ job }: JobCareerProps) => {
 
     try {
       setLoading(true);
-      await Service.editJob(selectedJob.id!, formData); // Update job via API
+      await Service.editJob(selectedJob.id!, formData);
       alert("Job updated successfully");
       setOpenJob(false);
     } catch (error) {
@@ -46,7 +48,7 @@ const JobCareer = ({ job }: JobCareerProps) => {
     if (!window.confirm("Are you sure you want to delete this job?")) return;
     try {
       setLoading(true);
-      await Service.deleteJob(id); // Call delete API
+      await Service.deleteJob(id);
       alert("Job deleted successfully");
     } catch (error) {
       console.error("Error deleting job:", error);
@@ -58,7 +60,7 @@ const JobCareer = ({ job }: JobCareerProps) => {
 
   return (
     <>
-      {/* Edit Job Dialog */}
+      {/* Modal to Edit Job */}
       <Dialog
         open={isOpenJob}
         onClose={() => setOpenJob(false)}
@@ -93,7 +95,6 @@ const JobCareer = ({ job }: JobCareerProps) => {
                 </button>
               </div>
 
-              {/* Job Form */}
               {selectedJob && (
                 <JobForm
                   selectedJob={selectedJob}
@@ -106,7 +107,31 @@ const JobCareer = ({ job }: JobCareerProps) => {
         </div>
       </Dialog>
 
-      {/* Job Table */}
+      {/* Modal to View PDF */}
+      <Dialog
+        open={!!pdfUrl}
+        onClose={() => setPdfUrl(null)}
+        className="relative z-50"
+      >
+        <div className="fixed inset-0 bg-black/60" aria-hidden="true" />
+        <div className="fixed inset-0 flex items-center justify-center p-4">
+          <div className="relative w-full max-w-4xl h-[80vh] bg-white rounded shadow-xl p-4">
+            <button
+              onClick={() => setPdfUrl(null)}
+              className="absolute text-xl font-bold text-gray-600 top-2 right-4 hover:text-red-600"
+            >
+              ✕
+            </button>
+            <iframe
+              src={pdfUrl ?? ""}
+              title="Job Description"
+              className="w-full h-full border rounded"
+            />
+          </div>
+        </div>
+      </Dialog>
+
+      {/* Job Listing Table */}
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-[#6abd45] text-white">
           <tr>
@@ -114,6 +139,7 @@ const JobCareer = ({ job }: JobCareerProps) => {
             <th className="px-6 py-3 text-left">Location</th>
             <th className="px-6 py-3 text-left">Type</th>
             <th className="px-6 py-3 text-left">Qualification</th>
+            <th className="px-6 py-3 text-left">View PDF</th>
             <th className="px-6 py-3 text-center">Actions</th>
           </tr>
         </thead>
@@ -124,6 +150,24 @@ const JobCareer = ({ job }: JobCareerProps) => {
               <td className="px-6 py-4">{jobItem.location}</td>
               <td className="px-6 py-4">{jobItem.type}</td>
               <td className="px-6 py-4">{jobItem.qualification}</td>
+              <td className="px-6 py-4">
+                {jobItem.jd && jobItem.jd.length > 0 ? (
+                  <button
+                    onClick={() =>
+                      setPdfUrl(
+                        `${import.meta.env.VITE_IMG_URL}${
+                          jobItem.jd[0].path
+                        }`
+                      )
+                    }
+                    className="text-blue-600 underline hover:text-blue-800"
+                  >
+                    View
+                  </button>
+                ) : (
+                  <span className="text-gray-400">No PDF</span>
+                )}
+              </td>
               <td className="px-6 py-4 space-x-2 text-center">
                 <button
                   className="px-2 py-1 text-sm text-blue-600 border border-blue-600 rounded hover:bg-blue-50"

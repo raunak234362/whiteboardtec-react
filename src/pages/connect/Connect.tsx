@@ -108,6 +108,8 @@ function Connect() {
     document.title = "Connect - Whiteboard";
   });
 
+  
+
   return (
     <>
       <PageBanner {...data.banner} />

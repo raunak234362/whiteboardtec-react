@@ -6,7 +6,7 @@ type HeadSectionType = {
 
 type JobDescType = {
     id: string,
-    role: string;
+    Role: string;
     location: string;
     "type": string;
     qualification: string;

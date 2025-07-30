@@ -70,6 +70,8 @@ function AdminCareer() {
     }
   };
 
+  console.log(gettingdata)
+
   return (
     <>
       {/* Modal for adding a job */}

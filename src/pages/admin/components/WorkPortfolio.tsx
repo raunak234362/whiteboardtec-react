@@ -1,95 +1,83 @@
-// import { useState } from "react";
+import { useState } from "react";
 import { PortfolioPropType } from "../../ourWork";
-import { Link } from "react-router-dom";
-// import { Dialog } from "@headlessui/react";
 
 interface WorkPortfolioProps extends PortfolioPropType {
-  onEdit:(portfolio: PortfolioPropType) => void;
+  onEdit: (portfolio: PortfolioPropType) => void;
   onDelete: (id: string) => void;
 }
 
-
 function WorkPortfolio({
   id,
-  title: initialTitle, 
-  description: initialDescription, 
-  pdf: initialPdfUrl, 
-  status: initialStatus, 
-  onEdit, 
-  onDelete, 
+  title,
+  description,
+  pdf,
+  status,
+  onEdit,
+  onDelete,
 }: WorkPortfolioProps) {
-  // const [pdf, setPdf] = useState<File | null>(null); 
-  // const [progress, setProgress] = useState<number>(0);
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-
-  // const handleFileChange =  (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setProgress(0);
-  //   const file = e.target.files?.[0];
-  //   if (file) {
-  //     setPdf(file);
-  //     setProgress(100);
-      
-  //   }
-  //   else {
-  //     setPdf(null);
-  //     setProgress(0);
-  //     alert("Please select a valid PDF file.");
-  //   }
-  // };
-
-
-return (
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
+console.log(pdf)
+  return (
     <>
-      
       <tr className="hover:bg-gray-100">
-        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
-        {initialTitle} 
+        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+          {title}
         </td>
-        <td className="px-6 py-4 text-sm text-center text-gray-800 whitespace-nowrap ">
-          {initialPdfUrl ? (
-            <Link
-              to={typeof initialPdfUrl === "string" ? initialPdfUrl : "#"} 
-              target="_blank"
-              className="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
+
+        <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap max-w-[250px] truncate">
+          {description || "No description"}
+        </td>
+
+        <td className="px-6 py-4 text-sm text-center text-gray-800 whitespace-nowrap">
+          {pdf ? (
+            <button
+              onClick={handleOpenModal}
+              className="font-semibold text-blue-600 hover:text-blue-800"
             >
               View PDF
-            </Link>
+            </button>
           ) : (
             "No PDF"
           )}
         </td>
-        <td className="px-6 py-4 text-sm font-medium text-center whitespace-nowrap">
+
+        <td className="px-6 py-4 text-sm text-center text-gray-800 whitespace-nowrap">
           <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              
-              onEdit({
-                id,
-                title: initialTitle,
-                description: initialDescription,
-                pdf: initialPdfUrl,
-                status: initialStatus,
-              });
-            }}
-            className="inline-flex items-center mr-4 text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
+            onClick={() => onEdit({ id, title, description, pdf, status })}
+            className="mr-2 text-green-600 hover:text-green-800"
           >
             Edit
           </button>
           <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-            
-              onDelete(id);
-            }}
-            className="inline-flex items-center text-sm font-semibold text-red-600 border border-transparent rounded-lg gap-x-2 hover:text-red-800 disabled:opacity-50 disabled:pointer-events-none"
+            onClick={() => onDelete(id)}
+            className="text-red-600 hover:text-red-800"
           >
             Delete
           </button>
         </td>
       </tr>
+
+      {/* Modal for PDF Preview */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+          <div className="relative w-[90%] h-[90%] bg-white rounded-lg shadow-lg p-4">
+            <button
+              onClick={handleCloseModal}
+              className="absolute text-xl font-bold text-gray-700 top-3 right-3 hover:text-red-600"
+            >
+              &times;
+            </button>
+            <iframe
+              src={`${import.meta.env.VITE_IMG_URL}${pdf[0].path}`}
+              title="PDF Viewer"
+              className="w-full h-full border-none"
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 }

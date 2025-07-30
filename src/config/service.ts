@@ -1,12 +1,11 @@
-
 import {
   JobPortalResponse,
   ApiResponse,
   PortfolioInterface,
   IProject,
-  PortfolioPropType,
+  ConnectProps, // Make sure CareerProps is correctly imported
 } from "./interface";
-import api from "./api";
+import api from "./api"; // Ensure this path is correct
 
 class Service {
   static async JobPortal(payload: FormData) {
@@ -22,8 +21,10 @@ class Service {
     } catch (error) {
       console.log(error);
       alert("Something went wrong, Please try again later");
+      throw error; // Always throw to allow calling component to handle
     }
   }
+
   static async getJob(): Promise<JobPortalResponse[]> {
     try {
       const token = sessionStorage.getItem("token");
@@ -42,6 +43,7 @@ class Service {
       throw error; // Propagate the error for handling
     }
   }
+
   static async deleteJob(id: number): Promise<void> {
     try {
       const token = sessionStorage.getItem("token");
@@ -55,6 +57,7 @@ class Service {
       throw error;
     }
   }
+
   static async editJob(id: number, payload: FormData): Promise<void> {
     try {
       const token = sessionStorage.getItem("token");
@@ -69,6 +72,7 @@ class Service {
       throw error;
     }
   }
+
   static async portfolio(payload: FormData) {
     try {
       const token = sessionStorage.getItem("token");
@@ -81,8 +85,10 @@ class Service {
     } catch (error) {
       console.log(error);
       alert("Something went wrong, Please try again later");
+      throw error; // Always throw to allow calling component to handle
     }
   }
+
   static async getPortfolio(): Promise<PortfolioInterface[]> {
     try {
       const token = sessionStorage.getItem("token");
@@ -101,6 +107,7 @@ class Service {
       throw error; // Propagate the error for handling
     }
   }
+
   static async updatePortfolio(id: string, payload: FormData): Promise<void> {
     try {
       const token = sessionStorage.getItem("token");
@@ -112,10 +119,11 @@ class Service {
       });
     } catch (error) {
       console.log(error);
-      alert("Soomething wennt wrong while updating the portfolio");
+      alert("Something went wrong while updating the portfolio");
       throw error;
     }
   }
+
   static async deletePortfolio(id: string): Promise<void> {
     try {
       const token = sessionStorage.getItem("token");
@@ -126,10 +134,11 @@ class Service {
       });
     } catch (error) {
       console.log(error);
-      alert("something went wrong while delelting portfolio");
+      alert("Something went wrong while deleting portfolio");
       throw error;
     }
   }
+
   static async createGallery(payload: FormData): Promise<void> {
     try {
       const token = sessionStorage.getItem("token");
@@ -146,6 +155,7 @@ class Service {
       throw error;
     }
   }
+
   static async getGallery(): Promise<IProject[]> {
     try {
       const token = sessionStorage.getItem("token");
@@ -161,6 +171,7 @@ class Service {
       throw error; // Propagate the error for handling
     }
   }
+
   static async getGalleryByDepartment(department: string): Promise<IProject[]> {
     console.log("Fetching gallery for department:", department);
     try {
@@ -202,6 +213,7 @@ class Service {
       throw error;
     }
   }
+
   static async deleteGallery(id: string): Promise<void> {
     try {
       const token = sessionStorage.getItem("token");
@@ -217,6 +229,7 @@ class Service {
       throw error;
     }
   }
+
   static async Gallery(department: string): Promise<IProject[]> {
     try {
       const token = sessionStorage.getItem("token");
@@ -235,24 +248,62 @@ class Service {
       throw error; // Propagate the error for handling
     }
   }
- 
-  static async getCareersPdf(): Promise<PortfolioPropType[]> {
+
+  static async getCareersPdf(): Promise<IProject[]> {
     try {
       const token = sessionStorage.getItem("token");
-      const response = await api.get<ApiResponse<PortfolioPropType[]>>(
-        "/project/all",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("PDF data:", response.data);
+      const response = await api.get<ApiResponse<IProject[]>>("/project/all", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("PDF data (from Careers PDF - /project/all):", response.data);
       return response.data.data;
     } catch (error) {
       console.log(error);
       throw error;
     }
   }
+
+ 
+  static async getformDetails(): Promise<ConnectProps[]> {
+    try {
+      const token = sessionStorage.getItem("token"); 
+      const response = await api.get<ApiResponse<ConnectProps[]>>(
+        "api/user/userData", 
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Form details data:", response.data);
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  static async postCareerForm(payload: ConnectProps): Promise<string> {
+    try {
+;
+      const response = await api.post<ApiResponse<any>>(
+        "api/user/response", 
+        payload
+      );
+      console.log("Connect form submission response:", response.data);
+ 
+      return response.data.message || "Application submitted successfully!";
+    } catch (error: any) {
+      console.error("Error submitting career form:", error);
+    
+      throw new Error(
+        error.response?.data?.message ||
+          "Failed to submit application. Please try again."
+      );
+    }
+  }
 }
+
 export default Service;

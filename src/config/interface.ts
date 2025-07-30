@@ -82,3 +82,10 @@ export interface PortfolioPropType {
   file?: any;
   status: boolean;
 }
+export interface ConnectProps {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  file: File | null;
+}
