@@ -3,7 +3,7 @@ import {
   ApiResponse,
   PortfolioInterface,
   IProject,
-  ConnectProps,
+  
   IJobApplication,
   ApplicationStatus,
 } from "./interface";

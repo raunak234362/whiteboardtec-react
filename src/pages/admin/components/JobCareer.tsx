@@ -145,8 +145,6 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
   >([]);
   const [currentJobTitleForApplicants, setCurrentJobTitleForApplicants] =
     useState("");
-  const [currentJobroleIdForApplicants, setCurrentJobroleIdForApplicants] =
-    useState("");
 
   const handleEditClick = (jobItem: JobPortalInterface) => {
     setSelectedJob(jobItem);
@@ -211,10 +209,9 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
       const applicants = await Service.getCareersApplicants(jobroleId);
       setApplicantsForSelectedJob(applicants);
       setCurrentJobTitleForApplicants(jobTitle);
-      setCurrentJobroleIdForApplicants(jobroleId);
+      setApplicantsForSelectedJob(applicants);
+      setCurrentJobTitleForApplicants(jobTitle);
       setIsApplicantsModalOpen(true);
-    } catch (error) {
-      console.error("Error fetching applicants:", error);
       alert("Failed to load applicants.");
     } finally {
       setLoading(false);
