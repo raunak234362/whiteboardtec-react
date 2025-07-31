@@ -9,14 +9,14 @@ export interface JobPortalInterface {
 }
 
 export interface JobPortalResponse {
-  id: number;
+  id: string;
   Role: string;
   location: string;
   type: string;
   qualification: string;
-  jd: string; // Or URL if file is uploaded
+  jd: any[]; // Or URL if file is uploaded
   status: "active" | "inactive";
-}
+} 
 
 export interface ApiResponse<Type> {
   success: boolean;
