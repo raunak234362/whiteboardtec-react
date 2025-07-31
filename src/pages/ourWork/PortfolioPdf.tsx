@@ -10,7 +10,9 @@ function PortfolioPdf({ portfolio }: { portfolio: PortfolioPropType[] }) {
   const firstPdf = portfolio && portfolio.length > 0 ? portfolio[0] : undefined;
   console.log("PortfolioPdf component loaded with pdfFiles:", firstPdf);
   const id = firstPdf?.id;
-  const file_id = firstPdf?.file[0]?.fileName?.replace(/\.pdf$/i, "");
+  const file_id = Array.isArray(firstPdf?.file)
+    ? firstPdf.file[0]?.fileName?.replace(/\.pdf$/i, "")
+    : undefined;
 
   console.log(
     "PortfolioPdf component loaded with id:",

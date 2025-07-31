@@ -1,14 +1,10 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
-
 import Service from "../../../config/service";
-
-import { GalleryProjectFrontend, IProject } from "../../../config/interface";
-
 import { useForm } from "react-hook-form";
+import { IProject, GalleryProjectFrontend } from "../../../config/interface";
+// import { Link } from "react-router-dom"; 
 
-import { Link } from "react-router-dom";
 interface ImagePortfolioProps extends IProject {
   onUpdateSuccess: (updatedItem: GalleryProjectFrontend) => void;
   onDeleteSuccess: (deletedId: string) => void;
@@ -16,124 +12,104 @@ interface ImagePortfolioProps extends IProject {
 
 function ImagePortfolio(props: ImagePortfolioProps) {
   const [isOpenJob, setOpenJob] = useState(false);
-
-  const [isImageOpen, setImageOpen] = useState(false);
-
+  const [isImageOpen, setImageOpen] = useState(false); // State to control the image viewer modal
   const [newSelectedFiles, setNewSelectedFiles] = useState<File[]>([]);
   const [progress, setProgress] = useState<number>(0);
+console.log("ImagePortfolio props:", props);
+  const { register, setValue, watch, reset } = useForm<GalleryProjectFrontend>({
+    defaultValues: {
+      id: props.id, // Ensure ID is part of default values for consistency
+      title: props.title,
+      description: props.description,
+      location: props.location,
+      type: props.type,
+      technologyused: props.technologyused,
+      status: props.status,
+      department: props.department, // Add department to default values
+      // Note: `images` and `file` are not directly set as default values here
+      // as they are handled separately for file inputs and existing images.
+    },
+  });
 
-  const { register } = useForm<GalleryProjectFrontend>();
+  // Watch for changes in form fields to reflect in state for handleUpdate
+  const title = watch("title");
+  const description = watch("description");
+  const location = watch("location");
+  const projectType = watch("type");
+  const technologyUsed = watch("technologyused");
+  const projectStatus = watch("status");
+  const department = watch("department"); // Watch department too
 
-  console.log(props);
+  // Effect to update form values when props change (e.g., after an update from parent)
+  useEffect(() => {
+    setValue("title", props.title);
+    setValue("description", props.description);
+    setValue("location", props.location);
+    setValue("type", props.type);
+    setValue("technologyused", props.technologyused);
+    setValue("status", props.status);
+    setValue("department", props.department); // Set department when props change
+    setNewSelectedFiles([]); // Clear new selected files on prop change
+    setProgress(0);
+  }, [props, setValue]);
 
-  // Removed unused selectedFiles state
+  const handleUpdate = async () => {
+    if (
+      !title?.trim() || // Use optional chaining for safety
+      !description?.trim() ||
+      !location?.trim() ||
+      !technologyUsed?.trim()
+    ) {
+      alert(
+        "Please fill in all required fields (Title, Description, Location, Software/Technologies Used)."
+      );
+      return;
+    }
 
-  // Removed unused progress state
+    try {
+      const formData = new FormData();
+      formData.append("title", title.trim());
+      formData.append("description", description.trim());
+      formData.append("location", location.trim());
+      formData.append("type", projectType);
+      formData.append("technologyused", technologyUsed.trim());
+      formData.append("status", projectStatus);
+      formData.append("department", department); // Append department to form data
 
+      // If new files are selected, append them. Otherwise, the backend should ideally
+      // retain existing images if no 'images' field is present in the FormData.
+      // If your backend *requires* sending existing image URLs when no new files are uploaded,
+      // you would need to convert existing URLs to blobs or send them in a separate field.
+      // For this example, we assume if `images` is not in FormData, existing are kept.
+      newSelectedFiles.forEach((file) => formData.append("images", file));
 
+      const updatedProject = await Service.updateGallery(props.id, formData);
 
- 
-  // const handleUpdate = async () => {
+      alert("Gallery project updated successfully");
+      setOpenJob(false);
+      reset(); // Reset form fields to default (or current props values)
+      setNewSelectedFiles([]); // Clear selected files after successful upload
+      setProgress(0); // Reset progress
 
-  // if (
-
-  // !title.trim() ||
-
-  // !description.trim() ||
-
-  // !location.trim() ||
-
-  // !technologyUsed.trim()
-
-  // ) {
-
-  // alert(
-
-  // "Please fill in all required fields (Title, Description, Location, Software/Technologies Used)."
-
-  // );
-
-  // return;
-
-  // }
-
-  // try {
-
-  // const formData = new FormData();
-
-  // formData.append("title", title.trim());
-
-  // formData.append("description", description.trim());
-
-  // formData.append("location", location.trim());
-
-  // formData.append("type", projectType);
-
-  // formData.append("technologyused", technologyUsed.trim());
-
-  // formData.append("status", projectStatus);
-
-  // if (
-
-  // newSelectedFiles.length === 0 &&
-
-  // props.images &&
-
-  // props.images.length > 0
-
-  // ) {
-
-  // props.images.forEach((imageUrl) =>
-
-  // formData.append("existingImages", imageUrl)
-
-  // );
-
-  // } else {
-
-  // newSelectedFiles.forEach((file) => formData.append("images", file));
-
-  // }
-
-  // const updatedProject = await Service.updateGallery(props.id, formData);
-
-  // alert("Gallery project updated successfully");
-
-  // setOpenJob(false);
-
-  // resetForm();
-
-  // props.onUpdateSuccess({
-
-  // id: props.id,
-
-  // title: updatedProject.title,
-
-  // description: updatedProject.description,
-
-  // location: updatedProject.location,
-
-  // type: updatedProject.type,
-
-  // technologyused: updatedProject.technologyused,
-
-  // status: updatedProject.status,
-
-  // images: updatedProject.images,
-
-  // onUpdateSuccess: props.onUpdateSuccess,
-
-  // onDeleteSuccess: props.onDeleteSuccess,
-
-  // });
-
-  // } catch (error) {
-
-  // console.error("Error updating gallery project:", error);
-
-  // }
-
-  // };
+      props.onUpdateSuccess({
+        id: props.id,
+        title: updatedProject.title,
+        department: updatedProject.department,
+        description: updatedProject.description,
+        location: updatedProject.location,
+        type: updatedProject.type,
+        technologyused: updatedProject.technologyused,
+        status: updatedProject.status,
+        images: updatedProject.images,
+        file: [], // Frontend representation might not need the actual File object
+        onUpdateSuccess: props.onUpdateSuccess,
+        onDeleteSuccess: props.onDeleteSuccess,
+      });
+    } catch (error) {
+      console.error("Error updating gallery project:", error);
+      alert("Something went wrong while updating the gallery project.");
+    }
+  };
 
   const handleDelete = async () => {
     if (
@@ -143,31 +119,50 @@ function ImagePortfolio(props: ImagePortfolioProps) {
     ) {
       try {
         await Service.deleteGallery(props.id);
-
         alert("Gallery project deleted successfully");
-
         setOpenJob(false);
-
+        props.onDeleteSuccess(props.id); // Notify parent component of deletion
       } catch (error) {
         console.error("Error deleting gallery project:", error);
+        alert("Something went wrong while deleting portfolio");
       }
+    }
+  };
+
+  const handleNewFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length > 0) {
+      setNewSelectedFiles(files);
+      // Simulate progress for visual feedback
+      let currentProgress = 0;
+      const interval = setInterval(() => {
+        currentProgress += 10;
+        if (currentProgress <= 100) {
+          setProgress(currentProgress);
+        } else {
+          clearInterval(interval);
+        }
+      }, 100); // Simulate upload progress
+    } else {
+      setNewSelectedFiles([]);
+      setProgress(0);
     }
   };
 
   return (
     <>
       {/* Edit Modal */}
-
       <Dialog
         open={isOpenJob}
         onClose={() => {
           setOpenJob(false);
-
+          reset(); // Reset form fields to initial props values
+          setNewSelectedFiles([]); // Clear new selected files on close
+          setProgress(0); // Reset progress
         }}
         className="relative z-50"
       >
         <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
-
         <div className="fixed inset-0 w-screen overflow-y-auto">
           <div className="flex items-center justify-center min-h-full p-4">
             <div className="bg-white w-full max-w-6xl p-6 rounded-lg shadow-lg flex flex-col max-h-[90vh] overflow-y-auto">
@@ -175,15 +170,16 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                 <Dialog.Title className="text-lg font-semibold">
                   Edit Gallery: {props.title}
                 </Dialog.Title>
-
                 <button
                   onClick={() => {
                     setOpenJob(false);
+                    reset();
+                    setNewSelectedFiles([]);
+                    setProgress(0);
                   }}
                   className="text-gray-400 hover:text-gray-800"
                 >
                   <span className="sr-only">Close</span>
-
                   <svg
                     className="w-6 h-6"
                     xmlns="http://www.w3.org/2000/svg"
@@ -211,7 +207,6 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                     >
                       Project Title *
                     </label>
-
                     <input
                       type="text"
                       id="edit-title"
@@ -228,7 +223,6 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                     >
                       Description *
                     </label>
-
                     <textarea
                       id="edit-description"
                       rows={3}
@@ -245,7 +239,6 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                     >
                       Location *
                     </label>
-
                     <input
                       type="text"
                       id="edit-location"
@@ -262,25 +255,37 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                     >
                       Project Type
                     </label>
-
                     <select
                       id="edit-projectType"
                       {...register("type", { required: true })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                     >
                       <option value="">Select project type</option>
-
-                      <option value="Institute">Institute</option>
-
-                      <option value="Commercial">Commercial</option>
-
-                      <option value="Facility Expension">
+                      <option value="INSTITUTE">Institute</option>
+                      <option value="COMMERCIAL">Commercial</option>
+                      <option value="FACILITY_EXPENSION">
                         Facility Expension
                       </option>
-
-                      <option value="Industrial">Industrial</option>
-
-                      <option value="Other">Other</option>
+                      <option value="INDUSTRIAL">Industrial</option>
+                      <option value="OTHER">Other</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="edit-department" // Changed ID for uniqueness within form
+                      className="block mb-1 text-sm font-medium text-gray-700"
+                    >
+                      Department
+                    </label>
+                    <select
+                      id="edit-department" // Changed ID
+                      {...register("department")}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    >
+                      <option value="OTHER">Select project type</option>
+                      <option value="PEMB">PEMB</option>
+                      <option value="STRUCTURAL">Structural</option>
+                      <option value="OTHER">Other</option>
                     </select>
                   </div>
                 </div>
@@ -293,7 +298,6 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                     >
                       Software/Technologies Used *
                     </label>
-
                     <input
                       type="text"
                       id="edit-technologyUsed"
@@ -311,20 +315,15 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                     >
                       Project Status
                     </label>
-
                     <select
                       id="edit-projectStatus"
                       {...register("status", { required: true })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                     >
                       <option value="PLANNING">Planning</option>
-
                       <option value="IN_PROGRESS">In Progress</option>
-
                       <option value="COMPLETED">Completed</option>
-
                       <option value="ON_HOLD">On Hold</option>
-
                       <option value="CANCELLED">Cancelled</option>
                     </select>
                   </div>
@@ -341,25 +340,27 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                       id="edit-images"
                       accept="image/*"
                       multiple
-                      {...register("images")}
+                      onChange={handleNewFileChange} // Use the new handler
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                      onChange={(e) => {
-                        const files = e.target.files ? Array.from(e.target.files) : [];
-                        setNewSelectedFiles(files);
-                        setProgress(files.length > 0 ? 100 : 0);
-                      }}
                     />
-                    
 
+                    {/* Display existing images if no new files are selected AND there are existing images */}
                     {newSelectedFiles.length === 0 &&
                       props.images &&
                       props.images.length > 0 && (
                         <div className="flex flex-wrap gap-2 mt-2">
                           {props.images.map(
-                            (imgObj: string | { image: string }, index: number) => (
+                            (
+                              imgObj: string | { image: string },
+                              index: number
+                            ) => (
                               <img
                                 key={index}
-                                src={typeof imgObj === "string" ? imgObj : imgObj.image}
+                                src={
+                                  typeof imgObj === "string"
+                                    ? imgObj
+                                    : imgObj.image
+                                }
                                 alt={`Current Image ${index}`}
                                 className="object-cover w-24 h-24 border rounded-md"
                               />
@@ -369,7 +370,6 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                       )}
 
                     {/* Show preview of newly selected files */}
-
                     {newSelectedFiles.length > 0 && (
                       <div className="flex flex-wrap gap-2 mt-2">
                         {newSelectedFiles.map((file, index) => (
@@ -391,13 +391,11 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                             style={{ width: `${progress}%` }}
                           ></div>
                         </div>
-
                         <span className="block mt-1 text-sm text-gray-600">
                           {progress.toFixed(0)}% selected
                         </span>
                       </div>
                     )}
-
                     <p className="mt-1 text-xs text-gray-500">
                       Upload new images to replace existing ones.
                     </p>
@@ -406,17 +404,14 @@ function ImagePortfolio(props: ImagePortfolioProps) {
               </div>
 
               {/* Action Buttons */}
-
               <div className="flex justify-center pt-4 mt-6 space-x-4 border-t">
                 <button
                   type="button"
-                  // onClick={handleUpdate}
-
+                  onClick={handleUpdate}
                   className="px-6 py-2 text-white transition-colors bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                 >
                   Update Project
                 </button>
-
                 <button
                   type="button"
                   onClick={handleDelete}
@@ -424,11 +419,13 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                 >
                   Delete Project
                 </button>
-
                 <button
                   type="button"
                   onClick={() => {
                     setOpenJob(false);
+                    reset();
+                    setNewSelectedFiles([]);
+                    setProgress(0);
                   }}
                   className="px-6 py-2 text-white transition-colors bg-gray-500 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
                 >
@@ -441,14 +438,12 @@ function ImagePortfolio(props: ImagePortfolioProps) {
       </Dialog>
 
       {/* Image Viewer Modal */}
-
       <Dialog
         open={isImageOpen}
         onClose={() => setImageOpen(false)}
         className="relative z-50"
       >
         <div className="fixed inset-0 bg-black/75" aria-hidden="true" />
-
         <div className="fixed inset-0 w-screen overflow-y-auto">
           <div className="flex items-center justify-center min-h-full p-4">
             <div className="bg-white rounded-lg shadow-lg max-w-4xl max-h-[90vh] overflow-hidden">
@@ -456,13 +451,11 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                 <Dialog.Title className="text-lg font-semibold">
                   {props.title}
                 </Dialog.Title>
-
                 <button
                   onClick={() => setImageOpen(false)}
                   className="text-gray-400 hover:text-gray-800"
                 >
                   <span className="sr-only">Close</span>
-
                   <svg
                     className="w-6 h-6"
                     xmlns="http://www.w3.org/2000/svg"
@@ -481,14 +474,21 @@ function ImagePortfolio(props: ImagePortfolioProps) {
               </div>
 
               <div className="p-4">
+                {/* Corrected image source access */}
                 {props.images && props.images.length > 0 ? (
-                  // Display the first image or iterate if you want a carousel
-
-                  <img
-                    src={props.images[0]}
-                    alt={props.title}
-                    className="w-full h-auto max-h-[70vh] object-contain rounded"
-                  />
+                  typeof props.images[0] === "string" ? (
+                    <img
+                      src={props.images[0] as string}
+                      alt={props.title}
+                      className="w-full h-auto max-h-[70vh] object-contain rounded"
+                    />
+                  ) : (
+                    <img
+                      src={(props.images[0] as { image?: string; secureUrl?: string })?.secureUrl || (props.images[0] as { image?: string })?.image || ""}
+                      alt={props.title}
+                      className="w-full h-auto max-h-[70vh] object-contain rounded"
+                    />
+                  )
                 ) : (
                   <div className="flex items-center justify-center h-64 bg-gray-100 rounded">
                     <span className="text-gray-500">No image available</span>
@@ -501,18 +501,15 @@ function ImagePortfolio(props: ImagePortfolioProps) {
       </Dialog>
 
       {/* Table Row */}
-
       <tr className="hover:bg-gray-50">
         <td className="px-6 py-4 whitespace-nowrap">
           <div>
             <div className="text-sm font-medium text-gray-900">
               {props.title}
             </div>
-
             <div className="max-w-xs text-sm text-gray-500 truncate">
               {props.description}
             </div>
-
             {props.location && (
               <div className="mt-1 text-xs text-gray-400">
                 📍 {props.location}
@@ -523,23 +520,22 @@ function ImagePortfolio(props: ImagePortfolioProps) {
 
         <td className="px-6 py-4 whitespace-nowrap">
           <div className="text-sm text-gray-900">
-            {props.type && ( // Changed to props.type
+            {props.type && (
               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mb-1">
                 {props.type}
               </span>
             )}
-
             <div className="text-xs text-gray-500">
               Status:{" "}
               <span
                 className={`font-medium ${
-                  props.status === "Completed" // Changed to props.status
+                  String(props.status) === "COMPLETED"
                     ? "text-green-600"
-                    : props.status === "In Progress"
+                    : String(props.status) === "IN_PROGRESS"
                     ? "text-blue-600"
-                    : props.status === "On Hold"
+                    : String(props.status) === "ON_HOLD"
                     ? "text-yellow-600"
-                    : props.status === "Cancelled"
+                    : String(props.status) === "CANCELLED"
                     ? "text-red-600"
                     : "text-gray-600"
                 }`}
@@ -547,83 +543,43 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                 {props.status || "N/A"}
               </span>
             </div>
-
-            {props.technologyused && ( // Changed to props.technologyused
+            {props.technologyused && (
               <div className="mt-1 text-xs text-gray-400">
                 Tools: {props.technologyused}
+              </div>
+            )}
+            {props.department && (
+              <div className="mt-1 text-xs text-gray-400">
+                Dept: {props.department}
               </div>
             )}
           </div>
         </td>
 
-        {/* <td className="px-6 py-4 text-center whitespace-nowrap">
-
-{props.images && props.images.length > 0 ? ( // Changed to props.images
-
-<button
-
-onClick={() => setImageOpen(true)}
-
-className="inline-flex items-center text-sm font-semibold text-blue-600 transition-colors border border-transparent rounded-lg gap-x-2 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-
->
-
-<svg
-
-className="w-4 h-4"
-
-fill="none"
-
-stroke="currentColor"
-
-viewBox="0 0 24 24"
-
->
-
-<path
-
-strokeLinecap="round"
-
-strokeLinejoin="round"
-
-strokeWidth={2}
-
-d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-
-/>
-
-</svg>
-
-View Image
-
-</button>
-
-) : (
-
-<span className="text-sm text-gray-400">No image</span>
-
-)}
-
-</td> */}
-
-        <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap ">
-          {props.title || "No Title"}
-        </td>
-
-        <td className="px-6 py-4 text-sm text-center text-gray-800 whitespace-nowrap ">
-          <Link
-            to={
-              props.images && props.images.length > 0
-                ? (typeof props.images[0] === "string"
-                    ? props.images[0]
-                    : (props.images[0] as { image: string }).image)
-                : "#"
-            }
-            target="_blank"
-            className="inline-flex items-center text-sm font-semibold text-blue-600 border border-transparent rounded-lg gap-x-2 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none"
-          >
-            View Image
-          </Link>
+        <td className="px-6 py-4 text-center whitespace-nowrap">
+          {props.images && props.images.length > 0 ? (
+            <button
+              onClick={() => setImageOpen(true)} // Open the image viewer modal
+              className="inline-flex items-center text-sm font-semibold text-blue-600 transition-colors border border-transparent rounded-lg gap-x-2 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              View Image
+            </button>
+          ) : (
+            <span className="text-sm text-gray-400">No image</span>
+          )}
         </td>
 
         <td className="px-6 py-4 text-center whitespace-nowrap">

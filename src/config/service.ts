@@ -3,7 +3,9 @@ import {
   ApiResponse,
   PortfolioInterface,
   IProject,
-  ConnectProps, // Make sure CareerProps is correctly imported
+  ConnectProps,
+  IJobApplication, // Make sure IJobApplication is imported
+  ApplicationStatus, // Make sure ApplicationStatus is imported
 } from "./interface";
 import api from "./api"; // Ensure this path is correct
 
@@ -245,11 +247,12 @@ class Service {
       return response.data.data;
     } catch (error) {
       console.log(error);
-      throw error; // Propagate the error for handling
+      throw error;
     }
   }
 
-  static async getCareersPdf(): Promise<IProject[]> {
+  static async getCareersPdf(): Promise<IProject[]>
+  {
     try {
       const token = sessionStorage.getItem("token");
       const response = await api.get<ApiResponse<IProject[]>>("/project/all", {
@@ -265,19 +268,21 @@ class Service {
     }
   }
 
- 
-  static async getformDetails(): Promise<ConnectProps[]> {
+  
+  static async getCareerForm(): Promise<IJobApplication[]> {
+    
     try {
-      const token = sessionStorage.getItem("token"); 
-      const response = await api.get<ApiResponse<ConnectProps[]>>(
-        "api/user/userData", 
+      const token = sessionStorage.getItem("token");
+      const response = await api.get<ApiResponse<IJobApplication[]>>
+        (
+        `api/user/responses`, 
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      console.log("Form details data:", response.data);
+      console.log("Career form data (all applications):", response.data);
       return response.data.data;
     } catch (error) {
       console.log(error);
@@ -285,23 +290,88 @@ class Service {
     }
   }
 
+ 
   static async postCareerForm(payload: ConnectProps): Promise<string> {
     try {
-;
       const response = await api.post<ApiResponse<any>>(
         "api/user/response", 
         payload
       );
       console.log("Connect form submission response:", response.data);
- 
+
       return response.data.message || "Application submitted successfully!";
     } catch (error: any) {
       console.error("Error submitting career form:", error);
-    
+
       throw new Error(
         error.response?.data?.message ||
           "Failed to submit application. Please try again."
       );
+    }
+  }
+
+ 
+  static async getApplicationById(id: string): Promise<IJobApplication> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.get<ApiResponse<IJobApplication>>(
+        `/api/user/response/${id}`, 
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(`Application ${id} data:`, response.data);
+      return response.data.data;
+    } catch (error) {
+      console.error(`Error fetching application ${id}:`, error);
+      throw error;
+    }
+  }
+
+  
+  static async updateApplication(
+    id: string,
+    payload: Partial<IJobApplication>
+  ): Promise<IJobApplication> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.put<ApiResponse<IJobApplication>>(
+        `/api/user/response/${id}`, // Typical route for updating by ID
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json", // Usually JSON for updates, not FormData
+          },
+        }
+      );
+      alert("Application updated successfully!");
+      return response.data.data;
+    } catch (error) {
+      console.error(`Error updating application ${id}:`, error);
+      alert("Something went wrong while updating the application.");
+      throw error;
+    }
+  }
+
+  static async deleteApplication(id: string): Promise<void> {
+    try {
+      const token = sessionStorage.getItem("token");
+      await api.delete(
+        `/api/user/response/${id}`, 
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      alert("Application deleted successfully!");
+    } catch (error) {
+      console.error(`Error deleting application ${id}:`, error);
+      alert("Something went wrong while deleting the application.");
+      throw error;
     }
   }
 }

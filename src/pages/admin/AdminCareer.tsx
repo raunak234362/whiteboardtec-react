@@ -44,7 +44,7 @@ function AdminCareer() {
     formData.append("location", data.location);
     formData.append("type", data.type);
     formData.append("qualification", data.qualification);
-    formData.append("status", status ? "active" : "inactive");
+    formData.append("status", status ? "true" : "false");
 
     // Append JD file
     if (jd && jd.length > 0) {
@@ -270,7 +270,13 @@ function AdminCareer() {
           {/* Job Listings Table */}
           <div className="mx-4">
             {gettingdata && gettingdata.length > 0 ? (
-              <JobCareer job={gettingdata} />
+              <JobCareer
+                job={gettingdata.map((job) => ({
+                  ...job,
+                  status: job.status === "active",
+                  jd: job.jd ? [{ path: job.jd }] : [],
+                }))}
+              />
             ) : (
               <p className="text-center text-gray-500">
                 No job postings found.

@@ -4,8 +4,8 @@ export interface JobPortalInterface {
   location: string;
   type: string;
   qualification: string;
-  status: "active" | "inactive";
-  jd: string;
+  status: boolean;
+  jd?: any[]; // Assuming jd is an array of objects with file paths
 }
 
 export interface JobPortalResponse {
@@ -17,33 +17,35 @@ export interface JobPortalResponse {
   jd: string; // Or URL if file is uploaded
   status: "active" | "inactive";
 }
+
 export interface ApiResponse<Type> {
   success: boolean;
   message: string;
   data: Type;
-} 
+}
 
-export interface PortfolioInterface{
+export interface PortfolioInterface {
   id: string;
   title: string;
   description: string;
   file: any[];
   status: boolean;
- // Assuming pdf is a string URL or path
+  pdf?: { path: string }[]; // Added the pdf property to align with PortfolioPropType
 }
+
 export type ProjectType =
   | "Institute"
   | "Commercial"
   | "Facility Expension"
   | "Industrial"
   | "Other";
+
 export type ProjectStatus =
   | "Planning"
   | "In Progress"
   | "Completed"
   | "On Hold"
   | "Cancelled";
-// Define ProjectType
 
 export interface IProject {
   id: string;
@@ -61,10 +63,11 @@ export interface IProject {
   __v?: number;
   secureUrl?: string;
 }
+
 export interface GalleryProjectFrontend
   extends Omit<IProject, "id" | "status" | "type" | "technologyused"> {
   id: string;
-  type: ProjectType; 
+  type: ProjectType;
   status: ProjectStatus;
   technologyused: string;
   onUpdateSuccess: (updatedItem: GalleryProjectFrontend) => void;
@@ -74,18 +77,41 @@ export interface GalleryProjectFrontend
 export interface GalleryImagesProps {
   department: string;
 }
+
 export interface PortfolioPropType {
-  id?: string;
+  file: any[];
+  id: string;
   title: string;
   description: string;
-  pdf?: string;
-  file?: any;
-  status: boolean;
+  status: string;
 }
+
 export interface ConnectProps {
   name: string;
   email: string;
   phone: string;
   message: string;
   file: File | null;
+}
+export type ApplicationStatus =
+  | "PENDING"
+  | "REVIEWED"
+  | "INTERVIEW"
+  | "OFFERED"
+  | "REJECTED"
+  | "HIRED";
+
+export interface IJobApplication {
+  id: string;
+  jobId: string;
+  jobTitle: string; 
+  applicantName: string;
+  email: string;
+  phone: string;
+  resumeUrl: string; 
+  coverLetter?: string;
+  appliedDate: string; 
+  status: ApplicationStatus; 
+  
+  [key: string]: any; 
 }

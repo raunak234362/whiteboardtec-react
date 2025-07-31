@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { PortfolioPropType } from "../../ourWork";
+import { PortfolioPropType } from "../../../config/interface";
 
 interface WorkPortfolioProps extends PortfolioPropType {
+  pdf: { path: string }[]; // Add this line to define the pdf property
   onEdit: (portfolio: PortfolioPropType) => void;
   onDelete: (id: string) => void;
 }
@@ -19,7 +20,7 @@ function WorkPortfolio({
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
-console.log(pdf)
+
   return (
     <>
       <tr className="hover:bg-gray-100">
@@ -32,7 +33,7 @@ console.log(pdf)
         </td>
 
         <td className="px-6 py-4 text-sm text-center text-gray-800 whitespace-nowrap">
-          {pdf ? (
+          {pdf && pdf.length > 0 ? (
             <button
               onClick={handleOpenModal}
               className="font-semibold text-blue-600 hover:text-blue-800"
@@ -46,13 +47,15 @@ console.log(pdf)
 
         <td className="px-6 py-4 text-sm text-center text-gray-800 whitespace-nowrap">
           <button
-            onClick={() => onEdit({ id, title, description, pdf, status })}
+            onClick={() => {
+              return onEdit({ id, title, description, status, file: [] });
+            }}
             className="mr-2 text-green-600 hover:text-green-800"
           >
             Edit
           </button>
           <button
-            onClick={() => onDelete(id)}
+            onClick={() => onDelete(id!)}
             className="text-red-600 hover:text-red-800"
           >
             Delete
@@ -61,7 +64,7 @@ console.log(pdf)
       </tr>
 
       {/* Modal for PDF Preview */}
-      {isModalOpen && (
+      {isModalOpen && pdf && pdf.length > 0 && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
           <div className="relative w-[90%] h-[90%] bg-white rounded-lg shadow-lg p-4">
             <button

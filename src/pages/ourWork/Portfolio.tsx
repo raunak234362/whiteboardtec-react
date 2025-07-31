@@ -1,5 +1,5 @@
 import { PageBanner, BannerPropType } from "../../components/banner";
-import { PortfolioPropType } from "../../config/interface";
+import { PortfolioInterface, PortfolioPropType } from "../../config/interface";
 import PortfolioInfo from "./PortfolioInfo";
 import { useEffect, useState } from "react";
 import PortfolioPdf from "./PortfolioPdf";
@@ -22,7 +22,12 @@ function Portfolio() {
       // );
       console.log(response);
       
-      setPortfolios(response);
+      setPortfolios(
+        response.map((portfolio: PortfolioInterface) => ({
+          ...portfolio,
+          status: portfolio.status ? "true" : "false",
+        }))
+      );
     } catch (error) {
       console.error("Failed to fetch portfolio data:", error);
     }

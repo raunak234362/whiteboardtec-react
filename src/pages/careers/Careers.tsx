@@ -51,7 +51,6 @@ function Careers() {
       const jobList = response.map((job: any) => ({
         ...job,
       }));
-      console.log("Fetched Career job listings:", jobList);
       if (jobList.length === 0) {
         console.warn("No job listings found");
       }
@@ -60,6 +59,7 @@ function Careers() {
       console.error("Error fetching job listings", error);
     }
   };
+  console.log("Fetched Career job listings:", job);
 
   useEffect(() => {
     document.title = "Careers - Whiteboard";

@@ -6,33 +6,43 @@ import ImagePortfolio from "./components/ImagePortfolio";
 import Service from "../../config/service";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-import {
-  IProject,
-  GalleryProjectFrontend,
-} from "../../config/interface";
+import { IProject, GalleryProjectFrontend } from "../../config/interface"; // Ensure IProject and GalleryProjectFrontend are correctly imported
 
-function AdminGallery() {
-  const [gallery, setGallery] = useState<GalleryProjectFrontend[]>([]);
-  const [isOpen, setOpen] = useState(false);
+// Define a type for form input fields only (exclude id, images, etc.)
+type IProjectFormInput = {
+  title: string;
+  description: string;
+  location: string;
+  type: string;
+  technologyused: string;
+  status: string;
+  department: string;
+};
+
+const AdminGallery = () => {
+  // State variables
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [uploadProgress, setUploadProgress] = useState<number[]>([]);
   const [isUploading, setIsUploading] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(true);
+  const [isOpen, setOpen] = useState(false);
+  const [gallery, setGallery] = useState<GalleryProjectFrontend[]>([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<IProject>({
+  } = useForm<IProjectFormInput>({
     defaultValues: {
       title: "",
       description: "",
       location: "",
-      type: "Other",
+      type: "OTHER", // Use uppercase enum values for consistency
       technologyused: "",
-      status: "In Progress",
+      status: "IN_PROGRESS", // Use uppercase enum values
+      department: "OTHER", // Default department
     },
   });
 
@@ -49,7 +59,7 @@ function AdminGallery() {
         technologyused: item.technologyused,
         status: item.status,
         images: item.images,
-        file: [], // Provide an empty array to satisfy the required 'file' property
+        file: [], // Provide an empty array to satisfy the required 'file' property, as it's for new uploads
         onUpdateSuccess: handleUpdateGalleryItem,
         onDeleteSuccess: handleDeleteGalleryItem,
       }));
@@ -65,24 +75,14 @@ function AdminGallery() {
     const files = Array.from(e.target.files || []);
     if (files.length > 0) {
       setSelectedFiles(files);
-      setUploadProgress(new Array(files.length).fill(0));
+      setUploadProgress(new Array(files.length).fill(0)); // Initialize progress for new files
     } else {
       setSelectedFiles([]);
       setUploadProgress([]);
     }
   };
 
-  const removeFile = (indexToRemove: number) => {
-    setSelectedFiles((prev) =>
-      prev.filter((_, index) => index !== indexToRemove)
-    );
-    setUploadProgress((prev) =>
-      prev.filter((_, index) => index !== indexToRemove)
-    );
-  };
-
- 
-  const onSubmit: SubmitHandler<IProject> = async (data) => {
+  const onSubmit: SubmitHandler<IProjectFormInput> = async (data) => {
     if (selectedFiles.length === 0) {
       alert("Please upload at least one image file");
       return;
@@ -96,7 +96,7 @@ function AdminGallery() {
       formData.append("description", data.description);
       formData.append("location", data.location);
       formData.append("type", data.type);
-      formData.append("department", data.department);
+      formData.append("department", data.department); // Ensure department is appended
       formData.append("technologyused", data.technologyused);
       formData.append("status", data.status);
 
@@ -106,9 +106,9 @@ function AdminGallery() {
 
       await Service.createGallery(formData);
 
-      fetchGalleryProjects();
-      setOpen(false);
-      reset(); 
+      fetchGalleryProjects(); // Re-fetch all projects to update the list
+      setOpen(false); // Close the modal
+      reset(); // Reset form fields to default values
       setSelectedFiles([]); // Manually clear selected files state
       alert("Gallery project added successfully!");
     } catch (error) {
@@ -158,6 +158,11 @@ function AdminGallery() {
 
   if (!isAuthenticated) {
     return <Navigate to="/admin/login" replace />;
+  }
+
+  function removeFile(index: number): void {
+    setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    setUploadProgress((prevProgress) => prevProgress.filter((_, i) => i !== index));
   }
 
   return (
@@ -299,7 +304,8 @@ function AdminGallery() {
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         disabled={isUploading}
                       >
-                        <option value="">Select project type</option>
+                        <option value="OTHER">Select project type</option>{" "}
+                        {/* Set a default value */}
                         <option value="INSTITUTE">Institute</option>
                         <option value="COMMERCIAL">Commercial</option>
                         <option value="FACILITY_EXPENSION">
@@ -321,24 +327,24 @@ function AdminGallery() {
                         htmlFor="department"
                         className="block mb-1 text-sm font-medium text-gray-700"
                       >
-                        department
+                        Department
                       </label>
                       <select
                         id="department"
                         {...register("department")}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                     
+                        disabled={isUploading}
                       >
-                        <option value="Other">Select project type</option>
+                        <option value="OTHER">Select department</option>{" "}
+                        {/* Set a default value */}
                         <option value="PEMB">PEMB</option>
                         <option value="STRUCTURAL">Structural</option>
-                       
-                        <option value="Other">Other</option>
+                        <option value="OTHER">Other</option>
                       </select>
 
-                      {errors.type && (
+                      {errors.department && ( // Check for department errors
                         <p className="mt-1 text-sm text-red-500">
-                          {errors.type.message}
+                          {errors.department.message}
                         </p>
                       )}
                     </div>
@@ -611,8 +617,8 @@ function AdminGallery() {
           </div>
         </div>
       </section>
-    </>
-  );
-}
-
-export default AdminGallery;
+      </>
+    );
+  };
+  
+  export default AdminGallery;
