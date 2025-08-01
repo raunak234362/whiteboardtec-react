@@ -28,6 +28,25 @@ const ApplicantsModal: React.FC<ApplicantsModalProps> = ({
   applicants,
   onDeleteApplicant,
 }) => {
+
+  const updateStatus = async (jobroleId: string, applicantId: string, status: any) => {
+    try {
+      // Convert boolean to ApplicationStatus type (e.g., "Contacted" or "NotContacted")
+      const response = await Service.updateJobApplicationStatus(
+        jobroleId,
+        applicantId,
+        status
+      );
+      if (response) {
+        alert("Applicant status updated successfully!");
+        // Optionally, you can refresh the applicants list here
+      }
+    } catch (error) {
+      console.error("Error updating applicant status:", error);
+      alert("Failed to update applicant status.");
+    }
+  }
+  
   if (!isOpen) return null;
 console.log("ApplicantsModal props:", { jobTitle, applicants });
   return (
@@ -125,15 +144,15 @@ console.log("ApplicantsModal props:", { jobTitle, applicants });
                       {/* Add an "Edit Status" or "View Full Details" button here */}
                     </td>
                     <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                      <button
-                        onClick={() =>
-                          onDeleteApplicant(applicant.jbroleId, applicant.id)
+                      <input
+                        type="checkbox"
+                        name={`applicant-${applicant.id}`}
+                        id={`applicant-${applicant.id}`}
+                        checked={applicant.status}
+                        onChange={(e) =>
+                          updateStatus(applicant.jbroleId, applicant.id, e.target.checked)
                         }
-                        className="ml-2 text-red-600 hover:text-red-900"
-                      >
-                        Delete
-                      </button>
-                      {/* Add an "Edit Status" or "View Full Details" button here */}
+                      />
                     </td>
                   </tr>
                 ))}

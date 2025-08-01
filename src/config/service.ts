@@ -5,7 +5,6 @@ import {
   IProject,
   
   IJobApplication,
-  ApplicationStatus,
 } from "./interface";
 import api from "./api"; // Ensure this path is correct
 
@@ -376,11 +375,11 @@ class Service {
   static async updateJobApplicationStatus(
     jobroleid: string,
     applicationId: string,
-    status: ApplicationStatus
+    status: any
   ): Promise<IJobApplication> {
     try {
       const token = sessionStorage.getItem("token");
-      const response = await api.patch<ApiResponse<IJobApplication>>(
+      const response = await api.put<ApiResponse<IJobApplication>>(
         `/applications/update/${jobroleid}/${applicationId}`,
         { status },
         {

@@ -93,13 +93,6 @@ export interface ConnectProps {
   message: string;
   file: File | null;
 }
-export type ApplicationStatus =
-  | "PENDING"
-  | "REVIEWED"
-  | "INTERVIEW"
-  | "OFFERED"
-  | "REJECTED"
-  | "HIRED";
 
 export interface IJobApplication {
   id: string;
@@ -111,7 +104,7 @@ export interface IJobApplication {
   resumeUrl: string; 
   coverLetter?: string;
   appliedDate: string; 
-  status: ApplicationStatus; 
+  status: any; 
   
   [key: string]: any; 
 }
