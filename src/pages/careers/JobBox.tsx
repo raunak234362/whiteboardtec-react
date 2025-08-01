@@ -6,12 +6,9 @@ import Service from "../../config/service";
 import { useForm } from "react-hook-form";
 
 function JobBox(job: JobDescType) {
-    const { register, handleSubmit, reset } = useForm<any>();
+    const { register, handleSubmit } = useForm<any>();
   const [isOpenJob, setOpenJob] = useState(false);
   console.log("JobBox props:", job);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
   const [resume, setResume] = useState<any>(null);
   const [progress, setProgress] = useState<number>(0);
 
@@ -52,9 +49,6 @@ function JobBox(job: JobDescType) {
       console.log("Application submitted successfully:", response);
     }
     setOpenJob(false);
-    setName("");
-    setEmail("");
-    setPhone("");
     setResume(null);
     setProgress(0);
     alert("Application submitted successfully!");
