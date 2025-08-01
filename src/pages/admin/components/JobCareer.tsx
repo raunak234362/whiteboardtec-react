@@ -1,22 +1,24 @@
 import { useState } from "react";
-import { JobPortalResponse, IJobApplication, JobPortalInterface } from "../../../config/interface"; // Ensure correct imports
-import Service from "../../../config/service"; // Adjust path as necessary
-// Assuming JobForm exists at this path and is compatible with JobPortalResponse/JobFormValues
+import {
+  JobPortalResponse,
+  IJobApplication,
+  JobPortalInterface,
+} from "../../../config/interface"; 
+import Service from "../../../config/service"; 
 import JobForm from "./JobForm";
 
 interface JobCareerProps {
-  job: JobPortalResponse[]; // Expecting JobPortalResponse array directly
-  onJobChange: () => void; // Callback to trigger re-fetch in parent AdminCareer
+  job: JobPortalResponse[]; 
+  onJobChange: () => void;
 }
 
-// --- ApplicantsModal Component (defined within this file for simplicity) ---
+
 interface ApplicantsModalProps {
   isOpen: boolean;
   onClose: () => void;
   jobTitle: string;
   applicants: IJobApplication[];
   onDeleteApplicant: (jobroleId: string, applicantId: string) => void;
-  // You might add an onUpdateApplicantStatus prop here for future functionality
 }
 
 const ApplicantsModal: React.FC<ApplicantsModalProps> = ({
@@ -27,10 +29,10 @@ const ApplicantsModal: React.FC<ApplicantsModalProps> = ({
   onDeleteApplicant,
 }) => {
   if (!isOpen) return null;
-
+console.log("ApplicantsModal props:", { jobTitle, applicants });
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-      <div className="relative w-[90%] h-[90%] max-w-4xl bg-white rounded-lg shadow-lg p-6 overflow-hidden flex flex-col">
+      <div className="relative w-[90%] h-[90%] max-w-6xl bg-white rounded-lg shadow-lg p-6 overflow-hidden flex flex-col">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold text-[#6abd45]">
             Applicants for "{jobTitle}"
@@ -73,13 +75,16 @@ const ApplicantsModal: React.FC<ApplicantsModalProps> = ({
                   <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
                     Actions
                   </th>
+                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                    Contacted / Not Contacted
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {applicants.map((applicant) => (
                   <tr key={applicant.id}>
                     <td className="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
-                      {applicant.applicantName}
+                      {applicant.name}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                       {applicant.email}
@@ -88,15 +93,17 @@ const ApplicantsModal: React.FC<ApplicantsModalProps> = ({
                       {applicant.phone}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                      {new Date(applicant.appliedDate).toLocaleDateString()}
+                      {new Date(applicant.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                      {applicant.status}
+                      {applicant.status ? "Contacted" : "Not Contacted"}
                     </td>
                     <td className="px-6 py-4 text-sm text-blue-600 underline whitespace-nowrap">
-                      {applicant.resumeUrl ? (
+                      {applicant.resume ? (
                         <a
-                          href={applicant.resumeUrl}
+                          href={`${import.meta.env.VITE_IMG_URL}${
+                            applicant.resume[0]?.path
+                          }`}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -109,7 +116,18 @@ const ApplicantsModal: React.FC<ApplicantsModalProps> = ({
                     <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
                       <button
                         onClick={() =>
-                          onDeleteApplicant(applicant.jobId, applicant.id)
+                          onDeleteApplicant(applicant.jbroleId, applicant.id)
+                        }
+                        className="ml-2 text-red-600 hover:text-red-900"
+                      >
+                        Delete
+                      </button>
+                      {/* Add an "Edit Status" or "View Full Details" button here */}
+                    </td>
+                    <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
+                      <button
+                        onClick={() =>
+                          onDeleteApplicant(applicant.jbroleId, applicant.id)
                         }
                         className="ml-2 text-red-600 hover:text-red-900"
                       >
@@ -136,7 +154,6 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
   ); // State holds JobPortalInterface
   const [loading, setLoading] = useState(false);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null); // PDF URL is a string
-  console.log("JobCareer pdfUrl:", pdfUrl);
 
   // States for Applicants Modal
   const [isApplicantsModalOpen, setIsApplicantsModalOpen] = useState(false);
@@ -147,6 +164,7 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
     useState("");
 
   const handleEditClick = (jobItem: JobPortalInterface) => {
+    console.log("Editing job:", jobItem);
     setSelectedJob(jobItem);
     setOpenJob(true);
   };
@@ -154,30 +172,21 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
   const handleUpdate = async (data: JobPortalInterface) => {
     // Expect JobPortalInterface for update logic
     if (!selectedJob) return;
-
+    console.log("Updating job with data:", selectedJob);
     const formData = new FormData();
     formData.append("Role", data.Role);
     formData.append("location", data.location);
     formData.append("type", data.type);
     formData.append("qualification", data.qualification);
-    // Convert boolean status from JobForm (if it outputs boolean) to "active"/"inactive" string for API
-    formData.append("status", data.status ? "active" : "inactive");
-
-    // Handle JD file if it's being updated via the form.
-    // If your JobForm provides a new FileList for `jd` on update, you'd handle it here.
-    // For simplicity, this example assumes `data.jd` is the URL string from the original data,
-    // or you'd pass a separate file input from JobForm.
-    // Example for a new file upload in JobForm for updates:
-    // if (data.newJdFile && data.newJdFile instanceof FileList && data.newJdFile.length > 0) {
-    //   formData.append("jd", data.newJdFile[0]);
-    // }
+  
+    formData.append("status", data.status ? "true" : "false");
 
     try {
       setLoading(true);
-      await Service.editJob(String(selectedJob.id), formData); // Convert number ID to string
+      await Service.editJob(selectedJob.id, formData); 
       alert("Job updated successfully");
       setOpenJob(false);
-      onJobChange(); // Trigger re-fetch of jobs in parent
+      onJobChange(); 
     } catch (error) {
       console.error("Error updating job:", error);
       alert("Failed to update job");
@@ -191,9 +200,9 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
     if (!window.confirm("Are you sure you want to delete this job?")) return;
     try {
       setLoading(true);
-      await Service.deleteJob(id); // Pass string ID to Service
+      await Service.deleteJob(id); 
       alert("Job deleted successfully");
-      onJobChange(); // Trigger re-fetch of jobs in parent
+      onJobChange(); 
     } catch (error) {
       console.error("Error deleting job:", error);
       alert("Failed to delete job");
@@ -206,6 +215,7 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
   const handleViewApplicants = async (jobroleId: string, jobTitle: string) => {
     try {
       setLoading(true);
+      console.log("Fetching applicants for job role:", jobroleId);
       const applicants = await Service.getCareersApplicants(jobroleId);
       setApplicantsForSelectedJob(applicants);
       setCurrentJobTitleForApplicants(jobTitle);
@@ -222,14 +232,17 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
     jobroleId: string,
     applicantId: string
   ) => {
+    console.log("Deleting applicant:", jobroleId, applicantId);
     if (!window.confirm("Are you sure you want to delete this applicant?"))
       return;
     try {
       setLoading(true);
+      console.log("Deleting applicant:", jobroleId, applicantId);
       await Service.deleteapplication(jobroleId, applicantId);
       alert("Applicant deleted successfully!");
-      // Re-fetch applicants for the current job to update the modal
-      await handleViewApplicants(jobroleId, currentJobTitleForApplicants);
+      // Directly fetch applicants and update state
+      const applicants = await Service.getCareersApplicants(jobroleId);
+      setApplicantsForSelectedJob(applicants);
     } catch (error) {
       console.error("Error deleting applicant:", error);
       alert("Failed to delete applicant.");
@@ -286,7 +299,9 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
                   <button
                     // Assuming VITE_IMG_URL is the base URL for your static files/PDFs
                     onClick={() =>
-                      setPdfUrl(`${import.meta.env.VITE_IMG_URL}${jobItem.jd[0]?.path}`)
+                      setPdfUrl(
+                        `${import.meta.env.VITE_IMG_URL}${jobItem.jd[0]?.path}`
+                      )
                     }
                     className="text-blue-600 underline hover:text-blue-800"
                   >
@@ -302,9 +317,9 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
                   onClick={() =>
                     handleEditClick({
                       ...jobItem,
-                      id: Number(jobItem.id),
-                      status: jobItem.status === "active" ? true : false,
-                      jd: jobItem.jd ? [jobItem.jd] : [], // Ensure jd is an array as required by JobPortalInterface
+                      id: String(jobItem.id),
+                      status: jobItem.status === "true" ? true : false,
+                      jd: jobItem.jd ? [jobItem.jd] : [], 
                     })
                   }
                 >

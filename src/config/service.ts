@@ -79,6 +79,7 @@ class Service {
    * @param payload FormData containing updated job role details.
    */
   static async editJob(id: string, payload: FormData): Promise<void> {
+    console.log("Editing job with ID:", id);
     try {
       const token = sessionStorage.getItem("token");
       await api.put(`/jobrole/update/${id}`, payload, {
@@ -313,11 +314,6 @@ class Service {
       throw error;
     }
   }
-
-  /**
-   * Fetches PDF files related to careers (from all projects).
-   * @returns A promise that resolves to an array of IProject objects.
-   */
   static async getCareersPdf(): Promise<IProject[]> {
     try {
       const token = sessionStorage.getItem("token");
@@ -334,11 +330,7 @@ class Service {
     }
   }
 
-  /**
-   * Fetches all job applications for a specific job role.
-   * @param jobroleId The ID of the job role.
-   * @returns A promise that resolves to an array of IJobApplication objects.
-   */
+ 
   static async getCareersApplicants(
     jobroleId: string
   ): Promise<IJobApplication[]> {
@@ -359,12 +351,8 @@ class Service {
     }
   }
 
-  /**
-   * Fetches job applications (this endpoint seems redundant with getCareersApplicants, verify backend).
-   * @param jobroleid The ID of the job role.
-   * @returns A promise that resolves to an array of IJobApplication objects.
-   */
-  static async getJobApplications(
+
+  static async getJobApplicant(
     jobroleid: string
   ): Promise<IJobApplication[]> {
     try {
@@ -384,13 +372,7 @@ class Service {
     }
   }
 
-  /**
-   * Updates the status of a specific job application.
-   * @param jobroleid The ID of the job role the application belongs to.
-   * @param applicationId The ID of the application to update.
-   * @param status The new status for the application.
-   * @returns A promise that resolves to the updated IJobApplication object.
-   */
+
   static async updateJobApplicationStatus(
     jobroleid: string,
     applicationId: string,
@@ -415,21 +397,16 @@ class Service {
     }
   }
 
-  /**
-   * Submits a new job application.
-   * @param payload FormData containing application details (e.g., resume).
-   * @param jobroleid The ID of the job role the application is for.
-   * @returns A promise that resolves to the created IJobApplication object.
-   */
-  static async postJobApplication(
-    payload: FormData,
+
+  static async ApplyJobApplication(
+    formData: FormData,
     jobroleid: string
   ): Promise<IJobApplication> {
     try {
-      const token = sessionStorage.getItem("token"); // Assuming application submission can be authenticated
+      const token = sessionStorage.getItem("token"); 
       const response = await api.post<ApiResponse<IJobApplication>>(
         `/applications/create/${jobroleid}`,
-        payload,
+        formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -445,11 +422,7 @@ class Service {
     }
   }
 
-  /**
-   * Deletes a specific job application.
-   * @param jobroleid The ID of the job role the application belongs to.
-   * @param applicationId The ID of the application to delete.
-   */
+ 
   static async deleteapplication(
     jobroleid: string,
     applicationId: string

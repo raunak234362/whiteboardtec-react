@@ -2,8 +2,11 @@ import { Link } from "react-router-dom";
 import { JobDescType } from ".";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
+import Service from "../../config/service";
+import { useForm } from "react-hook-form";
 
 function JobBox(job: JobDescType) {
+    const { register, handleSubmit, reset } = useForm<any>();
   const [isOpenJob, setOpenJob] = useState(false);
   console.log("JobBox props:", job);
   const [name, setName] = useState("");
@@ -34,33 +37,27 @@ function JobBox(job: JobDescType) {
     }
   };
 
-  const handleApply = async () => {
-    if (!name || !email || !phone || !resume) {
-      alert("Please fill all the fields");
-      return;
+  const handleApply = async (data: any) => {
+   console.log("Applying with data:", data);
+    const formData = new FormData();
+   formData.append("name", data?.name);
+   formData.append("email", data?.email);
+   formData.append("phone", data?.phone);
+   if (resume) {
+     formData.append("resume", resume);
+   }
+
+    const response = await Service.ApplyJobApplication(formData, job.id)
+    if (response) {
+      console.log("Application submitted successfully:", response);
     }
-
-    // const data = {
-    //   name: name,
-    //   email: email,
-    //   phone: phone,
-    //   resume: "",
-    //   jobId: job.id,
-    // };
-
-    // const profileDesc = ref(
-    //   Storage,
-    //   `Application/${name.replace(" ", "_")}_${v4()}`
-    // );
-    // await uploadBytes(profileDesc, resume).then((val) => {
-    //   // getDownloadURL(val.ref).then((url) => {
-    //   //   data.resume = url;
-    //   //   const application = collection(db, "application");
-    //   //   addDoc(application, data);
-    //   // });
-    // });
-    alert("Application Successfully Submitted");
     setOpenJob(false);
+    setName("");
+    setEmail("");
+    setPhone("");
+    setResume(null);
+    setProgress(0);
+    alert("Application submitted successfully!");
   };
 
   return (
@@ -100,108 +97,106 @@ function JobBox(job: JobDescType) {
                   </svg>
                 </button>
               </div>
-
-              <table className="mx-10 mt-4 border-separate border-spacing-y-4">
-                <tbody>
-                  <tr>
-                    <td>
-                      <label htmlFor="Name" className="text-lg text-gray-800">
-                        Name
-                      </label>
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        name="Name"
-                        id="Name"
-                        value={name}
-                        onChange={(e) => {
-                          setName(e.target.value);
-                        }}
-                        className="w-full px-2 mx-4 text-lg border-2 border-gray-200 rounded-md"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label htmlFor="Email" className="text-lg text-gray-800">
-                        Email
-                      </label>
-                    </td>
-                    <td>
-                      <input
-                        type="email"
-                        name="Email"
-                        id="Email"
-                        value={email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                        }}
-                        className="w-full px-2 mx-4 text-lg border-2 border-gray-200 rounded-md"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label htmlFor="Phone" className="text-lg text-gray-800">
-                        Phone
-                      </label>
-                    </td>
-                    <td>
-                      <input
-                        type="tel"
-                        name="Phone"
-                        id="Phone"
-                        value={phone}
-                        onChange={(e) => {
-                          setPhone(e.target.value);
-                        }}
-                        className="w-full px-2 mx-4 text-lg border-2 border-gray-200 rounded-md"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label htmlFor="resume" className="text-lg text-gray-800">
-                        Resume
-                      </label>
-                    </td>
-                    <td>
-                      <input
-                        type="file"
-                        name="resume"
-                        id="resume"
-                        onChange={handleFileChange}
-                        className="w-full mx-4 text-lg border-2 border-gray-200 rounded-md"
-                      />
-                      {progress > 0 && progress <= 100 && (
-                        <span className="mx-3 text-gray-600">{progress}%</span>
-                      )}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div className="flex flex-row flex-wrap justify-center">
-                <button
-                  type="submit"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleApply();
-                  }}
-                  className=" px-4 border-2 rounded-md bg-green-500 text-white text-xl border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
-                >
-                  Apply
-                </button>
-                <button
-                  type="submit"
-                  onClick={() => {
-                    setOpenJob(false);
-                  }}
-                  className="px-4 mx-3 text-xl text-white bg-red-600 border-2 border-white rounded-md drop-shadow-lg hover:border-red-500 hover:text-red-500 hover:bg-white"
-                >
-                  Cancel
-                </button>
-              </div>
+              <form onSubmit={handleSubmit(handleApply)}>
+                <table className="mx-10 mt-4 border-separate border-spacing-y-4">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <label htmlFor="Name" className="text-lg text-gray-800">
+                          Name
+                        </label>
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          id="Name"
+                          {...register("name", { required: true })}
+                          className="w-full px-2 mx-4 text-lg border-2 border-gray-200 rounded-md"
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label
+                          htmlFor="Email"
+                          className="text-lg text-gray-800"
+                        >
+                          Email
+                        </label>
+                      </td>
+                      <td>
+                        <input
+                          type="email"
+               
+                          id="Email"
+                         {...register("email", { required: true })}
+                          className="w-full px-2 mx-4 text-lg border-2 border-gray-200 rounded-md"
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label
+                          htmlFor="Phone"
+                          className="text-lg text-gray-800"
+                        >
+                          Phone
+                        </label>
+                      </td>
+                      <td>
+                        <input
+                          type="tel"
+                         
+                          id="Phone"
+                          {...register("phone", { required: true })}
+                          className="w-full px-2 mx-4 text-lg border-2 border-gray-200 rounded-md"
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <label
+                          htmlFor="resume"
+                          className="text-lg text-gray-800"
+                        >
+                          Resume
+                        </label>
+                      </td>
+                      <td>
+                        <input
+                          type="file"
+                          name="resume"
+                          id="resume"
+                          onChange={handleFileChange}
+                          className="w-full mx-4 text-lg border-2 border-gray-200 rounded-md"
+                        />
+                        {progress > 0 && progress <= 100 && (
+                          <span className="mx-3 text-gray-600">
+                            {progress}%
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div className="flex flex-row flex-wrap justify-center">
+                  <button
+                    type="submit"
+                    className=" px-4 border-2 rounded-md bg-green-500 text-white text-xl border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
+                  >
+                    Apply
+                  </button>
+                  <button
+                    type="submit"
+                    onClick={() => {
+                      setOpenJob(false);
+                    }}
+                    className="px-4 mx-3 text-xl text-white bg-red-600 border-2 border-white rounded-md drop-shadow-lg hover:border-red-500 hover:text-red-500 hover:bg-white"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

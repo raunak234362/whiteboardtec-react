@@ -1,11 +1,11 @@
 export interface JobPortalInterface {
-  id: number;
+  id: string;
   Role: string;
   location: string;
   type: string;
   qualification: string;
   status: boolean;
-  jd?: any[]; // Assuming jd is an array of objects with file paths
+  jd?: any[];
 }
 
 export interface JobPortalResponse {
@@ -14,8 +14,8 @@ export interface JobPortalResponse {
   location: string;
   type: string;
   qualification: string;
-  jd: any[]; // Or URL if file is uploaded
-  status: "active" | "inactive";
+  jd: any[];
+  status: "true" | "false";
 } 
 
 export interface ApiResponse<Type> {
@@ -30,7 +30,7 @@ export interface PortfolioInterface {
   description: string;
   file: any[];
   status: boolean;
-  pdf?: { path: string }[]; // Added the pdf property to align with PortfolioPropType
+  pdf?: { path: string }[]; 
 }
 
 export type ProjectType =
