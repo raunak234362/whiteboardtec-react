@@ -1,11 +1,9 @@
-/* eslint-disable react-refresh/only-export-components */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { PageBanner, BannerPropType } from "../../components/banner";
-import { motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { PageBanner, BannerPropType } from "../../components/banner";
 import { ImageModal } from "./ImagePopup";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "../../config/firebase";
+import Service from "../../config/service";
+import { IProject } from "../../config/interface";
 
 const banner: BannerPropType = {
   header: "Gallery",
@@ -13,7 +11,7 @@ const banner: BannerPropType = {
 };
 
 function Structural() {
-  const [popupImages, setPopupImages] = useState<any|null>(null);
+  const [popupImages, setPopupImages] = useState<string[] | null>(null);
   const [popupTitle, setPopupTitle] = useState<string | null>(null);
   const [popupAddress, setPopupAddress] = useState<string | null>(null);
   const [popupProjectType, setPopupProjectType] = useState<string | null>(null);
@@ -23,40 +21,14 @@ function Structural() {
   const [popupIndex, setPopupIndex] = useState<number>(0);
   const [popupSoftware, setPopupSoftware] = useState<string | null>(null);
 
-  const [galleryImages, setGalleryImages] = useState<
-    {
-      src: string;
-      title: string;
-      softwareUsed: string;
-      ProjectStatus: string;
-      location: string;
-      Projecttype: string;
-      images: string[];
-    }[]
-  >([]);
+  const [galleryImages, setGalleryImages] = useState<IProject[]>([]);
 
   const fetchGalleryImages = useCallback(async () => {
     try {
-      const q = query(
-        collection(db, "gallery"),
-        where("projectDepartment", "==", "Structural")
-      );
-      const snapshot = await getDocs(q);
-      const fetchedImages = snapshot.docs.map((doc) => {
-        const data = doc.data();
-        return {
-          src: data.images?.[0]?.src || data.img || "", // fallback if no image
-          title: data.title || "Untitled",
-          softwareUsed: data.softwareUsed || "Unknown",
-          ProjectStatus: data.projectStatus || "Unknown",
-          location: data.location || "Unknown",
-          Projecttype: data.projectType || "Unknown",
-          images: data.images || [], // should be an array of { src }
-        };
-      });
-      setGalleryImages(fetchedImages);
+      const fetched = await Service.getGalleryByDepartment("Structural");
+      setGalleryImages(fetched);
     } catch (error) {
-      console.error("Error fetching PEMB gallery images:", error);
+      console.error("Error fetching Structural gallery:", error);
     }
   }, []);
 
@@ -80,14 +52,6 @@ function Structural() {
     projectType: string,
     projectStatus: string
   ) => {
-    console.log("Opening popup with:", {
-      images,
-      title,
-      location,
-      softwareUsed,
-      projectType,
-      popupImages,
-    });
     preloadImages(images);
     setPopupImages(images);
     setPopupTitle(title);
@@ -107,46 +71,38 @@ function Structural() {
     setPopupProjectStatus(null);
   };
 
-  console.log("Render state:", {
-    hasImages: !!popupImages,
-    hasTitle: !!popupTitle,
-    hasAddress: !!popupAddress,
-    hasProjectType: !!popupProjectType,
-    hasProjectStatus: !!popupProjectStatus,
-  });
-
   return (
     <div className="pemb">
       <PageBanner {...banner} />
-      <div className="grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-6 px-5 py-10">
+      <div className="grid grid-cols-2 gap-6 px-5 py-10 lg:grid-cols-4 md:grid-cols-3">
         {galleryImages.map((item, index) => (
           <motion.div
-            key={index}
+            key={item.id}
             className="relative"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
           >
             <div
-              className="h-full justify-center text-center cursor-pointer"
+              className="justify-center h-full text-center cursor-pointer"
               onClick={() =>
                 openPopup(
-                  item?.images,
-                  item?.title,
-                  item?.location || "Unknown address",
-                  item?.softwareUsed || "Unknown",
-                  item?.Projecttype,
-                  item?.ProjectStatus || "Status not available"
+                  item.images || [],
+                  item.title,
+                  item.location,
+                  item.technologyused || "Unknown",
+                  item.type,
+                  item.status
                 )
               }
             >
               <img
-                src={item.src}
+                src={item.images?.[0] || "/default.jpg"}
                 alt={item.title}
                 className="rounded-lg shadow-md"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 hover:opacity-75 transition duration-300 flex items-center justify-center rounded-lg">
-                <span className="text-white text-xl font-bold">
+              <div className="absolute inset-0 flex items-center justify-center transition duration-300 bg-black rounded-lg opacity-0 bg-opacity-70 hover:opacity-75">
+                <span className="text-xl font-bold text-white">
                   {item.title.toUpperCase()}
                 </span>
               </div>
@@ -155,14 +111,14 @@ function Structural() {
         ))}
       </div>
 
-      {popupTitle && popupAddress && popupProjectType && (
+      {popupImages && popupTitle && popupAddress && popupProjectType && (
         <ImageModal
           images={popupImages}
           title={popupTitle}
-          location={popupAddress || ""}
-          softwareUsed={popupSoftware || ""}
-          projectType={popupProjectType || ""}
-          ProjectStatus={popupProjectStatus || ""}
+          location={popupAddress}
+          softwareUsed={popupSoftware || "Unknown"}
+          projectType={popupProjectType}
+          ProjectStatus={popupProjectStatus || "Unknown"}
           initialIndex={popupIndex}
           onClose={closePopup}
         />
@@ -170,4 +126,5 @@ function Structural() {
     </div>
   );
 }
+
 export default Structural;

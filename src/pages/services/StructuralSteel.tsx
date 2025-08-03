@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { PageBanner, BannerPropType } from "../../components/banner";
 import Newsletter from "../../components/newsletter/Newsletter";
@@ -37,56 +38,8 @@ const portfolio: string[] = [
   "Senior Living Developments"
 ]
 
-const service_image : CarouselPropType[] =  [
-  {
-    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FLOVES-894-ISO.png?alt=media&token=ca13ee2a-781c-4516-bbb5-6a6604506c73",
-  },
-  {
-    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FPINON-MISC-ISO.png?alt=media&token=e2c99360-f6f1-4453-92b7-ee880a914e04"
-  },
-  {
-    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FEast-Chambers-Show-Barn-Addition-ISO.png?alt=media&token=ace6e434-b4f3-4b9c-afbc-5d368aa2b5b2"
-  },
-  {
-    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FCross-Creek-Ranch-Fire-Station-ISO.png?alt=media&token=94b13c74-0198-4e81-8488-699afbc41203"
-  },
-  {
-    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FTRINITY-ISO.png?alt=media&token=0da83470-01d1-4d68-80a3-dfad99b62529"
-  },
-  {
-    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FFreeport-Chilled-Storage-ISO.png?alt=media&token=3df733e9-2ad3-4d55-bbe9-8cbb2a900b47"
-  },
-  {
-    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FWest-Fraser-Sawmill-Production-Building-1715-ISO.png?alt=media&token=7540999d-f87e-41c7-9b11-bce6180b4ed7"
-  },
-  {
-    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FCUMMINGS-ISO.png?alt=media&token=64587f6d-4fa2-47d5-ace9-23c3817c3100"
-  },
-  {
-    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FCollage-1-Jefferson-ISO.png?alt=media&token=be7212a2-8842-412c-92fb-2ed5ce971322"
-  },
-  {
-    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FYARBROUGH-ISO.png?alt=media&token=500a72ca-227a-4474-a191-e695df3907ba"
-  },
-  {
-    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FPINON-ISO.png?alt=media&token=ed6c67e3-3d5e-484b-98f8-f727612fac8b"
-  },
-  {
-    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FKBC-ISO.png?alt=media&token=14d6a871-c7b9-4fd2-89d1-6ae6a2c1c341"
-  },
-  {
-    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FTHE-BLOCK-ISO.png?alt=media&token=f731d98d-a8fa-4f5d-b984-5c269ce562f9"
-  },
-  {
-    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FTest-Range-Support-Facility-ISO.png?alt=media&token=42e6e401-b9a8-4c97-a469-74793a718b44"
-  },
-  {
-    url: "https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2FPUEBLO-ISO.png?alt=media&token=94f2ea26-d909-4267-9f26-a235ef586298"
-  },
-]
-
 function StructuralSteel() {
-  const [service_images, setServiceImages] = useState<CarouselPropType[]>(service_image);
+  const [service_images, setServiceImages] = useState<CarouselPropType[]>();
   useEffect(() => {
     document.title = "Structural Steel Detailing - Whiteboard Tech";
   });
@@ -164,7 +117,7 @@ function StructuralSteel() {
             </div>
             <div className="flex flex-wrap justify-center m-5 item-center ">
               <img
-                src="https://firebasestorage.googleapis.com/v0/b/whiteboard-website.appspot.com/o/assets%2Fimage%2Finsite-images%2Four-services.jpg?alt=media&token=56d33c91-c20d-4d23-bdc3-9d8cae9bb336"
+                src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685663/insite-images/our-services_qnqsre.jpg"
                 alt="Equal Opportunity"
               />
             </div>
@@ -211,7 +164,7 @@ function StructuralSteel() {
           </section>
           <div className="flex flex-wrap items-center justify-center">
             <div className="w-1/2 h-96 max-md:w-full">
-            <CarouselDefault images={service_images} />
+            <CarouselDefault images={service_images ?? []} />
             </div>
           </div>
         </div>

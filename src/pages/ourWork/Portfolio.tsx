@@ -1,61 +1,64 @@
 import { PageBanner, BannerPropType } from "../../components/banner";
-import { PortfolioPropType } from ".";
+import { PortfolioInterface, PortfolioPropType } from "../../config/interface";
 import PortfolioInfo from "./PortfolioInfo";
-import { useCallback, useEffect, useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "../../config/firebase";
+import { useEffect, useState } from "react";
 import PortfolioPdf from "./PortfolioPdf";
+import Service from "../../config/service"; 
 
 const bannerData: BannerPropType = {
   header: "Our Portfolio",
-  image: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685614/banner-image/portfolio-banner_hziqaf.jpg",
+  image:
+    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685614/banner-image/portfolio-banner_hziqaf.jpg",
 };
 
 function Portfolio() {
-  const [portfolios, setPortfolio] = useState<PortfolioPropType[]>([]);
+  const [portfolios, setPortfolios] = useState<PortfolioPropType[]>([]);
 
-  const fetchPortfolio = useCallback(async () => {
-    const portfolio = collection(db, "portfolio");
-    const querySnapshot = query(portfolio, where("status", "==", true));
-    const portfolioData = await getDocs(querySnapshot);
-    const data = portfolioData.docs.map((doc) => ({
-      id: String(doc.id),
-      ...doc.data(),
-    }));
-    setPortfolio(data as PortfolioPropType[]);
-  }, []);
+  const fetchPortfolio = async () => {
+    try {
+      const response = await Service.getPortfolio(); 
+      // const activePortfolios = response.filter(
+      //   (portfolio: PortfolioPropType) => portfolio.status === true
+      // );
+      console.log(response);
+      
+      setPortfolios(
+        response.map((portfolio: PortfolioInterface) => ({
+          ...portfolio,
+          status: portfolio.status ? "true" : "false",
+        }))
+      );
+    } catch (error) {
+      console.error("Failed to fetch portfolio data:", error);
+    }
+  };
 
   useEffect(() => {
     document.title = "Portfolio - Whiteboard";
     fetchPortfolio();
   }, []);
 
-
   return (
     <>
       <PageBanner {...bannerData} />
-      <div className="my-2 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
-        {portfolios?.map((portfolio, index) => {
-          return (
-            <section key={index} className="rounded-3xl mt-10 h-[60vh] max-md:h-[90vh] border-2 p-2 grid grid-cols-[60%_40%] gap-3 shadow-md max-md:grid-cols-1 relative">
-              <div className="overflow-y-hidden my-2 ml-6 max-md:ml-0 order-1 max-md:order-2">
-                {
-                  portfolio?.pdf && (
-                    <PortfolioPdf pdfURL={portfolio?.pdf} />
-                    
-                  )
-                }
-              </div>
-              <div className="max-md:order-1 order-2">
-                <PortfolioInfo
-                  title={portfolio.title}
-                  description={portfolio.description}
-                  pdf={portfolio.pdf}
-                />
-              </div>
-            </section>
-          );
-        })}
+      <div className="mx-auto my-2 lg:max-w-screen-lg xl:max-w-screen-xl">
+        {portfolios.map((portfolio, index) => (
+          <section
+            key={index}
+            className="rounded-3xl mt-10 h-[60vh] max-md:h-[90vh] border-2 p-2 grid grid-cols-[60%_40%] gap-3 shadow-md max-md:grid-cols-1 relative"
+          >
+            <div className="order-1 my-2 ml-6 overflow-y-hidden max-md:ml-0 max-md:order-2">
+              {portfolio && <PortfolioPdf portfolio={portfolios} />}
+            </div>
+            <div className="order-2 max-md:order-1">
+              <PortfolioInfo
+                title={portfolio.title}
+                description={portfolio.description}
+                file={portfolio.file}
+              />
+            </div>
+          </section>
+        ))}
       </div>
     </>
   );

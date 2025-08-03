@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
-import { auth } from '../../config/firebase'
 import { Navigate } from 'react-router-dom'
 
 function Admin() {
   useEffect(() => {
     document.title = "Admin Portal - Whiteboard";
   }, []);
+  const token= sessionStorage.getItem("token");
 
-    if (auth.currentUser?.email){
+    if (token){
         return (
           <Navigate to='/admin/dashboard'/>
         )

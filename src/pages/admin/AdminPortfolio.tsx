@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Header, HeaderProp, Sidebar } from "./components";
 import WorkPortfolio from "./components/WorkPortfolio";
-import { PortfolioPropType } from "../ourWork";
+import { PortfolioPropType } from "../../config/interface";
 import { Dialog } from "@headlessui/react";
 import Service from "../../config/service";
 
@@ -30,20 +30,24 @@ function AdminPortfolio() {
       const response = await Service.getPortfolio();
       console.log("Fetched Portfolio:", response);
       setPortfolio(
-        response.map((portfolio: any) => ({
-          id: portfolio.id,
-          title: portfolio.title,
-          description: portfolio.description,
-          status: portfolio.status,
-          pdf: portfolio.pdf || "",
-        }))
-      );
+              response.map((portfolio: any) => ({
+                id: portfolio.id,
+                title: portfolio.title,
+                description: portfolio.description,
+                status: portfolio.status,
+                pdf: portfolio.file || "",
+                file: portfolio.file || null, // Ensure 'file' is included
+              }))
+            );
  
     } catch (error) {
       console.error("Error fetching portfolio:", error);
       setPortfolio([]);
     }
   };
+
+
+  
 console.log("----------",portfolios);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -182,9 +186,9 @@ console.log("----------",portfolios);
         open={isOpen}
         onClose={() => {
           setOpen(false);
-          setIsEditMode(false); 
+          setIsEditMode(false);
           setCurrentPortfolio(null);
-          setTitle(""); 
+          setTitle("");
           setDescription("");
           setPdf(null);
           setStatus(false);
@@ -199,7 +203,6 @@ console.log("----------",portfolios);
               <div className="flex justify-between">
                 <Dialog.Title className="text-lg font-semibold">
                   {isEditMode ? "Edit Portfolio" : "Add New Portfolio"}{" "}
-               
                 </Dialog.Title>
                 <button
                   onClick={() => {
@@ -301,11 +304,15 @@ console.log("----------",portfolios);
                           {Math.round(progress)}%
                         </span>
                       )}
-                      {isEditMode && currentPortfolio?.pdf && !pdf && (
+                      {isEditMode && currentPortfolio?.file && !pdf && (
                         <p className="mx-4 mt-1 text-sm text-gray-500">
                           Current PDF:{" "}
                           <a
-                            href={currentPortfolio.pdf}
+                            href={`${import.meta.env.VITE_IMG_URL}${
+                              Array.isArray(currentPortfolio.file)
+                                ? (currentPortfolio.file[0] as { path?: string })?.path
+                                : (currentPortfolio.file as { path?: string } | null | undefined)?.path || ""
+                            }`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="underline"
@@ -351,9 +358,9 @@ console.log("----------",portfolios);
                   onClick={(e) => {
                     e.preventDefault();
                     if (isEditMode) {
-                      handleUpdateSubmit(); 
+                      handleUpdateSubmit();
                     } else {
-                      handleAddSubmit(); 
+                      handleAddSubmit();
                     }
                   }}
                   className=" px-4 border-2 rounded-md bg-green-500 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
@@ -399,13 +406,13 @@ console.log("----------",portfolios);
                 e.preventDefault();
                 setOpen(true);
                 setIsEditMode(false);
-               
+
                 setTitle("");
                 setDescription("");
                 setPdf(null);
                 setStatus(false);
                 setProgress(0);
-                setCurrentPortfolio(null); 
+                setCurrentPortfolio(null);
               }}
             >
               Add New
@@ -425,6 +432,12 @@ console.log("----------",portfolios);
                   scope="col"
                   className="px-6 py-3 text-xs font-medium text-center uppercase"
                 >
+                  Description
+                </th>
+                <th
+                  scope="col"
+                  className="px-6 py-3 text-xs font-medium text-center uppercase"
+                >
                   Portfolio PDF
                 </th>
                 <th
@@ -436,18 +449,33 @@ console.log("----------",portfolios);
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 ">
-              {portfolios?.map(
-                (
-                  portfolio 
-                ) => (
+              {portfolios
+                ?.filter((portfolio) => portfolio.id) // Ensure id is defined
+                .map((portfolio) => (
                   <WorkPortfolio
-                    key={portfolio.id} 
+                    key={portfolio.id}
                     {...portfolio}
-                    onEdit={handleEdit} 
-                    onDelete={handleDelete} 
+                    id={portfolio.id as string} // Explicitly cast id to string
+                    status={
+                      typeof portfolio.status === "boolean"
+                        ? portfolio.status
+                        : portfolio.status === "active"
+                        ? "active"
+                        : "inactive"
+                    } // Ensure status matches the expected type
+                    pdf={
+                      Array.isArray(portfolio.file)
+                        ? portfolio.file
+                        : portfolio.file
+                        ? [portfolio.file]
+                        : []
+                    }
+                    onEdit={(portfolio) =>
+                      handleEdit(portfolio as PortfolioPropType)
+                    }
+                    onDelete={handleDelete}
                   />
-                )
-              )}
+                ))}
             </tbody>
           </table>
         </div>

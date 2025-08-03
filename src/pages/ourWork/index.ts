@@ -5,10 +5,10 @@ export type PortfolioPropType = {
   id: string;
   title: string;
   description: string;
-  pdf: string;
-  // images?: CarouselPropType[];
+  file?: { path: string; fileName: string }[];
   status: "active" | "inactive" | boolean;
 };
+
 
 export type ImagePortfolioPropType = {
   id: string;
@@ -26,7 +26,7 @@ export type ImagePortfolioPropType = {
 export type PortfolioInfoPropType = {
   title: string;
   description: string;
-  pdf: string;
+  file?: any;
 };
 
 export { OurWork, Portfolio };

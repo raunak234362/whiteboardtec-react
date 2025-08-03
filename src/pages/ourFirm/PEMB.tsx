@@ -2,10 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { PageBanner, BannerPropType } from "../../components/banner";
 import { motion } from "framer-motion";
-import { useCallback, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { ImageModal } from "./ImagePopup";
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "../../config/firebase";
 
 const banner: BannerPropType = {
   header: "Gallery",
@@ -35,42 +33,32 @@ function PEMB() {
     }[]
   >([]);
 
-  const fetchGalleryImage = async() => {
-    // const response = await Service
-  }
-  useEffect(() => { 
-    fetchGalleryImage();
-  }, []);
-
-  const fetchGalleryImages = useCallback(async () => {
+  // Replace this with your actual service or dummy data
+  const fetchGalleryImage = async () => {
     try {
-      const q = query(
-        collection(db, "gallery"),
-        where("projectDepartment", "==", "PEMB")
-      );
-      const snapshot = await getDocs(q);
-      const fetchedImages = snapshot.docs.map((doc) => {
-        const data = doc.data();
-        return {
-          src: data.images?.[0]?.src || data.img || "", // fallback if no image
-          title: data.title || "Untitled",
-          softwareUsed: data.softwareUsed || "Unknown",
-          ProjectStatus: data.projectStatus || "Unknown",
-          location: data.location || "Unknown",
-          Projecttype: data.projectType || "Unknown",
-          images: data.images || [], // should be an array of { src }
-        };
-      });
-      setGalleryImages(fetchedImages);
+      // Example dummy data (replace this with your own API call or local JSON)
+      const data = [
+        {
+          src: "/images/sample1.jpg",
+          title: "Project One",
+          softwareUsed: "AutoCAD",
+          ProjectStatus: "Completed",
+          location: "Bangalore",
+          Projecttype: "PEMB",
+          images: ["/images/sample1.jpg", "/images/sample2.jpg"],
+        },
+        // ...more items
+      ];
+      setGalleryImages(data);
     } catch (error) {
-      console.error("Error fetching PEMB gallery images:", error);
+      console.error("Failed to fetch PEMB gallery images:", error);
     }
-  }, []);
+  };
 
   useEffect(() => {
     document.title = "Gallery - Whiteboard Tech";
-    fetchGalleryImages();
-  }, [fetchGalleryImages]);
+    fetchGalleryImage();
+  }, []);
 
   const preloadImages = (images: string[]) => {
     images.forEach((image: string) => {
@@ -87,14 +75,6 @@ function PEMB() {
     projectType: string,
     projectStatus: string
   ) => {
-    console.log("Opening popup with:", {
-      images,
-      title,
-      location,
-      softwareUsed,
-      projectType,
-      popupImages,
-    });
     preloadImages(images);
     setPopupImages(images);
     setPopupTitle(title);
@@ -113,14 +93,6 @@ function PEMB() {
     setPopupProjectType(null);
     setPopupProjectStatus(null);
   };
-
-  console.log("Render state:", {
-    hasImages: !!popupImages,
-    hasTitle: !!popupTitle,
-    hasAddress: !!popupAddress,
-    hasProjectType: !!popupProjectType,
-    hasProjectStatus: !!popupProjectStatus,
-  });
 
   return (
     <div className="pemb">
@@ -177,4 +149,5 @@ function PEMB() {
     </div>
   );
 }
+
 export default PEMB;
