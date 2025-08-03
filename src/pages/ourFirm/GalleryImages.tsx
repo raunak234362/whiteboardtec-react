@@ -87,7 +87,7 @@ function GalleryImages() {
         </h2>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {galleryImg.map((project) => (
+          {galleryImg?.map((project) => (
             <div
               key={project.id}
               className="relative overflow-hidden transition-transform duration-300 transform bg-white rounded-lg shadow-md cursor-pointer hover:scale-105"
