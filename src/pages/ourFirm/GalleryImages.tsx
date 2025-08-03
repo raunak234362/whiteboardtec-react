@@ -21,7 +21,9 @@ function GalleryImages() {
     setError(null);
 
     try {
-      const allProjects = await Service.getGalleryByDepartment(department ?? "");
+      const allProjects = await Service.getGalleryByDepartment(
+        department ?? ""
+      );
       setGalleryImg(allProjects);
     } catch (err) {
       console.error("Error fetching projects:", err);
@@ -43,7 +45,9 @@ function GalleryImages() {
       images:
         project.images && project.images?.length > 0
           ? project.images
-          : typeof project.file === "object" && !Array.isArray(project.file) && (project.file as { secureUrl?: string })?.secureUrl
+          : typeof project.file === "object" &&
+            !Array.isArray(project.file) &&
+            (project.file as { secureUrl?: string })?.secureUrl
           ? [(project.file as { secureUrl: string }).secureUrl]
           : [],
     };
@@ -71,21 +75,20 @@ function GalleryImages() {
     );
   }
 
-  if (galleryImg?.length === 0) {
-    return (
-      <div className="flex items-center justify-center h-48">
-        <p className="text-gray-500">No projects found for {department}.</p>
-      </div>
-    );
-  }
-
   return (
     <section className="px-5 py-10 bg-gray-50">
       <div className="container mx-auto">
         <h2 className="mb-8 text-3xl font-bold text-center text-gray-800">
           {department} Projects
         </h2>
-
+        
+        {
+          galleryImg?.length === 0 && (
+            <div className="flex items-center justify-center h-48">
+              <p className="text-gray-500">No projects found for {department}.</p>
+            </div>
+          )
+        }
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {galleryImg?.map((project) => (
             <div
@@ -169,7 +172,9 @@ function GalleryImages() {
                       onClick={() =>
                         setCurrentImageIndex((prev) =>
                           prev === 0
-                            ? (selectedProject.images ? selectedProject.images?.length - 1 : 0)
+                            ? selectedProject.images
+                              ? selectedProject.images?.length - 1
+                              : 0
                             : prev - 1
                         )
                       }
@@ -180,7 +185,8 @@ function GalleryImages() {
                       className="absolute right-0 p-2 transform -translate-y-1/2 bg-white rounded-full shadow top-1/2 bg-opacity-70 hover:bg-opacity-100"
                       onClick={() =>
                         setCurrentImageIndex((prev) =>
-                          selectedProject.images && prev === selectedProject.images?.length - 1
+                          selectedProject.images &&
+                          prev === selectedProject.images?.length - 1
                             ? 0
                             : prev + 1
                         )
