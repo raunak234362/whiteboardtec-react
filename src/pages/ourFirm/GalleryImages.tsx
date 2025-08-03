@@ -41,7 +41,7 @@ function GalleryImages() {
     const projectWithImages = {
       ...project,
       images:
-        project.images && project.images.length > 0
+        project.images && project.images?.length > 0
           ? project.images
           : typeof project.file === "object" && !Array.isArray(project.file) && (project.file as { secureUrl?: string })?.secureUrl
           ? [(project.file as { secureUrl: string }).secureUrl]
@@ -71,7 +71,7 @@ function GalleryImages() {
     );
   }
 
-  if (galleryImg.length === 0) {
+  if (galleryImg?.length === 0) {
     return (
       <div className="flex items-center justify-center h-48">
         <p className="text-gray-500">No projects found for {department}.</p>
@@ -155,21 +155,21 @@ function GalleryImages() {
             </div>
 
             {/* Image Carousel */}
-            {selectedProject?.images && selectedProject.images.length > 0 && (
+            {selectedProject?.images && selectedProject.images?.length > 0 && (
               <div className="relative mb-4">
                 <img
                   src={selectedProject.images[currentImageIndex]}
                   alt={`${selectedProject.title} - ${currentImageIndex + 1}`}
                   className="object-contain w-full h-auto rounded-lg max-h-96"
                 />
-                {selectedProject.images.length > 1 && (
+                {selectedProject.images?.length > 1 && (
                   <>
                     <button
                       className="absolute left-0 p-2 transform -translate-y-1/2 bg-white rounded-full shadow top-1/2 bg-opacity-70 hover:bg-opacity-100"
                       onClick={() =>
                         setCurrentImageIndex((prev) =>
                           prev === 0
-                            ? (selectedProject.images ? selectedProject.images.length - 1 : 0)
+                            ? (selectedProject.images ? selectedProject.images?.length - 1 : 0)
                             : prev - 1
                         )
                       }
@@ -180,7 +180,7 @@ function GalleryImages() {
                       className="absolute right-0 p-2 transform -translate-y-1/2 bg-white rounded-full shadow top-1/2 bg-opacity-70 hover:bg-opacity-100"
                       onClick={() =>
                         setCurrentImageIndex((prev) =>
-                          selectedProject.images && prev === selectedProject.images.length - 1
+                          selectedProject.images && prev === selectedProject.images?.length - 1
                             ? 0
                             : prev + 1
                         )
@@ -191,7 +191,7 @@ function GalleryImages() {
                   </>
                 )}
                 <div className="mt-2 text-sm text-center text-gray-600">
-                  {currentImageIndex + 1} / {selectedProject.images.length}
+                  {currentImageIndex + 1} / {selectedProject.images?.length}
                 </div>
               </div>
             )}
