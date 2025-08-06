@@ -15,7 +15,7 @@ export interface JobPortalResponse {
   type: string;
   qualification: string;
   jd: any[];
-  status: "true" | "false";
+  status: true | false;
 } 
 
 export interface ApiResponse<Type> {
@@ -107,4 +107,26 @@ export interface IJobApplication {
   status: any; 
   
   [key: string]: any; 
+}
+
+export interface blogInterface {
+  id: string;
+  title: string;
+  content: string;
+  files:JSON
+  createdAt: string;
+  updatedAt: string;
+  [key: string]: any;
+  likes: number;
+}
+export interface commentInterface {
+  id: string;
+  content: string;
+  postId: string; 
+  likes: number;
+  createdAt: string;
+  updatedAt: string;
+  parentId: string;
+  [key: string]: any;
+
 }

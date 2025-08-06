@@ -18,7 +18,7 @@ function App(): JSX.Element {
       </>
     );
   } else {
-    console.log("khul gaya jo kholna chahte thhhhe")
+    console.log("App component rendered with location:", location.pathname);
     return (
       <>
 

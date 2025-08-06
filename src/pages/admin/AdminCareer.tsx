@@ -11,7 +11,7 @@ function AdminCareer() {
   const { register, handleSubmit, reset } = useForm<JobPortalResponse>();
   const [gettingdata, setGettingData] = useState<JobPortalResponse[]>([]);
   const [jd, setJD] = useState<FileList | null>(null); // State for the file input
-  const [status, setStatus] = useState(false); // State for the status checkbox
+  const [status, setStatus] = useState(true); // State for the status checkbox
   const [isOpen, setOpen] = useState(false); // State for the Add New Job modal
 
   const header: HeaderProp = {
@@ -51,7 +51,7 @@ function AdminCareer() {
     formData.append("type", data.type);
     formData.append("qualification", data.qualification);
     // Convert boolean status from the checkbox to "active" or "inactive" string for the API
-    formData.append("status", status ? "active" : "inactive");
+    formData.append("status", status ? "true" : "false");
 
     // Append the Job Description (JD) file
     if (jd && jd.length > 0) {
@@ -73,7 +73,7 @@ function AdminCareer() {
       setOpen(false); // Close the Add New Job modal
       reset(); // Reset the form fields
       setJD(null); // Clear the file input state
-      setStatus(false); // Reset the status checkbox to inactive
+      setStatus(true); // Reset the status checkbox to inactive
     } catch (error) {
       console.error("Error adding job:", error);
       alert("Something went wrong while adding the job. Please try again.");

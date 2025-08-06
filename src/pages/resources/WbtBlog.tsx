@@ -1,8 +1,9 @@
-import { PageBanner } from "../../components/banner"
-import { ResourcePropType } from ".";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { PageBanner } from "../../components/banner";
+import Service from "../../config/service"; // Adjust the path as necessary
+import { blogInterface } from "../../config/interface";
 
-const props: ResourcePropType = {
+const props = {
   banner: {
     header: "Hey, Thanks",
     subheader: "for visiting our blog.",
@@ -10,6 +11,7 @@ const props: ResourcePropType = {
       "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685612/banner-image/resource_lixfvx.jpg",
   },
   context: {
+    head: "Welcome to Our Blog",
     desc: "There's so much happening in our world all the time and we’d like to share our views, collaborate and exchange ideas with like-minded people like you. Read on and share your views.",
   },
   posts: {
@@ -18,38 +20,141 @@ const props: ResourcePropType = {
   },
 };
 
-
 function WbtBlog() {
-  useEffect(()=> {
-    document.title = "WBT Blog- Resources - Whiteboard";
-  })
+  const [blogs, setBlogs] = useState<blogInterface[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Track which blog id is currently being liked (to disable button)
+  const [liking, setLiking] = useState<string | null>(null);
+
+  useEffect(() => {
+    document.title = "WBT Blog - Resources - Whiteboard";
+
+    async function fetchBlogs() {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await Service.getBlogs();
+        setBlogs(data);
+      } catch (err) {
+        setError("Failed to load blogs. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchBlogs();
+  }, []);
+
+  // Likes handler with optimistic UI update and disable button while loading
+  async function handleLike(blogId: string) {
+    if (liking === blogId) return; // avoid double click
+
+    setLiking(blogId);
+    try {
+      const updatedLikes = await Service.likes(blogId);
+      setBlogs((prevBlogs) =>
+        prevBlogs.map((b) =>
+          b.id === blogId ? { ...b, likes: updatedLikes } : b
+        )
+      );
+    } catch (error) {
+      alert("Failed to like the blog. Please try again.");
+    } finally {
+      setLiking(null);
+    }
+  }
 
   return (
     <>
       <PageBanner {...props.banner} />
-      <div className="mx-auto my-0 bg-gray-100 w-ful lg:max-w-screen-lg xl:max-w-screen-xl">
-      <section className="m-28 max-md:mx-0 mt-0 mb-10 p-2 grid grid-cols-[70%_30%] max-md:grid-cols-1 gap-4">
-      <div className="order-1 max-md:order-2">
+      <div className="w-full mx-auto my-0 bg-gray-100 lg:max-w-screen-lg xl:max-w-screen-xl">
+        <section className="m-28 max-md:mx-0 mt-0 mb-10 p-2 grid grid-cols-[70%_30%] max-md:grid-cols-1 gap-8">
+          {/* Main Content */}
+          <div className="order-1 max-md:order-2">
             <div className="mb-4 text-3xl font-bold text-black">
-              {props.context?.head}
+              {props.context?.head || "Welcome to Our Blog"}
             </div>
-            <div className="text-xl leading-loose text-gray-900">
-              {props.context?.desc}
+            <div className="mb-8 text-xl leading-relaxed text-gray-900">
+              {props.context?.desc ||
+                "Explore the latest articles and insights from Whiteboard."}
             </div>
+
+            {loading && (
+              <p className="py-10 text-lg text-center text-gray-500">
+                Loading blogs...
+              </p>
+            )}
+
+            {error && (
+              <p className="py-10 font-semibold text-center text-red-600">
+                {error}
+              </p>
+            )}
+
+            {!loading && !error && blogs.length === 0 && (
+              <p className="py-10 text-lg text-center text-gray-500">
+                No blogs found.
+              </p>
+            )}
+
+            {!loading && !error && blogs.length > 0 && (
+              <div className="space-y-8">
+                {blogs.map((blog) => (
+                  <article
+                    key={blog.id}
+                    className="p-6 transition-shadow duration-300 bg-white rounded shadow-md hover:shadow-lg"
+                  >
+                    <h3 className="mb-3 text-2xl font-semibold text-gray-900">
+                      {blog.title}
+                    </h3>
+                    <p className="mb-3 text-gray-700 line-clamp-4">
+                      {blog.content}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-500">
+                        Published:{" "}
+                        {new Date(blog.createdAt).toLocaleDateString()}
+                      </span>
+
+                      <button
+                        disabled={liking === blog.id}
+                        onClick={() => handleLike(blog.id)}
+                        className={`flex items-center space-x-1 ${
+                          liking === blog.id
+                            ? "text-green-300 cursor-not-allowed"
+                            : "text-green-600 hover:text-green-800 cursor-pointer"
+                        }`}
+                        aria-label={`Like blog titled ${blog.title}`}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-5 h-5 fill-current"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
+                        </svg>
+                        <span>{blog.likes ?? 0}</span>
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
           </div>
 
-          <div className="bg-[#6abd45] rounded-md p-3 order-2 max-md:order-1">
-            <div className="p-1 -mt-1 text-white h-fit">
-              <div className="mb-4 text-3xl font-bold ">
-                {props.posts?.title}
-              </div>
-              <div className="text-lg">{props.posts?.desc}</div>
-            </div>
-          </div>
-      </section>
+          {/* Sidebar Featured Posts */}
+          <aside className="bg-[#6abd45] rounded-md p-6 order-2 max-md:order-1 text-white">
+            <h2 className="mb-4 text-3xl font-bold">{props.posts?.title}</h2>
+            <p className="text-lg">{props.posts?.desc}</p>
+            {/* Optional: Add featured highlights or recent posts here */}
+          </aside>
+        </section>
       </div>
     </>
-  )
+  );
 }
 
-export default WbtBlog
+export default WbtBlog;

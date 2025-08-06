@@ -3,17 +3,12 @@ import {
   ApiResponse,
   PortfolioInterface,
   IProject,
-  
   IJobApplication,
+  blogInterface
 } from "./interface";
-import api from "./api"; // Ensure this path is correct
+import api from "./api"; 
 
 class Service {
-  /**
-   * Creates a new job role.
-   * @param payload FormData containing job role details.
-   * @returns The API response data.
-   */
   static async JobPortal(payload: FormData) {
     try {
       const token = sessionStorage.getItem("token");
@@ -31,10 +26,6 @@ class Service {
     }
   }
 
-  /**
-   * Fetches all job roles.
-   * @returns A promise that resolves to an array of JobPortalResponse objects.
-   */
   static async getJob(): Promise<JobPortalResponse[]> {
     try {
       const token = sessionStorage.getItem("token");
@@ -54,10 +45,6 @@ class Service {
     }
   }
 
-  /**
-   * Deletes a job role by its ID.
-   * @param id The ID of the job role to delete (string).
-   */
   static async deleteJob(id: string): Promise<void> {
     try {
       const token = sessionStorage.getItem("token");
@@ -72,11 +59,6 @@ class Service {
     }
   }
 
-  /**
-   * Edits an existing job role.
-   * @param id The ID of the job role to edit (string).
-   * @param payload FormData containing updated job role details.
-   */
   static async editJob(id: string, payload: FormData): Promise<void> {
     console.log("Editing job with ID:", id);
     try {
@@ -93,10 +75,6 @@ class Service {
     }
   }
 
-  /**
-   * Creates a new portfolio entry.
-   * @param payload FormData containing portfolio details.
-   */
   static async portfolio(payload: FormData) {
     try {
       const token = sessionStorage.getItem("token");
@@ -113,10 +91,6 @@ class Service {
     }
   }
 
-  /**
-   * Fetches all portfolio entries.
-   * @returns A promise that resolves to an array of PortfolioInterface objects.
-   */
   static async getPortfolio(): Promise<PortfolioInterface[]> {
     try {
       const token = sessionStorage.getItem("token");
@@ -136,11 +110,6 @@ class Service {
     }
   }
 
-  /**
-   * Updates an existing portfolio entry.
-   * @param id The ID of the portfolio entry to update.
-   * @param payload FormData containing updated portfolio details.
-   */
   static async updatePortfolio(id: string, payload: FormData): Promise<void> {
     try {
       const token = sessionStorage.getItem("token");
@@ -157,10 +126,6 @@ class Service {
     }
   }
 
-  /**
-   * Deletes a portfolio entry.
-   * @param id The ID of the portfolio entry to delete.
-   */
   static async deletePortfolio(id: string): Promise<void> {
     try {
       const token = sessionStorage.getItem("token");
@@ -176,10 +141,6 @@ class Service {
     }
   }
 
-  /**
-   * Creates a new gallery project entry.
-   * @param payload FormData containing gallery project details.
-   */
   static async createGallery(payload: FormData): Promise<void> {
     try {
       const token = sessionStorage.getItem("token");
@@ -197,10 +158,6 @@ class Service {
     }
   }
 
-  /**
-   * Fetches all gallery projects.
-   * @returns A promise that resolves to an array of IProject objects.
-   */
   static async getGallery(): Promise<IProject[]> {
     try {
       const token = sessionStorage.getItem("token");
@@ -217,11 +174,6 @@ class Service {
     }
   }
 
-  /**
-   * Fetches gallery projects filtered by department.
-   * @param department The department to filter by.
-   * @returns A promise that resolves to an array of IProject objects.
-   */
   static async getGalleryByDepartment(department: string): Promise<IProject[]> {
     console.log("Fetching gallery for department:", department);
     try {
@@ -242,12 +194,6 @@ class Service {
     }
   }
 
-  /**
-   * Updates an existing gallery project.
-   * @param id The ID of the gallery project to update.
-   * @param payload FormData containing updated gallery project details.
-   * @returns A promise that resolves to the updated IProject object.
-   */
   static async updateGallery(id: string, payload: FormData): Promise<IProject> {
     try {
       const token = sessionStorage.getItem("token");
@@ -270,10 +216,6 @@ class Service {
     }
   }
 
-  /**
-   * Deletes a gallery project.
-   * @param id The ID of the gallery project to delete.
-   */
   static async deleteGallery(id: string): Promise<void> {
     try {
       const token = sessionStorage.getItem("token");
@@ -290,11 +232,6 @@ class Service {
     }
   }
 
-  /**
-   * Fetches gallery projects by department (duplicate of getGalleryByDepartment, keeping for now).
-   * @param department The department to filter by.
-   * @returns A promise that resolves to an array of IProject objects.
-   */
   static async Gallery(department: string): Promise<IProject[]> {
     try {
       const token = sessionStorage.getItem("token");
@@ -329,7 +266,6 @@ class Service {
     }
   }
 
- 
   static async getCareersApplicants(
     jobroleId: string
   ): Promise<IJobApplication[]> {
@@ -350,10 +286,7 @@ class Service {
     }
   }
 
-
-  static async getJobApplicant(
-    jobroleid: string
-  ): Promise<IJobApplication[]> {
+  static async getJobApplicant(jobroleid: string): Promise<IJobApplication[]> {
     try {
       const token = sessionStorage.getItem("token");
       const response = await api.get<ApiResponse<IJobApplication[]>>(
@@ -370,7 +303,6 @@ class Service {
       throw error;
     }
   }
-
 
   static async updateJobApplicationStatus(
     jobroleid: string,
@@ -396,13 +328,12 @@ class Service {
     }
   }
 
-
   static async ApplyJobApplication(
     formData: FormData,
     jobroleid: string
   ): Promise<IJobApplication> {
     try {
-      const token = sessionStorage.getItem("token"); 
+      const token = sessionStorage.getItem("token");
       const response = await api.post<ApiResponse<IJobApplication>>(
         `/applications/create/${jobroleid}`,
         formData,
@@ -421,7 +352,6 @@ class Service {
     }
   }
 
- 
   static async deleteapplication(
     jobroleid: string,
     applicationId: string
@@ -437,6 +367,90 @@ class Service {
     } catch (error) {
       console.error("Error deleting application:", error);
       alert("Something went wrong while deleting the application.");
+      throw error;
+    }
+  }
+  static async createBlog(payload: FormData): Promise<blogInterface> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.post("/blog/posts", payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      const resData = response.data as ApiResponse<blogInterface>;
+      return resData.data;
+    } catch (error) {
+      console.error(error);
+      alert("Error creating blog");
+      throw error;
+    }
+  }
+  static async getBlogs(): Promise<blogInterface[]> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.get<ApiResponse<blogInterface[]>>(
+        "/blog/posts",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      return response.data.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+  static async updateBlog(
+    id: string,
+    payload: FormData
+  ): Promise<blogInterface> {
+    try {
+      const token = sessionStorage.getItem("token");
+      console.log("Updating blog with ID:", id, "Payload:", payload);
+      const response = await api.put<ApiResponse<blogInterface>>(
+        `/blog/posts/${id}`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data.data;
+    } catch (error) {
+      console.error(error);
+      alert("Error updating blog");
+      throw error;
+    }
+  }
+  static async deleteBlog(id: string): Promise<void> {
+    try {
+      const token = sessionStorage.getItem("token");
+      await api.delete(`/blog/posts/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    } catch (error) {
+      console.error(error);
+      alert("Error deleting blog");
+      throw error;
+    }
+  }
+  static async likes(blogId: string): Promise<number> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.patch<ApiResponse<{ likes: number }>>(
+        `/blog/posts/${blogId}/like`,
+        {
+          method: "PATCH",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      return response.data.data.likes;
+    } catch (error) {
+      console.error(error);
       throw error;
     }
   }

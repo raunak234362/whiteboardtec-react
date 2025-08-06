@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import {
   JobPortalResponse,
   IJobApplication,
@@ -29,23 +29,35 @@ const ApplicantsModal: React.FC<ApplicantsModalProps> = ({
   onDeleteApplicant,
 }) => {
 
-  const updateStatus = async (jobroleId: string, applicantId: string, status: any) => {
+  const [localApplicants, setLocalApplicants] = useState<IJobApplication[]>([]);
+  useEffect(() => {
+    setLocalApplicants(applicants);
+  }, [applicants, isOpen]);
+
+  
+  const updateStatus = async (
+    jobroleId: string,
+    applicantId: string,
+    status: boolean
+  ) => {
+   
+    setLocalApplicants((apps) =>
+      apps.map((app) => (app.id === applicantId ? { ...app, status } : app))
+    );
     try {
-      // Convert boolean to ApplicationStatus type (e.g., "Contacted" or "NotContacted")
-      const response = await Service.updateJobApplicationStatus(
-        jobroleId,
-        applicantId,
-        status
-      );
-      if (response) {
-        alert("Applicant status updated successfully!");
-        // Optionally, you can refresh the applicants list here
-      }
+      await Service.updateJobApplicationStatus(jobroleId, applicantId, status);
+     
     } catch (error) {
       console.error("Error updating applicant status:", error);
+      setLocalApplicants((apps) =>
+        apps.map((app) =>
+          app.id === applicantId ? { ...app, status: !status } : app
+        )
+      );
       alert("Failed to update applicant status.");
     }
-  }
+  };
+
   
   if (!isOpen) return null;
 console.log("ApplicantsModal props:", { jobTitle, applicants });
@@ -100,7 +112,7 @@ console.log("ApplicantsModal props:", { jobTitle, applicants });
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {applicants.map((applicant) => (
+                {localApplicants.map((applicant) => (
                   <tr key={applicant.id}>
                     <td className="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
                       {applicant.name}
@@ -238,9 +250,10 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
       const applicants = await Service.getCareersApplicants(jobroleId);
       setApplicantsForSelectedJob(applicants);
       setCurrentJobTitleForApplicants(jobTitle);
-      setApplicantsForSelectedJob(applicants);
-      setCurrentJobTitleForApplicants(jobTitle);
       setIsApplicantsModalOpen(true);
+      alert("Fetched applicants successfully.");
+    } catch (error) {
+      console.error("Error fetching applicants:", error);
       alert("Failed to load applicants.");
     } finally {
       setLoading(false);
@@ -303,7 +316,7 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
             <th className="px-6 py-3 text-left">View PDF</th>
             <th className="px-6 py-3 text-center">Actions</th>
             <th className="px-6 py-3 text-center">Applicants</th>{" "}
-            {/* New Column */}
+          
           </tr>
         </thead>
         <tbody>
@@ -337,7 +350,7 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
                     handleEditClick({
                       ...jobItem,
                       id: String(jobItem.id),
-                      status: jobItem.status === "true" ? true : false,
+                      status: jobItem.status === true ? true : false,
                       jd: jobItem.jd ? [jobItem.jd] : [], 
                     })
                   }

@@ -29,6 +29,19 @@ function Sidebar() {
           </div>
         </NavLink>
         <NavLink
+          to="/admin/blog" // New route for admin blog management
+          className={({ isActive }) =>
+            `flex flex-col items-center justify-center py-2.5 h-fit  ${
+              isActive ? "bg-[#6abd45]" : "bg-gray-800 hover:bg-gray-500"
+            }`
+          }
+        >
+          <div>
+            <h1 className="font-semibold text-md">Blog</h1>
+          </div>
+        </NavLink>
+
+        <NavLink
           to="/admin/gallery"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center py-2.5 h-fit  ${

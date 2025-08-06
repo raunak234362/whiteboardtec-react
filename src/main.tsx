@@ -41,6 +41,7 @@ import {
 } from "./pages/admin";
 import "tw-elements-react/dist/css/tw-elements-react.min.css";
 import GalleryImages from "./pages/ourFirm/GalleryImages.tsx";
+import AdminBlogManager from "./pages/admin/AdminBlogManager.tsx";
 
 const route = createBrowserRouter(
   createRoutesFromElements(
@@ -55,7 +56,6 @@ const route = createBrowserRouter(
       />
       <Route path="/our-firm/leadership-teams" element={<LeadershipTeam />} />
       <Route path="/our-firm/business-model" element={<BusiessModel />} />
-
       <Route path="/services" element={<StructuralSteel />} />
       <Route
         path="/services/structural-steel-detailing"
@@ -78,22 +78,19 @@ const route = createBrowserRouter(
         path="/services/rebar-estimation-and-detailing"
         element={<Rebar />}
       />
-
       <Route path="/our-work" element={<Portfolio />} />
       <Route path="/our-work/project-portfolio" element={<Portfolio />} />
-
       <Route path="/portal" element={<Portal />} />
       <Route path="/career" element={<Careers />} />
       <Route path="/connect" element={<Connect />} />
-
       <Route path="/resources" element={<Resources />} />
       <Route path="/resources/case-studies" element={<CaseStudies />} />
       <Route path="/resources/wbt-blog" element={<WbtBlog />} />
-
       <Route path="*" element={<Error />} />
-
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin/dashboard" element={<Dashboard />} />
+      <Route path="/admin/blog" element={<AdminBlogManager />} />
+      
       <Route path="/admin/login" element={<Login />} />
       <Route path="/admin/career" element={<AdminCareer />} />
       <Route path="/admin/portfolio" element={<AdminPortfolio />} />
