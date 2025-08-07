@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { PageBanner } from "../../components/banner";
-import Service from "../../config/service"; // Adjust the path as necessary
+import Service from "../../config/service";
 import { blogInterface } from "../../config/interface";
 
 const props = {
@@ -24,12 +24,14 @@ function WbtBlog() {
   const [blogs, setBlogs] = useState<blogInterface[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  // Track which blog id is currently being liked (to disable button)
   const [liking, setLiking] = useState<string | null>(null);
+  const [likedBlogs, setLikedBlogs] = useState<string[]>([]);
 
   useEffect(() => {
     document.title = "WBT Blog - Resources - Whiteboard";
+
+  const liked = localStorage.getItem("wbt-liked-blogs");
+  setLikedBlogs(liked ? JSON.parse(liked) : []);
 
     async function fetchBlogs() {
       setLoading(true);
@@ -47,18 +49,23 @@ function WbtBlog() {
     fetchBlogs();
   }, []);
 
-  // Likes handler with optimistic UI update and disable button while loading
-  async function handleLike(blogId: string) {
-    if (liking === blogId) return; // avoid double click
 
+  async function handleLike(blogId: string) {
+    if (liking === blogId || likedBlogs.includes(blogId)) return;
     setLiking(blogId);
     try {
+     
       const updatedLikes = await Service.likes(blogId);
+
       setBlogs((prevBlogs) =>
         prevBlogs.map((b) =>
           b.id === blogId ? { ...b, likes: updatedLikes } : b
         )
       );
+      
+      const newLiked = [...likedBlogs, blogId];
+      setLikedBlogs(newLiked);
+      localStorage.setItem("wbt-liked-blogs", JSON.stringify(newLiked));
     } catch (error) {
       alert("Failed to like the blog. Please try again.");
     } finally {
@@ -101,46 +108,52 @@ function WbtBlog() {
 
             {!loading && !error && blogs.length > 0 && (
               <div className="space-y-8">
-                {blogs.map((blog) => (
-                  <article
-                    key={blog.id}
-                    className="p-6 transition-shadow duration-300 bg-white rounded shadow-md hover:shadow-lg"
-                  >
-                    <h3 className="mb-3 text-2xl font-semibold text-gray-900">
-                      {blog.title}
-                    </h3>
-                    <p className="mb-3 text-gray-700 line-clamp-4">
-                      {blog.content}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-500">
-                        Published:{" "}
-                        {new Date(blog.createdAt).toLocaleDateString()}
-                      </span>
-
-                      <button
-                        disabled={liking === blog.id}
-                        onClick={() => handleLike(blog.id)}
-                        className={`flex items-center space-x-1 ${
-                          liking === blog.id
-                            ? "text-green-300 cursor-not-allowed"
-                            : "text-green-600 hover:text-green-800 cursor-pointer"
-                        }`}
-                        aria-label={`Like blog titled ${blog.title}`}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="w-5 h-5 fill-current"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
+                {blogs.map((blog) => {
+                  const alreadyLiked = likedBlogs.includes(blog.id);
+                  return (
+                    <article
+                      key={blog.id}
+                      className="p-6 transition-shadow duration-300 bg-white rounded shadow-md hover:shadow-lg"
+                    >
+                      <h3 className="mb-3 text-2xl font-semibold text-gray-900">
+                        {blog.title}
+                      </h3>
+                      <p className="mb-3 text-gray-700 line-clamp-4">
+                        {blog.content}
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-500">
+                          Published:{" "}
+                          {new Date(blog.createdAt).toLocaleDateString()}
+                        </span>
+                        <button
+                          disabled={liking === blog.id || alreadyLiked}
+                          onClick={() => handleLike(blog.id)}
+                          className={`flex items-center space-x-1 ${
+                            liking === blog.id || alreadyLiked
+                              ? "text-green-300 cursor-not-allowed"
+                              : "text-green-600 hover:text-green-800 cursor-pointer"
+                          }`}
+                          aria-label={
+                            alreadyLiked
+                              ? "Already liked"
+                              : `Like blog titled ${blog.title}`
+                          }
                         >
-                          <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
-                        </svg>
-                        <span>{blog.likes ?? 0}</span>
-                      </button>
-                    </div>
-                  </article>
-                ))}
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="w-5 h-5 fill-current"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
+                          </svg>
+                          <span>{blog.likes ?? 0}</span>
+                        </button>
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
             )}
           </div>
