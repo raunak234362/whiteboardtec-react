@@ -44,23 +44,33 @@ function Structural() {
     });
   };
 
-  const openPopup = (
-    images: string[],
-    title: string,
-    location: string,
-    softwareUsed: string,
-    projectType: string,
-    projectStatus: string
-  ) => {
-    preloadImages(images);
-    setPopupImages(images);
-    setPopupTitle(title);
-    setPopupAddress(location);
-    setPopupSoftware(softwareUsed);
-    setPopupProjectType(projectType);
-    setPopupProjectStatus(projectStatus);
-    setPopupIndex(0);
-  };
+const openPopup = async (
+  images: string[],
+  title: string,
+  location: string,
+  softwareUsed: string,
+  projectType: string,
+  projectStatus: string,
+  id: string // project id
+) => {
+  try {
+    // 🔥 Call the API when image is clicked
+    await Service.getProjectById(id); // Replace with your actual service method
+    console.log("Image click logged for ID:", id);
+  } catch (error) {
+    console.error("Error logging image click:", error);
+  }
+
+  preloadImages(images);
+  setPopupImages(images);
+  setPopupTitle(title);
+  setPopupAddress(location);
+  setPopupSoftware(softwareUsed);
+  setPopupProjectType(projectType);
+  setPopupProjectStatus(projectStatus);
+  setPopupIndex(0);
+};
+
 
   const closePopup = () => {
     setPopupImages(null);

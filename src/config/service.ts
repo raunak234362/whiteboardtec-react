@@ -454,6 +454,24 @@ class Service {
       throw error;
     }
   }
+  static async getProjectById(projectId: string): Promise<object> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.patch<ApiResponse<{ likes: number }>>(
+        `/project/${projectId}`,
+        {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      console.log("-==-=-=-=-=--=-=-===-==-=-=",response)
+      return response;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 }
+
 
 export default Service;

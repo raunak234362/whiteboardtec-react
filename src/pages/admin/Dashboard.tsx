@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Header, HeaderProp, Sidebar } from "./components";
-import Service from "../../config/service"; 
-import AdminBlogManager from "./AdminBlogManager"; 
+import Service from "../../config/service";
 
 type DashboardStats = {
   totalJobs: number;
@@ -9,7 +8,7 @@ type DashboardStats = {
   applicants: number;
   galleryImages: number;
   portfolios: number;
- 
+  blogs: number; // Added blogs count here
 };
 
 function DashboardCard({
@@ -20,11 +19,16 @@ function DashboardCard({
   value: string | number;
 }) {
   return (
-    <div className="flex flex-col items-center justify-center w-full max-w-xs p-6 bg-white border-l-4 border-green-500 rounded shadow-md transition-shadow duration-300 hover:shadow-xl hover:scale-[1.03] cursor-pointer">
-      <h3 className="text-xs font-semibold text-gray-500 uppercase transition-colors duration-300 hover:text-green-600">
+    <div
+      role="region"
+      aria-label={title}
+      tabIndex={0}
+      className="flex flex-col items-center justify-center w-full max-w-xs p-6 bg-white border-l-4 border-green-500 rounded shadow-md transition-shadow duration-300 hover:shadow-xl hover:scale-[1.03] cursor-default focus:outline-none focus:ring-2 focus:ring-green-400"
+    >
+      <h3 className="mb-1 text-xs font-semibold text-gray-500 uppercase transition-colors duration-300">
         {title}
       </h3>
-      <div className="mt-2 text-3xl font-bold text-gray-900">{value}</div>
+      <div className="text-3xl font-bold text-gray-900">{value}</div>
     </div>
   );
 }
@@ -36,6 +40,7 @@ function Dashboard() {
     applicants: 0,
     galleryImages: 0,
     portfolios: 0,
+    blogs: 0, // Initialize blogs count
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -47,33 +52,32 @@ function Dashboard() {
       setLoading(true);
       setError(null);
       try {
-        // Fetch all jobs
+        // Fetch jobs
         const jobs = await Service.getJob();
-        console.log(
-          "Job statuses:",
-          jobs.map((j) => j.status)
-        );
+
         const totalJobs = jobs.length;
-        const activeJobs = jobs.filter((j) => j.status === true).length;
-          // const activeJobs = jobs.filter(
-          //   (j) =>
-          //     j.status === "active" || j.status === "true" || j.status === true // In case you ever store boolean!
-          // ).length;
+
+        // Adjust activeJobs filter condition as per your backend data
+        const activeJobs = jobs.filter(
+          (j) => String(j.status).toLowerCase() === "true"
+        ).length;
+
         // Fetch total applicants across all jobs
         let applicants = 0;
-        
         for (const job of jobs) {
           const apps = await Service.getCareersApplicants(job.id);
           applicants += apps.length;
         }
 
-        // Fetch gallery images/projects count
+        // Fetch gallery count
         const gallery = await Service.getGallery();
         const galleryImages = gallery.length;
 
-        // Fetch portfolios count
-        const portfoliosList = await Service.getPortfolio();
-        const portfolios = portfoliosList.length;
+        // Fetch portfolio count
+        const portfolios = (await Service.getPortfolio()).length;
+
+        // Fetch blogs count
+        const blogs = (await Service.getBlogs()).length;
 
         setStats({
           totalJobs,
@@ -81,6 +85,7 @@ function Dashboard() {
           applicants,
           galleryImages,
           portfolios,
+          blogs,
         });
       } catch (err) {
         console.error("Dashboard data fetch error:", err);
@@ -105,41 +110,36 @@ function Dashboard() {
           <Sidebar />
         </div>
 
-        {/* Main Content Area */}
-        <div className="flex flex-col px-6 py-8">
+        {/* Main Content */}
+        <main className="flex flex-col max-w-full px-8 py-10 overflow-auto">
           <Header {...header} />
 
-          {/* Loading Indicator */}
           {loading && (
-            <div className="flex items-center justify-center py-16">
+            <div className="flex items-center justify-center py-20">
               <span className="text-lg text-gray-600">
                 Loading dashboard...
               </span>
             </div>
           )}
 
-          {/* Error Message */}
           {error && (
-            <div className="flex items-center justify-center py-16">
+            <div className="flex items-center justify-center py-20">
               <span className="text-lg text-red-600">{error}</span>
             </div>
           )}
 
-          {/* Dashboard Content */}
           {!loading && !error && (
             <>
-              {/* Welcome Message */}
-              <div className="flex flex-col items-center justify-center mt-4">
-                <h1 className="text-4xl font-bold text-gray-900">
+              <div className="flex flex-col items-center justify-center mb-12">
+                <h1 className="max-w-4xl text-5xl font-extrabold leading-tight text-center text-gray-900">
                   Welcome to Whiteboard
                 </h1>
-                <p className="mt-2 text-lg text-gray-600">
-                  {/* You can show admin info here */}
+                <p className="max-w-2xl mt-4 text-lg text-center text-gray-600">
+                  {/* Optional info here */}
                 </p>
               </div>
 
-              {/* Stats Cards Grid */}
-              <div className="grid grid-cols-1 gap-6 px-4 mt-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              <div className="grid grid-cols-1 gap-8 px-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 <DashboardCard title="Total Jobs" value={stats.totalJobs} />
                 <DashboardCard title="Active Jobs" value={stats.activeJobs} />
                 <DashboardCard title="Applicants" value={stats.applicants} />
@@ -148,15 +148,15 @@ function Dashboard() {
                   value={stats.galleryImages}
                 />
                 <DashboardCard
-                  title="Total No of Portfolios"
+                  title="Total Portfolios"
                   value={stats.portfolios}
                 />
-                {/* Add more cards as needed */}
+                <DashboardCard title="Blogs Posted" value={stats.blogs} />{" "}
+                {/* New card */}
               </div>
-             
             </>
           )}
-        </div>
+        </main>
       </section>
     </>
   );

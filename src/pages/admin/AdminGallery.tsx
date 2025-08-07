@@ -6,9 +6,8 @@ import ImagePortfolio from "./components/ImagePortfolio";
 import Service from "../../config/service";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-import { IProject, GalleryProjectFrontend } from "../../config/interface"; // Ensure IProject and GalleryProjectFrontend are correctly imported
+import { IProject, GalleryProjectFrontend } from "../../config/interface";
 
-// Define a type for form input fields only (exclude id, images, etc.)
 type IProjectFormInput = {
   title: string;
   description: string;
@@ -19,9 +18,30 @@ type IProjectFormInput = {
   department: string;
 };
 
-const AdminGallery = () => {
-  // State variables
+// Custom Hook for multiple file uploads
+function useMultipleFileUpload() {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+
+  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    setSelectedFiles(files);
+  };
+
+  const removeFile = (index: number) => {
+    setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const clearFiles = () => {
+    setSelectedFiles([]);
+  };
+
+  return { selectedFiles, onFileChange, removeFile, clearFiles };
+}
+
+const AdminGallery = () => {
+  const { selectedFiles, onFileChange, removeFile, clearFiles } =
+    useMultipleFileUpload();
+
   const [uploadProgress, setUploadProgress] = useState<number[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [isOpen, setOpen] = useState(false);
@@ -39,10 +59,10 @@ const AdminGallery = () => {
       title: "",
       description: "",
       location: "",
-      type: "OTHER", // Use uppercase enum values for consistency
+      type: "OTHER",
       technologyused: "",
-      status: "IN_PROGRESS", // Use uppercase enum values
-      department: "OTHER", // Default department
+      status: "IN_PROGRESS",
+      department: "OTHER",
     },
   });
 
@@ -59,7 +79,7 @@ const AdminGallery = () => {
         technologyused: item.technologyused,
         status: item.status,
         images: item.images,
-        file: [], // Provide an empty array to satisfy the required 'file' property, as it's for new uploads
+        file: [],
         onUpdateSuccess: handleUpdateGalleryItem,
         onDeleteSuccess: handleDeleteGalleryItem,
       }));
@@ -70,17 +90,6 @@ const AdminGallery = () => {
       setGallery([]);
     }
   }, []);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    if (files.length > 0) {
-      setSelectedFiles(files);
-      setUploadProgress(new Array(files.length).fill(0)); // Initialize progress for new files
-    } else {
-      setSelectedFiles([]);
-      setUploadProgress([]);
-    }
-  };
 
   const onSubmit: SubmitHandler<IProjectFormInput> = async (data) => {
     if (selectedFiles.length === 0) {
@@ -96,20 +105,20 @@ const AdminGallery = () => {
       formData.append("description", data.description);
       formData.append("location", data.location);
       formData.append("type", data.type);
-      formData.append("department", data.department); // Ensure department is appended
+      formData.append("department", data.department);
       formData.append("technologyused", data.technologyused);
       formData.append("status", data.status);
 
       selectedFiles.forEach((file) => {
-        formData.append("images", file);
+        formData.append("images", file); // Append with [] to indicate multiple files
       });
 
       await Service.createGallery(formData);
 
-      fetchGalleryProjects(); // Re-fetch all projects to update the list
-      setOpen(false); // Close the modal
-      reset(); // Reset form fields to default values
-      setSelectedFiles([]); // Manually clear selected files state
+      await fetchGalleryProjects();
+      setOpen(false);
+      reset();
+      clearFiles();
       alert("Gallery project added successfully!");
     } catch (error) {
       console.error("Error adding gallery project:", error);
@@ -148,10 +157,6 @@ const AdminGallery = () => {
     setIsLoadingAuth(false);
   }, [fetchGalleryProjects]);
 
-  const header: HeaderProp = {
-    head: "Gallery Management",
-  };
-
   if (isLoadingAuth) {
     return <div>Loading authentication...</div>;
   }
@@ -160,10 +165,7 @@ const AdminGallery = () => {
     return <Navigate to="/admin/login" replace />;
   }
 
-  function removeFile(index: number): void {
-    setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
-    setUploadProgress((prevProgress) => prevProgress.filter((_, i) => i !== index));
-  }
+  const header: HeaderProp = { head: "Gallery Management" };
 
   return (
     <>
@@ -172,8 +174,7 @@ const AdminGallery = () => {
         onClose={() => {
           setOpen(false);
           reset();
-          setSelectedFiles([]);
-          setUploadProgress([]);
+          clearFiles();
           setIsUploading(false);
         }}
         className="relative z-50"
@@ -190,8 +191,7 @@ const AdminGallery = () => {
                   onClick={() => {
                     setOpen(false);
                     reset();
-                    setSelectedFiles([]);
-                    setUploadProgress([]);
+                    clearFiles();
                     setIsUploading(false);
                   }}
                   className="text-gray-400 hover:text-gray-800"
@@ -200,16 +200,15 @@ const AdminGallery = () => {
                   <span className="sr-only">Close</span>
                   <svg
                     className="w-6 h-6"
-                    xmlns="http://www.w3.org/2000/svg"
                     fill="none"
-                    viewBox="0 0 24 24"
                     stroke="currentColor"
-                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    strokeWidth={2}
                   >
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      strokeWidth="2"
                       d="M6 18L18 6M6 6l12 12"
                     />
                   </svg>
@@ -217,18 +216,13 @@ const AdminGallery = () => {
               </div>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                  {/* Left Column */}
+                  {/* Left column */}
                   <div className="space-y-4">
-                    <div>
-                      <label
-                        htmlFor="title"
-                        className="block mb-1 text-sm font-medium text-gray-700"
-                      >
+                    <label>
+                      <span className="block mb-1 text-sm font-medium text-gray-700">
                         Project Title *
-                      </label>
+                      </span>
                       <input
-                        type="text"
-                        id="title"
                         {...register("title", {
                           required: "Project Title is required",
                         })}
@@ -241,21 +235,16 @@ const AdminGallery = () => {
                           {errors.title.message}
                         </p>
                       )}
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="description"
-                        className="block mb-1 text-sm font-medium text-gray-700"
-                      >
+                    </label>
+                    <label>
+                      <span className="block mb-1 text-sm font-medium text-gray-700">
                         Description *
-                      </label>
+                      </span>
                       <textarea
-                        id="description"
-                        rows={3}
                         {...register("description", {
                           required: "Description is required",
                         })}
+                        rows={3}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         placeholder="Enter project description"
                         disabled={isUploading}
@@ -265,18 +254,12 @@ const AdminGallery = () => {
                           {errors.description.message}
                         </p>
                       )}
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="location"
-                        className="block mb-1 text-sm font-medium text-gray-700"
-                      >
+                    </label>
+                    <label>
+                      <span className="block mb-1 text-sm font-medium text-gray-700">
                         Location *
-                      </label>
+                      </span>
                       <input
-                        type="text"
-                        id="location"
                         {...register("location", {
                           required: "Location is required",
                         })}
@@ -289,79 +272,57 @@ const AdminGallery = () => {
                           {errors.location.message}
                         </p>
                       )}
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="projectType"
-                        className="block mb-1 text-sm font-medium text-gray-700"
-                      >
+                    </label>
+                    <label>
+                      <span className="block mb-1 text-sm font-medium text-gray-700">
                         Project Type
-                      </label>
+                      </span>
                       <select
-                        id="projectType"
                         {...register("type")}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         disabled={isUploading}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                       >
-                        <option value="OTHER">Select project type</option>{" "}
-                        {/* Set a default value */}
+                        <option value="OTHER">Other</option>
                         <option value="INSTITUTE">Institute</option>
                         <option value="COMMERCIAL">Commercial</option>
                         <option value="FACILITY_EXPENSION">
                           Facility Expension
                         </option>
                         <option value="INDUSTRIAL">Industrial</option>
-                        <option value="OTHER">Other</option>
                       </select>
-
                       {errors.type && (
                         <p className="mt-1 text-sm text-red-500">
                           {errors.type.message}
                         </p>
                       )}
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="department"
-                        className="block mb-1 text-sm font-medium text-gray-700"
-                      >
+                    </label>
+                    <label>
+                      <span className="block mb-1 text-sm font-medium text-gray-700">
                         Department
-                      </label>
+                      </span>
                       <select
-                        id="department"
                         {...register("department")}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         disabled={isUploading}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                       >
-                        <option value="OTHER">Select department</option>{" "}
-                        {/* Set a default value */}
+                        <option value="OTHER">Other</option>
                         <option value="PEMB">PEMB</option>
                         <option value="STRUCTURAL">Structural</option>
-                        <option value="OTHER">Other</option>
                       </select>
-
-                      {errors.department && ( // Check for department errors
+                      {errors.department && (
                         <p className="mt-1 text-sm text-red-500">
                           {errors.department.message}
                         </p>
                       )}
-                    </div>
+                    </label>
                   </div>
-
+                  {/* Right column */}
                   <div className="space-y-4">
-                    {" "}
-                    <div>
-                      <label
-                        htmlFor="technologyUsed"
-                        className="block mb-1 text-sm font-medium text-gray-700"
-                      >
-                        Software/Technologies Used *
-                      </label>
+                    <label>
+                      <span className="block mb-1 text-sm font-medium text-gray-700">
+                        Software / Technologies Used *
+                      </span>
                       <input
-                        type="text"
-                        id="technologyUsed"
                         {...register("technologyused", {
                           required: "Technologies Used is required",
                         })}
@@ -374,19 +335,15 @@ const AdminGallery = () => {
                           {errors.technologyused.message}
                         </p>
                       )}
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="projectStatus"
-                        className="block mb-1 text-sm font-medium text-gray-700"
-                      >
+                    </label>
+                    <label>
+                      <span className="block mb-1 text-sm font-medium text-gray-700">
                         Project Status
-                      </label>
+                      </span>
                       <select
-                        id="projectStatus"
                         {...register("status")}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         disabled={isUploading}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                       >
                         <option value="PLANNING">Planning</option>
                         <option value="IN_PROGRESS">In Progress</option>
@@ -394,23 +351,20 @@ const AdminGallery = () => {
                         <option value="ON_HOLD">On Hold</option>
                         <option value="CANCELLED">Cancelled</option>
                       </select>
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="images"
-                        className="block mb-1 text-sm font-medium text-gray-700"
-                      >
+                    </label>
+                    <label>
+                      <span className="block mb-1 text-sm font-medium text-gray-700">
                         Project Images * (Multiple files supported)
-                      </label>
+                      </span>
                       <input
                         type="file"
                         name="images"
                         id="images"
                         accept="image/*"
                         multiple
-                        onChange={handleFileChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                        onChange={onFileChange}
                         disabled={isUploading}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                       />
                       {selectedFiles.length === 0 && (
                         <p className="mt-1 text-sm text-red-500">
@@ -420,74 +374,65 @@ const AdminGallery = () => {
                       <p className="mt-1 text-sm text-gray-500">
                         Select multiple images to upload for this project
                       </p>
-                    </div>
+                    </label>
                     {selectedFiles.length > 0 && (
-                      <div className="mt-4">
-                        <h4 className="mb-2 text-sm font-medium text-gray-700">
-                          Selected Files ({selectedFiles.length})
-                        </h4>
-                        <div className="space-y-2 overflow-y-auto max-h-32">
-                          {selectedFiles.map((file, index) => (
-                            <div
-                              key={index}
-                              className="flex items-center justify-between p-2 rounded bg-gray-50"
-                            >
-                              <div className="flex-1">
-                                <span className="block text-sm text-gray-800 truncate">
-                                  {file.name}
-                                </span>
-                                <span className="text-xs text-gray-500">
-                                  {(file.size / 1024 / 1024).toFixed(2)} MB
-                                </span>
-                                {isUploading && (
-                                  <div className="mt-1">
-                                    <div className="bg-gray-200 rounded-full h-1.5">
-                                      <div
-                                        className="bg-green-600 h-1.5 rounded-full transition-all duration-300"
-                                        style={{
-                                          width: `${
-                                            uploadProgress[index] || 0
-                                          }%`,
-                                        }}
-                                      ></div>
-                                    </div>
-                                  </div>
-                                )}
-                              </div>
-                              {!isUploading && (
-                                <button
-                                  type="button"
-                                  onClick={() => removeFile(index)}
-                                  className="ml-2 text-red-500 hover:text-red-700"
-                                >
-                                  <svg
-                                    className="w-4 h-4"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth="2"
-                                      d="M6 18L18 6M6 6l12 12"
+                      <div className="mt-4 space-y-2 overflow-y-auto max-h-32">
+                        {selectedFiles.map((file, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center justify-between p-2 rounded bg-gray-50"
+                          >
+                            <div>
+                              <span className="block text-sm text-gray-800 truncate">
+                                {file.name}
+                              </span>
+                              <span className="text-xs text-gray-500">
+                                {(file.size / 1024 / 1024).toFixed(2)} MB
+                              </span>
+                              {isUploading && (
+                                <div className="mt-1">
+                                  <div className="bg-gray-200 rounded-full h-1.5">
+                                    <div
+                                      className="bg-green-600 h-1.5 rounded-full transition-all duration-300"
+                                      style={{
+                                        width: `${uploadProgress[index] || 0}%`,
+                                      }}
                                     />
-                                  </svg>
-                                </button>
+                                  </div>
+                                </div>
                               )}
                             </div>
-                          ))}
-                        </div>
+                            {!isUploading && (
+                              <button
+                                type="button"
+                                onClick={() => removeFile(index)}
+                                className="ml-2 text-red-500 hover:text-red-700"
+                                aria-label="Remove file"
+                              >
+                                <svg
+                                  className="w-4 h-4"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M6 18L18 6M6 6l12 12"
+                                  />
+                                </svg>
+                              </button>
+                            )}
+                          </div>
+                        ))}
                       </div>
                     )}
-                    {/* Overall Upload Progress */}
                     {isUploading && (
                       <div className="mt-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm text-gray-600">
-                            Uploading images...
-                          </span>
-                          <span className="text-sm text-gray-600">
+                        <div className="flex items-center justify-between mb-2 text-sm text-gray-600">
+                          <span>Uploading images...</span>
+                          <span>
                             {uploadProgress.filter((p) => p === 100).length} /{" "}
                             {selectedFiles.length} completed
                           </span>
@@ -503,19 +448,18 @@ const AdminGallery = () => {
                                 100
                               }%`,
                             }}
-                          ></div>
+                          />
                         </div>
                       </div>
                     )}
                   </div>
                 </div>
-
                 {/* Action Buttons */}
-                <div className="flex justify-center pt-4 mt-6 space-x-4 border-t">
+                <div className="flex justify-center pt-6 space-x-4 border-t">
                   <button
                     type="submit"
                     disabled={isUploading || selectedFiles.length === 0}
-                    className="px-6 py-2 text-white transition-colors bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                    className="px-6 py-2 text-white transition bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
                   >
                     {isUploading ? "Uploading..." : "Add Gallery Project"}
                   </button>
@@ -524,12 +468,11 @@ const AdminGallery = () => {
                     onClick={() => {
                       setOpen(false);
                       reset();
-                      setSelectedFiles([]);
-                      setUploadProgress([]);
+                      clearFiles();
                       setIsUploading(false);
                     }}
                     disabled={isUploading}
-                    className="px-6 py-2 text-white transition-colors bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                    className="px-6 py-2 text-white transition bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
                   >
                     Cancel
                   </button>
@@ -540,23 +483,23 @@ const AdminGallery = () => {
         </div>
       </Dialog>
 
-      {/* Main Gallery Section */}
-      <section className="w-full grid grid-cols-[20%_80%]">
-        <div style={{ minHeight: "95.2vh" }}>
+      {/* Main section */}
+      <section className="w-full grid grid-cols-[20%_80%] min-h-screen">
+        <aside
+          className="text-white bg-gray-900 border-r border-gray-300"
+          style={{ minHeight: "100vh" }}
+        >
           <Sidebar />
-        </div>
-        <div className="flex flex-col flex-wrap">
+        </aside>
+        <main className="flex flex-col overflow-auto">
           <Header {...header} />
           <div className="flex flex-row flex-wrap items-center justify-between m-4">
-            <h1 className="text-xl font-semibold text-gray-800">
+            <h1 className="text-2xl font-semibold text-gray-800">
               Gallery Management
-            </h1>{" "}
+            </h1>
             <button
-              className="px-4 py-2 text-white transition-colors bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-              onClick={(e) => {
-                e.preventDefault();
-                setOpen(true);
-              }}
+              onClick={() => setOpen(true)}
+              className="px-4 py-2 text-white transition bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               Add New Project
             </button>
@@ -566,34 +509,22 @@ const AdminGallery = () => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-green-500">
                 <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase"
-                  >
+                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">
                     Project Details
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase"
-                  >
+                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">
                     Type & Status
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase"
-                  >
+                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">
                     Images
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-xs font-medium tracking-wider text-center text-white uppercase"
-                  >
+                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-center text-white uppercase">
                     Actions
                   </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {gallery?.map((project) => (
+                {gallery.map((project) => (
                   <ImagePortfolio
                     key={project.id}
                     {...project}
@@ -601,7 +532,7 @@ const AdminGallery = () => {
                     onDeleteSuccess={handleDeleteGalleryItem}
                   />
                 ))}
-                {gallery?.length === 0 && (
+                {gallery.length === 0 && (
                   <tr>
                     <td
                       colSpan={4}
@@ -615,10 +546,10 @@ const AdminGallery = () => {
               </tbody>
             </table>
           </div>
-        </div>
+        </main>
       </section>
-      </>
-    );
-  };
-  
-  export default AdminGallery;
+    </>
+  );
+};
+
+export default AdminGallery;

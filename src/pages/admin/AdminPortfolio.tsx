@@ -6,9 +6,6 @@ import { PortfolioPropType } from "../../config/interface";
 import { Dialog } from "@headlessui/react";
 import Service from "../../config/service";
 
-
-
-
 function AdminPortfolio() {
   const [portfolios, setPortfolio] = useState<PortfolioPropType[]>([]);
   const [isOpen, setOpen] = useState(false);
@@ -22,35 +19,27 @@ function AdminPortfolio() {
   const [progress, setProgress] = useState<number>(0);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  // const [jdPdf, setJdPdf] = useState<File | null>(null);
-  // const [jdProgress, setJdProgress] = useState<number>(0);
-  
+
   const fetchPortfolio = async () => {
     try {
       const response = await Service.getPortfolio();
-      console.log("Fetched Portfolio:", response);
       setPortfolio(
-              response.map((portfolio: any) => ({
-                id: portfolio.id,
-                title: portfolio.title,
-                description: portfolio.description,
-                status: portfolio.status,
-                pdf: portfolio.file || "",
-                file: portfolio.file || null, // Ensure 'file' is included
-              }))
-            );
- 
+        response.map((portfolio: any) => ({
+          id: portfolio.id,
+          title: portfolio.title,
+          description: portfolio.description,
+          status: portfolio.status,
+          pdf: portfolio.file || "",
+          file: portfolio.file || null,
+        }))
+      );
     } catch (error) {
       console.error("Error fetching portfolio:", error);
       setPortfolio([]);
     }
   };
 
-
-  
-console.log("----------",portfolios);
-
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProgress(0);
     const file = e.target.files?.[0];
     if (file) {
@@ -61,11 +50,8 @@ console.log("----------",portfolios);
       setProgress(0);
     }
   };
-  
-
 
   const handleAddSubmit = useCallback(async () => {
-    console.log(pdf);
     if (!pdf) {
       alert("Please upload a PDF file");
       return;
@@ -109,7 +95,7 @@ console.log("----------",portfolios);
     }
 
     try {
-      await Service.updatePortfolio(currentPortfolio.id, formData); 
+      await Service.updatePortfolio(currentPortfolio.id, formData);
       alert("Portfolio project updated successfully");
       fetchPortfolio();
       setOpen(false);
@@ -127,12 +113,12 @@ console.log("----------",portfolios);
   }, [title, description, pdf, status, currentPortfolio]);
 
   const handleEdit = useCallback((portfolio: PortfolioPropType) => {
-    setOpen(true); 
+    setOpen(true);
     setIsEditMode(true);
     setCurrentPortfolio(portfolio);
     setTitle(portfolio.title);
     setDescription(portfolio.description);
-    setPdf(null); 
+    setPdf(null);
     setStatus(
       typeof portfolio.status === "boolean"
         ? portfolio.status
@@ -148,7 +134,7 @@ console.log("----------",portfolios);
       try {
         await Service.deletePortfolio(id);
         alert("Portfolio project deleted successfully");
-        fetchPortfolio(); // Refresh the list
+        fetchPortfolio();
       } catch (error) {
         console.error("Error deleting portfolio project:", error);
         alert("Failed to delete portfolio project. Please try again.");
@@ -159,8 +145,6 @@ console.log("----------",portfolios);
   useEffect(() => {
     document.title = "Admin | Portfolio - Whiteboard";
     const token = sessionStorage.getItem("token");
-    console.log("Token in useEffect:", token);
-
     if (token) {
       setIsAuthenticated(true);
       fetchPortfolio();
@@ -170,18 +154,25 @@ console.log("----------",portfolios);
     setIsLoading(false);
   }, []);
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen text-gray-600">
+        Loading authentication...
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/admin/login" replace />;
+  }
+
   const header: HeaderProp = {
     head: "Portfolio",
   };
-  if (isLoading) {
-    return <div>Loading authentication...</div>;
-  }
-  if (!isAuthenticated) {
-    return <Navigate to="/admin/login" replace />; 
-  }
 
   return (
     <>
+      {/* Modal */}
       <Dialog
         open={isOpen}
         onClose={() => {
@@ -194,293 +185,270 @@ console.log("----------",portfolios);
           setStatus(false);
           setProgress(0);
         }}
-        className="relative z-50"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
       >
-        <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
-        <div className="fixed w-screen overflow-y-auto inset-1">
-          <div className="flex items-center justify-center min-h-full p-4">
-            <div className="flex flex-col w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg">
-              <div className="flex justify-between">
-                <Dialog.Title className="text-lg font-semibold">
-                  {isEditMode ? "Edit Portfolio" : "Add New Portfolio"}{" "}
-                </Dialog.Title>
-                <button
-                  onClick={() => {
-                    setOpen(false);
-                    setIsEditMode(false);
-                    setCurrentPortfolio(null);
-                    setTitle("");
-                    setDescription("");
-                    setPdf(null);
-                    setStatus(false);
-                    setProgress(0);
-                  }}
-                  className="text-gray-400 hover:text-gray-800"
-                >
-                  <span className="sr-only">Close</span>
-                  <svg
-                    className="w-6 h-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              </div>
-
-              <table className="mx-10 mt-4 border-separate border-spacing-y-4">
-                <tbody>
-                  <tr>
-                    <td>
-                      <label htmlFor="Role" className="text-sm text-gray-800">
-                        Title
-                      </label>
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        name="Role"
-                        id="Role"
-                        value={title}
-                        onChange={(e) => {
-                          setTitle(e.target.value);
-                        }}
-                        className="w-full px-2 mx-4 border-2 border-gray-200 rounded-md"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label
-                        htmlFor="Location"
-                        className="text-sm text-gray-800"
-                      >
-                        Description
-                      </label>
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        name="Description"
-                        id="Description"
-                        value={description}
-                        onChange={(e) => {
-                          setDescription(e.target.value);
-                        }}
-                        className="w-full px-2 mx-4 border-2 border-gray-200 rounded-md"
-                        placeholder="Enter description"
-                        title="Description"
-                      />
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>
-                      <label htmlFor="pdf" className="text-sm text-gray-800">
-                        PDF
-                      </label>
-                    </td>
-                    <td>
-                      <input
-                        type="file"
-                        name="PDF"
-                        id="PDF"
-                        accept="application/pdf"
-                        onChange={handleFileChange}
-                        className="w-full mx-4 border-2 border-gray-200 rounded-md"
-                        placeholder="Upload PDF file"
-                        title="Upload PDF file"
-                      />
-                      {progress > 0 && progress <= 100 && (
-                        <span className="mx-3 text-gray-600">
-                          {Math.round(progress)}%
-                        </span>
-                      )}
-                      {isEditMode && currentPortfolio?.file && !pdf && (
-                        <p className="mx-4 mt-1 text-sm text-gray-500">
-                          Current PDF:{" "}
-                          <a
-                            href={`${import.meta.env.VITE_IMG_URL}${
-                              Array.isArray(currentPortfolio.file)
-                                ? (currentPortfolio.file[0] as { path?: string })?.path
-                                : (currentPortfolio.file as { path?: string } | null | undefined)?.path || ""
-                            }`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="underline"
-                          >
-                            View
-                          </a>{" "}
-                          (Upload new to change)
-                        </p>
-                      )}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label htmlFor="Active" className="text-sm text-gray-800">
-                        Status
-                      </label>
-                    </td>
-                    <td>
-                      <input
-                        type="checkbox"
-                        name="Active"
-                        id="Active"
-                        checked={status}
-                        onChange={() => setStatus(!status)}
-                        className="mx-4 border-2 border-gray-200 rounded-md custom-checkbox"
-                      />
-                      {status ? (
-                        <label className="text-[#6abd45]" htmlFor="Active">
-                          Active
-                        </label>
-                      ) : (
-                        <label className="text-red-600" htmlFor="Active">
-                          Inactive
-                        </label>
-                      )}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div className="flex flex-row flex-wrap justify-center">
-                <button
-                  type="submit"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (isEditMode) {
-                      handleUpdateSubmit();
-                    } else {
-                      handleAddSubmit();
-                    }
-                  }}
-                  className=" px-4 border-2 rounded-md bg-green-500 text-white text-lg border-white drop-shadow-lg mx-3 hover:border-[#6abd45] hover:text-[#6abd45] hover:bg-white"
-                >
-                  {isEditMode ? "Update" : "Add New"}{" "}
-                  {/* Dynamic button text */}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setOpen(false);
-                    setIsEditMode(false);
-                    setCurrentPortfolio(null);
-                    setTitle("");
-                    setDescription("");
-                    setPdf(null);
-                    setStatus(false);
-                    setProgress(0);
-                  }}
-                  className="px-4 mx-3 text-lg text-white bg-red-600 border-2 border-white rounded-md drop-shadow-lg hover:border-red-500 hover:text-red-500 hover:bg-white"
-                >
-                  Cancel
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Dialog>
-
-      <section className="w-full grid grid-cols-[20%_80%]">
-        <div style={{ minHeight: "95.2vh" }}>
-          <Sidebar />
-        </div>
-        <div className="flex flex-col flex-wrap">
-          <Header {...header} />
-          <div className="flex flex-row flex-wrap m-4">
-            <h1 className="text-lg font-semibold">
-              List of Current Portfolio Works
-            </h1>
+        <Dialog.Panel className="relative w-full max-w-4xl max-h-[90vh] overflow-auto rounded-lg bg-white p-6 shadow-lg">
+          <div className="flex items-center justify-between mb-6">
+            <Dialog.Title className="text-lg font-semibold text-gray-900">
+              {isEditMode ? "Edit Portfolio" : "Add New Portfolio"}
+            </Dialog.Title>
             <button
-              className="px-2 mx-4 bg-gray-200 border-2 border-black rounded-md shadow-xl hover:drop-shadow-none drop-shadow-xl hover:shadow-none"
-              onClick={(e) => {
-                e.preventDefault();
-                setOpen(true);
+              onClick={() => {
+                setOpen(false);
                 setIsEditMode(false);
-
+                setCurrentPortfolio(null);
                 setTitle("");
                 setDescription("");
                 setPdf(null);
                 setStatus(false);
                 setProgress(0);
-                setCurrentPortfolio(null);
               }}
+              className="text-gray-400 hover:text-gray-800 focus:outline-none"
+              aria-label="Close modal"
             >
-              Add New
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
             </button>
           </div>
 
-          <table className="mx-4 divide-y divide-gray-200">
-            <thead className="bg-[#6abd45] text-white">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-3 pl-20 text-xs font-medium uppercase text-start"
-                >
-                  Title
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-xs font-medium text-center uppercase"
-                >
-                  Description
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-xs font-medium text-center uppercase"
-                >
-                  Portfolio PDF
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-xs font-medium text-center uppercase"
-                >
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 ">
-              {portfolios
-                ?.filter((portfolio) => portfolio.id) // Ensure id is defined
-                .map((portfolio) => (
-                  <WorkPortfolio
-                    key={portfolio.id}
-                    {...portfolio}
-                    id={portfolio.id as string} // Explicitly cast id to string
-                    status={
-                      typeof portfolio.status === "boolean"
-                        ? portfolio.status
-                        : portfolio.status === "active"
-                        ? "active"
-                        : "inactive"
-                    } // Ensure status matches the expected type
-                    pdf={
-                      Array.isArray(portfolio.file)
-                        ? portfolio.file
-                        : portfolio.file
-                        ? [portfolio.file]
-                        : []
-                    }
-                    onEdit={(portfolio) =>
-                      handleEdit(portfolio as PortfolioPropType)
-                    }
-                    onDelete={handleDelete}
-                  />
+          {/* Form Inputs */}
+          <form>
+            <table className="w-full mx-auto border-separate border-spacing-y-4">
+              <tbody>
+                {[
+                  {
+                    label: "Title",
+                    value: title,
+                    type: "text",
+                    onChange: setTitle,
+                  },
+                  {
+                    label: "Description",
+                    value: description,
+                    type: "text",
+                    onChange: setDescription,
+                    placeholder: "Enter description",
+                  },
+                ].map(({ label, value, type, onChange, placeholder }, idx) => (
+                  <tr key={idx}>
+                    <td className="w-32 p-2 font-medium text-gray-800 align-top">
+                      {label}
+                    </td>
+                    <td className="p-2">
+                      <input
+                        type={type}
+                        value={value}
+                        onChange={(e) => onChange(e.target.value)}
+                        placeholder={placeholder}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      />
+                    </td>
+                  </tr>
                 ))}
-            </tbody>
-          </table>
-        </div>
+
+                <tr>
+                  <td className="p-2 font-medium text-gray-800 align-top">
+                    PDF
+                  </td>
+                  <td className="p-2">
+                    <input
+                      type="file"
+                      accept="application/pdf"
+                      onChange={handleFileChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                    />
+                    {progress > 0 && progress <= 100 && (
+                      <p className="mt-1 text-gray-600">
+                        {Math.round(progress)}%
+                      </p>
+                    )}
+                    {isEditMode && currentPortfolio?.file && !pdf && (
+                      <p className="mt-1 text-sm text-gray-500">
+                        Current PDF:{" "}
+                        <a
+                          href={`${import.meta.env.VITE_IMG_URL}${
+                            Array.isArray(currentPortfolio.file)
+                              ? (currentPortfolio.file[0] as { path?: string })
+                                  ?.path
+                              : (
+                                  currentPortfolio.file as
+                                    | { path?: string }
+                                    | null
+                                    | undefined
+                                )?.path || ""
+                          }`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 underline"
+                        >
+                          View
+                        </a>{" "}
+                        (Upload new to change)
+                      </p>
+                    )}
+                  </td>
+                </tr>
+
+                <tr>
+                  <td className="p-2 font-medium text-gray-800 align-top">
+                    Status
+                  </td>
+                  <td className="flex items-center p-2 space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={status}
+                      onChange={() => setStatus(!status)}
+                      className="w-5 h-5 border-gray-300 rounded focus:ring-2 focus:ring-green-500"
+                      id="statusCheckbox"
+                    />
+                    <label
+                      htmlFor="statusCheckbox"
+                      className={status ? "text-green-600" : "text-red-600"}
+                    >
+                      {status ? "Active" : "Inactive"}
+                    </label>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            {/* Action Buttons */}
+            <div className="flex justify-center mt-6 space-x-6">
+              <button
+                type="button"
+                onClick={() => {
+                  if (isEditMode) handleUpdateSubmit();
+                  else handleAddSubmit();
+                }}
+                className="px-6 py-2 text-green-600 transition bg-green-600 rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+              >
+                {isEditMode ? "Update" : "Add New"}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  setIsEditMode(false);
+                  setCurrentPortfolio(null);
+                  setTitle("");
+                  setDescription("");
+                  setPdf(null);
+                  setStatus(false);
+                  setProgress(0);
+                }}
+                className="px-6 py-2 text-white transition bg-red-600 rounded-md shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </Dialog.Panel>
+      </Dialog>
+
+      {/* Main portfolio section */}
+      <section className="w-full grid grid-cols-[20%_80%] h-screen bg-gray-50">
+        <aside className="overflow-auto text-white bg-gray-900 border-r border-gray-300">
+          <Sidebar />
+        </aside>
+
+        <main className="flex flex-col overflow-auto">
+          <Header {...header} />
+          <div className="flex items-center justify-between p-6">
+            <h1 className="text-3xl font-semibold text-gray-800">
+              Portfolio Projects
+            </h1>
+            <button
+              className="px-6 py-2 text-white transition bg-green-600 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+              onClick={() => {
+                setOpen(true);
+                setIsEditMode(false);
+                setCurrentPortfolio(null);
+                setTitle("");
+                setDescription("");
+                setPdf(null);
+                setStatus(false);
+                setProgress(0);
+              }}
+            >
+              + Add New Project
+            </button>
+          </div>
+
+          <div className="p-6 overflow-auto bg-white rounded shadow">
+            <table className="min-w-full divide-y divide-gray-200 rounded shadow">
+              <thead className="text-white bg-green-600">
+                <tr>
+                  <th className="px-6 py-3 text-sm font-semibold text-left uppercase">
+                    Title
+                  </th>
+                  <th className="px-6 py-3 text-sm font-semibold text-left uppercase">
+                    Description
+                  </th>
+                  <th className="px-6 py-3 text-sm font-semibold text-left uppercase">
+                    Portfolio PDF
+                  </th>
+                  <th className="px-6 py-3 text-sm font-semibold text-center uppercase">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {portfolios.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan={4}
+                      className="px-6 py-4 font-medium text-center text-gray-500"
+                    >
+                      No portfolio projects found.
+                    </td>
+                  </tr>
+                ) : (
+                  portfolios
+                    .filter((portfolio) => portfolio.id)
+                    .map((portfolio) => (
+                      <WorkPortfolio
+                        key={portfolio.id}
+                        {...portfolio}
+                        id={portfolio.id as string}
+                        status={
+                          typeof portfolio.status === "boolean"
+                            ? portfolio.status
+                            : portfolio.status === "active"
+                            ? "active"
+                            : "inactive"
+                        }
+                        pdf={
+                          Array.isArray(portfolio.file)
+                            ? portfolio.file
+                            : portfolio.file
+                            ? [portfolio.file]
+                            : []
+                        }
+                        onEdit={(pf) => handleEdit(pf as PortfolioPropType)}
+                        onDelete={handleDelete}
+                      />
+                    ))
+                )}
+              </tbody>
+            </table>
+          </div>
+        </main>
       </section>
     </>
   );
 }
+
 export default AdminPortfolio;
