@@ -42,7 +42,7 @@ const AdminGallery = () => {
   const { selectedFiles, onFileChange, removeFile, clearFiles } =
     useMultipleFileUpload();
 
-  const [uploadProgress, setUploadProgress] = useState<number[]>([]);
+  const [uploadProgress] = useState<number[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [isOpen, setOpen] = useState(false);
   const [gallery, setGallery] = useState<GalleryProjectFrontend[]>([]);

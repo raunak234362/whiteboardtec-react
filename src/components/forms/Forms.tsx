@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Service from "../../config/service";
-import { ConnectProps } from "../../config/interface"; 
+
 
 type FormField = {
   name: string;
@@ -22,7 +22,7 @@ function Forms(props: FormType): JSX.Element {
     formState: { errors }, 
   } = useForm();
 
-  const [loading, setLoading] = useState(false);
+  const [, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
 
   const onSubmit = async (data: any) => {

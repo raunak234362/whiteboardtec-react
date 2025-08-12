@@ -5,6 +5,13 @@ import Service from "../../config/service";
 interface ImageModalProps {
   projectID: string;
   onClose: () => void;
+  imageList: string[];
+  title: string;
+  location: string;
+  softwareUsed: string;
+  projectType: string;
+  ProjectStatus: string;
+  initialIndex: number;
 }
 
 export const ImageModal: React.FC<ImageModalProps> = ({

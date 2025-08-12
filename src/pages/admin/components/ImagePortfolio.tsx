@@ -104,6 +104,7 @@ console.log("ImagePortfolio props:", props);
         file: [], // Frontend representation might not need the actual File object
         onUpdateSuccess: props.onUpdateSuccess,
         onDeleteSuccess: props.onDeleteSuccess,
+        projectTitle: ""
       });
     } catch (error) {
       console.error("Error updating gallery project:", error);

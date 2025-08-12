@@ -136,15 +136,14 @@ function PEMB() {
 
       {popupTitle && popupAddress && popupProjectType && (
         <ImageModal
-          images={popupImages || []}
+          imageList={popupImages || []}
           title={popupTitle}
           location={popupAddress || ""}
           softwareUsed={popupSoftware || ""}
           projectType={popupProjectType || ""}
           ProjectStatus={popupProjectStatus || ""}
           initialIndex={popupIndex}
-          onClose={closePopup}
-        />
+          onClose={closePopup} projectID={""}        />
       )}
     </div>
   );

@@ -140,7 +140,7 @@ function GalleryImages() {
         </div>
 
         {selectedProjectID && (
-          <ImageModal projectID={selectedProjectID} onClose={closeModal} />
+          <ImageModal projectID={selectedProjectID} onClose={closeModal} imageList={[]} title={""} location={""} softwareUsed={""} projectType={""} ProjectStatus={""} initialIndex={0} />
         )}
       </div>
     </section>

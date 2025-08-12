@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { PageBanner, BannerPropType } from "../../components/banner";
-import { ImageModal } from "./ImagePopup";
+// import { ImageModal } from "./ImagePopup";
 import Service from "../../config/service";
 import { IProject } from "../../config/interface";
 
@@ -11,15 +11,15 @@ const banner: BannerPropType = {
 };
 
 function Structural() {
-  const [popupImages, setPopupImages] = useState<string[] | null>(null);
-  const [popupTitle, setPopupTitle] = useState<string | null>(null);
-  const [popupAddress, setPopupAddress] = useState<string | null>(null);
-  const [popupProjectType, setPopupProjectType] = useState<string | null>(null);
-  const [popupProjectStatus, setPopupProjectStatus] = useState<string | null>(
+  const [, setPopupImages] = useState<string[] | null>(null);
+  const [, setPopupTitle] = useState<string | null>(null);
+  const [, setPopupAddress] = useState<string | null>(null);
+  const [, setPopupProjectType] = useState<string | null>(null);
+  const [, setPopupProjectStatus] = useState<string | null>(
     null
   );
-  const [popupIndex, setPopupIndex] = useState<number>(0);
-  const [popupSoftware, setPopupSoftware] = useState<string | null>(null);
+  const [, setPopupIndex] = useState<number>(0);
+  const [, setPopupSoftware] = useState<string | null>(null);
 
   const [galleryImages, setGalleryImages] = useState<IProject[]>([]);
 
@@ -72,14 +72,6 @@ const openPopup = async (
 };
 
 
-  const closePopup = () => {
-    setPopupImages(null);
-    setPopupTitle(null);
-    setPopupAddress(null);
-    setPopupSoftware(null);
-    setPopupProjectType(null);
-    setPopupProjectStatus(null);
-  };
 
   return (
     <div className="pemb">
