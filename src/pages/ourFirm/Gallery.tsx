@@ -46,7 +46,7 @@ function Gallery() {
       <section className="px-5 py-10">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {galleryCategories.map(
+            {galleryCategories?.map(
               (
                 category,
                 index 
