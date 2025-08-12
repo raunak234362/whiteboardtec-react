@@ -23,14 +23,21 @@ export const ImageModal: React.FC<ImageModalProps> = ({
 
   interface GalleryFile {
     secureUrl: string;
-    [key: string]: any;
   }
-
   interface GalleryResponse {
-    file: GalleryFile | GalleryFile[] | string[];
+    images?: GalleryFile[] | string[] | GalleryFile;
     projectTitle?: string;
     title?: string;
     description?: string;
+    department?: string;
+    location?: string;
+    projectLocation?: string;
+    technologyused?: string;
+    technologyUsed?: string;
+    status?: string;
+    ProjectStatus?: string;
+    softwareUsed?: string;
+    type?: string;
     [key: string]: any;
   }
 
@@ -40,27 +47,32 @@ export const ImageModal: React.FC<ImageModalProps> = ({
         projectID
       );
       let images: string[] = [];
+
       if (Array.isArray(response.images)) {
-        if (typeof response.images[0] === "string") {
+        if (typeof response.images[0] === "string")
           images = response.images as string[];
-        } else {
+        else
           images = (response.images as GalleryFile[]).map((f) => f.secureUrl);
-        }
       } else if (
         response.images &&
-        typeof response.images === "object" &&
-        "secureUrl" in response.images
+        "secureUrl" in (response.images as GalleryFile)
       ) {
         images = [(response.images as GalleryFile).secureUrl];
       }
+
       setImageData({
-        title: response.projectTitle || response.title || "",
-        description: response.description || "",
-        type: response.type || "",
+        title: response.projectTitle || response.title || "Untitled Project",
+        description: response.description || "No description available",
+        type: response.type || "Not specified",
         images,
-        department: response.department || "Unknown",
-        projectLocation: response.projectLocation || "Unknown",
-        technologyUsed: response.technologyUsed || "Unknown",
+        department: response.department || "Not specified",
+        projectLocation:
+          response.location || response.projectLocation || "Not specified",
+        technologyUsed:
+          response.technologyused || response.technologyUsed || "Not specified",
+        projectStatus:
+          response.status || response.ProjectStatus || "Not specified",
+        softwareUsed: response.softwareUsed || "Not specified",
       });
       setCurrentIndex(0);
     } catch {
@@ -90,12 +102,13 @@ export const ImageModal: React.FC<ImageModalProps> = ({
     <Dialog
       open={!!projectID}
       onClose={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-20 backdrop-blur-lg"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30 backdrop-blur-lg"
     >
       <Dialog.Panel className="relative flex flex-col max-w-5xl w-full max-h-[90vh] bg-white rounded-2xl shadow-2xl overflow-hidden">
         {imageData?.images?.length > 0 ? (
           <div className="flex flex-col md:flex-row md:space-x-8">
-            <div className="relative flex items-center justify-center md:flex-[0.65] bg-gray-100 p-5">
+            {/* Image Viewer */}
+            <div className="relative flex items-center justify-center p-5 bg-gray-100 md:w-2/3">
               <img
                 src={imageData.images[currentIndex]}
                 alt={`Project image ${currentIndex + 1}`}
@@ -105,69 +118,76 @@ export const ImageModal: React.FC<ImageModalProps> = ({
                 <>
                   <button
                     onClick={prevImage}
-                    aria-label="Previous image"
-                    className="absolute p-3 text-3xl font-bold text-gray-700 transform -translate-y-1/2 bg-white rounded-full shadow-md top-1/2 left-3 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    aria-label="Previous"
+                    className="absolute p-3 text-3xl -translate-y-1/2 bg-white rounded-full shadow-md left-3 top-1/2"
                   >
                     ‹
                   </button>
                   <button
                     onClick={nextImage}
-                    aria-label="Next image"
-                    className="absolute p-3 text-3xl font-bold text-gray-700 transform -translate-y-1/2 bg-white rounded-full shadow-md top-1/2 right-3 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    aria-label="Next"
+                    className="absolute p-3 text-3xl -translate-y-1/2 bg-white rounded-full shadow-md right-3 top-1/2"
                   >
                     ›
                   </button>
-                  <div className="absolute px-4 py-1 text-base font-semibold text-white transform translate-x-1/2 bg-black rounded-full select-none bottom-3 right-1/2 bg-opacity-60">
-                    {currentIndex + 1} / {imageData.images.length}
-                  </div>
                 </>
               )}
             </div>
 
-            <div className="flex flex-col md:flex-[0.35] px-8 py-7 overflow-y-auto">
-              <h2 className="mb-4 text-3xl font-extrabold text-center text-green-700 md:text-left">
-                {imageData.title || "Untitled Project"}
+            {/* Project Details */}
+            <div className="p-6 overflow-y-auto md:w-1/3">
+              <h2 className="mb-4 text-3xl font-bold text-green-700">
+                {imageData.title}
               </h2>
-              {(imageData.type || imageData.description) && (
-                <p className="mb-5 text-center text-gray-700 whitespace-pre-line md:text-left">
-                  {imageData.type || ""}
-                  {imageData.type && imageData.description ? "\n\n" : ""}
-                  {imageData.description || ""}
-                </p>
-              )}
-
-              <div className="grid grid-cols-1 gap-6 text-sm text-gray-600 md:grid-cols-1">
+              <p className="mb-4 text-gray-700">{imageData.description}</p>
+              <div className="space-y-3 text-sm text-gray-600">
                 <div>
-                  <p className="mb-1 font-semibold text-green-600">
-                    Department
-                  </p>
-                  <p>{imageData.department || "Unknown"}</p>
+                  <span className="font-semibold text-green-600">
+                    Department:
+                  </span>{" "}
+                  {imageData.department}
                 </div>
                 <div>
-                  <p className="mb-1 font-semibold text-green-600">Location</p>
-                  <p>{imageData.projectLocation || "Unknown"}</p>
+                  <span className="font-semibold text-green-600">
+                    Location:
+                  </span>{" "}
+                  {imageData.projectLocation}
                 </div>
                 <div>
-                  <p className="mb-1 font-semibold text-green-600">
-                    Technology Used
-                  </p>
-                  <p>{imageData.technologyUsed || "Unknown"}</p>
+                  <span className="font-semibold text-green-600">
+                    Project Type:
+                  </span>{" "}
+                  {imageData.type}
+                </div>
+                <div>
+                  <span className="font-semibold text-green-600">Status:</span>{" "}
+                  {imageData.projectStatus}
+                </div>
+                <div>
+                  <span className="font-semibold text-green-600">
+                    Technology Used:
+                  </span>{" "}
+                  {imageData.technologyUsed}
+                </div>
+                <div>
+                  <span className="font-semibold text-green-600">
+                    Software Used:
+                  </span>{" "}
+                  {imageData.softwareUsed}
                 </div>
               </div>
 
-              <div className="flex justify-center mt-8 md:justify-start">
-                <button
-                  onClick={onClose}
-                  className="py-3 font-semibold text-white bg-green-600 rounded-lg shadow px-7 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
-                >
-                  Close
-                </button>
-              </div>
+              <button
+                onClick={onClose}
+                className="px-6 py-2 mt-6 text-white bg-green-600 rounded-lg hover:bg-green-700"
+              >
+                Close
+              </button>
             </div>
           </div>
         ) : (
           <p className="p-10 italic text-center text-gray-500">
-            No images available for this project.
+            No images available
           </p>
         )}
       </Dialog.Panel>
