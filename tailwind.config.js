@@ -4,16 +4,16 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/tw-elements-react/dist/js/**/*.js"
-
+    "./node_modules/tw-elements-react/dist/js/**/*.js",
   ],
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Proxima Nova Rg', 'sans-serif'],
+        sans: ["Proxima Nova Rg", "sans-serif"],
       },
     },
   },
   // plugins: [],
   plugins: [require("tw-elements-react/dist/plugin.cjs")],
-}
+  plugins: [require("@tailwindcss/typography")],
+};

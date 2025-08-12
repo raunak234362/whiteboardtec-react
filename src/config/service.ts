@@ -4,7 +4,8 @@ import {
   PortfolioInterface,
   IProject,
   IJobApplication,
-  blogInterface
+  blogInterface,
+  ConnectProps
 } from "./interface";
 import api from "./api"; 
 
@@ -250,6 +251,23 @@ class Service {
       throw error;
     }
   }
+
+  static async getGalleryProjectById(id: string): Promise<IProject> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.get<ApiResponse<IProject>>(`/project/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // console.log("Gallery project data:", response.data);
+      return response.data.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
   static async getCareersPdf(): Promise<IProject[]> {
     try {
       const token = sessionStorage.getItem("token");
@@ -464,14 +482,48 @@ class Service {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log("-==-=-=-=-=--=-=-===-==-=-=",response)
+      console.log("-==-=-=-=-=--=-=-===-==-=-=", response);
       return response;
     } catch (error) {
       console.error(error);
       throw error;
     }
   }
+  static async connectPostMethod(payload: FormData): Promise<ConnectProps> {
+    try {
+      console.log("Sending connect form data:", payload.get("name"), payload.get("email"));
+
+      const token = sessionStorage.getItem("token");
+      const response = await api.post("/user/response", payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json", // Use application/json for FormData
+        },
+      });
+      const resData = response.data as ApiResponse<ConnectProps>;
+      return resData.data;
+    } catch (error) {
+      console.error(error);
+      alert("Error in sending message");
+      throw error;
+    }
+  }
+  static async connectGetMethod(): Promise<ConnectProps[]> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.get<ApiResponse<ConnectProps[]>>(
+        "/user/userData",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      return response.data.data;
+    } catch (error) { 
+      console.error(error);
+      throw error;
+    }
+  }
 }
 
-
 export default Service;
+ 

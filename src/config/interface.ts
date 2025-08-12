@@ -48,7 +48,9 @@ export type ProjectStatus =
   | "Cancelled";
 
 export interface IProject {
+  projectTitle: string;
   id: string;
+  projectID?: any;
   title: string;
   description: string;
   location: string;
@@ -118,15 +120,4 @@ export interface blogInterface {
   updatedAt: string;
   [key: string]: any;
   likes: number;
-}
-export interface commentInterface {
-  id: string;
-  content: string;
-  postId: string; 
-  likes: number;
-  createdAt: string;
-  updatedAt: string;
-  parentId: string;
-  [key: string]: any;
-
 }

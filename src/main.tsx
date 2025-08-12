@@ -27,7 +27,13 @@ import {
 } from "./pages/services";
 import Error from "./pages/error/Error.tsx";
 import { Portfolio } from "./pages/ourWork";
-import { Resources, WbtBlog, CaseStudies } from "./pages/resources";
+import {
+  Resources,
+  WbtBlog,
+  CaseStudies,
+} from "./pages/resources";
+import BlogDetails from "./pages/resources/BlogDetails.tsx";
+
 import Portal from "./pages/portal/Portal.tsx";
 import Careers from "./pages/careers/Careers.tsx";
 import Connect from "./pages/connect/Connect.tsx";
@@ -42,6 +48,7 @@ import {
 import "tw-elements-react/dist/css/tw-elements-react.min.css";
 import GalleryImages from "./pages/ourFirm/GalleryImages.tsx";
 import AdminBlogManager from "./pages/admin/AdminBlogManager.tsx";
+import ConnectInfo from "./pages/admin/ConnectInfo.tsx";
 
 const route = createBrowserRouter(
   createRoutesFromElements(
@@ -86,11 +93,13 @@ const route = createBrowserRouter(
       <Route path="/resources" element={<Resources />} />
       <Route path="/resources/case-studies" element={<CaseStudies />} />
       <Route path="/resources/wbt-blog" element={<WbtBlog />} />
+      <Route path="/resources/wbt-blog/:id" element={<BlogDetails />} />
       <Route path="*" element={<Error />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin/dashboard" element={<Dashboard />} />
       <Route path="/admin/blog" element={<AdminBlogManager />} />
-      
+      <Route path="/admin/connect-info" element={<ConnectInfo />} />
+      // New route for connect info
       <Route path="/admin/login" element={<Login />} />
       <Route path="/admin/career" element={<AdminCareer />} />
       <Route path="/admin/portfolio" element={<AdminPortfolio />} />

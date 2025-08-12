@@ -85,6 +85,8 @@ const openPopup = async (
     <div className="pemb">
       <PageBanner {...banner} />
       <div className="grid grid-cols-2 gap-6 px-5 py-10 lg:grid-cols-4 md:grid-cols-3">
+
+        <h1>Structural Gallery</h1>
         {galleryImages.map((item, index) => (
           <motion.div
             key={item.id}
@@ -102,7 +104,8 @@ const openPopup = async (
                   item.location,
                   item.technologyused || "Unknown",
                   item.type,
-                  item.status
+                  item.status,
+                  item.id // Pass the project id as the 7th argument
                 )
               }
             >
@@ -120,7 +123,7 @@ const openPopup = async (
           </motion.div>
         ))}
       </div>
-
+{/* 
       {popupImages && popupTitle && popupAddress && popupProjectType && (
         <ImageModal
           images={popupImages}
@@ -132,7 +135,7 @@ const openPopup = async (
           initialIndex={popupIndex}
           onClose={closePopup}
         />
-      )}
+      )} */}
     </div>
   );
 }

@@ -8,7 +8,7 @@ type DashboardStats = {
   applicants: number;
   galleryImages: number;
   portfolios: number;
-  blogs: number; // Added blogs count here
+  blogs: number;
 };
 
 function DashboardCard({
@@ -40,7 +40,7 @@ function Dashboard() {
     applicants: 0,
     galleryImages: 0,
     portfolios: 0,
-    blogs: 0, // Initialize blogs count
+    blogs: 0,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -54,29 +54,28 @@ function Dashboard() {
       try {
         // Fetch jobs
         const jobs = await Service.getJob();
-
         const totalJobs = jobs.length;
 
-        // Adjust activeJobs filter condition as per your backend data
+        // Active jobs count
         const activeJobs = jobs.filter(
           (j) => String(j.status).toLowerCase() === "true"
         ).length;
 
-        // Fetch total applicants across all jobs
+        // Applicants
         let applicants = 0;
         for (const job of jobs) {
           const apps = await Service.getCareersApplicants(job.id);
           applicants += apps.length;
         }
 
-        // Fetch gallery count
+        // Gallery count
         const gallery = await Service.getGallery();
         const galleryImages = gallery.length;
 
-        // Fetch portfolio count
+        // Portfolio count
         const portfolios = (await Service.getPortfolio()).length;
 
-        // Fetch blogs count
+        // Blogs count
         const blogs = (await Service.getBlogs()).length;
 
         setStats({
@@ -151,8 +150,7 @@ function Dashboard() {
                   title="Total Portfolios"
                   value={stats.portfolios}
                 />
-                <DashboardCard title="Blogs Posted" value={stats.blogs} />{" "}
-                {/* New card */}
+                <DashboardCard title="Blogs Posted" value={stats.blogs} />
               </div>
             </>
           )}

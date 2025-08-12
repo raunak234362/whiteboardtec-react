@@ -72,6 +72,7 @@ const AdminGallery = () => {
       const mappedData: GalleryProjectFrontend[] = response.map((item) => ({
         id: item.id,
         title: item.title,
+        projectTitle: item.title,
         department: item.department,
         description: item.description,
         location: item.location,

@@ -1,131 +1,169 @@
-import React, { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { Dialog } from "@headlessui/react";
+import Service from "../../config/service";
 
 interface ImageModalProps {
-  images: string[];
-  title: string;
-  location: string;
-  softwareUsed: string;
-  projectType: string;
-  ProjectStatus: string;
-  initialIndex: number;
+  projectID: string;
   onClose: () => void;
 }
 
 export const ImageModal: React.FC<ImageModalProps> = ({
-  images,
-  title,
-  location,
-  projectType,
-  ProjectStatus,
-  softwareUsed,
-  initialIndex,
+  projectID,
   onClose,
 }) => {
-  const [currentIndex, setCurrentIndex] = useState<number>(initialIndex);
-  const modalRef = useRef<HTMLDivElement>(null);
-  console.log("ImageModal rendered with images:", images);
-  const nextImage = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  };
+  const [imageData, setImageData] = useState<any>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const prevImage = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
+  interface GalleryFile {
+    secureUrl: string;
+    [key: string]: any;
+  }
 
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "ArrowRight") nextImage();
-    if (e.key === "ArrowLeft") prevImage();
-    if (e.key === "Escape") onClose();
+  interface GalleryResponse {
+    file: GalleryFile | GalleryFile[] | string[];
+    projectTitle?: string;
+    title?: string;
+    description?: string;
+    [key: string]: any;
+  }
+
+  const fetchImageData = async () => {
+    try {
+      const response: GalleryResponse = await Service.getGalleryProjectById(
+        projectID
+      );
+      let images: string[] = [];
+      if (Array.isArray(response.images)) {
+        if (typeof response.images[0] === "string") {
+          images = response.images as string[];
+        } else {
+          images = (response.images as GalleryFile[]).map((f) => f.secureUrl);
+        }
+      } else if (
+        response.images &&
+        typeof response.images === "object" &&
+        "secureUrl" in response.images
+      ) {
+        images = [(response.images as GalleryFile).secureUrl];
+      }
+      setImageData({
+        title: response.projectTitle || response.title || "",
+        description: response.description || "",
+        type: response.type || "",
+        images,
+        department: response.department || "Unknown",
+        projectLocation: response.projectLocation || "Unknown",
+        technologyUsed: response.technologyUsed || "Unknown",
+      });
+      setCurrentIndex(0);
+    } catch {
+      setImageData(null);
+    }
   };
 
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
-    modalRef.current?.focus();
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
+    if (projectID) fetchImageData();
+  }, [projectID]);
 
-  if (
-    images?.length > 0 &&
-    currentIndex >= 0 &&
-    currentIndex < images?.length
-  ) {
-    console.log(
-      "Current image index and src:",
-      currentIndex,
-      images[currentIndex]
-    );
-  } else {
-    console.log(
-      "Current image index and src:",
-      currentIndex,
-      "No image available"
-    );
-  }
+  const nextImage = () => {
+    if (imageData?.images?.length > 0) {
+      setCurrentIndex((prev) => (prev + 1) % imageData.images.length);
+    }
+  };
+
+  const prevImage = () => {
+    if (imageData?.images?.length > 0) {
+      setCurrentIndex(
+        (prev) => (prev - 1 + imageData.images.length) % imageData.images.length
+      );
+    }
+  };
 
   return (
-    <motion.div
-      className="fixed inset-0 bg-slate-950 bg-opacity-75 flex items-center justify-center z-50"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      tabIndex={-1}
-      ref={modalRef}
+    <Dialog
+      open={!!projectID}
+      onClose={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-20 backdrop-blur-lg"
     >
-      <div className="relative bg-white rounded-lg shadow-lg p-4 w-[90%] md:w-[45%] mx-auto outline-none">
-        <button
-          className="absolute top-2 right-2 bg-red-500 px-3 py-1 rounded-full text-white text-xl font-bold"
-          onClick={onClose}
-        >
-          ×
-        </button>
-        <div className="flex flex-col items-center">
-          <img
-            src={images?.[currentIndex]}
-            alt={title}
-            className="lg:w-auto lg:h-96 rounded-lg object-contain"
-            onError={(e) => {
-              e.currentTarget.onerror = null;
-              e.currentTarget.src = "/assets/placeholder.png";
-            }}
-          />
-          <div className="mt-4 text-center">
-            <p className="md:text-4xl font-bold text-green-700">
-              {title?.toUpperCase()}
-            </p>
-            <p className="md:text-lg text-gray-700">
-              <span className="font-semibold">Location: </span>
-              {location || "Not available"}
-            </p>
-            <p className="md:text-lg text-gray-700">
-              <span className="font-semibold">Project Type: </span>
-              {projectType || "Not available"}
-            </p>
-            <p className="md:text-lg text-gray-700">
-              <span className="font-semibold">Software Used: </span>
-              {softwareUsed || "Unknown"}
-            </p>
-            <p className="md:text-lg text-gray-700">
-              <span className="font-semibold">Project Status: </span>
-              {ProjectStatus || "Not available"}
-            </p>
+      <Dialog.Panel className="relative flex flex-col max-w-5xl w-full max-h-[90vh] bg-white rounded-2xl shadow-2xl overflow-hidden">
+        {imageData?.images?.length > 0 ? (
+          <div className="flex flex-col md:flex-row md:space-x-8">
+            <div className="relative flex items-center justify-center md:flex-[0.65] bg-gray-100 p-5">
+              <img
+                src={imageData.images[currentIndex]}
+                alt={`Project image ${currentIndex + 1}`}
+                className="max-h-[85vh] w-full object-contain rounded-lg shadow-md"
+              />
+              {imageData.images.length > 1 && (
+                <>
+                  <button
+                    onClick={prevImage}
+                    aria-label="Previous image"
+                    className="absolute p-3 text-3xl font-bold text-gray-700 transform -translate-y-1/2 bg-white rounded-full shadow-md top-1/2 left-3 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    onClick={nextImage}
+                    aria-label="Next image"
+                    className="absolute p-3 text-3xl font-bold text-gray-700 transform -translate-y-1/2 bg-white rounded-full shadow-md top-1/2 right-3 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  >
+                    ›
+                  </button>
+                  <div className="absolute px-4 py-1 text-base font-semibold text-white transform translate-x-1/2 bg-black rounded-full select-none bottom-3 right-1/2 bg-opacity-60">
+                    {currentIndex + 1} / {imageData.images.length}
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="flex flex-col md:flex-[0.35] px-8 py-7 overflow-y-auto">
+              <h2 className="mb-4 text-3xl font-extrabold text-center text-green-700 md:text-left">
+                {imageData.title || "Untitled Project"}
+              </h2>
+              {(imageData.type || imageData.description) && (
+                <p className="mb-5 text-center text-gray-700 whitespace-pre-line md:text-left">
+                  {imageData.type || ""}
+                  {imageData.type && imageData.description ? "\n\n" : ""}
+                  {imageData.description || ""}
+                </p>
+              )}
+
+              <div className="grid grid-cols-1 gap-6 text-sm text-gray-600 md:grid-cols-1">
+                <div>
+                  <p className="mb-1 font-semibold text-green-600">
+                    Department
+                  </p>
+                  <p>{imageData.department || "Unknown"}</p>
+                </div>
+                <div>
+                  <p className="mb-1 font-semibold text-green-600">Location</p>
+                  <p>{imageData.projectLocation || "Unknown"}</p>
+                </div>
+                <div>
+                  <p className="mb-1 font-semibold text-green-600">
+                    Technology Used
+                  </p>
+                  <p>{imageData.technologyUsed || "Unknown"}</p>
+                </div>
+              </div>
+
+              <div className="flex justify-center mt-8 md:justify-start">
+                <button
+                  onClick={onClose}
+                  className="py-3 font-semibold text-white bg-green-600 rounded-lg shadow px-7 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="flex gap-5 justify-center mt-4">
-            <button
-              className="text-white bg-green-400 rounded-full text-3xl font-bold px-4"
-              onClick={prevImage}
-            >
-              {"<"}
-            </button>
-            <button
-              className="text-white bg-green-400 rounded-full text-2xl font-bold px-4"
-              onClick={nextImage}
-            >
-              {">"}
-            </button>
-          </div>
-        </div>
-      </div>
-    </motion.div>
+        ) : (
+          <p className="p-10 italic text-center text-gray-500">
+            No images available for this project.
+          </p>
+        )}
+      </Dialog.Panel>
+    </Dialog>
   );
 };

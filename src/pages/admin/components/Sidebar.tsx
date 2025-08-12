@@ -77,6 +77,18 @@ function Sidebar() {
             <h1 className="font-semibold text-md">Careers</h1>
           </div>
         </NavLink>
+        <NavLink
+          to="/admin/connect-info"
+          className={({ isActive }) =>
+            `flex flex-col items-center justify-center py-2.5 h-fit  ${
+              isActive ? "bg-[#6abd45]" : "bg-gray-800 hover:bg-gray-500"
+            }`
+          }
+        >
+          <div>
+            <h1 className="font-semibold text-md">Connect</h1>
+          </div>
+        </NavLink>
       </div>
     </>
   );

@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { pdfjs } from "react-pdf"; // Still good to keep if you plan to use react-pdf for more advanced features later
+import { pdfjs } from "react-pdf";
 import { PortfolioPropType } from "../../config/interface";
-// Set the worker source using a local worker (important for react-pdf)
+
 pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.js";
 
-// Update the prop type to be an array of PdfFile objects
+
 function PortfolioPdf({ portfolio }: { portfolio: PortfolioPropType[] }) {
-  // Example: Use the first item in the array (adjust logic as needed)
+  
   const firstPdf = portfolio && portfolio.length > 0 ? portfolio[0] : undefined;
   console.log("PortfolioPdf component loaded with pdfFiles:", firstPdf);
   const id = firstPdf?.id;
@@ -37,7 +37,6 @@ function PortfolioPdf({ portfolio }: { portfolio: PortfolioPropType[] }) {
         </div>
       )}
 
-      {/* PDF Viewer - only render iframe if no fatal error and a URL is set */}
       {pdfURL && !error ? (
         <div className="flex items-center justify-center w-full h-full">
           <iframe
@@ -56,7 +55,7 @@ function PortfolioPdf({ portfolio }: { portfolio: PortfolioPropType[] }) {
           </iframe>
         </div>
       ) : (
-        // Fallback message if no PDF can be displayed (e.g., due to error or no valid URL)
+   
         !error && (
           <div className="flex items-center justify-center w-full h-full text-center text-gray-600">
             <p>No PDF to display.</p>

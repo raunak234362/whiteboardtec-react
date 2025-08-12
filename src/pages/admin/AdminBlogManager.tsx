@@ -1,5 +1,5 @@
 import  { useEffect, useState } from "react";
-import { Header, HeaderProp, Sidebar } from "./components"; // Adjust if path is different
+import { Header, HeaderProp, Sidebar } from "./components"; 
 import { Dialog } from "@headlessui/react";
 import { Editor } from "primereact/editor";
 import { useForm } from "react-hook-form";

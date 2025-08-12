@@ -1,4 +1,7 @@
-import { useId, useState } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import Service from "../../config/service";
+import { ConnectProps } from "../../config/interface"; 
 
 type FormField = {
   name: string;
@@ -9,75 +12,78 @@ type FormField = {
 type FormType = {
   title: string;
   field: FormField[];
-  submitMail?: string;
 };
 
 function Forms(props: FormType): JSX.Element {
-  const formId = useId();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }, 
+  } = useForm();
+
   const [loading, setLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
 
-  async function handleSubmit(formData: FormData) {
+  const onSubmit = async (data: any) => {
     setLoading(true);
     setStatusMessage("");
 
-    const data: Record<string, any> = {};
-    formData.forEach((value, key) => {
-      data[key] = value;
-    });
-
-    // 🔁 Replace the URL below with your backend endpoint or use Formspree/FormSubmit
-    try {
-      const response = await fetch(
-        "https://formsubmit.co/ajax/" + props.submitMail,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      if (response.ok) {
-        setStatusMessage("Message sent successfully!");
+    const formData = new FormData();
+    props.field.forEach((field) => {
+      if (field.type === "file" && data[field.name]?.[0]) {
+        formData.append(field.name, data[field.name][0]);
       } else {
-        setStatusMessage("Failed to send message.");
+        formData.append(field.name, data[field.name] ?? "");
       }
+    });
+    try {
+      await Service.connectPostMethod(formData);
+      setStatusMessage("✅ Message sent successfully!");
+      reset();
     } catch (err) {
-      setStatusMessage("An error occurred. Please try again.");
-      console.error("Form submission error:", err);
+      console.error(err);
+      setStatusMessage("❌ Failed to send message.");
     }
 
     setLoading(false);
-  }
+  };
 
   return (
     <div className="bg-[#6abd45] rounded-lg flex flex-wrap flex-col w-80 h-fit shadow-2xl max-md:w-full max-md:rounded-xl">
-      <h1 className="p-4 pb-2 text-3xl text-white">{props.title}</h1>
+      <h1 className="p-4 pb-2 text-3xl font-semibold text-white">
+        {props.title}
+      </h1>
 
-      <form id={formId}>
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full">
         {props.field &&
           props.field.map((field, index) => (
             <div key={index} className="px-3 py-2">
               {field.type === "textarea" ? (
                 <textarea
-                  required
-                  id={formId + "_" + field.name}
-                  name={field.name}
+                  {...register(field.name, { required: true })}
                   placeholder={field.placeholder}
                   className="w-full h-24 p-2 text-lg placeholder-black rounded-md placeholder-opacity-70"
+                />
+              ) : field.type === "file" ? (
+                <input
+                  type="file"
+                  {...register(field.name, { required: true })}
+                  className="w-full p-2 text-lg placeholder-black rounded-md placeholder-opacity-70"
+                  accept="*"
                 />
               ) : (
                 <input
                   type={field.type}
-                  required
-                  id={formId + "_" + field.name}
-                  name={field.name}
+                  {...register(field.name, { required: true })}
                   placeholder={field.placeholder}
                   className="w-full p-2 text-lg placeholder-black rounded-md placeholder-opacity-70"
                 />
+              )}
+              {errors[field.name] && (
+                <p className="mt-1 text-sm text-red-200">
+                  This field is required
+                </p>
               )}
             </div>
           ))}
@@ -85,16 +91,10 @@ function Forms(props: FormType): JSX.Element {
         <div className="px-3 py-2 mb-2">
           <button
             type="submit"
-            onClick={(e) => {
-              e.preventDefault();
-              const form = document.getElementById(formId) as HTMLFormElement;
-              const formData = new FormData(form);
-              handleSubmit(formData);
-            }}
-            disabled={loading}
-            className="bg-white text-[#6abd45] text-xl px-2 rounded-full items-center w-1/2 h-10 hover:bg-[#6abd45] hover:text-white hover:font-semibold hover:border-white border-4 shadow-lg"
+            className={`bg-white text-[#6abd45] text-xl px-2 rounded-full items-center w-1/2 h-10 border-4 shadow-lg 
+              hover:bg-[#6abd45] hover:text-white hover:font-semibold hover:border-white`}
           >
-            {loading ? "Sending..." : "Submit"}
+            Submit
           </button>
         </div>
       </form>

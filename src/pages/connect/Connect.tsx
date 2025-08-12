@@ -99,7 +99,6 @@ const data: DataType = {
         placeholder: "Message",
       },
     ],
-    submitMail: "sales@whiteboardtec.com",
   },
 };
 
@@ -254,7 +253,7 @@ function Connect() {
           <Forms
             title={data.form?.title}
             field={data.form?.field}
-            submitMail={data.form?.submitMail}
+            
           />
         </div>
       </section>
