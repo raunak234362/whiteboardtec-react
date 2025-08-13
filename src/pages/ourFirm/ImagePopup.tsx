@@ -46,13 +46,14 @@ export const ImageModal: React.FC<ImageModalProps> = ({
       const response: GalleryResponse = await Service.getGalleryProjectById(
         projectID
       );
-      let images: string[] = [];
 
+      let images: string[] = [];
       if (Array.isArray(response.images)) {
-        if (typeof response.images[0] === "string")
+        if (typeof response.images[0] === "string") {
           images = response.images as string[];
-        else
+        } else {
           images = (response.images as GalleryFile[]).map((f) => f.secureUrl);
+        }
       } else if (
         response.images &&
         "secureUrl" in (response.images as GalleryFile)
@@ -74,6 +75,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
           response.status || response.ProjectStatus || "Not specified",
         softwareUsed: response.softwareUsed || "Not specified",
       });
+
       setCurrentIndex(0);
     } catch {
       setImageData(null);
@@ -104,7 +106,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
       onClose={onClose}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30 backdrop-blur-lg"
     >
-      <Dialog.Panel className="relative flex flex-col max-w-5xl w-full max-h-[90vh] bg-white rounded-2xl shadow-2xl overflow-hidden">
+      <Dialog.Panel className="relative flex flex-col w-[90%]  bg-white rounded-2xl shadow-2xl overflow-auto">
         {imageData?.images?.length > 0 ? (
           <div className="flex flex-col md:flex-row md:space-x-8">
             {/* Image Viewer */}
@@ -112,7 +114,8 @@ export const ImageModal: React.FC<ImageModalProps> = ({
               <img
                 src={imageData.images[currentIndex]}
                 alt={`Project image ${currentIndex + 1}`}
-                className="max-h-[85vh] w-full object-contain rounded-lg shadow-md"
+                className="w-full object-contain rounded-lg shadow-md"
+                
               />
               {imageData.images.length > 1 && (
                 <>
@@ -135,11 +138,14 @@ export const ImageModal: React.FC<ImageModalProps> = ({
             </div>
 
             {/* Project Details */}
-            <div className="p-6 overflow-y-auto md:w-1/3">
-              <h2 className="mb-4 text-3xl font-bold text-green-700">
+            <div className="p-6 md:w-1/3">
+              <h2 className="mb-4 text-3xl font-bold text-green-700 whitespace-normal break-words">
                 {imageData.title}
               </h2>
-              <p className="mb-4 text-gray-700">{imageData.description}</p>
+              <p className="mb-4 text-gray-700 whitespace-normal break-words">
+                {imageData.description}
+              </p>
+
               <div className="space-y-3 text-sm text-gray-600">
                 <div>
                   <span className="font-semibold text-green-600">

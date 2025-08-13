@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Service from "../../config/service";
-import { ImageModal } from "./ImagePopup"; // Or your filename for ImageModal
+import { ImageModal } from "./ImagePopup";
 
 function GalleryImages() {
   type Project = {
@@ -15,11 +15,11 @@ function GalleryImages() {
     projectType?: string;
     technologyUsed?: string;
     department?: string;
-    // Add other fields as needed
+
   };
 
   const [searchParams] = useSearchParams();
-  const department = searchParams.get("department") || ""; // read from URL
+  const department = searchParams.get("department") || ""; 
 
   const [galleryImg, setGalleryImg] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -121,18 +121,19 @@ function GalleryImages() {
           {galleryImg.map((project) => (
             <div
               key={project.projectId}
-              className="relative overflow-hidden transition-transform transform bg-white rounded-lg shadow-md cursor-pointer group hover:scale-105"
+              className="relative overflow-hidden transition-all duration-300 bg-white rounded-lg shadow-md cursor-pointer group hover:scale-105 hover:z-10"
               onClick={() => openModal(project)}
+              style={{ minHeight: "220px" }}
             >
               <img
                 src={project.file?.secureUrl || ""}
                 alt={project.projectTitle}
                 loading="lazy"
-                className="object-cover w-full h-48"
+                className="object-fill w-full h-48"
               />
-              {/* Hover details */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center text-white transition-opacity bg-black rounded-lg opacity-0 bg-opacity-60 group-hover:opacity-100">
-                <h3 className="text-lg font-semibold truncate">
+              {/* Hover Overlay */}
+              <div className="absolute inset-0 flex items-center justify-center p-4 text-center text-green-950   transition-opacity rounded-lg opacity-0 group-hover:opacity-95 bg-[#6abd45] bg-opacity-90">
+                <h3 className="text-lg font-semibold break-words whitespace-normal text-center max-w-full">
                   {project.projectTitle}
                 </h3>
               </div>
