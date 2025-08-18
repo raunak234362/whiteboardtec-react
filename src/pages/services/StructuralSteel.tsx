@@ -163,7 +163,7 @@ function StructuralSteel() {
             </section>
           </section>
           <div className="flex flex-wrap items-center justify-center">
-            <div className="w-1/2 h-96 max-md:w-full">
+            <div className="w-full h-96 max-md:w-full">
             <CarouselDefault images={service_images ?? []} />
             </div>
           </div>
