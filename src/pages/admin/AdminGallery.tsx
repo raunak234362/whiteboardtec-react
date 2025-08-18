@@ -361,7 +361,7 @@ const AdminGallery = () => {
                         type="file"
                         name="images"
                         id="images"
-                        accept="image/*"
+                        accept="image/*,video/*"
                         multiple
                         onChange={onFileChange}
                         disabled={isUploading}
