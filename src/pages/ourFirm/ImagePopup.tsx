@@ -171,15 +171,9 @@ export const ImageModal: React.FC<ImageModalProps> = ({
                 </div>
                 <div>
                   <span className="font-semibold text-green-600">
-                    Technology Used:
-                  </span>{" "}
-                  {imageData.technologyUsed}
-                </div>
-                <div>
-                  <span className="font-semibold text-green-600">
                     Software Used:
                   </span>{" "}
-                  {imageData.softwareUsed}
+                  {imageData.technologyUsed}
                 </div>
               </div>
 
