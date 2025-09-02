@@ -13,6 +13,7 @@ type IProjectFormInput = {
   description: string;
   location: string;
   type: string;
+  otherType?: string;
   technologyused: string;
   status: string;
   department: string;
@@ -53,6 +54,8 @@ const AdminGallery = () => {
     register,
     handleSubmit,
     reset,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<IProjectFormInput>({
     defaultValues: {
@@ -60,11 +63,21 @@ const AdminGallery = () => {
       description: "",
       location: "",
       type: "OTHER",
+      otherType: "",
       technologyused: "",
       status: "IN_PROGRESS",
       department: "OTHER",
     },
   });
+
+  const typeValue = watch("type");
+
+  // Clear otherType if not OTHER
+  useEffect(() => {
+    if (typeValue !== "OTHER") {
+      setValue("otherType", "");
+    }
+  }, [typeValue, setValue]);
 
   const fetchGalleryProjects = useCallback(async () => {
     try {
@@ -105,13 +118,14 @@ const AdminGallery = () => {
       formData.append("title", data.title);
       formData.append("description", data.description);
       formData.append("location", data.location);
-      formData.append("type", data.type);
+      // Use otherType if type is OTHER
+      formData.append("type", data.type === "OTHER" ? data.otherType || "" : data.type);
       formData.append("department", data.department);
       formData.append("technologyused", data.technologyused);
       formData.append("status", data.status);
 
       selectedFiles.forEach((file) => {
-        formData.append("images", file); // Append with [] to indicate multiple files
+        formData.append("images", file);
       });
 
       await Service.createGallery(formData);
@@ -297,6 +311,30 @@ const AdminGallery = () => {
                         </p>
                       )}
                     </label>
+
+                    {/* Conditional input for otherType */}
+                    {typeValue === "OTHER" && (
+                      <label>
+                        <span className="block mb-1 text-sm font-medium text-gray-700">
+                          Specify Other Type *
+                        </span>
+                        <input
+                          {...register("otherType", {
+                            required: "Please specify the project type",
+                          })}
+                          disabled={isUploading}
+                          placeholder="Enter project type"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                          type="text"
+                        />
+                        {errors.otherType && (
+                          <p className="mt-1 text-sm text-red-500">
+                            {errors.otherType.message}
+                          </p>
+                        )}
+                      </label>
+                    )}
+
                     <label>
                       <span className="block mb-1 text-sm font-medium text-gray-700">
                         Department
