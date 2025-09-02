@@ -10,7 +10,7 @@ const banner: BannerPropType = {
 
 const team: LeaderDetailType[] = [
   {
-    name: "Vishal L Khandappanavar",
+    name: "Vishal L.      Khandappanavar",
     designation: "CEO",
     thoughts: [
       "A spirited human being known as much for his wit as for his unbridled passion and commitment towards work. For him, people come first and that reflects in his ideology of a customer-focused delivery system. For over 15 years, Vishal has been a keen observer and a contributor to the Engineering Services Outsourcing (ESO) industry. Prior to founding Whiteboard Technologies, he spent several years working with multiple engineering service firms, taking them from start-up stages to established multi-million dollar enterprises. Be it sales & marketing, account management or technical detailing, Vishal always has a string of fresh, apt and highly valuable ideas brought to the table.",
