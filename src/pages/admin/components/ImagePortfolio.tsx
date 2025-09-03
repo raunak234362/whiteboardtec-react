@@ -24,6 +24,8 @@ function ImagePortfolio(props: ImagePortfolioProps) {
       location: props.location,
       type: props.type,
       technologyused: props.technologyused,
+      otherType: props.otherType || "",
+      designingSoftware: props.designingSoftware || "",
       status: props.status,
       department: props.department, // Add department to default values
       // Note: `images` and `file` are not directly set as default values here
@@ -47,6 +49,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
   const projectType = watch("type");
   const otherType = watch("otherType");
   const technologyUsed = watch("technologyused");
+  const designingSoftware = watch("designingSoftware");
   const projectStatus = watch("status");
   const department = watch("department"); // Watch department too
 
@@ -58,6 +61,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
     setValue("type", props.type);
     setValue("otherType", props.otherType ?? "");
     setValue("technologyused", props.technologyused);
+    setValue("designingSoftware", props.designingSoftware);
     setValue("status", props.status);
     setValue("department", props.department); // Set department when props change
     setNewSelectedFiles([]); // Clear new selected files on prop change
@@ -84,6 +88,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
       formData.append("location", location.trim());
       formData.append("type", projectType);
       formData.append("otherType", otherType);
+      formData.append("designingSoftware", designingSoftware);
       formData.append("technologyused", technologyUsed.trim());
       formData.append("status", projectStatus);
       formData.append("department", department);
@@ -328,7 +333,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                     <input
                       type="text"
                       id="edit-designingSoftware"
-                      {...register("otherType", { required: true })}
+                      {...register("designingSoftware", { required: true })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                       placeholder="e.g., Tekla, SDS-2"
                       required
