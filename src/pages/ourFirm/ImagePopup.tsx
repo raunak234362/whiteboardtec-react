@@ -33,7 +33,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
     location?: string;
     projectLocation?: string;
     technologyused?: string;
-    technologyUsed?: string;
+    designingSoftware?: string;
     status?: string;
     ProjectStatus?: string;
     softwareUsed?: string;
@@ -65,6 +65,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
         title: response.projectTitle || response.title || "Untitled Project",
         description: response.description || "No description available",
         type: response.type || "Not specified",
+        otherType: response.otherType || "Not specified",
         images,
         department: response.department || "Not specified",
         projectLocation:
@@ -115,7 +116,6 @@ export const ImageModal: React.FC<ImageModalProps> = ({
                 src={imageData.images[currentIndex]}
                 alt={`Project image ${currentIndex + 1}`}
                 className="w-full object-contain rounded-lg shadow-md"
-                
               />
               {imageData.images.length > 1 && (
                 <>
@@ -147,31 +147,48 @@ export const ImageModal: React.FC<ImageModalProps> = ({
               </p>
 
               <div className="space-y-3 text-sm text-gray-600">
-                <div>
+                {/* <div>
                   <span className="font-semibold text-green-600">
                     Department:
                   </span>{" "}
                   {imageData.department}
-                </div>
+                </div> */}
                 <div>
                   <span className="font-semibold text-green-600">
                     Location:
                   </span>{" "}
                   {imageData.projectLocation}
                 </div>
-                <div>
-                  <span className="font-semibold text-green-600">
-                    Project Type:
-                  </span>{" "}
-                  {imageData.type}
-                </div>
+                {imageData.type === "OTHER" ? (
+                  <div>
+                    <span className="font-semibold text-green-600">
+                      Project Type:
+                    </span>{" "}
+                    {imageData.otherType}
+                  </div>
+                ) : (
+                  <div>
+                    <span className="font-semibold text-green-600">
+                      Project Type:
+                    </span>{" "}
+                    {imageData.type}
+                  </div>
+                )}
                 <div>
                   <span className="font-semibold text-green-600">Status:</span>{" "}
                   {imageData.projectStatus}
                 </div>
+                {imageData.department === "PEMB" && (
+                  <div>
+                    <span className="font-semibold text-green-600">
+                      Designing Software:
+                    </span>{" "}
+                    {imageData.designingSoftware}
+                  </div>
+                )}
                 <div>
                   <span className="font-semibold text-green-600">
-                    Software Used:
+                    Detailing Software:
                   </span>{" "}
                   {imageData.technologyUsed}
                 </div>
