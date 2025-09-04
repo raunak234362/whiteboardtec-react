@@ -93,6 +93,7 @@ const AdminGallery = () => {
         location: item.location,
         type: item.type,
         otherType: item.otherType ?? "",
+        designingSoftware: item.designingSoftware,
         technologyused: item.technologyused,
         status: item.status,
         images: item.images,
