@@ -24,7 +24,9 @@ import {
   PEMB,
   StructuralSteel,
   Rebar,
+  
 } from "./pages/services";
+import SteelEstimation from "./pages/services/SteelEstimations.tsx";
 import Error from "./pages/error/Error.tsx";
 import { Portfolio } from "./pages/ourWork";
 import {
@@ -84,6 +86,10 @@ const route = createBrowserRouter(
       <Route
         path="/services/rebar-estimation-and-detailing"
         element={<Rebar />}
+      />
+      <Route
+        path="/services/steel-estimation-and-take-off"
+        element={<SteelEstimation />}
       />
       <Route path="/our-work" element={<Portfolio />} />
       <Route path="/our-work/project-portfolio" element={<Portfolio />} />

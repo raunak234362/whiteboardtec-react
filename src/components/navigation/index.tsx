@@ -70,6 +70,10 @@ const NavRoute: NavRouteType[] = [
         name: "Rebar Estimation and Detailing",
         path: "/rebar-estimation-and-detailing",
       },
+      {
+        name: "Steel Estimation and Take-Off Services",
+        path: "/steel-estimation-and-take-off",
+      }
     ],
   },
   {
