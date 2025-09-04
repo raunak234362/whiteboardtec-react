@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react";
 import { PageBanner, BannerPropType } from "../../components/banner";
 import Newsletter from "../../components/newsletter/Newsletter";
-import Estimate from "../../components/estimation/Estimate";
+// import Estimate from "../../components/estimation/Estimate";
 import Service from "../../config/service";
 import { ClipboardList, FileText, Scale, Ruler } from "lucide-react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const banner: BannerPropType = {
   header: "Steel Estimation & Take-Off Services",
@@ -46,7 +46,7 @@ const deliverables: { text: string; icon: JSX.Element }[] = [
 ];
 
 function SteelEstimation() {
-  const [service_images, setServiceImages] = useState<any[]>([]);
+  const [, setServiceImages] = useState<any[]>([]);
   useEffect(() => {
     document.title = "Steel Estimation & Take-Off Services - Whiteboard Tech";
   }, []);
