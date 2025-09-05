@@ -55,6 +55,10 @@ const NavRoute: NavRouteType[] = [
         path: "/miscellaneous-steel-detailing",
       },
       {
+        name: "Steel Estimation and Take-Off Services",
+        path: "/steel-estimation-and-take-off",
+      },
+      {
         name: "Connection Design And PE/SE Stamping",
         path: "/connection-design-and-pe-se-stamping",
       },
@@ -70,10 +74,10 @@ const NavRoute: NavRouteType[] = [
         name: "Rebar Estimation and Detailing",
         path: "/rebar-estimation-and-detailing",
       },
-      {
-        name: "Steel Estimation and Take-Off Services",
-        path: "/steel-estimation-and-take-off",
-      }
+      // {
+      //   name: "Steel Estimation and Take-Off Services",
+      //   path: "/steel-estimation-and-take-off",
+      // }
     ],
   },
   {

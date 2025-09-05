@@ -18,15 +18,15 @@ function Newsletter() {
     }
   return (
     <>
-          <section className="m-28 max-md:mx-2 mt-0 mb-5 p-2 flex flex-wrap justify-start items-start mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
+          <section className="m-28 max-md:mx-3 mt-0 mb-5 p-4 flex flex-wrap justify-start items-start mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
             <div className="flex flex-wrap flex-col">
               <div className="text-3xl text-justify m-1 font-semibold text-[#6abd45]">
                 Sign up for our newsletter to get exclusive access to
               </div>
-              <div className="flex flex-wrap flex-row mx-5 md-max:flex-col">
+              <div className="flex flex-wrap flex-row md-max:flex-col">
                 <div>
                   {newsletter?.description?.map((item, index) => (
-                    <div key={index} className="flex-row flex justify-start mr-2 my-2">
+                    <div key={index} className="flex-row flex justify-start mr-0 my-2">
                       <span className="text-gray-700 m-1 mt-1">
                         <svg
                           className="h-4 w-4 text-[#6abd45]"

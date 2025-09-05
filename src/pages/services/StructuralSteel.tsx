@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 import { PageBanner, BannerPropType } from "../../components/banner";
 import Newsletter from "../../components/newsletter/Newsletter";
 import Estimate from "../../components/estimation/Estimate";
-import { CarouselDefault, CarouselPropType } from "../../components/Carousel/CarouselDefault";
+import {
+  CarouselDefault,
+  CarouselPropType,
+} from "../../components/Carousel/CarouselDefault";
 import Service from "../../config/service";
 
 const banner: BannerPropType = {
@@ -35,11 +38,12 @@ const portfolio: string[] = [
   "Energy Efficient Buildings",
   "Warehouses",
   "Aircraft Hangers",
-  "Senior Living Developments"
-]
+  "Senior Living Developments",
+];
 
 function StructuralSteel() {
   const [service_images, setServiceImages] = useState<CarouselPropType[]>();
+
   useEffect(() => {
     document.title = "Structural Steel Detailing - Whiteboard Tech";
   });
@@ -52,8 +56,8 @@ function StructuralSteel() {
     }));
     setServiceImages(images);
     console.log("Fetched Gallery Images:", response);
-  }
-  
+  };
+
   useEffect(() => {
     fetchAllGalleryImages();
   }, []);
@@ -61,111 +65,136 @@ function StructuralSteel() {
   return (
     <>
       <PageBanner {...banner} />
-      <div className="mx-auto my-0 m-28 lg:max-w-screen-lg xl:max-w-screen-xl">
-        <section className="rounded-3xl mt-3 border-2 p-2 grid grid-cols-[60%_40%] gap-3 shadow-md max-md:grid-cols-1">
-          <div className="order-1 m-4 leading-loose text-gray-700 max-md:order-2">
-            <div className="text-3xl font-bold my-2 text-[#6abd45]">
+
+      {/* Intro + Estimate */}
+      <div className="mx-auto my-20 lg:max-w-screen-lg xl:max-w-screen-xl">
+        <section className="rounded-3xl border-2 p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 shadow-md bg-white">
+          <div className="leading-loose text-gray-700">
+            <h2 className="text-3xl font-bold mb-4 text-[#6abd45]">
               Steel industry continues to evolve
-            </div>
-            {headSection?.map((desc, index) => {
-              return (
-                <p key={index} className="text-lg leading-relaxed text-justify">
-                  {desc}
-                </p>
-              );
-            })}
+            </h2>
+            {headSection.map((desc, index) => (
+              <p
+                key={index}
+                className="text-lg leading-relaxed mb-4 text-justify"
+              >
+                {desc}
+              </p>
+            ))}
           </div>
-          <Estimate head="Get your Steel Detailing Estimates done for FREE. Yes. You heard us right!" />
+          <div className="flex justify-center items-center">
+            <Estimate head="Get your Steel Detailing Estimates done for FREE. Yes. You heard us right!" />
+          </div>
         </section>
       </div>
 
-      <div className="pb-16 bg-gray-100 shadow-md drop-shadow-md">
-        <div className="pt-3 pl-16 mx-auto my-10 max-md:mx-0 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl max-md:px-5">
-          <div className="text-4xl font-bold my-2 text-[#6abd45] mt-5">
+      {/* Our Services */}
+      {/* <div className="py-16 bg-gray-100">
+        <div className="mx-auto px-6 md:px-12 lg:max-w-screen-lg xl:max-w-screen-xl">
+          <h2 className="text-4xl font-bold mb-8 text-[#6abd45]">
             Our Services
-          </div>
-          <section className="flex flex-row flex-wrap mt-3 max-md:flex-col">
-            <div className="flex flex-col flex-wrap p-2 mt-3 h-fit lg:w-3/5 md:flex-row">
-              {services.map((detail, index) => {
-                return (
-                  <span
-                    key={index}
-                    className="flex flex-row flex-wrap items-center w-1/2 my-2 h-fit max-md:w-full"
+          </h2>
+          <section className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {services.map((detail, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <svg
+                  className="h-5 w-5 text-[#6abd45] shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" />
+                  <path d="M18 15l-6-6l-6 6h12" transform="rotate(90 12 12)" />
+                </svg>
+                <span className="text-lg">{detail}</span>
+              </div>
+            ))}
+          </section>
+        </div>
+      </div> */}
+      {/* Our Services */}
+      <div className="py-16 bg-gray-100">
+        <div className="mx-auto px-6 md:px-12 lg:max-w-screen-lg xl:max-w-screen-xl">
+          <h2 className="text-4xl font-bold mb-8 text-[#6abd45]">
+            Our Services
+          </h2>
+
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* First Column */}
+            <div className="flex flex-col gap-4">
+              {services.slice(0, 3).map((detail, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <svg
+                    className="h-5 w-5 text-[#6abd45] shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
                   >
-                    <svg
-                      className="h-6 w-6 text-[#6abd45] inline-flex"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      strokeWidth="2"
-                      stroke="currentColor"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      {" "}
-                      <path stroke="none" d="M0 0h24v24H0z" />{" "}
-                      <path
-                        d="M18 15l-6-6l-6 6h12"
-                        transform="rotate(90 12 12)"
-                      />
-                    </svg>
-                    <span className="inline-flex text-lg">{detail}</span>
-                  </span>
-                );
-              })}
+                    <path stroke="none" d="M0 0h24v24H0z" />
+                    <path
+                      d="M18 15l-6-6l-6 6h12"
+                      transform="rotate(90 12 12)"
+                    />
+                  </svg>
+                  <span className="text-lg">{detail}</span>
+                </div>
+              ))}
             </div>
-            <div className="flex flex-wrap justify-center m-5 item-center ">
-              <img
-                src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685663/insite-images/our-services_qnqsre.jpg"
-                alt="Equal Opportunity"
-              />
+
+            {/* Second Column */}
+            <div className="flex flex-col gap-4">
+              {services.slice(3, 6).map((detail, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <svg
+                    className="h-5 w-5 text-[#6abd45] shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" />
+                    <path
+                      d="M18 15l-6-6l-6 6h12"
+                      transform="rotate(90 12 12)"
+                    />
+                  </svg>
+                  <span className="text-lg">{detail}</span>
+                </div>
+              ))}
             </div>
           </section>
         </div>
+      </div>
 
-        <div className="py-3 mx-auto bg-white border-2 shadow-md lg:max-w-screen-lg xl:max-w-screen-xl rounded-3xl">
-          <section className="px-10">
-            <div className="text-4xl font-bold mb-0 text-[#6abd45] mt-3">
-              Our Portfolio
-            </div>
-            <section className="flex flex-col flex-wrap p-2 md:flex-row">
-              <div className="flex flex-col flex-wrap p-2 h-fit md:flex-row">
-                {portfolio.map((detail, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="flex flex-row flex-wrap items-center w-1/3 my-2 h-fit max-md:w-full"
-                    >
-                      <svg
-                        className="h-6 w-6 text-[#6abd45] inline-flex"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        strokeWidth="2"
-                        stroke="currentColor"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        {" "}
-                        <path stroke="none" d="M0 0h24v24H0z" />{" "}
-                        <path
-                          d="M18 15l-6-6l-6 6h12"
-                          transform="rotate(90 12 12)"
-                        />
-                      </svg>
-                      <p className="inline-flex text-lg">{detail}</p>
-                    </div>
-                  );
-                })}
+      {/* Our Portfolio */}
+      <div className="py-16 bg-white">
+        <div className="mx-auto px-6 md:px-12 lg:max-w-screen-lg xl:max-w-screen-xl">
+          <h2 className="text-4xl font-bold mb-8 text-[#6abd45]">
+            Our Portfolio
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+            {portfolio.map((detail, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <svg
+                  className="h-5 w-5 text-[#6abd45] shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" />
+                  <path d="M18 15l-6-6l-6 6h12" transform="rotate(90 12 12)" />
+                </svg>
+                <p className="text-lg">{detail}</p>
               </div>
-            </section>
-          </section>
-          <div className="flex flex-wrap items-center justify-center">
-            <div className="w-full h-96 max-md:w-full">
+            ))}
+          </div>
+
+          {/* Carousel */}
+          <div className="w-full h-96">
             <CarouselDefault images={service_images ?? []} />
-            </div>
           </div>
         </div>
       </div>
