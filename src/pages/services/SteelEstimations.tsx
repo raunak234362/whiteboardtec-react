@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { PageBanner, BannerPropType } from "../../components/banner";
-import Estimate from "../../components/estimation/Estimate";
+// import Estimate from "../../components/estimation/Estimate";
 import Newsletter from "../../components/newsletter/Newsletter";
 import Service from "../../config/service";
 import { ClipboardList, FileText, Scale, Ruler } from "lucide-react";
