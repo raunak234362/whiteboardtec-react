@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { PageBanner, BannerPropType } from "../../components/banner";
+import Estimate from "../../components/estimation/Estimate";
 import Newsletter from "../../components/newsletter/Newsletter";
 import Service from "../../config/service";
 import { ClipboardList, FileText, Scale, Ruler } from "lucide-react";
@@ -8,11 +9,13 @@ const banner: BannerPropType = {
   header: "Steel Estimation & Take-Off Services",
   subheader: "Eliminate Bidding Uncertainty. Maximize Your Profit.",
   image:
-    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1756983079/banner-image/Pasted_image_flirow.png",
+    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1756980017/banner-image/20250902_131026_lqlxwz.jpg",
 };
 
 const headSection: string[] = [
   "Stop guessing. Start winning more projects. Our Estimation Take-Off Service gives you a clear, data-driven advantage. We turn complex structural, architectural, and civil drawings into precise, actionable estimates take-off report.",
+  
+  "In today's fast-paced market, a reliable and clear estimate is crucial. We provide the speed and consistency you need to respond to bid invitations confidently. By partnering with us, you can avoid costly surprises, improve your project timelines, and build stronger, more reliable relationships with your clients.",
 ];
 
 const takeoffs: string[] = [
@@ -66,119 +69,138 @@ function SteelEstimation() {
 
       {/* Intro Section */}
       <div className="mx-auto my-16 lg:max-w-screen-lg xl:max-w-screen-xl px-6">
-        <section className="rounded-3xl border p-6 lg:p-10 grid grid-cols-1 lg:grid-cols-[60%_40%] gap-8 shadow-xl bg-gradient-to-br from-white to-gray-50">
-          <div className="leading-relaxed text-gray-700">
-            <h2 className="text-3xl font-bold mb-6 text-[#6abd45]">
-              Steel Estimation Take-Off Services
-            </h2>
-            {headSection.map((desc, index) => (
-              <p
-                key={index}
-                className="text-lg leading-relaxed mb-4 text-justify"
-              >
-                {desc}
-              </p>
-            ))}
+        <section className="rounded-3xl border-2 p-6 lg:p-10 grid grid-cols-1 lg:grid-cols-2 gap-8 shadow-md bg-white">
+          {/* LEFT SIDE - Content + Image */}
+          <div className="flex flex-col justify-between">
+            <div className="leading-relaxed text-gray-700 mb-6">
+              {headSection.map((desc, index) => {
+                // Split the first sentence from the rest
+                if (index === 0) {
+                  const [firstSentence, ...rest] = desc.split("Our Estimation");
+                  return (
+                    <div key={index}>
+                      <p className="text-xl font-bold text-[#6abd45] mb-2">
+                        Stop guessing. Start winning more projects!
+                      </p>
+                      <p className="text-lg leading-relaxed text-justify text-gray-700">
+                        Our Estimation {rest.join("Our Estimation")}
+                      </p>
+                    </div>
+                  );
+                }
+                return (
+                  <p
+                    key={index}
+                    className="text-lg leading-relaxed mb-4 text-justify text-gray-700"
+                  >
+                    {desc}
+                  </p>
+                );
+              })}
+            </div>
+
+            {/* Image */}
+            <div className="h-[220px] md:h-[200px] rounded-2xl overflow-hidden shadow-md">
+              <img
+                src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1756980012/banner-image/20250902_131253_vyyzx6.jpg"
+                alt="Steel Estimation Example"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
-            {[
-              "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1756980017/banner-image/20250902_131026_lqlxwz.jpg",
-              "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1756980012/banner-image/20250902_131253_vyyzx6.jpg",
-            ].map((src, idx) => (
-              <div
-                key={idx}
-                className="h-[220px] md:h-[250px] rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition duration-300"
-              >
-                <img
-                  src={src}
-                  alt={`Steel Estimation Example ${idx + 1}`}
-                  className="w-full h-full object-cover transform hover:scale-105 transition duration-500"
-                />
-              </div>
-            ))}
+
+          {/* RIGHT SIDE - Estimate box */}
+          <div className="flex items-center justify-center">
+            <Estimate head="Get your Steel Detailing Estimates done for FREE. Yes. You heard us right!" />
           </div>
         </section>
       </div>
 
       {/* Our Take-Offs */}
-      <div className="bg-gray-50 py-20">
+      <div className="bg-gray-100 py-16">
         <div className="mx-auto md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl px-6">
-          <h2 className="text-4xl font-extrabold text-center mb-12 text-[#6abd45]">
+          <h2 className="text-3xl font-semibold mb-8 text-[#6abd45]">
             Our Detailed Take-Offs Cover
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {takeoffs.map((detail, index) => {
               const [heading, description] = detail.split(":");
-              const gradient =
-                index % 2 === 0
-                  ? "from-gray-100 to-gray-300" // soft light gray
-                  : "from-gray-200 to-gray-400"; // slightly darker gray
               return (
                 <div
                   key={index}
-                  className={`bg-gradient-to-r ${gradient} text-gray-800 p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 transform `}
+                  className="bg-white text-gray-800 p-6 rounded-2xl shadow-md border"
                 >
-                  <h3 className="text-2xl font-bold mb-3">{heading}</h3>
-                  <p className="text-base opacity-90">{description?.trim()}</p>
+                  <h3 className="text-xl font-semibold mb-2">{heading}</h3>
+                  <p className="text-base">{description?.trim()}</p>
                 </div>
               );
             })}
-          </div>
+          </section>
         </div>
       </div>
-
+      {/* 
       {/* Deliverables */}
-      <div className="py-20 bg-gradient-to-br from-white to-gray-50">
+      {/* <div className="py-16 bg-white">
         <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-6">
-          <h2 className="text-4xl font-extrabold mb-12 text-[#6abd45] text-center">
+          <h2 className="text-3xl font-semibold mb-8 text-[#6abd45]">
             Our Deliverables
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {deliverables.map((item, index) => (
               <div
                 key={index}
-                className="flex flex-col items-center text-center bg-white p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+                className="flex flex-col items-center text-center bg-gray-50 p-6 rounded-2xl shadow-md border"
               >
-                <div className="mb-4 bg-gray-100 p-4 rounded-full shadow-inner">
+                <div className="mb-4 bg-white p-4 rounded-full shadow-inner">
                   {item.icon}
                 </div>
-                <p className="text-lg text-gray-700 font-medium">{item.text}</p>
+                <p className="text-base text-gray-700 font-medium">
+                  {item.text}
+                </p>
               </div>
             ))}
-          </div>
-
-          {/* Why Partner with Us */}
-          <div className="py-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-3xl shadow-inner">
-            <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-6">
-              <div className="bg-white rounded-3xl shadow-lg p-10 text-center">
-                <h2 className="text-4xl font-extrabold mb-6 text-[#6abd45]">
-                  Why Partner With Us?
-                </h2>
-                <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto mb-8">
-                  In today's fast-paced market, a reliable and clear estimate is
-                  crucial. We provide the speed and consistency you need to
-                  respond to bid invitations confidently. By partnering with us,
-                  you can avoid costly surprises, improve your project
-                  timelines, and build stronger, more reliable relationships
-                  with your clients.
-                </p>
-                <div className="mt-5 flex justify-center">
-                  <a
-                    href="#"
-                    className="bg-[#6abd45] text-white px-6 py-3 rounded-full text-lg font-medium shadow-md hover:bg-[#2563eb] hover:shadow-xl transition duration-300"
-                  >
-                    Get Estimate ➤
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+          </section>
         </div>
       </div>
 
-      <Newsletter />
+
+      <div>
+        <Newsletter />
+      </div> */}
+      {/* Our Deliverables Section */}
+      <div className="py-16 bg-gray-50">
+        <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-6">
+          <h2 className="text-3xl font-semibold mb-8 text-[#6abd45]">
+            Our Deliverables
+          </h2>
+
+          <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {deliverables.map((item, index) => (
+              <div
+                key={index}
+                className="flex flex-col items-center text-center bg-white p-6 rounded-2xl shadow-md border"
+              >
+                <div className="mb-4 bg-gray-50 p-4 rounded-full shadow-inner">
+                  {item.icon}
+                </div>
+                <p className="text-base text-gray-700 font-medium">
+                  {item.text}
+                </p>
+              </div>
+            ))}
+          </section>
+        </div>
+      </div>
+
+      {/* Divider Before Newsletter */}
+      <div className="border-t border-gray-300 my-10"></div>
+
+      {/* Newsletter Section */}
+      <div className="py-12 bg-white">
+        <Newsletter />
+      </div>
     </>
   );
 }
