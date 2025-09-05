@@ -5,6 +5,56 @@ import Newsletter from "../../components/newsletter/Newsletter";
 import Service from "../../config/service";
 import { ClipboardList, FileText, Scale, Ruler } from "lucide-react";
 
+// ✅ NEW COMPONENT (Custom Estimate Box)
+function SteelEstimateBox() {
+  return (
+    <div className="bg-[#6abd45] rounded-xl md:order-1 order-first p-6 mx-5 text-white shadow-lg">
+      <div className="text-2xl font-bold mb-3">
+        Get Accurate Steel Estimation & Take-Off Reports – Start Today!
+      </div>
+      <p className="text-md mb-4 leading-relaxed">
+        Why wait? Send us your drawing sets today and speed up your bidding
+        process with our steel estimation take-off services where we provide
+        complete clarity for confident bidding
+      </p>
+      <ul className="list-none space-y-3">
+        {[
+          "A complete estimation sheet with categorized steel take-offs.",
+          "Detailed scope list of steel members",
+          "Drawing references for transparency",
+          "The total estimated steel weight",
+        ].map((point, idx) => (
+          <li key={idx} className="flex items-start">
+            <svg
+              className="h-5 w-5 text-white mt-1 mr-2"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              strokeWidth="2"
+              stroke="currentColor"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" />
+              <path d="M18 15l-6-6l-6 6h12" transform="rotate(90 12 12)" />
+            </svg>
+            <span className="text-md">{point}</span>
+          </li>
+        ))}
+      </ul>
+      <div className="mt-6 flex">
+        <a
+          href="#"
+          className="border-2 rounded-full border-white border-opacity-90 px-5 py-2 text-md hover:bg-white hover:text-[#6abd45] hover:shadow-xl transition duration-200"
+        >
+          Get Estimate ➤
+        </a>
+      </div>
+    </div>
+  );
+}
+
 const banner: BannerPropType = {
   header: "Steel Estimation & Take-Off Services",
   subheader: "Eliminate Bidding Uncertainty. Maximize Your Profit.",
@@ -14,7 +64,6 @@ const banner: BannerPropType = {
 
 const headSection: string[] = [
   "Stop guessing. Start winning more projects. Our Estimation Take-Off Service gives you a clear, data-driven advantage. We turn complex structural, architectural, and civil drawings into precise, actionable estimates take-off report.",
-  
   "In today's fast-paced market, a reliable and clear estimate is crucial. We provide the speed and consistency you need to respond to bid invitations confidently. By partnering with us, you can avoid costly surprises, improve your project timelines, and build stronger, more reliable relationships with your clients.",
 ];
 
@@ -74,7 +123,6 @@ function SteelEstimation() {
           <div className="flex flex-col justify-between">
             <div className="leading-relaxed text-gray-700 mb-6">
               {headSection.map((desc, index) => {
-                // Split the first sentence from the rest
                 if (index === 0) {
                   const [, ...rest] = desc.split("Our Estimation");
                   return (
@@ -109,9 +157,9 @@ function SteelEstimation() {
             </div>
           </div>
 
-          {/* RIGHT SIDE - Estimate box */}
+          {/* RIGHT SIDE - ✅ Replaced with SteelEstimateBox */}
           <div className="flex items-center justify-center">
-            <Estimate head="Get your Steel Detailing Estimates done for FREE. Yes. You heard us right!" />
+            <SteelEstimateBox />
           </div>
         </section>
       </div>
@@ -139,38 +187,9 @@ function SteelEstimation() {
           </section>
         </div>
       </div>
-      {/* 
-      {/* Deliverables */}
-      {/* <div className="py-16 bg-white">
-        <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-6">
-          <h2 className="text-3xl font-semibold mb-8 text-[#6abd45]">
-            Our Deliverables
-          </h2>
 
-          <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {deliverables.map((item, index) => (
-              <div
-                key={index}
-                className="flex flex-col items-center text-center bg-gray-50 p-6 rounded-2xl shadow-md border"
-              >
-                <div className="mb-4 bg-white p-4 rounded-full shadow-inner">
-                  {item.icon}
-                </div>
-                <p className="text-base text-gray-700 font-medium">
-                  {item.text}
-                </p>
-              </div>
-            ))}
-          </section>
-        </div>
-      </div>
-
-
-      <div>
-        <Newsletter />
-      </div> */}
       {/* Our Deliverables Section */}
-      <div className="py-16 bg-gray-50">
+      <div className="py-16 bg-white">
         <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-6">
           <h2 className="text-3xl font-semibold mb-8 text-[#6abd45]">
             Our Deliverables
@@ -195,7 +214,7 @@ function SteelEstimation() {
       </div>
 
       {/* Divider Before Newsletter */}
-      <div className="border-t border-gray-300 my-10"></div>
+      {/* <div className="border-t border-gray-300 my-10"></div> */}
 
       {/* Newsletter Section */}
       <div className="py-12 bg-white">
