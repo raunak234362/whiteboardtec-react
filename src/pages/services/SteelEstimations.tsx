@@ -76,7 +76,7 @@ function SteelEstimation() {
               {headSection.map((desc, index) => {
                 // Split the first sentence from the rest
                 if (index === 0) {
-                  const [firstSentence, ...rest] = desc.split("Our Estimation");
+                  const [, ...rest] = desc.split("Our Estimation");
                   return (
                     <div key={index}>
                       <p className="text-xl font-bold text-[#6abd45] mb-2">
