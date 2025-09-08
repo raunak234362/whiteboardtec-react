@@ -33,12 +33,6 @@ export interface PortfolioInterface {
   pdf?: { path: string }[]; 
 }
 
-export type ProjectType =
-  | "Institute"
-  | "Commercial"
-  | "Facility Expension"
-  | "Industrial"
-  | "Other";
 
 export type ProjectStatus =
   | "Planning"
@@ -51,11 +45,13 @@ export interface IProject {
   projectTitle: string;
   id: string;
   projectID?: any;
+  otherType: string;
   title: string;
   description: string;
   location: string;
-  type: ProjectType;
+  type: string;
   technologyused: string;
+  designingSoftware: string;
   status: ProjectStatus;
   images?: string[];
   file: string[];
@@ -69,7 +65,7 @@ export interface IProject {
 export interface GalleryProjectFrontend
   extends Omit<IProject, "id" | "status" | "type" | "technologyused"> {
   id: string;
-  type: ProjectType;
+  type: string;
   status: ProjectStatus;
   technologyused: string;
   onUpdateSuccess: (updatedItem: GalleryProjectFrontend) => void;

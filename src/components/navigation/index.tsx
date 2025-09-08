@@ -31,7 +31,7 @@ const NavRoute: NavRouteType[] = [
         path: "/business-model",
       },
       {
-        name: "Leadership Teams",
+        name: "Leadership Team",
         path: "/leadership-teams",
       },
       {

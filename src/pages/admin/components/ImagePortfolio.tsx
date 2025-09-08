@@ -3,7 +3,7 @@ import { Dialog } from "@headlessui/react";
 import Service from "../../../config/service";
 import { useForm } from "react-hook-form";
 import { IProject, GalleryProjectFrontend } from "../../../config/interface";
-// import { Link } from "react-router-dom"; 
+// import { Link } from "react-router-dom";
 
 interface ImagePortfolioProps extends IProject {
   onUpdateSuccess: (updatedItem: GalleryProjectFrontend) => void;
@@ -15,7 +15,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
   const [isImageOpen, setImageOpen] = useState(false); // State to control the image viewer modal
   const [newSelectedFiles, setNewSelectedFiles] = useState<File[]>([]);
   const [progress, setProgress] = useState<number>(0);
-console.log("ImagePortfolio props:", props);
+  console.log("ImagePortfolio props:", props);
   const { register, setValue, watch, reset } = useForm<GalleryProjectFrontend>({
     defaultValues: {
       id: props.id, // Ensure ID is part of default values for consistency
@@ -24,6 +24,8 @@ console.log("ImagePortfolio props:", props);
       location: props.location,
       type: props.type,
       technologyused: props.technologyused,
+      otherType: props.otherType || "",
+      designingSoftware: props.designingSoftware || "",
       status: props.status,
       department: props.department, // Add department to default values
       // Note: `images` and `file` are not directly set as default values here
@@ -31,12 +33,23 @@ console.log("ImagePortfolio props:", props);
     },
   });
 
+  const typeValue = watch("type");
+
+  // Clear otherType if not OTHER
+  useEffect(() => {
+    if (typeValue !== "OTHER") {
+      setValue("otherType", "");
+    }
+  }, [typeValue, setValue]);
+
   // Watch for changes in form fields to reflect in state for handleUpdate
   const title = watch("title");
   const description = watch("description");
   const location = watch("location");
   const projectType = watch("type");
+  const otherType = watch("otherType");
   const technologyUsed = watch("technologyused");
+  const designingSoftware = watch("designingSoftware");
   const projectStatus = watch("status");
   const department = watch("department"); // Watch department too
 
@@ -46,7 +59,9 @@ console.log("ImagePortfolio props:", props);
     setValue("description", props.description);
     setValue("location", props.location);
     setValue("type", props.type);
+    setValue("otherType", props.otherType ?? "");
     setValue("technologyused", props.technologyused);
+    setValue("designingSoftware", props.designingSoftware);
     setValue("status", props.status);
     setValue("department", props.department); // Set department when props change
     setNewSelectedFiles([]); // Clear new selected files on prop change
@@ -72,9 +87,11 @@ console.log("ImagePortfolio props:", props);
       formData.append("description", description.trim());
       formData.append("location", location.trim());
       formData.append("type", projectType);
+      formData.append("otherType", otherType);
+      formData.append("designingSoftware", designingSoftware);
       formData.append("technologyused", technologyUsed.trim());
       formData.append("status", projectStatus);
-      formData.append("department", department); // Append department to form data
+      formData.append("department", department);
 
       // If new files are selected, append them. Otherwise, the backend should ideally
       // retain existing images if no 'images' field is present in the FormData.
@@ -84,28 +101,12 @@ console.log("ImagePortfolio props:", props);
       newSelectedFiles.forEach((file) => formData.append("images", file));
 
       const updatedProject = await Service.updateGallery(props.id, formData);
-
+      console.log("Updated project response:", updatedProject);
       alert("Gallery project updated successfully");
       setOpenJob(false);
       reset(); // Reset form fields to default (or current props values)
       setNewSelectedFiles([]); // Clear selected files after successful upload
       setProgress(0); // Reset progress
-
-      props.onUpdateSuccess({
-        id: props.id,
-        title: updatedProject.title,
-        department: updatedProject.department,
-        description: updatedProject.description,
-        location: updatedProject.location,
-        type: updatedProject.type,
-        technologyused: updatedProject.technologyused,
-        status: updatedProject.status,
-        images: updatedProject.images,
-        file: [], // Frontend representation might not need the actual File object
-        onUpdateSuccess: props.onUpdateSuccess,
-        onDeleteSuccess: props.onDeleteSuccess,
-        projectTitle: ""
-      });
     } catch (error) {
       console.error("Error updating gallery project:", error);
       alert("Something went wrong while updating the gallery project.");
@@ -250,26 +251,40 @@ console.log("ImagePortfolio props:", props);
                   </div>
 
                   <div>
-                    <label
-                      htmlFor="edit-projectType"
-                      className="block mb-1 text-sm font-medium text-gray-700"
-                    >
-                      Project Type
+                    <label>
+                      <span className="block mb-1 text-sm font-medium text-gray-700">
+                        Project Type
+                      </span>
+                      <select
+                        {...register("type")}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      >
+                        <option value="OTHER">Other</option>
+                        <option value="INSTITUTE">Institute</option>
+                        <option value="COMMERCIAL">Commercial</option>
+                        <option value="FACILITY_EXPENSION">
+                          Facility Expension
+                        </option>
+                        <option value="INDUSTRIAL">Industrial</option>
+                      </select>
                     </label>
-                    <select
-                      id="edit-projectType"
-                      {...register("type", { required: true })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                    >
-                      <option value="">Select project type</option>
-                      <option value="INSTITUTE">Institute</option>
-                      <option value="COMMERCIAL">Commercial</option>
-                      <option value="FACILITY_EXPENSION">
-                        Facility Expension
-                      </option>
-                      <option value="INDUSTRIAL">Industrial</option>
-                      <option value="OTHER">Other</option>
-                    </select>
+
+                    {/* Conditional input for otherType */}
+                    {typeValue === "OTHER" && (
+                      <label>
+                        <span className="block mb-1 text-sm font-medium text-gray-700">
+                          Specify Other Type *
+                        </span>
+                        <input
+                          {...register("otherType", {
+                            required: "Please specify the project type",
+                          })}
+                          placeholder="Enter project type"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                          type="text"
+                        />
+                      </label>
+                    )}
                   </div>
                   <div>
                     <label
@@ -297,12 +312,28 @@ console.log("ImagePortfolio props:", props);
                       htmlFor="edit-technologyUsed"
                       className="block mb-1 text-sm font-medium text-gray-700"
                     >
-                      Software/Technologies Used *
+                      Detailing Software
                     </label>
                     <input
                       type="text"
                       id="edit-technologyUsed"
                       {...register("technologyused", { required: true })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      placeholder="e.g., Tekla, SDS-2"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="edit-technologyUsed"
+                      className="block mb-1 text-sm font-medium text-gray-700"
+                    >
+                      Designing Software
+                    </label>
+                    <input
+                      type="text"
+                      id="edit-designingSoftware"
+                      {...register("designingSoftware", { required: true })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                       placeholder="e.g., Tekla, SDS-2"
                       required
@@ -485,7 +516,16 @@ console.log("ImagePortfolio props:", props);
                     />
                   ) : (
                     <img
-                      src={(props.images[0] as { image?: string; secureUrl?: string })?.secureUrl || (props.images[0] as { image?: string })?.image || ""}
+                      src={
+                        (
+                          props.images[0] as {
+                            image?: string;
+                            secureUrl?: string;
+                          }
+                        )?.secureUrl ||
+                        (props.images[0] as { image?: string })?.image ||
+                        ""
+                      }
                       alt={props.title}
                       className="w-full h-auto max-h-[70vh] object-contain rounded"
                     />

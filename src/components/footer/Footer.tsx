@@ -7,7 +7,7 @@ const Footer = (): JSX.Element => {
     <div className="relative bottom-0 w-full bg-black">
       <div className="text-[#FFF] h-fit py-2 max-md:py-7 items-center flex text-[13px] justify-between mx-auto lg:max-w-screen-lg xl:max-w-screen-xl md:flex-row flex-col">
         <div className="flex text-center">
-          Copyright © 2023 by Whiteboard Technologies Pvt. Ltd. All rights
+          Copyright © 2025 by Whiteboard Technologies Pvt. Ltd. All rights
           reserved.
         </div>
         <div className="flex flex-row items-center max-md:mt-5">

@@ -13,7 +13,9 @@ type IProjectFormInput = {
   description: string;
   location: string;
   type: string;
+  otherType?: string;
   technologyused: string;
+  designingSoftware: string;
   status: string;
   department: string;
 };
@@ -53,6 +55,8 @@ const AdminGallery = () => {
     register,
     handleSubmit,
     reset,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<IProjectFormInput>({
     defaultValues: {
@@ -60,11 +64,22 @@ const AdminGallery = () => {
       description: "",
       location: "",
       type: "OTHER",
+      otherType: "",
       technologyused: "",
       status: "IN_PROGRESS",
+      designingSoftware: "",
       department: "OTHER",
     },
   });
+
+  const typeValue = watch("type");
+
+  // Clear otherType if not OTHER
+  useEffect(() => {
+    if (typeValue !== "OTHER") {
+      setValue("otherType", "");
+    }
+  }, [typeValue, setValue]);
 
   const fetchGalleryProjects = useCallback(async () => {
     try {
@@ -77,6 +92,8 @@ const AdminGallery = () => {
         description: item.description,
         location: item.location,
         type: item.type,
+        otherType: item.otherType ?? "",
+        designingSoftware: item.designingSoftware,
         technologyused: item.technologyused,
         status: item.status,
         images: item.images,
@@ -105,13 +122,16 @@ const AdminGallery = () => {
       formData.append("title", data.title);
       formData.append("description", data.description);
       formData.append("location", data.location);
-      formData.append("type", data.type);
+      // Use otherType if type is OTHER
+      formData.append("type",data.type || "");
+      formData.append("otherType", data.otherType || "");
       formData.append("department", data.department);
+      formData.append("designingSoftware", data.designingSoftware);
       formData.append("technologyused", data.technologyused);
       formData.append("status", data.status);
 
       selectedFiles.forEach((file) => {
-        formData.append("images", file); // Append with [] to indicate multiple files
+        formData.append("images", file);
       });
 
       await Service.createGallery(formData);
@@ -297,6 +317,30 @@ const AdminGallery = () => {
                         </p>
                       )}
                     </label>
+
+                    {/* Conditional input for otherType */}
+                    {typeValue === "OTHER" && (
+                      <label>
+                        <span className="block mb-1 text-sm font-medium text-gray-700">
+                          Specify Other Type *
+                        </span>
+                        <input
+                          {...register("otherType", {
+                            required: "Please specify the project type",
+                          })}
+                          disabled={isUploading}
+                          placeholder="Enter project type"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                          type="text"
+                        />
+                        {errors.otherType && (
+                          <p className="mt-1 text-sm text-red-500">
+                            {errors.otherType.message}
+                          </p>
+                        )}
+                      </label>
+                    )}
+
                     <label>
                       <span className="block mb-1 text-sm font-medium text-gray-700">
                         Department
@@ -321,12 +365,10 @@ const AdminGallery = () => {
                   <div className="space-y-4">
                     <label>
                       <span className="block mb-1 text-sm font-medium text-gray-700">
-                        Software / Technologies Used *
+                        Detailing Software *
                       </span>
                       <input
-                        {...register("technologyused", {
-                          required: "Technologies Used is required",
-                        })}
+                        {...register("technologyused")}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         placeholder="e.g., Tekla, SDS-2"
                         disabled={isUploading}
@@ -334,6 +376,24 @@ const AdminGallery = () => {
                       {errors.technologyused && (
                         <p className="mt-1 text-sm text-red-500">
                           {errors.technologyused.message}
+                        </p>
+                      )}
+                    </label>
+                    <label>
+                      <span className="block mb-1 text-sm font-medium text-gray-700">
+                        Designing Software *
+                      </span>
+                      <input
+                        {...register("designingSoftware", {
+                          required: "Designing Software is required",
+                        })}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder="e.g., AutoCAD, Revit"
+                        disabled={isUploading}
+                      />
+                      {errors.designingSoftware && (
+                        <p className="mt-1 text-sm text-red-500">
+                          {errors.designingSoftware.message}
                         </p>
                       )}
                     </label>
