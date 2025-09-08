@@ -38,6 +38,8 @@ function Gallery() {
     navigate(`/our-firm/gallery/images?department=${department}`);
   };
 
+  console.log('-=-=-=-=-=-=-=-=-=')
+
 
 
   return (
