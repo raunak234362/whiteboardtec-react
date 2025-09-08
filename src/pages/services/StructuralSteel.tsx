@@ -65,140 +65,119 @@ function StructuralSteel() {
   return (
     <>
       <PageBanner {...banner} />
-
-      {/* Intro + Estimate */}
-      <div className="mx-auto my-20 lg:max-w-screen-lg xl:max-w-screen-xl">
-        <section className="rounded-3xl border-2 p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 shadow-md bg-white">
-          <div className="leading-loose text-gray-700">
-            <h2 className="text-3xl font-bold mb-4 text-[#6abd45]">
-              Steel industry continues to evolve
-            </h2>
-            {headSection.map((desc, index) => (
-              <p
-                key={index}
-                className="text-lg leading-relaxed mb-4 text-justify"
-              >
-                {desc}
-              </p>
-            ))}
-          </div>
-          <div className="flex justify-center items-center">
-            <Estimate head="Get your Steel Detailing Estimates done for FREE. Yes. You heard us right!" />
-          </div>
-        </section>
-      </div>
-
-      {/* Our Services */}
-      {/* <div className="py-16 bg-gray-100">
-        <div className="mx-auto px-6 md:px-12 lg:max-w-screen-lg xl:max-w-screen-xl">
-          <h2 className="text-4xl font-bold mb-8 text-[#6abd45]">
-            Our Services
-          </h2>
-          <section className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {services.map((detail, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <svg
-                  className="h-5 w-5 text-[#6abd45] shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" />
-                  <path d="M18 15l-6-6l-6 6h12" transform="rotate(90 12 12)" />
-                </svg>
-                <span className="text-lg">{detail}</span>
-              </div>
-            ))}
-          </section>
-        </div>
-      </div> */}
-      {/* Our Services */}
-      <div className="py-16 bg-gray-100">
-        <div className="mx-auto px-6 md:px-12 lg:max-w-screen-lg xl:max-w-screen-xl">
-          <h2 className="text-4xl font-bold mb-8 text-[#6abd45]">
-            Our Services
-          </h2>
-
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* First Column */}
-            <div className="flex flex-col gap-4">
-              {services.slice(0, 3).map((detail, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <svg
-                    className="h-5 w-5 text-[#6abd45] shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
+      <section className="m-10 flex flex-wrap justify-start items-start mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
+        <div className="flex flex-wrap flex-col">
+          {/* Intro + Estimate */}
+          <div className="mx-auto my-20 lg:max-w-screen-lg xl:max-w-screen-xl">
+            <section className="rounded-3xl border-2 p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 shadow-md bg-white">
+              <div className="leading-loose text-gray-700">
+                <h2 className="text-3xl font-bold mb-4 text-[#6abd45]">
+                  Steel industry continues to evolve
+                </h2>
+                {headSection.map((desc, index) => (
+                  <p
+                    key={index}
+                    className="text-lg leading-relaxed mb-4 text-justify"
                   >
-                    <path stroke="none" d="M0 0h24v24H0z" />
-                    <path
-                      d="M18 15l-6-6l-6 6h12"
-                      transform="rotate(90 12 12)"
-                    />
-                  </svg>
-                  <span className="text-lg">{detail}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Second Column */}
-            <div className="flex flex-col gap-4">
-              {services.slice(3, 6).map((detail, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <svg
-                    className="h-5 w-5 text-[#6abd45] shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" />
-                    <path
-                      d="M18 15l-6-6l-6 6h12"
-                      transform="rotate(90 12 12)"
-                    />
-                  </svg>
-                  <span className="text-lg">{detail}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-        </div>
-      </div>
-
-      {/* Our Portfolio */}
-      <div className="py-16 bg-white">
-        <div className="mx-auto px-6 md:px-12 lg:max-w-screen-lg xl:max-w-screen-xl">
-          <h2 className="text-4xl font-bold mb-8 text-[#6abd45]">
-            Our Portfolio
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-            {portfolio.map((detail, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <svg
-                  className="h-5 w-5 text-[#6abd45] shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" />
-                  <path d="M18 15l-6-6l-6 6h12" transform="rotate(90 12 12)" />
-                </svg>
-                <p className="text-lg">{detail}</p>
+                    {desc}
+                  </p>
+                ))}
               </div>
-            ))}
+              <div className="flex justify-center items-center">
+                <Estimate head="Get your Steel Detailing Estimates done for FREE. Yes. You heard us right!" />
+              </div>
+            </section>
           </div>
 
-          {/* Carousel */}
-          <div className="w-full h-96">
-            <CarouselDefault images={service_images ?? []} />
+          <div className="py-16 bg-gray-100 rounded-2xl">
+            <div className="mx-auto px-6 md:px-12 lg:max-w-screen-lg xl:max-w-screen-xl">
+              <h2 className="text-4xl font-bold mb-8 text-[#6abd45]">
+                Our Services
+              </h2>
+
+              <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* First Column */}
+                <div className="flex flex-col gap-4">
+                  {services.slice(0, 3).map((detail, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <svg
+                        className="h-5 w-5 text-[#6abd45] shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path stroke="none" d="M0 0h24v24H0z" />
+                        <path
+                          d="M18 15l-6-6l-6 6h12"
+                          transform="rotate(90 12 12)"
+                        />
+                      </svg>
+                      <span className="text-lg">{detail}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Second Column */}
+                <div className="flex flex-col gap-4">
+                  {services.slice(3, 6).map((detail, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <svg
+                        className="h-5 w-5 text-[#6abd45] shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path stroke="none" d="M0 0h24v24H0z" />
+                        <path
+                          d="M18 15l-6-6l-6 6h12"
+                          transform="rotate(90 12 12)"
+                        />
+                      </svg>
+                      <span className="text-lg">{detail}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </div>
+          </div>
+
+          {/* Our Portfolio */}
+          <div className="py-16 bg-white">
+            <div className="mx-auto px-6 md:px-12 lg:max-w-screen-lg xl:max-w-screen-xl">
+              <h2 className="text-4xl font-bold mb-8 text-[#6abd45]">
+                Our Portfolio
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+                {portfolio.map((detail, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <svg
+                      className="h-5 w-5 text-[#6abd45] shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path stroke="none" d="M0 0h24v24H0z" />
+                      <path
+                        d="M18 15l-6-6l-6 6h12"
+                        transform="rotate(90 12 12)"
+                      />
+                    </svg>
+                    <p className="text-lg">{detail}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Carousel */}
+              <div className="w-full h-96">
+                <CarouselDefault images={service_images ?? []} />
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
+      </section>
       <Newsletter />
     </>
   );

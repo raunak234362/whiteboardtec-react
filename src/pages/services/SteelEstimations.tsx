@@ -5,10 +5,10 @@ import Newsletter from "../../components/newsletter/Newsletter";
 import Service from "../../config/service";
 import { ClipboardList, FileText, Scale, Ruler } from "lucide-react";
 
-// ✅ NEW COMPONENT (Custom Estimate Box)
+
 function SteelEstimateBox() {
   return (
-    <div className="bg-[#6abd45] rounded-xl md:order-1 order-first p-6 mx-5 text-white shadow-lg">
+    <div className="bg-[#6abd45] rounded-xl md:order-1 order-first p-6 mx-5 text-white shadow-lg h-full">
       <div className="text-2xl font-bold mb-3">
         Get Accurate Steel Estimation & Take-Off Reports – Start Today!
       </div>
@@ -81,11 +81,11 @@ const deliverables: { text: string; icon: JSX.Element }[] = [
   },
   {
     text: "A detailed scope list of steel members considered in the estimate.",
-    icon: <ClipboardList className="w-12 h-12 text-[#2563eb]" />,
+    icon: <ClipboardList className="w-12 h-12 text-[#6abd45]" />,
   },
   {
     text: "The total estimated steel weight for bidding.",
-    icon: <Scale className="w-12 h-12 text-[#facc15]" />,
+    icon: <Scale className="w-12 h-12 text-[#6abd45]" />,
   },
   {
     text: "Drawing references for cross-verification and transparency.",
@@ -127,7 +127,7 @@ function SteelEstimation() {
                   const [, ...rest] = desc.split("Our Estimation");
                   return (
                     <div key={index}>
-                      <p className="text-xl font-bold text-[#6abd45] mb-2">
+                      <p className="text-3xl font-bold text-[#6abd45] mb-2">
                         Stop guessing. Start winning more projects!
                       </p>
                       <p className="text-lg leading-relaxed text-justify text-gray-700">

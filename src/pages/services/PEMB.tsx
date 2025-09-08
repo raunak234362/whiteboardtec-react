@@ -60,11 +60,15 @@ function PEMB() {
     <>
       <PageBanner {...banner} />
 
-      <div className="mx-auto my-0 m-28 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
-        <section className="rounded-3xl mt-3 border-2 p-2 grid grid-cols-[60%_40%] gap-3 shadow-md max-md:grid-cols-1">
-          <div className="order-1 m-4 leading-loose text-gray-700 max-md:order-2">
+      {/* Head Section */}
+      <div className="mx-auto my-0 m-28 lg:max-w-screen-lg xl:max-w-screen-xl px-8">
+        <section className="rounded-3xl mt-3 border-2 p-6 grid grid-cols-[60%_40%] gap-6 shadow-md max-md:grid-cols-1">
+          <div className="order-1 leading-loose text-gray-700 max-md:order-2">
             {headSection.map((desc, index) => (
-              <p key={index} className="text-lg leading-relaxed text-justify">
+              <p
+                key={index}
+                className="text-lg leading-relaxed text-justify mb-4"
+              >
                 {desc}
               </p>
             ))}
@@ -73,22 +77,17 @@ function PEMB() {
         </section>
       </div>
 
+      {/* Offerings Section */}
       <div className="bg-gray-100">
-        <div className="pt-3 mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
-          <div className="text-4xl font-bold my-2 text-[#6abd45] mt-5 max-md:mx-2">
+        <div className="pt-10 pb-10 mx-auto my-10 lg:max-w-screen-lg xl:max-w-screen-xl px-8">
+          <h2 className="text-4xl font-bold text-[#6abd45] mb-6">
             Our Structural Design Engineering Portfolio Includes
-          </div>
-
-          <section className="grid grid-cols-1 p-2 mt-3 md:gap-x-10 md:grid-cols-2">
+          </h2>
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {pembDetailing.map((detail, index) => (
-              <div
-                key={index}
-                className="flex flex-row flex-wrap items-start py-1 md:py-2"
-              >
+              <div key={index} className="flex items-start gap-2 py-2">
                 <svg
-                  className="h-6 w-6 text-[#6abd45] inline-flex"
-                  width="24"
-                  height="24"
+                  className="h-6 w-6 text-[#6abd45] shrink-0 mt-1"
                   viewBox="0 0 24 24"
                   strokeWidth="2"
                   stroke="currentColor"
@@ -99,7 +98,7 @@ function PEMB() {
                   <path stroke="none" d="M0 0h24v24H0z" />
                   <path d="M18 15l-6-6l-6 6h12" transform="rotate(90 12 12)" />
                 </svg>
-                <p className="text-lg inline-flex max-md:w-[90%]">{detail}</p>
+                <p className="text-lg">{detail}</p>
               </div>
             ))}
           </section>
@@ -108,11 +107,11 @@ function PEMB() {
 
       {/* Carousel Section */}
       {pembImages.length > 0 && (
-        <div className="py-5 mx-auto my-10 bg-white border-2 shadow-md lg:max-w-screen-lg xl:max-w-screen-xl rounded-3xl">
-          <div className="text-4xl font-bold text-[#6abd45] mb-5 px-5">
+        <div className="py-10 mx-auto my-10 bg-white border-2 shadow-md lg:max-w-screen-lg xl:max-w-screen-xl rounded-3xl px-8">
+          <h2 className="text-4xl font-bold text-[#6abd45] mb-6">
             Our PEMB Portfolio
-          </div>
-          <div className="w-full px-10 h-96 max-md:px-3">
+          </h2>
+          <div className="w-full h-96">
             <CarouselDefault images={pembImages} />
           </div>
         </div>

@@ -35,9 +35,9 @@ const rebarEstimation = {
     "Total estimation summary as per client’s requirement",
     "Rebar Take off summary",
     "List of accessories EX. Chairs, Bolsters, Wire mesh",
-    "Out puts is MS Excel, ASA estimation, Soule estimation Formats."
+    "Out puts is MS Excel, ASA estimation, Soule estimation Formats.",
   ],
-}
+};
 
 const rebarStructures = {
   title: "Structures Detailed",
@@ -48,41 +48,41 @@ const rebarStructures = {
     "Oil, Gas and Chemical plants and refineries",
     "Tilt-UP panels",
     "WWTP (Waste Water Treatment Plant)",
-  ]
-}
+  ],
+};
 
 const workDone = [
   {
     title: "York county resource recovery centre",
-    desc: "Pennsylvania – 572.88 MT"
+    desc: "Pennsylvania – 572.88 MT",
   },
   {
     title: "York county resource recovery centre",
-    desc: "OH – 727.04 MT"
+    desc: "OH – 727.04 MT",
   },
   {
     title: "Baltimore ESA transport facility",
-    desc: "Baltimore – 195.17 MT"
+    desc: "Baltimore – 195.17 MT",
   },
   {
     title: "Memorial hospital",
-    desc: "Pennsylvania – 231.75 MT"
+    desc: "Pennsylvania – 231.75 MT",
   },
   {
     title: "Pennsylvania state WWTP",
-    desc: "PA – 546.55 MT"
+    desc: "PA – 546.55 MT",
   },
   {
     title: "York County Tipping Hall",
-    desc: "PA – 627.38 MT"
+    desc: "PA – 627.38 MT",
   },
   {
     title: "CPV Charles Cooling tower",
-    desc: "Pennsylvania – 203.76 MT"
-  }
-]
+    desc: "Pennsylvania – 203.76 MT",
+  },
+];
 
-const jobDone:string[] = [
+const jobDone: string[] = [
   "1 st Place Condos – 900 MT",
   "Burnham Tower – 500MT",
   "Potawatomi Casino – 5000 MT",
@@ -90,7 +90,7 @@ const jobDone:string[] = [
   "UMNC Health Centre – 4000 MT",
   "Gansevoort Park, Bronx Community college – 700 MT",
   "Edison High school – 1000 MT",
-]
+];
 
 function Rebar() {
   useEffect(() => {
@@ -100,7 +100,7 @@ function Rebar() {
   return (
     <>
       <PageBanner {...banner} />
-      <div className="mx-auto my-0 m-28 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
+      <div className="m-28 max-md:mx-3 mt-0 mb-5 p-4 flex flex-wrap justify-start items-start mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
         <section className="rounded-3xl mt-3 border-2 p-2 grid grid-cols-[60%_40%] gap-3 shadow-md max-md:grid-cols-1">
           <div className="order-1 m-4 leading-loose text-gray-700 max-md:order-2">
             {headSection.description?.map((desc, index) => {
@@ -119,7 +119,7 @@ function Rebar() {
       </div>
 
       <div className="bg-gray-100">
-        <div className="pt-3 mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
+        <div className="my-5 p-5 flex flex-col justify-center items-start mx-auto md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
           <div className="text-4xl font-bold my-2 text-[#6abd45] mt-5 max-md:mx-2">
             Rebar Detailing
           </div>
@@ -227,17 +227,18 @@ function Rebar() {
           </div>
         </section>
       </div>
-
-      <div className="pt-3 mx-auto mt-5 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
-          <div className="text-3xl font-semibold my-2 text-[#6abd45] mt-5 max-md:mx-2">
-          Rebar Estimation work done
+      <div>
+        <div className="mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl px-3">
+          <div className="text-3xl font-semibold my-2 text-[#6abd45] mt-7 ">
+            Rebar Estimation work done
           </div>
           <section className="grid grid-cols-1 p-2 mt-3 md:gap-x-10 md:grid-cols-2">
             {workDone.map((detail, index) => {
               return (
                 <div
                   className="py-1 mx-4 my-1 md:py-2 flex flex-wrap flex-col items-start max-md:w-[90%]"
-                  key={index} >
+                  key={index}
+                >
                   <p className="flex text-lg">{detail.title}</p>
                   <p className="text-md flex text-[#6abd45]">{detail.desc}</p>
                 </div>
@@ -245,11 +246,12 @@ function Rebar() {
             })}
           </section>
         </div>
+      </div>
 
-        <div className="bg-gray-100 shadow-md drop-shadow-md">
+      <div className="bg-gray-100 shadow-md drop-shadow-md">
         <div className="pt-3 mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
           <div className="text-3xl font-semibold my-2 text-[#6abd45] mt-5 max-md:mx-2">
-          Job Done By Our Teams
+            Job Done By Our Teams
           </div>
           <section className="grid grid-cols-1 p-2 mt-3 md:gap-x-10 md:grid-cols-2">
             {jobDone.map((detail, index) => {
