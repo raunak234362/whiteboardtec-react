@@ -38,6 +38,8 @@ function Portfolio() {
     fetchPortfolio();
   }, []);
 
+  console.log("Portfolios State:", portfolios);
+
   return (
     <>
       <PageBanner {...bannerData} />
