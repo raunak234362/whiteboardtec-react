@@ -79,7 +79,7 @@ function PEMB() {
 
       {/* Offerings Section */}
       <div className="bg-gray-100">
-        <div className="pt-10 pb-10 mx-auto my-10 lg:max-w-screen-lg xl:max-w-screen-xl px-8">
+        <div className="pt-10 pb-10 mx-auto my-10 lg:max-w-screen-lg xl:max-w-screen-xl px-12">
           <h2 className="text-4xl font-bold text-[#6abd45] mb-6">
             Our Structural Design Engineering Portfolio Includes
           </h2>
@@ -107,7 +107,7 @@ function PEMB() {
 
       {/* Carousel Section */}
       {pembImages.length > 0 && (
-        <div className="py-10 mx-auto my-10 bg-white border-2 shadow-md lg:max-w-screen-lg xl:max-w-screen-xl rounded-3xl px-8">
+        <div className="py-10 mx-auto my-10 bg-white border-2 shadow-md lg:max-w-screen-lg xl:max-w-screen-xl rounded-3xl px-14">
           <h2 className="text-4xl font-bold text-[#6abd45] mb-6">
             Our PEMB Portfolio
           </h2>

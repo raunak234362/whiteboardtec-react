@@ -381,12 +381,10 @@ const AdminGallery = () => {
                     </label>
                     <label>
                       <span className="block mb-1 text-sm font-medium text-gray-700">
-                        Designing Software *
+                        Designing Software 
                       </span>
                       <input
-                        {...register("designingSoftware", {
-                          required: "Designing Software is required",
-                        })}
+                        {...register("designingSoftware")}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         placeholder="e.g., AutoCAD, Revit"
                         disabled={isUploading}
