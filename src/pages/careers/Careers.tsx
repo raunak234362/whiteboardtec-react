@@ -96,7 +96,7 @@ function Careers() {
 
       <div className="bg-gray-100">
         <div className="pt-3 mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
-          <div className="my-2 text-4xl font-semibold text-black mt-7">
+          <div className="my-2 text-4xl font-semibold text-black mt-7 px-2">
             Current Openings
           </div>
           <section className="grid grid-cols-1 p-2 mt-3 gap-y-5 gap-x-10 md:grid-cols-2">
@@ -111,7 +111,7 @@ function Careers() {
             )}
           </section>
 
-          <div className="my-2 text-4xl font-semibold text-black mt-7">
+          <div className="my-2 text-4xl font-semibold text-black mt-7 px-2">
             Campus Recruitment
           </div>
           <section className="grid grid-cols-1 p-2 mt-3 gap-y-5 gap-x-10 md:grid-cols-2">
@@ -151,7 +151,7 @@ function Careers() {
             </div>
           </section>
 
-          <div className="my-2 mt-3 text-lg text-black max-md:mx-2">
+          <div className="my-2 mt-3 text-lg text-black max-md:mx-2 px-2">
             We might just be a part of the recruitment drive at your college.
             Follow our social handles for more information on campus events.
             {/* Social media icons section */}
@@ -159,7 +159,7 @@ function Careers() {
         </div>
       </div>
 
-      <div className="pt-3 mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
+      <div className="pt-3 mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl scroll-px-2">
         <div className="my-2 text-3xl font-semibold text-black mt-7">
           We continue to attract and retain the best talent because of
         </div>

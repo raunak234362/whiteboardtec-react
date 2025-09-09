@@ -98,10 +98,10 @@ function MiscellaneousSteel() {
 
           <div className="bg-gray-100 my-5 rounded-2xl">
             <div className="p-5 mx-auto my-10 lg:max-w-screen-lg xl:max-w-screen-xl pb-7">
-              <div className="text-3xl font-semibold  text-[#6abd45] ">
+              <div className="text-3xl font-semibold  text-[#6abd45] px-3">
                 Miscellaneous Detailing team Capabilities
               </div>
-              <section className="grid grid-cols-1 p-2 mt-3 md:gap-x-10 md:grid-cols-2">
+              <section className="grid grid-cols-1 p-2 mt-3 md:gap-x-10 md:grid-cols-2 px-2">
                 {MiscCapability.map((detail, index) => {
                   return (
                     <span
@@ -137,7 +137,7 @@ function MiscellaneousSteel() {
           </div>
 
           <div className="mx-auto w-full ">
-            <section className="grid grid-cols-1 gap-2 p-2 mt-3 border-2 shadow-md  rounded-2xl md:grid-cols-4 lg:grid-cols-4">
+            <section className="grid grid-cols-1 gap-2 p-2 mt-3 border-2 shadow-md  rounded-2xl md:grid-cols-4 lg:grid-cols-4 px-4">
               {MiscType?.map((type, index) => {
                 return (
                   <div key={index} className="m-4 leading-loose text-gray-700">

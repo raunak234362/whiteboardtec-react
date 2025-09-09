@@ -119,8 +119,8 @@ function Rebar() {
       </div>
 
       <div className="bg-gray-100">
-        <div className="my-5 p-5 flex flex-col justify-center items-start mx-auto md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
-          <div className="text-4xl font-bold my-2 text-[#6abd45] mt-5 max-md:mx-2">
+        <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-7">
+          <div className="text-3xl font-semibold text-[#6abd45] mb-8 px-3">
             Rebar Detailing
           </div>
           <section className="grid grid-cols-1 p-2 mt-3 md:gap-x-10 md:grid-cols-2">
@@ -156,9 +156,9 @@ function Rebar() {
         </div>
       </div>
 
-      <div className="mx-auto my-0 m-28 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
+      {/* <div className="py-5 px-48  my-0  md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl ">
         <section className="grid grid-cols-1 gap-3 p-2 mt-3 border-2 shadow-md rounded-3xl md:grid-cols-2">
-          <div className="m-10 mr-4 leading-loose text-gray-700 max-md:m-4">
+          <div className="m-9 mr-4 leading-loose text-gray-700 max-md:m-4">
             <div className="text-3xl font-bold my-2 text-[#6abd45] max-md:mx-1">
               {rebarEstimation.title}
             </div>
@@ -226,13 +226,69 @@ function Rebar() {
             })}
           </div>
         </section>
+      </div> */}
+      <div className="py-10 px-4 mx-auto md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
+        <section className="grid grid-cols-1 gap-6 p-6 mt-6 border-2 shadow-md rounded-3xl md:grid-cols-2">
+          {/* Left Column - Rebar Estimation */}
+          <div className="leading-loose text-gray-700">
+            <div className="text-3xl font-bold mb-4 text-[#6abd45]">
+              {rebarEstimation.title}
+            </div>
+            {rebarEstimation.description?.map((detail, index) => (
+              <div key={index} className="flex items-start gap-2 py-2">
+                <svg
+                  className="h-6 w-6 text-[#6abd45] shrink-0"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                  stroke="currentColor"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" />
+                  <path d="M18 15l-6-6l-6 6h12" transform="rotate(90 12 12)" />
+                </svg>
+                <p className="text-lg">{detail}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Right Column - Structures Detailed */}
+          <div className="leading-loose text-gray-700">
+            <div className="text-3xl font-bold mb-4 text-[#6abd45]">
+              {rebarStructures.title}
+            </div>
+            {rebarStructures.description?.map((detail, index) => (
+              <div key={index} className="flex items-start gap-2 py-2">
+                <svg
+                  className="h-6 w-6 text-[#6abd45] shrink-0"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                  stroke="currentColor"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" />
+                  <path d="M18 15l-6-6l-6 6h12" transform="rotate(90 12 12)" />
+                </svg>
+                <p className="text-lg">{detail}</p>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
+
       <div>
-        <div className="mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl px-3">
-          <div className="text-3xl font-semibold my-2 text-[#6abd45] mt-7 ">
+        <div className="mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl px-6">
+          <div className="text-3xl font-semibold my-2 text-[#6abd45] mt-7 px-3">
             Rebar Estimation work done
           </div>
-          <section className="grid grid-cols-1 p-2 mt-3 md:gap-x-10 md:grid-cols-2">
+          <section className="grid grid-cols-1 p- mt-3 md:gap-x-10 md:grid-cols-2">
             {workDone.map((detail, index) => {
               return (
                 <div
@@ -248,12 +304,12 @@ function Rebar() {
         </div>
       </div>
 
-      <div className="bg-gray-100 shadow-md drop-shadow-md">
+      <div className="bg-gray-100 shadow-md drop-shadow-md ">
         <div className="pt-3 mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
-          <div className="text-3xl font-semibold my-2 text-[#6abd45] mt-5 max-md:mx-2">
+          <div className="text-3xl font-semibold my-2 text-[#6abd45] mt-5 max-md:mx-2 px-7">
             Job Done By Our Teams
           </div>
-          <section className="grid grid-cols-1 p-2 mt-3 md:gap-x-10 md:grid-cols-2">
+          <section className="grid grid-cols-1 p-2 mt-3 md:gap-x-10 md:grid-cols-2 px-7">
             {jobDone.map((detail, index) => {
               return (
                 <div

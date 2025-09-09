@@ -82,7 +82,7 @@ function ArchitecturalBIM() {
       </div> */}
       {/* Offerings Section */}
       <div className="bg-gray-100 py-16">
-        <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-8">
+        <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-12">
           <h2 className="text-3xl font-semibold text-[#6abd45] mb-8">
             Our BIM Architectural Service Offerings
           </h2>
