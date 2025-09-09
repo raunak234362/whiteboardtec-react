@@ -76,12 +76,20 @@ export interface GalleryImagesProps {
   department: string;
 }
 
+export interface Files {
+  fileId?: string;
+  fileName?: string;
+  path: string;
+  secureUrl?: string;
+  originalName?: string;
+}
+
 export interface PortfolioPropType {
-  file: any[];
   id: string;
   title: string;
   description: string;
-  status: string;
+  status: boolean;
+  file: Files[] | null;
 }
 
 export interface ConnectProps {

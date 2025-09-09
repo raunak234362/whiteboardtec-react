@@ -3,7 +3,7 @@ import { PortfolioInterface, PortfolioPropType } from "../../config/interface";
 import PortfolioInfo from "./PortfolioInfo";
 import { useEffect, useState } from "react";
 import PortfolioPdf from "./PortfolioPdf";
-import Service from "../../config/service"; 
+import Service from "../../config/service";
 
 const bannerData: BannerPropType = {
   header: "Our Portfolio",
@@ -16,16 +16,12 @@ function Portfolio() {
 
   const fetchPortfolio = async () => {
     try {
-      const response = await Service.getPortfolio(); 
-      // const activePortfolios = response.filter(
-      //   (portfolio: PortfolioPropType) => portfolio.status === true
-      // );
-      console.log(response);
-      
+      const response = await Service.getPortfolio();
+
       setPortfolios(
         response.map((portfolio: PortfolioInterface) => ({
           ...portfolio,
-          status: portfolio.status ? "true" : "false",
+          status: portfolio.status,
         }))
       );
     } catch (error) {
@@ -38,8 +34,6 @@ function Portfolio() {
     fetchPortfolio();
   }, []);
 
-  console.log("Portfolios State:", portfolios);
-
   return (
     <>
       <PageBanner {...bannerData} />
@@ -49,8 +43,8 @@ function Portfolio() {
             key={index}
             className="rounded-3xl mt-10 h-[60vh] max-md:h-[90vh] border-2 p-2 grid grid-cols-[60%_40%] gap-3 shadow-md max-md:grid-cols-1 relative"
           >
-            <div className="order-1 my-2 ml-6 overflow-y-hidden max-md:ml-0 max-md:order-2">
-              {portfolio && <PortfolioPdf portfolio={portfolios} />}
+            <div className="order-1 overflow-y-hidden max-md:ml-0 max-md:order-2">
+              {portfolio && <PortfolioPdf portfolio={portfolio} />}
             </div>
             <div className="order-2 max-md:order-1">
               <PortfolioInfo

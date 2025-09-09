@@ -427,8 +427,6 @@ function AdminPortfolio() {
                           typeof portfolio.status === "boolean"
                             ? portfolio.status
                             : portfolio.status === "active"
-                            ? "active"
-                            : "inactive"
                         }
                         pdf={
                           Array.isArray(portfolio.file)
