@@ -65,7 +65,7 @@ function StructuralSteel() {
   return (
     <>
       <PageBanner {...banner} />
-      <section className="m-10 flex flex-wrap justify-start items-start mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
+      <section className=" flex flex-wrap justify-center items-start mx-auto ">
         <div className="flex flex-wrap flex-col">
           {/* Intro + Estimate */}
           <div className="mx-auto my-20 lg:max-w-screen-lg xl:max-w-screen-xl">
@@ -89,7 +89,7 @@ function StructuralSteel() {
             </section>
           </div>
 
-          <div className="py-16 bg-gray-100 rounded-2xl">
+          <div className="py-16 bg-gray-100 rounded-2xl w-screen">
             <div className="mx-auto px-6 md:px-12 lg:max-w-screen-lg xl:max-w-screen-xl">
               <h2 className="text-4xl font-bold mb-8 text-[#6abd45]">
                 Our Services

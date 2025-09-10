@@ -20,6 +20,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
 }) => {
   const [imageData, setImageData] = useState<any>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [slideDirection, setSlideDirection] = useState<"next" | "prev" | null>(null);
 
   interface GalleryFile {
     secureUrl: string;
@@ -89,17 +90,30 @@ export const ImageModal: React.FC<ImageModalProps> = ({
 
   const nextImage = () => {
     if (imageData?.images?.length > 0) {
+      setSlideDirection("next");
       setCurrentIndex((prev) => (prev + 1) % imageData.images.length);
     }
   };
 
   const prevImage = () => {
     if (imageData?.images?.length > 0) {
+      setSlideDirection("prev");
       setCurrentIndex(
         (prev) => (prev - 1 + imageData.images.length) % imageData.images.length
       );
     }
   };
+
+  // Automatic slide every 2 seconds
+  useEffect(() => {
+    if (imageData?.images?.length > 1) {
+      const interval = setInterval(() => {
+        nextImage();
+      }, 3000); // 3 seconds
+
+      return () => clearInterval(interval); // Cleanup on unmount or change
+    }
+  }, [imageData]);
 
   return (
     <Dialog
@@ -107,16 +121,53 @@ export const ImageModal: React.FC<ImageModalProps> = ({
       onClose={onClose}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30 backdrop-blur-lg"
     >
-      <Dialog.Panel className="relative flex flex-col w-[90%]  bg-white rounded-2xl shadow-2xl overflow-auto">
+      <Dialog.Panel className="relative flex flex-col w-[50%] bg-white rounded-2xl shadow-2xl overflow-auto">
         {imageData?.images?.length > 0 ? (
-          <div className="flex flex-col md:flex-row md:space-x-8">
+          <div className="flex flex-col md:flex-col md:space-x-8">
             {/* Image Viewer */}
-            <div className="relative flex items-center justify-center p-5 bg-gray-100 md:w-2/3">
+            <div className="relative flex items-center justify-center p-5 bg-gray-100 md:w-full overflow-hidden">
               <img
                 src={imageData.images[currentIndex]}
                 alt={`Project image ${currentIndex + 1}`}
-                className="w-full object-contain rounded-lg shadow-md"
+                className={`w-full object-contain rounded-lg shadow-md transition-transform duration-2000 ease-in-out ${
+                  slideDirection === "next"
+                    ? "animate-slide-in-right"
+                    : slideDirection === "prev"
+                    ? "animate-slide-in-left"
+                    : ""
+                }`}
+                key={currentIndex} // Key ensures re-render for transition
               />
+              <style>
+                {`
+                  @keyframes slide-in-right {
+                    from {
+                      transform: translateX(100%);
+                      opacity: 0;
+                    }
+                    to {
+                      transform: translateX(0);
+                      opacity: 1;
+                    }
+                  }
+                  @keyframes slide-in-left {
+                    from {
+                      transform: translateX(-100%);
+                      opacity: 0;
+                    }
+                    to {
+                      transform: translateX(0);
+                      opacity: 1;
+                    }
+                  }
+                  .animate-slide-in-right {
+                    animation: slide-in-right 2s ease-in-out;
+                  }
+                  .animate-slide-in-left {
+                    animation: slide-in-left 2s ease-in-out;
+                  }
+                `}
+              </style>
               {imageData.images.length > 1 && (
                 <>
                   <button
@@ -138,7 +189,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
             </div>
 
             {/* Project Details */}
-            <div className="p-6 md:w-1/3">
+            <div className="p-6 md:w-11/12">
               <h2 className="mb-4 text-3xl font-bold text-green-700 whitespace-normal break-words">
                 {imageData.title.toUpperCase()}
               </h2>
@@ -147,12 +198,6 @@ export const ImageModal: React.FC<ImageModalProps> = ({
               </p>
 
               <div className="space-y-3 text-sm text-gray-600">
-                {/* <div>
-                  <span className="font-semibold text-green-600">
-                    Department:
-                  </span>{" "}
-                  {imageData.department}
-                </div> */}
                 <div>
                   <span className="font-semibold text-green-600">
                     Location:
