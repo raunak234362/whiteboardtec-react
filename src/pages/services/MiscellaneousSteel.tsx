@@ -11,11 +11,7 @@ const banner: BannerPropType = {
 };
 
 const headSection: string[] = [
-<<<<<<< HEAD
   "Our portfolio spans across structural steel elements such as complex staircases, hand railings and other intricate misc. steel construction items. We understand the detailing needs from a fabrication point of view and execute comprehensive drawings that conform to your unique requirements..",
-=======
-  "Our portfolio spans across structural steel elements such as complex staircases, hand-railings and other intricate misc. steel construction items. We understand the detailing needs from a fabrication point of view and execute comprehensive drawings that are conformed to your unique requirements.",
->>>>>>> origin/main
   "Using the latest 3D modeling tools and in compliance with the AISC code, we will make sure you present your bids on time and in entirety.",
   "No job is too small for us and nothing is miscellaneous when you add an element of technical clarity to it.",
 ];
