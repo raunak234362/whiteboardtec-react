@@ -77,6 +77,7 @@ export interface GalleryImagesProps {
 }
 
 export interface Files {
+  size: number;
   fileId?: string;
   fileName?: string;
   path: string;

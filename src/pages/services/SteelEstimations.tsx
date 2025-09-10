@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { PageBanner, BannerPropType } from "../../components/banner";
-// import Estimate from "../../components/estimation/Estimate";
 import Newsletter from "../../components/newsletter/Newsletter";
 import Service from "../../config/service";
 import { ClipboardList, FileText, Scale, Ruler } from "lucide-react";
+
 
 
 function SteelEstimateBox() {
@@ -45,7 +45,7 @@ function SteelEstimateBox() {
       </ul>
       <div className="mt-6 flex">
         <a
-          href="#"
+          href="mailto:sales@whiteboardtec.com"
           className="border-2 rounded-full border-white border-opacity-90 px-5 py-2 text-md hover:bg-white hover:text-[#6abd45] hover:shadow-xl transition duration-200"
         >
           Get Estimate ➤

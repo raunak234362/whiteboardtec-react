@@ -89,7 +89,7 @@ function Estimate({ head }: { head: string }) {
                 </div>
                 <div className="mt-5 mb-0 flex flex-wrap flex-col md:flex-row items-center">
                     <Link
-                        to="#"
+                        to="mailto:sales@whiteboardtec.com"
                         className="border-2 rounded-full border-white border-opacity-90 duration-200 ease-in-out text-md px-5 py-2 hover:bg-white hover:text-[#6abd45] hover:border-white hover:shadow-xl"
                     >
                         Get Estimate ➤

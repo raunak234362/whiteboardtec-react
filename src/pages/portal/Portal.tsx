@@ -42,19 +42,7 @@ const data: PortalPropType = {
       url: "https://projectstation.whiteboardtec.com/",
       device: "web",
       image:
-        "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685577/icons/web_z2njle.png",
-    },
-    {
-      url: "/android/#",
-      device: "android",
-      image:
-        "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685582/icons/android_btqlkn.png",
-    },
-    {
-      url: "/ios/#",
-      device: "ios",
-      image:
-        "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685580/icons/ios_mgzs3c.png",
+        "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1757499575/loginwith_gplziw.png",
     },
   ],
 };
@@ -108,9 +96,9 @@ function Portal() {
           </div>
 
           <div className="flex flex-wrap justify-center order-2 max-md:order-1">
-            <div className="bg-[#6abd45] rounded-xl flex flex-wrap flex-col w-full h-fit shadow-2xl mx-4">
+            <div className="bg-[#6abd45] rounded-xl flex flex-wrap flex-col w-full h-full shadow-2xl mx-4 ">
               <h1 className="p-4 pb-2 text-2xl text-white">
-                Bridge all gaps and supercharge your projects on the fly.
+                Click here to visit Project Station !
               </h1>
               <div className="flex flex-col flex-wrap justify-center mx-2 mb-2">
                 {data.portal.map((item, index) => {
