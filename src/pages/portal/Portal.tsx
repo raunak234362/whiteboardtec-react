@@ -28,11 +28,11 @@ const data: PortalPropType = {
   },
   context: {
     title:
-      "Structural Detailing Project Management with Whiteboard now made seamless. A tool designed to help you stay responsive and manage all your projects on the go.",
+      "Structural Detailing Project Management with Whiteboard is now seamless. A tool designed to help you stay responsive and manage all your projects on the go.",
     description: [
-      "Upload all your relevant project, bid documents (RFIs, RFQs), and associated drawings and photos in a jiffy.",
+      "Upload all your relevant project and bid documents (RFIs, RFQs), and associated drawings and photos in a jiffy.",
       "Collaborate with our team literally from anywhere, at any time, on any device.",
-      "Comment, version control and respond directly with our team.",
+      "Comment, control versions, and respond directly with our team.",
       "Follow your submittals and provide instant feedback.",
       "No upload limit. Supports all file types. PNG, JPEG, & PDF.",
     ],

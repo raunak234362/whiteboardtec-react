@@ -11,8 +11,8 @@ const banner: BannerPropType = {
 };
 
 const headSection: string[] = [
-  "As one of the early adopters of the Building Information Modeling (BIM) system we understand how an elaborate 3D architectural design can set a conceptual project to life. As a matter of fact, our virtual models are so detailed that you can actually assess the feasibility and performance of a design even before the project execution. Putting to work the most up to date BIM tools combined with a design-thinking perspective, we generate stunning visual prototypes that count!",
-  "As BIM continues to revolutionise the construction industry, we continue to innovate the construction ecosystem with visuals that are enriched with technical clarity. Is it possible to validate the minuscule details with enhanced visualisations? YES, it is. And our portfolio speaks for us.",
+  "As one of the early adopters of the Building Information Modeling (BIM) system, we understand how an elaborate 3D architectural design can set a conceptual project to life. As a matter of fact, our virtual models are so detailed that you can actually assess the feasibility and performance of a design even before the project execution. Putting to work the most up-to-date BIM tools combined with a design-thinking perspective, we generate stunning visual prototypes that count!",
+  "As BIM continues to revolutionize the construction industry, we continue to innovate the construction ecosystem with visuals that are enriched with technical clarity. Is it possible to validate the minuscule details with enhanced visualizations? YES, it is. And our portfolio speaks for us.",
 ];
 
 const BIMDetailing: string[] = [
@@ -51,35 +51,6 @@ function ArchitecturalBIM() {
         </section>
       </div>
 
-      {/* Offerings Section */}
-      {/* <div className="bg-gray-100 py-16">
-        <div className="mx-auto px-6 md:px-12 lg:max-w-screen-lg xl:max-w-screen-xl">
-          <h2 className="text-3xl font-semibold text-[#6abd45] mb-8">
-            Our BIM Architectural Service Offerings
-          </h2>
-          <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {BIMDetailing.map((detail, index) => (
-              <div key={index} className="flex items-center gap-2 py-1">
-                <svg
-                  className="h-6 w-6 text-[#6abd45] shrink-0"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2"
-                  stroke="currentColor"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" />
-                  <path d="M18 15l-6-6l-6 6h12" transform="rotate(90 12 12)" />
-                </svg>
-                <p className="text-lg">{detail}</p>
-              </div>
-            ))}
-          </section>
-        </div>
-      </div> */}
       {/* Offerings Section */}
       <div className="bg-gray-100 py-16">
         <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-12">

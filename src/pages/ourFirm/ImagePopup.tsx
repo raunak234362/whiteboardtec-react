@@ -140,10 +140,10 @@ export const ImageModal: React.FC<ImageModalProps> = ({
             {/* Project Details */}
             <div className="p-6 md:w-1/3">
               <h2 className="mb-4 text-3xl font-bold text-green-700 whitespace-normal break-words">
-                {imageData.title}
+                {imageData.title.toUpperCase()}
               </h2>
               <p className="mb-4 text-gray-700 whitespace-normal break-words">
-                {imageData.description}
+                {imageData.description.toUpperCase()}
               </p>
 
               <div className="space-y-3 text-sm text-gray-600">
@@ -157,33 +157,33 @@ export const ImageModal: React.FC<ImageModalProps> = ({
                   <span className="font-semibold text-green-600">
                     Location:
                   </span>{" "}
-                  {imageData.projectLocation}
+                  {imageData.projectLocation.toUpperCase()}
                 </div>
                 {imageData.type === "OTHER" ? (
                   <div>
                     <span className="font-semibold text-green-600">
                       Project Type:
                     </span>{" "}
-                    {imageData.otherType}
+                    {imageData.otherType.toUpperCase()}
                   </div>
                 ) : (
                   <div>
                     <span className="font-semibold text-green-600">
                       Project Type:
                     </span>{" "}
-                    {imageData.type}
+                      {imageData.type.toUpperCase()}
                   </div>
                 )}
                 <div>
                   <span className="font-semibold text-green-600">Status:</span>{" "}
-                  {imageData.projectStatus}
+                  {imageData.projectStatus.toUpperCase()}.
                 </div>
                 {imageData.department === "PEMB" && (
                   <div>
                     <span className="font-semibold text-green-600">
                       Designing Software:
                     </span>{" "}
-                    {imageData.designingSoftware}
+                    {imageData.designingSoftware.toUpperCase()}
                   </div>
                 )}
                 <div>

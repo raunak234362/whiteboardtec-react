@@ -10,13 +10,13 @@ const banner: BannerPropType = {
     "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685618/banner-image/misc-banner_x3hbow.jpg",
 };
 
-const headSection:string[] = [
-  "Our portfolio spans across structural steel elements such as complex staircases, hand-railings and other intricate misc. steel construction items. We understand the detailing needs from a fabrication point of view and execute comprehensive drawings that are conformed to your unique requirements.",
+const headSection: string[] = [
+  "Our portfolio spans across structural steel elements such as complex staircases, hand railings and other intricate misc. steel construction items. We understand the detailing needs from a fabrication point of view and execute comprehensive drawings that conform to your unique requirements..",
   "Using the latest 3D modeling tools and in compliance with the AISC code, we will make sure you present your bids on time and in entirety.",
-  "No job is too small for us and nothing is miscellaneous when you add an element of technical clarity to it."
-]
+  "No job is too small for us and nothing is miscellaneous when you add an element of technical clarity to it.",
+];
 
-const MiscCapability:string[] = [
+const MiscCapability: string[] = [
   "Egress Stairs (Switch back/Box stair/Scissor stairs) with Railing",
   "Ship ladder",
   "Industrial access stairs with railing",

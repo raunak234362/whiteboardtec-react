@@ -11,7 +11,7 @@ const banner: BannerPropType = {
 };
 
 const headSection: string[] = [
-  "From the simplest to the most complex connection configurations, our experienced team can interpret and achieve detailed drawings that are accurate and in compliance with the AISC Standards at all times. Our scope of services span across Welded, Bolted, Standard, and Non–Standard Shear Connections to Braces and Trusses and everything in between. Complexities motivate us and we take them head-on!",
+  "From the simplest to the most complex connection configurations, our experienced team can interpret and achieve detailed drawings that are accurate and in compliance with the AISC Standards at all times.Our scope of services spans across Welded, Bolted, Standard, and Non–Standard Shear Connections, Braces, Trusses, and everything in between. Complexities motivate us and we take them head-on!",
   "We’re also the “A” team when it comes to dealing with steel connections that require heavy customizations. Fabricators and Erectors have turned to us to help them navigate through the intricate connection design challenges across a range of industries and projects.",
 ];
 
@@ -61,13 +61,13 @@ function PESEStampig() {
               </h2>
               <div className="text-lg text-justify space-y-4">
                 <p>
-                  Through a network of Professional Engineers we have the
+                  Through a network of Professional Engineers,we have the
                   capability of providing full-spectrum PE/SE Stamping services
-                  to Fabricators and Erectors in the U.S & Canada.
+                  to Fabricators and Erectors in the U.S. and Canada.
                 </p>
                 <p>
                   Our partners are licensed to practice across all 50 states in
-                  the U.S and can certify your calculations with paramount
+                  the U.S. and can certify your calculations with paramount
                   accuracy. We undertake PE/SE reviews for all your project
                   documentation and engineering documents.
                 </p>

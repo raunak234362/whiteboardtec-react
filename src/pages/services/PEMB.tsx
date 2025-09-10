@@ -15,8 +15,8 @@ const banner: BannerPropType = {
 };
 
 const headSection: string[] = [
-  "Product innovations are constant to the construction ecosystem. Pre Engineered Buildings bring a myriad of benefits such as reducing construction costs, driving sustainability, flexibility with design and are rapidly gaining traction within the infrastructure spheres. Our experience with PEMB Design and Detailing go deep into critical infrastructure projects.",
-  "We specialize in all aspects of PEMB steel detailing with our core practice area being Pre-Engineered Metal Buildings (PEMB), Structural Steel, Hybrid Structures, small or large. Leveraging the most up-to-date 3D modelling and design tools, we bring definitive value to any project. We comply with all leading industry standards such as ASD, LRFD, AISI and MBMA.",
+  "Product innovations are constant to the construction ecosystem. Pre-Engineered Buildings bring a myriad of benefits such as reducing construction costs, driving sustainability, offering flexibility with design, and rapidly gaining traction within the infrastructure spheres. Our experience with PEMB Design and Detailing goes deep into critical infrastructure projects.",
+  "We specialize in all aspects of PEMB steel detailing with our core practice area being Pre-Engineered Metal Buildings (PEMB), Structural Steel, Hybrid Structures, small or large. Leveraging the most up-to-date 3D modeling and design tools, we bring definitive value to any project. We comply with all leading industry standards such as ASD, LRFD, AISI and MBMA.",
 ];
 
 const pembDetailing: string[] = [
@@ -28,7 +28,7 @@ const pembDetailing: string[] = [
   "Fixed Based Column Bracings",
   "Heavy Equipment Supporting Platforms",
   "Buildings for Industrial and Commercial Construction",
-  "Buildings with Miscellaneous attachments like a staircase, handrails, etc.",
+  "Buildings with miscellaneous attachments such as staircases, handrails, etc.",
 ];
 
 function PEMB() {

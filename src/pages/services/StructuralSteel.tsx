@@ -17,8 +17,8 @@ const banner: BannerPropType = {
 };
 
 const headSection: string[] = [
-  "We mean it when we say; we understand your pressures. The complexity when it comes to execution of incomplete drawings, project fulfillment schedules and frequent cost overruns. You need an experienced detailer like us to step up, quickly understand, get it right and deliver drawings that are error-free and compliant.",
-  "As the Steel Industry continues to evolve, we continue to drive fresh perspectives into the Detailing Services ecosystem. Because of our innate ability to understand the process of construction, and how it can impact the build and engineering, we place extreme importance on achieving the synchronization of the material functionality at all touch points.",
+  "We mean it when we say, we understand your pressures. The complexity when it comes to the execution of incomplete drawings, project fulfillment schedules and frequent cost overruns. You need an experienced detailer like us to step up, quickly understand, get it right and deliver drawings that are error-free and compliant.",
+  "As the Steel Industry continues to evolve, we continue to drive fresh perspectives into the Detailing Services ecosystem. Because of our innate ability to understand the process of construction, and how it can impact the construction and engineering, we place extreme importance on achieving the synchronization of material functionality at all touch points.",
 ];
 
 const services: string[] = [
