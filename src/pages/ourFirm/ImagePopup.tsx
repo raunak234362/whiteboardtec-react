@@ -119,17 +119,18 @@ export const ImageModal: React.FC<ImageModalProps> = ({
     <Dialog
       open={!!projectID}
       onClose={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30 backdrop-blur-lg"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30 backdrop-blur-lg  overflow-auto"
     >
-      <Dialog.Panel className="relative flex flex-col w-[50%] bg-white rounded-2xl shadow-2xl overflow-auto">
+      <Dialog.Panel className="relative flex flex-col w-[90%] md:w-[60%]  bg-white rounded-2xl shadow-2xl overflow-auto">
         {imageData?.images?.length > 0 ? (
-          <div className="flex flex-col md:flex-col md:space-x-8">
+          
+          <div className="flex flex-col md:flex-col md:space-x-8 max-md:h-[95vh] md:overflow-hidden ">
             {/* Image Viewer */}
             <div className="relative flex items-center justify-center p-5 bg-gray-100 md:w-full overflow-hidden">
-              <img
+              <img  
                 src={imageData.images[currentIndex]}
                 alt={`Project image ${currentIndex + 1}`}
-                className={`w-full object-contain rounded-lg shadow-md transition-transform duration-2000 ease-in-out ${
+                className={`w-full h-[55vh] object-contain rounded-lg shadow-md transition-transform duration-2000 ease-in-out ${
                   slideDirection === "next"
                     ? "animate-slide-in-right"
                     : slideDirection === "prev"
