@@ -20,9 +20,9 @@ function SteelEstimateBox() {
       <ul className="list-none space-y-3">
         {[
           "A complete estimation sheet with categorized steel take-offs.",
-          "Detailed scope list of steel members",
-          "Drawing references for transparency",
-          "The total estimated steel weight",
+          "Detailed scope list of steel members.",
+          "Drawing references for transparency.",
+          "The total estimated steel weight.",
         ].map((point, idx) => (
           <li key={idx} className="flex items-start">
             <svg
@@ -57,14 +57,14 @@ function SteelEstimateBox() {
 
 const banner: BannerPropType = {
   header: "Steel Estimation & Take-Off Services",
-  subheader: "Eliminate Bidding Uncertainty. Maximize Your Profit.",
+  subheader: "Eliminate Bidding Uncertainty. Maximize Your Profits.",
   image:
     "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1756980017/banner-image/20250902_131026_lqlxwz.jpg",
 };
 
 const headSection: string[] = [
   "Stop guessing. Start winning more projects. Our Estimation Take-Off Service gives you a clear, data-driven advantage. We turn complex structural, architectural, and civil drawings into precise, actionable estimates take-off report.",
-  "In today's fast-paced market, a reliable and clear estimate is crucial. We provide the speed and consistency you need to respond to bid invitations confidently. By partnering with us, you can avoid costly surprises, improve your project timelines, and build stronger, more reliable relationships with your clients.",
+  "In today's fast-paced market, a reliable and clear estimate is crucial for structural steel fabricators. We provide the speed and consistency you need to respond to bid invitations confidently. By partnering with us, you can avoid costly surprises, improve your project timelines, and build stronger, more reliable relationships with your clients.",
 ];
 
 const takeoffs: string[] = [
