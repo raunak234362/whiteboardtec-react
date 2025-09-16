@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import Service from "../../config/service";
@@ -20,7 +21,9 @@ export const ImageModal: React.FC<ImageModalProps> = ({
 }) => {
   const [imageData, setImageData] = useState<any>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [slideDirection, setSlideDirection] = useState<"next" | "prev" | null>(null);
+  const [slideDirection, setSlideDirection] = useState<"next" | "prev" | null>(
+    null
+  );
 
   interface GalleryFile {
     secureUrl: string;
@@ -34,7 +37,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
     location?: string;
     projectLocation?: string;
     technologyused?: string;
-    designingSoftware?: string;
+    designingSoftware?: string; // Add this key to the interface
     status?: string;
     ProjectStatus?: string;
     softwareUsed?: string;
@@ -73,6 +76,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
           response.location || response.projectLocation || "Not specified",
         technologyUsed:
           response.technologyused || response.technologyUsed || "Not specified",
+        designingSoftware: response.designingSoftware || "Not specified", // Added this line
         projectStatus:
           response.status || response.ProjectStatus || "Not specified",
         softwareUsed: response.softwareUsed || "Not specified",
@@ -104,14 +108,14 @@ export const ImageModal: React.FC<ImageModalProps> = ({
     }
   };
 
-  // Automatic slide every 2 seconds
+  // Automatic slide every 3 seconds
   useEffect(() => {
     if (imageData?.images?.length > 1) {
       const interval = setInterval(() => {
         nextImage();
-      }, 3000); // 3 seconds
+      }, 3000);
 
-      return () => clearInterval(interval); // Cleanup on unmount or change
+      return () => clearInterval(interval);
     }
   }, [imageData]);
 
@@ -136,7 +140,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
                     ? "animate-slide-in-left"
                     : ""
                 }`}
-                key={currentIndex} // Key ensures re-render for transition
+                key={currentIndex}
               />
               <style>
                 {`
@@ -216,14 +220,14 @@ export const ImageModal: React.FC<ImageModalProps> = ({
                     <span className="font-semibold text-green-600">
                       Project Type:
                     </span>{" "}
-                      {imageData.type.toUpperCase()}
+                    {imageData.type.toUpperCase()}
                   </div>
                 )}
                 <div>
                   <span className="font-semibold text-green-600">Status:</span>{" "}
                   {imageData.projectStatus.toUpperCase()}.
                 </div>
-                {imageData.department === "PEMB" && (
+                {imageData.designingSoftware && (
                   <div>
                     <span className="font-semibold text-green-600">
                       Designing Software:
@@ -235,7 +239,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
                   <span className="font-semibold text-green-600">
                     Detailing Software:
                   </span>{" "}
-                  {imageData.technologyUsed}
+                  {imageData.technologyUsed.toUpperCase()}
                 </div>
               </div>
 

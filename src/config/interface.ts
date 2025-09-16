@@ -51,7 +51,7 @@ export interface IProject {
   location: string;
   type: string;
   technologyused: string;
-  designingSoftware: string;
+  designingSoftware?: string;
   status: ProjectStatus;
   images?: string[];
   file: string[];

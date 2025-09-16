@@ -88,7 +88,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
       formData.append("location", location.trim());
       formData.append("type", projectType);
       formData.append("otherType", otherType);
-      formData.append("designingSoftware", designingSoftware);
+      formData.append("designingSoftware", designingSoftware || "");
       formData.append("technologyused", technologyUsed.trim());
       formData.append("status", projectStatus);
       formData.append("department", department);

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Service from "../../config/service";
 import { ImageModal } from "./ImagePopup";
-import { Divide } from "lucide-react";
+
 
 function GalleryImages() {
   type Project = {
