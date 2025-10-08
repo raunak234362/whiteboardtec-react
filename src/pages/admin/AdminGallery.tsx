@@ -10,7 +10,7 @@ import { IProject, GalleryProjectFrontend } from "../../config/interface";
 
 type IProjectFormInput = {
   title: string;
-  description: string;
+  scope: string;
   location: string;
   type: string;
   otherType?: string;
@@ -61,7 +61,7 @@ const AdminGallery = () => {
   } = useForm<IProjectFormInput>({
     defaultValues: {
       title: "",
-      description: "",
+      scope: "",
       location: "",
       type: "OTHER",
       otherType: "",
@@ -89,7 +89,7 @@ const AdminGallery = () => {
         title: item.title,
         projectTitle: item.title,
         department: item.department,
-        description: item.description,
+        scope: item.scope,
         location: item.location,
         type: item.type,
         otherType: item.otherType ?? "",
@@ -120,7 +120,7 @@ const AdminGallery = () => {
     try {
       const formData = new FormData();
       formData.append("title", data.title);
-      formData.append("description", data.description);
+      formData.append("Scope", data.scope);
       formData.append("location", data.location);
       // Use otherType if type is OTHER
       formData.append("type",data.type || "");
@@ -259,20 +259,20 @@ const AdminGallery = () => {
                     </label>
                     <label>
                       <span className="block mb-1 text-sm font-medium text-gray-700">
-                        Description *
+                        Scope *
                       </span>
                       <textarea
-                        {...register("description", {
-                          required: "Description is required",
+                        {...register("scope", {
+                          required: "Scope is required",
                         })}
                         rows={3}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                        placeholder="Enter project description"
+                        placeholder="Enter project scope"
                         disabled={isUploading}
                       />
-                      {errors.description && (
+                      {errors.scope && (
                         <p className="mt-1 text-sm text-red-500">
-                          {errors.description.message}
+                          {errors.scope.message}
                         </p>
                       )}
                     </label>

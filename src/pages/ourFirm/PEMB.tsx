@@ -20,11 +20,13 @@ function PEMB() {
   );
   const [popupIndex, setPopupIndex] = useState<number>(0);
   const [popupSoftware, setPopupSoftware] = useState<string | null>(null);
+  const [popupScope,setPopupScope]=useState<string | null>(null);
 
-  const [galleryImages, setGalleryImages] = useState<
+  const [galleryImages] = useState<
     {
       src: string;
       title: string;
+      scope: string;
       softwareUsed: string;
       ProjectStatus: string;
       location: string;
@@ -37,19 +39,20 @@ function PEMB() {
   const fetchGalleryImage = async () => {
     try {
       // Example dummy data (replace this with your own API call or local JSON)
-      const data = [
-        {
-          src: "/images/sample1.jpg",
-          title: "Project One",
-          softwareUsed: "AutoCAD",
-          ProjectStatus: "Completed",
-          location: "Bangalore",
-          Projecttype: "PEMB",
-          images: ["/images/sample1.jpg", "/images/sample2.jpg"],
-        },
-        // ...more items
-      ];
-      setGalleryImages(data);
+      // const data = [
+      //   {
+      //     src: "/images/sample1.jpg",
+      //     title: "Project One",
+
+      //     softwareUsed: "AutoCAD",
+      //     ProjectStatus: "Completed",
+      //     location: "Bangalore",
+      //     Projecttype: "PEMB",
+      //     images: ["/images/sample1.jpg", "/images/sample2.jpg"],
+      //   },
+      //   // ...more items
+      // ];
+     
     } catch (error) {
       console.error("Failed to fetch PEMB gallery images:", error);
     }
@@ -69,6 +72,7 @@ function PEMB() {
 
   const openPopup = (
     images: string[],
+    scope:string,
     title: string,
     location: string,
     softwareUsed: string,
@@ -77,6 +81,7 @@ function PEMB() {
   ) => {
     preloadImages(images);
     setPopupImages(images);
+    setPopupScope(scope);
     setPopupTitle(title);
     setPopupAddress(location);
     setPopupSoftware(softwareUsed);
@@ -92,6 +97,7 @@ function PEMB() {
     setPopupSoftware(null);
     setPopupProjectType(null);
     setPopupProjectStatus(null);
+    setPopupScope(null);
   };
 
   return (
@@ -111,6 +117,7 @@ function PEMB() {
               onClick={() =>
                 openPopup(
                   item?.images,
+                  item?.scope,
                   item?.title,
                   item?.location || "Unknown address",
                   item?.softwareUsed || "Unknown",
@@ -137,13 +144,16 @@ function PEMB() {
       {popupTitle && popupAddress && popupProjectType && (
         <ImageModal
           imageList={popupImages || []}
+          scope={popupScope || ''}
           title={popupTitle}
           location={popupAddress || ""}
           softwareUsed={popupSoftware || ""}
           projectType={popupProjectType || ""}
           ProjectStatus={popupProjectStatus || ""}
           initialIndex={popupIndex}
-          onClose={closePopup} projectID={""}        />
+          onClose={closePopup}
+          projectID={""}
+        />
       )}
     </div>
   );

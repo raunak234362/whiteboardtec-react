@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import Service from "../../config/service";
 import { ImageModal } from "./ImagePopup";
 
+
 function GalleryImages() {
   type Project = {
     projectId: string;
@@ -173,7 +174,7 @@ function GalleryImages() {
                   )}
                   {department === "PEMB" && (
                     <h2 className="mb-4 text-3xl font-bold text-center text-gray-800">
-                      {department} PROJECTS
+                      {/* {department} PROJECTS */}
                     </h2>
                   )}
                 
@@ -208,6 +209,7 @@ function GalleryImages() {
             projectID={selectedProjectID}
             onClose={closeModal}
             imageList={[]}
+            scope=""
             title={""}
             location={""}
             softwareUsed={""}

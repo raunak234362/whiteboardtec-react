@@ -51,10 +51,6 @@ function Portfolio() {
             <div className="flex flex-col space-y-4 overflow-y-auto custom-scrollbar pr-2">
               {portfolios.length > 0 ? (
                 portfolios.map((portfolio, index) => {
-                  // const firstFile =
-                  //   Array.isArray(portfolio.file) && portfolio.file.length > 0
-                  //     ? portfolio.file[0]
-                  //     : null;
                   const isSelected = selectedPortfolio?.id === portfolio.id;
 
                   return (
