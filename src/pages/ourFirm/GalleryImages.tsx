@@ -174,7 +174,7 @@ function GalleryImages() {
                   )}
                   {department === "PEMB" && (
                     <h2 className="mb-4 text-3xl font-bold text-center text-gray-800">
-                      {department} PROJECTS
+                      {/* {department} PROJECTS */}
                     </h2>
                   )}
                 

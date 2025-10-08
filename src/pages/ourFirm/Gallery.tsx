@@ -20,7 +20,7 @@ const galleryCategories = [
   },
   {
     src: "../../assets/pembIMG.jpg", 
-    title: "PEMB Designing and Detailing",
+    title: "PEMB Designing and Detailing Projects",
     department: "PEMB",
   },
 ];

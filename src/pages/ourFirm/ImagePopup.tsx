@@ -8,6 +8,7 @@ interface ImageModalProps {
   onClose: () => void;
   imageList: string[];
   title: string;
+  scope: string;
   location: string;
   softwareUsed: string;
   projectType: string;
@@ -32,7 +33,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
     images?: GalleryFile[] | string[] | GalleryFile;
     projectTitle?: string;
     title?: string;
-    description?: string;
+    scope?: string;
     department?: string;
     location?: string;
     projectLocation?: string;
@@ -67,7 +68,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
 
       setImageData({
         title: response.projectTitle || response.title || "Untitled Project",
-        description: response.description || "No description available",
+        scope: response.scope || "No Scope available",
         type: response.type || "Not specified",
         otherType: response.otherType || "Not specified",
         images,
@@ -197,9 +198,9 @@ export const ImageModal: React.FC<ImageModalProps> = ({
               <h2 className="mb-4 text-3xl font-bold text-green-700 whitespace-normal break-words">
                 {imageData.title.toUpperCase()}
               </h2>
-              <p className="mb-4 text-gray-700 whitespace-normal break-words">
-                {imageData.description.toUpperCase()}
-              </p>
+              {/* <p className="mb-4 text-gray-700 whitespace-normal break-words">
+                {imageData.scope.toUpperCase()}
+              </p> */}
 
               <div className="space-y-3 text-sm text-gray-600">
                 <div>
@@ -207,6 +208,12 @@ export const ImageModal: React.FC<ImageModalProps> = ({
                     Location:
                   </span>{" "}
                   {imageData.projectLocation.toUpperCase()}
+                </div>
+                <div>
+                  <span className="font-semibold text-green-600">
+                    Scope:
+                  </span>{" "}
+                  {imageData.scope.toUpperCase()}
                 </div>
                 {imageData.type === "OTHER" ? (
                   <div>

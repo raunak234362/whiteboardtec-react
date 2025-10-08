@@ -20,7 +20,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
     defaultValues: {
       id: props.id, // Ensure ID is part of default values for consistency
       title: props.title,
-      description: props.description,
+      scope: props.scope,
       location: props.location,
       type: props.type,
       technologyused: props.technologyused,
@@ -44,7 +44,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
 
   // Watch for changes in form fields to reflect in state for handleUpdate
   const title = watch("title");
-  const description = watch("description");
+  const scope = watch("scope");
   const location = watch("location");
   const projectType = watch("type");
   const otherType = watch("otherType");
@@ -56,7 +56,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
   // Effect to update form values when props change (e.g., after an update from parent)
   useEffect(() => {
     setValue("title", props.title);
-    setValue("description", props.description);
+    setValue("scope", props.scope);
     setValue("location", props.location);
     setValue("type", props.type);
     setValue("otherType", props.otherType ?? "");
@@ -71,12 +71,12 @@ function ImagePortfolio(props: ImagePortfolioProps) {
   const handleUpdate = async () => {
     if (
       !title?.trim() || // Use optional chaining for safety
-      !description?.trim() ||
+      !scope?.trim() ||
       !location?.trim() ||
       !technologyUsed?.trim()
     ) {
       alert(
-        "Please fill in all required fields (Title, Description, Location, Software/Technologies Used)."
+        "Please fill in all required fields (Title, Scope, Location, Software/Technologies Used)."
       );
       return;
     }
@@ -84,7 +84,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
     try {
       const formData = new FormData();
       formData.append("title", title.trim());
-      formData.append("description", description.trim());
+      formData.append("scope", scope.trim());
       formData.append("location", location.trim());
       formData.append("type", projectType);
       formData.append("otherType", otherType);
@@ -220,15 +220,15 @@ function ImagePortfolio(props: ImagePortfolioProps) {
 
                   <div>
                     <label
-                      htmlFor="edit-description"
+                      htmlFor="edit-scope"
                       className="block mb-1 text-sm font-medium text-gray-700"
                     >
-                      Description *
+                      Scope *
                     </label>
                     <textarea
-                      id="edit-description"
+                      id="edit-Scope"
                       rows={3}
-                      {...register("description", { required: true })}
+                      {...register("scope", { required: true })}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                       required
                     />
@@ -549,7 +549,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
               {props.title}
             </div>
             <div className="max-w-xs text-sm text-gray-500 truncate">
-              {props.description}
+              {props.scope}
             </div>
             {props.location && (
               <div className="mt-1 text-xs text-gray-400">
