@@ -47,7 +47,7 @@ export interface IProject {
   projectID?: any;
   otherType: string;
   title: string;
-  scope: string;
+  description: string;
   location: string;
   type: string;
   technologyused: string;

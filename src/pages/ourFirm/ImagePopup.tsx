@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import Service from "../../config/service";
@@ -8,7 +7,7 @@ interface ImageModalProps {
   onClose: () => void;
   imageList: string[];
   title: string;
-  scope: string;
+  description: string;
   location: string;
   softwareUsed: string;
   projectType: string;
@@ -33,7 +32,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
     images?: GalleryFile[] | string[] | GalleryFile;
     projectTitle?: string;
     title?: string;
-    scope?: string;
+    description?: string;
     department?: string;
     location?: string;
     projectLocation?: string;
@@ -68,7 +67,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
 
       setImageData({
         title: response.projectTitle || response.title || "Untitled Project",
-        scope: response.scope || "No Scope available",
+        description: response.description || "No Scope available",
         type: response.type || "Not specified",
         otherType: response.otherType || "Not specified",
         images,
@@ -128,11 +127,10 @@ export const ImageModal: React.FC<ImageModalProps> = ({
     >
       <Dialog.Panel className="relative flex flex-col w-[90%] md:w-[60%]  bg-white rounded-2xl shadow-2xl overflow-auto">
         {imageData?.images?.length > 0 ? (
-          
           <div className="flex flex-col md:flex-col md:space-x-8 max-md:h-[95vh] md:overflow-hidden ">
             {/* Image Viewer */}
             <div className="relative flex items-center justify-center p-5 bg-gray-100 md:w-full overflow-hidden">
-              <img  
+              <img
                 src={imageData.images[currentIndex]}
                 alt={`Project image ${currentIndex + 1}`}
                 className={`w-full h-[55vh] object-contain rounded-lg shadow-md transition-transform duration-2000 ease-in-out ${
@@ -206,27 +204,25 @@ export const ImageModal: React.FC<ImageModalProps> = ({
               <div className="space-y-3 text-sm text-gray-600">
                 <div>
                   <span className="font-semibold text-green-600">
-                    Location:
+                    LOCATION:
                   </span>{" "}
                   {imageData.projectLocation.toUpperCase()}
                 </div>
                 <div>
-                  <span className="font-semibold text-green-600">
-                    Scope:
-                  </span>{" "}
-                  {imageData.scope.toUpperCase()}
+                  <span className="font-semibold text-green-600">SCOPE:</span>{" "}
+                  {imageData.description.toUpperCase()}
                 </div>
                 {imageData.type === "OTHER" ? (
                   <div>
                     <span className="font-semibold text-green-600">
-                      Project Type:
+                      PROJECT TYPE:
                     </span>{" "}
                     {imageData.otherType.toUpperCase()}
                   </div>
                 ) : (
                   <div>
                     <span className="font-semibold text-green-600">
-                      Project Type:
+                    PROJECT TYPE:
                     </span>{" "}
                     {imageData.type.toUpperCase()}
                   </div>
@@ -235,17 +231,17 @@ export const ImageModal: React.FC<ImageModalProps> = ({
                   <span className="font-semibold text-green-600">Status:</span>{" "}
                   {imageData.projectStatus.toUpperCase()}.
                 </div>
-                {imageData.designingSoftware && (
+                {imageData.designingSoftware === "null" || "" ? null : (
                   <div>
                     <span className="font-semibold text-green-600">
-                      Designing Software:
+                      DESIGNING SOFTWARE:
                     </span>{" "}
                     {imageData.designingSoftware.toUpperCase()}
                   </div>
                 )}
                 <div>
                   <span className="font-semibold text-green-600">
-                    Detailing Software:
+                    DETAILING SOFTWARE:
                   </span>{" "}
                   {imageData.technologyUsed.toUpperCase()}
                 </div>
@@ -255,7 +251,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
                 onClick={onClose}
                 className="px-6 py-2 mt-6 text-white bg-green-600 rounded-lg hover:bg-green-700"
               >
-                Close
+                CLOSE
               </button>
             </div>
           </div>

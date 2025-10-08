@@ -26,7 +26,7 @@ function PEMB() {
     {
       src: string;
       title: string;
-      scope: string;
+      description: string;
       softwareUsed: string;
       ProjectStatus: string;
       location: string;
@@ -72,7 +72,7 @@ function PEMB() {
 
   const openPopup = (
     images: string[],
-    scope:string,
+    description:string,
     title: string,
     location: string,
     softwareUsed: string,
@@ -81,7 +81,7 @@ function PEMB() {
   ) => {
     preloadImages(images);
     setPopupImages(images);
-    setPopupScope(scope);
+    setPopupScope(description);
     setPopupTitle(title);
     setPopupAddress(location);
     setPopupSoftware(softwareUsed);
@@ -117,7 +117,7 @@ function PEMB() {
               onClick={() =>
                 openPopup(
                   item?.images,
-                  item?.scope,
+                  item?.description,
                   item?.title,
                   item?.location || "Unknown address",
                   item?.softwareUsed || "Unknown",
@@ -144,7 +144,7 @@ function PEMB() {
       {popupTitle && popupAddress && popupProjectType && (
         <ImageModal
           imageList={popupImages || []}
-          scope={popupScope || ''}
+          description={popupScope || ''}
           title={popupTitle}
           location={popupAddress || ""}
           softwareUsed={popupSoftware || ""}

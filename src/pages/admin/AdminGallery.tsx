@@ -10,7 +10,7 @@ import { IProject, GalleryProjectFrontend } from "../../config/interface";
 
 type IProjectFormInput = {
   title: string;
-  scope: string;
+  description: string;
   location: string;
   type: string;
   otherType?: string;
@@ -61,7 +61,7 @@ const AdminGallery = () => {
   } = useForm<IProjectFormInput>({
     defaultValues: {
       title: "",
-      scope: "",
+      description: "",
       location: "",
       type: "OTHER",
       otherType: "",
@@ -89,7 +89,7 @@ const AdminGallery = () => {
         title: item.title,
         projectTitle: item.title,
         department: item.department,
-        scope: item.scope,
+        description: item.description,
         location: item.location,
         type: item.type,
         otherType: item.otherType ?? "",
@@ -120,7 +120,7 @@ const AdminGallery = () => {
     try {
       const formData = new FormData();
       formData.append("title", data.title);
-      formData.append("Scope", data.scope);
+      formData.append("description", data.description);
       formData.append("location", data.location);
       // Use otherType if type is OTHER
       formData.append("type",data.type || "");
@@ -262,7 +262,7 @@ const AdminGallery = () => {
                         Scope *
                       </span>
                       <textarea
-                        {...register("scope", {
+                        {...register("description", {
                           required: "Scope is required",
                         })}
                         rows={3}
@@ -270,9 +270,9 @@ const AdminGallery = () => {
                         placeholder="Enter project scope"
                         disabled={isUploading}
                       />
-                      {errors.scope && (
+                      {errors.description && (
                         <p className="mt-1 text-sm text-red-500">
-                          {errors.scope.message}
+                          {errors.description.message}
                         </p>
                       )}
                     </label>
