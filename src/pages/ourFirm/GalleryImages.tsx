@@ -209,6 +209,7 @@ function GalleryImages() {
             projectID={selectedProjectID}
             onClose={closeModal}
             imageList={[]}
+            scope=""
             title={""}
             location={""}
             softwareUsed={""}
