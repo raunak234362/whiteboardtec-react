@@ -169,7 +169,7 @@ function GalleryImages() {
                 <div className="bg-gray-300 h-fit p-2 rounded-lg">
                   {department !== "PEMB" && (
                     <h3 className="mb-4 text-2xl font-semibold text-black">
-                      Tekla Structures
+                      TEKLA STRUCTURES
                     </h3>
                   )}
                   {department === "PEMB" && (

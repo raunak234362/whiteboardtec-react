@@ -228,7 +228,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
                   </div>
                 )}
                 <div>
-                  <span className="font-semibold text-green-600">Status:</span>{" "}
+                  <span className="font-semibold text-green-600">STATUS:</span>{" "}
                   {imageData.projectStatus.toUpperCase()}.
                 </div>
                 {imageData.designingSoftware === "null" || "" ? null : (
