@@ -54,8 +54,8 @@ const openPopup = async (
   id: string // project id
 ) => {
   try {
-    // 🔥 Call the API when image is clicked
-    await Service.getProjectById(id); // Replace with your actual service method
+  
+    await Service.getProjectById(id);
     console.log("Image click logged for ID:", id);
   } catch (error) {
     console.error("Error logging image click:", error);
@@ -97,7 +97,7 @@ const openPopup = async (
                   item.technologyused || "Unknown",
                   item.type,
                   item.status,
-                  item.id // Pass the project id as the 7th argument
+                  item.id 
                 )
               }
             >

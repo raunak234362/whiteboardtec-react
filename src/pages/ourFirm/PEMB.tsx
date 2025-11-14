@@ -133,6 +133,7 @@ function PEMB() {
               />
               <div className="absolute inset-0 flex items-center justify-center transition duration-300 bg-black rounded-lg opacity-0 bg-opacity-70 hover:opacity-75">
                 <span className="text-xl font-bold text-white">
+                  
                   {item.title.toUpperCase()}
                 </span>
               </div>

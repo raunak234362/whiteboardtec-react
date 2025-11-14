@@ -133,13 +133,13 @@ function GalleryImages() {
         >
           <img
             src={project.file?.secureUrl || ""}
-            alt={project.projectTitle}
+            alt={project.projectTitle.toUpperCase()}
             loading="lazy"
             className="object-cover w-full h-48"
           />
           <div className="absolute inset-0 flex items-center justify-center p-4 text-center text-green-950 transition-opacity rounded-lg opacity-0 group-hover:opacity-95 bg-[#6abd45] bg-opacity-90">
             <h3 className="text-lg font-semibold break-words whitespace-normal text-center max-w-full">
-              {project.projectTitle}
+              {project.projectTitle.toUpperCase()}
             </h3>
           </div>
         </div>
