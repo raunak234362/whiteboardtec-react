@@ -66,12 +66,12 @@ function Gallery() {
                   >
                     <img
                       src={category.src}
-                      alt={category.title.toUpperCase()}
+                      alt={category.title}
                       className="object-cover w-full h-full rounded-lg cursor-pointer"
                     />
                     <div className="absolute inset-0 flex items-center justify-center transition duration-300 bg-black rounded-lg opacity-0 bg-opacity-70 hover:opacity-50">
                       <span className="text-4xl font-bold text-white">
-                        {category.title.toUpperCase()}
+                        {category.title}
                       </span>
                     </div>
                   </div>
