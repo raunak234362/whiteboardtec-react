@@ -15,7 +15,7 @@ const galleryCategories = [
   
   {
     src: "../../assets/Tekla.jpg", 
-    title: "Structural Steel Detailing Project",
+    title: "Structural Steel Detailing Projects",
     department: "STRUCTURAL", 
   },
   {
@@ -79,7 +79,7 @@ function Gallery() {
               )
             )}
           </div>
-        </div>
+        </div>0
       </section>
 
       

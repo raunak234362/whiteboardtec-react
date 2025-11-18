@@ -46,7 +46,7 @@ function Portfolio() {
           {/* Left Panel: File Browser / List */}
           <div className="w-full md:w-1/3 border-r border-gray-200 p-6 flex flex-col">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">
-              My Portfolio
+              Project Portfolio
             </h2>
             <div className="flex flex-col space-y-4 overflow-y-auto custom-scrollbar pr-2">
               {portfolios.length > 0 ? (
