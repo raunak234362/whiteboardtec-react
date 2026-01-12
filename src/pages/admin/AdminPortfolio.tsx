@@ -29,7 +29,6 @@ function AdminPortfolio() {
           title: portfolio.title,
           description: portfolio.description,
           status: portfolio.status,
-          pdf: portfolio.file || "",
           file: portfolio.file || null,
         }))
       );
@@ -427,13 +426,6 @@ function AdminPortfolio() {
                           typeof portfolio.status === "boolean"
                             ? portfolio.status
                             : portfolio.status === "active"
-                        }
-                        pdf={
-                          Array.isArray(portfolio.file)
-                            ? portfolio.file
-                            : portfolio.file
-                            ? [portfolio.file]
-                            : []
                         }
                         onEdit={(pf) => handleEdit(pf as PortfolioPropType)}
                         onDelete={handleDelete}

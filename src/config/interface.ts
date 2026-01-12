@@ -28,9 +28,8 @@ export interface PortfolioInterface {
   id: string;
   title: string;
   description: string;
-  file: any[];
+  file: Files[];
   status: boolean;
-  pdf?: { path: string }[]; 
 }
 
 
