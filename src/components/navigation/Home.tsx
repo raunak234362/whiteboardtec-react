@@ -30,7 +30,7 @@ function Home(props: NavRouteType): JSX.Element {
             )}
             <div
               className={`md:absolute flex uppercase flex-wrap items-center justify-center md:bottom-1/2 md:left-1/4 md:font-bold  md:text-3xl md:text-white z-20 ${hovered ? "invisible" : ""}`}
-              style={{ textShadow: "5px 5px 7px rgb(0, 0, 0)" }}
+              // style={{ textShadow: "5px 5px 7px rgb(0, 0, 0)" }}
             >
               {props.name}
             </div>

@@ -3,8 +3,7 @@ import Estimate from "../../components/estimation/Estimate";
 import { useEffect } from "react";
 
 const banner: BannerPropType = {
-  header: "Business",
-  subheader: "Model",
+  header: "Business Model",
   image:
     "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685620/banner-image/business-model-banner_m8ujfv.jpg",
 };
