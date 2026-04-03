@@ -109,7 +109,7 @@ const NavRoute: NavRouteType[] = [
     ],
   },
   {
-    name: "Portal",
+    name: "Project Station",
     path: "/portal",
     image:
       "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685704/route-image/portal_nn6wrw.jpg",

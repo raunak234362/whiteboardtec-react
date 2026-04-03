@@ -22,7 +22,7 @@ type PortalPropType = {
 
 const data: PortalPropType = {
   banner: {
-    header: "Portal",
+    header: "Project Station",
     image:
       "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685614/banner-image/portal-banner_fg0eae.jpg",
   },
@@ -39,7 +39,7 @@ const data: PortalPropType = {
   },
   portal: [
     {
-      url: "https://projectstation.whiteboardtec.com/",
+      url: "https://ps.whiteboardtec.com/",
       device: "web",
       image:
         "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1757499575/loginwith_gplziw.png",
@@ -49,7 +49,7 @@ const data: PortalPropType = {
 
 function Portal() {
   useEffect(() => {
-    document.title = "Portal - Whiteboard";
+    document.title = "Project Station - Whiteboard";
   });
 
   return (
