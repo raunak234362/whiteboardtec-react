@@ -29,9 +29,9 @@ function ExtraHeader() {
           </div>
           <div className="inline-flex ml-3 max-md:my-2">
             <img
-              src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685731/logos/AISC-Detailer-logo_zkosis.png"
+              src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1775640416/AISC_cbue7q.png"
               alt="AISC Detailer"
-              className="md:h-12 max-md:h-8 m-0.5"
+              className="md:h-16 max-md:h-16 m-0.5"
             />
             <img
               src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685729/logos/Tekla_Structures_logo_sc2vxa.png"
