@@ -52,11 +52,11 @@ const Portal = () => {
               transition={{ duration: 0.6 }}
               className=""
             >
-              <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight mb-8">
+              <h1 className="md:text-3xl font-extrabold text-[#6abd45] leading-tight mb-8">
                Whiteboard Structural Detailing Project Management is now{" "}
-                <span className="text-[#6abd45]">Seamless.</span>
+                <span className="text-slate-900">Seamless.</span>
               </h1>
-              <p className="text-xl text-slate-600 leading-relaxed mb-8 text-justify">
+              <p className="text-xlg text-slate-600 leading-relaxed mb-8 text-justify">
                 Tired of juggling emails, file versions, and project updates?
                 Project Station is our answer to seamless project management.
                 Built specifically for structural steel detailing, it's your
@@ -71,7 +71,7 @@ const Portal = () => {
               className="bg-[#6abd45] backdrop-blur-md rounded-3xl p-10 border border-white/20 "
             >
               <div className="text-center">
-                <h4 className="text-3xl font-bold mb-6">
+                <h4 className="text-2xl font-medium text-white mb-6">
                   "A tool designed to help you stay responsive and manage all
                   your projects on the go."
                 </h4>
@@ -100,7 +100,7 @@ const Portal = () => {
       <section className="py-24 bg-gray-200">
         <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-5">
           <div className="text-left mb-16">
-            <h2 className="text-[#6abd45] font-extrabold text-3xl mb-4">
+            <h2 className="text-[#6abd45] font-bold text-3xl mb-4">
               Core Capabilities
             </h2>
           </div>
@@ -145,6 +145,9 @@ const Portal = () => {
             ))}
           </div>
         </div>
+      </section>
+      <section className="">
+        <Newsletter />
       </section>
 
       {/* Communication Section */}
@@ -191,7 +194,7 @@ const Portal = () => {
         </div>
       </section> */}
 
-      <Newsletter />
+      
     </div>
   );
 };

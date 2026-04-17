@@ -46,11 +46,9 @@ const data: DataType = {
     phone: [
       {
         primary: "1-612-605-5833",
-        secondary: "1-218-212-7100",
       },
       {
         primary: "1-612-216-5427",
-        secondary: "1-904-675-3009",
       },
     ],
     mail: [
@@ -70,7 +68,7 @@ const data: DataType = {
       {
         title: "INDIA",
         addrLine1: "No. 23/4, 1st Floor, Dr. Rajgopal Road, RMV 2nd Stage,",
-        addrLine2: "Sanjaynagar, Bengalurur-560094, Karnataka, India",
+        addrLine2: "Sanjaynagar, Bengaluru-560094, Karnataka, India",
         phone: "+91-6364063539",
       },
     ],
@@ -130,7 +128,7 @@ function Connect() {
                   <div key={index} className="flex flex-row items-center mr-5">
                     <span className="m-2 text-gray-700">
                       <svg
-                        className="h-8 w-8 text-[#6abd45]"
+                        className="h-4 w-4 text-[#6abd45]"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
@@ -165,7 +163,7 @@ function Connect() {
           <div className="flex flex-row flex-wrap items-center mx-3 my-3 max-md:mx-0">
             <span className="m-2 text-gray-700 max-md:m-1">
               <svg
-                className="h-10 w-10 text-[#6abd45]"
+                className="h-8 w-8 text-[#6abd45]"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
