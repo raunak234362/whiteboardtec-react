@@ -116,7 +116,7 @@ const NavRoute: NavRouteType[] = [
       
   },
   {
-    name: "Career",
+    name: "Careers",
     path: "/career",
     image:
       "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685704/route-image/services_cmbnnq.jpg",
