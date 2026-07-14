@@ -10,7 +10,7 @@ type JobDescType = {
     location: string;
     "type": string;
     qualification: string;
-    jd: string;
+    jd: any;
     status: boolean;
 }
 

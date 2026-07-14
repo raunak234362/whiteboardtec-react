@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { JobDescType } from ".";
 import { useState } from "react";
 import { Dialog } from "@headlessui/react";
@@ -11,6 +10,16 @@ function JobBox(job: JobDescType) {
   console.log("JobBox props:", job);
   const [resume, setResume] = useState<any>(null);
   const [progress, setProgress] = useState<number>(0);
+
+  let jdUrl = "";
+  if (job.jd) {
+    if (Array.isArray(job.jd) && job.jd.length > 0) {
+      const jdItem = job.jd[0];
+      jdUrl = jdItem.secureUrl || (jdItem.path ? `${import.meta.env.VITE_IMG_URL}${jdItem.path}` : "");
+    } else if (typeof job.jd === "string") {
+      jdUrl = job.jd.startsWith("http") ? job.jd : `${import.meta.env.VITE_IMG_URL}${job.jd}`;
+    }
+  }
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setProgress(0);
@@ -211,13 +220,20 @@ function JobBox(job: JobDescType) {
             </div>
           </div>
           <div className="flex flex-col flex-wrap mt-5 mb-0 md:flex-row justify-evenly">
-            <Link
-              to={job.jd}
+            <a
+              href={jdUrl || "#"}
               target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => {
+                if (!jdUrl) {
+                  e.preventDefault();
+                  alert("Job description is not available.");
+                }
+              }}
               className="border-2 rounded-full border-black border-opacity-50 text-center opacity-80 text-md px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
             >
               Download JD ➤{" "}
-            </Link>
+            </a>
             <button
               className="border-2 rounded-full max-md:mt-5 border-black border-opacity-50 opacity-80 text-md px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
               onClick={(e) => {
