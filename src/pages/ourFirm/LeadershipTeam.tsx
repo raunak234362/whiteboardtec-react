@@ -142,15 +142,15 @@ function LeadershipTeam() {
               return (
                 <div
                   key={leader.id || leader._id || index}
-                  className="bg-white border-2 shadow-lg rounded-none drop-shadow-lg p-7 flex flex-col justify-between"
+                  className="bg-white border-2 shadow-lg rounded-none drop-shadow-lg p-5 md:p-6 lg:p-7 flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex flex-row items-start justify-between mb-4">
                       <div className="flex-1 mr-4">
-                        <div className="text-[#6abd45] font-semibold text-4xl gap-2 flex flex-wrap flex-col">
+                        <div className="text-[#6abd45] font-semibold text-2xl md:text-3xl lg:text-4xl gap-2 flex flex-wrap flex-col">
                           {name}
                         </div>
-                        <div className="font-semibold text-black text-xl mt-1 uppercase">
+                        <div className="font-semibold text-black text-sm md:text-base lg:text-xl mt-1 uppercase">
                           {designation}
                         </div>
                       </div>
@@ -159,7 +159,7 @@ function LeadershipTeam() {
                         <img
                           src={imageUrl}
                           alt={name}
-                          className="h-44 w-36 object-cover rounded-none shadow-md"
+                          className="h-44 w-36 md:h-32 md:w-24 lg:h-44 lg:w-36 object-cover rounded-none shadow-md"
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
                             target.onerror = null;
