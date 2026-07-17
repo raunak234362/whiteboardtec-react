@@ -5,9 +5,10 @@ import {
   IProject,
   IJobApplication,
   blogInterface,
-  ConnectProps
+  ConnectProps,
+  leadershipInterface
 } from "./interface";
-import api from "./api"; 
+import api from "./api";
 
 class Service {
   static async JobPortal(payload: FormData) {
@@ -518,12 +519,90 @@ class Service {
         }
       );
       return response.data.data;
-    } catch (error) { 
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  //leadership details
+  static async leadershipPost(payload: FormData): Promise<any> {
+    try {
+      console.log("payload for leadership", payload);
+      const token = sessionStorage.getItem("token");
+      const response = await api.post("leadership/add", payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("response for leadership", response);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+  static async leadershipGet(): Promise<leadershipInterface[]> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.get("leadership/all",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      const resData = response.data as ApiResponse<leadershipInterface[]>;
+      console.log("response for leadership", resData);
+      return resData.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+  static async leadershipGetbyId(id: string): Promise<leadershipInterface> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.get(`leadership/get/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const resData = response.data as ApiResponse<leadershipInterface>;
+      console.log("response for leadership", resData);
+      return resData.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+  static async leadershipUpdate(id: string, payload: FormData): Promise<leadershipInterface> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.put(`leadership/update/${id}`, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      const resData = response.data as ApiResponse<leadershipInterface>;
+      console.log("response for leadership", resData);
+      return resData.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+  static async leadershipDelete(id: string): Promise<leadershipInterface> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.delete(`leadership/delete/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const resData = response.data as ApiResponse<leadershipInterface>;
+      console.log("response for leadership", resData);
+      return resData.data;
+    } catch (error) {
       console.error(error);
       throw error;
     }
   }
 }
-
 export default Service;
- 

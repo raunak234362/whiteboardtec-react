@@ -46,6 +46,7 @@ import {
   AdminCareer,
   AdminGallery,
   AdminPortfolio,
+  AdminLeadership,
 } from "./pages/admin";
 import "tw-elements-react/dist/css/tw-elements-react.min.css";
 import GalleryImages from "./pages/ourFirm/GalleryImages.tsx";
@@ -110,6 +111,7 @@ const route = createBrowserRouter(
       <Route path="/admin/career" element={<AdminCareer />} />
       <Route path="/admin/portfolio" element={<AdminPortfolio />} />
       <Route path="/admin/gallery" element={<AdminGallery />} />
+      <Route path="/admin/leadership" element={<AdminLeadership />} />
     </Route>
   )
 );

@@ -125,3 +125,12 @@ export interface blogInterface {
   [key: string]: any;
   likes: number;
 }
+export interface leadershipInterface {
+ id?: string;
+ _id?: string;
+ name :string;
+ bio:string;
+ sociallink:JSON;
+ profilePic:JSON;
+ designation:string;
+}
