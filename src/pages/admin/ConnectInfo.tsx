@@ -37,11 +37,11 @@ export default function ConnectInfo() {
 
   return (
     <section className="min-h-screen grid grid-cols-[240px_1fr] bg-gray-50">
-      <aside className="h-screen text-white bg-gray-900 border-r border-gray-300">
+      <aside className="h-screen overflow-y-auto text-white bg-gray-900 border-r border-gray-300">
         <Sidebar />
       </aside>
 
-      <main className="flex flex-col">
+      <main className="flex flex-col min-w-0 h-screen overflow-hidden">
         <Header {...header} />
 
         <div className="flex-grow p-8 overflow-auto bg-white">
@@ -65,7 +65,7 @@ export default function ConnectInfo() {
                   <p className="text-sm mt-1">When clients submit connect forms, they will show up here.</p>
                 </div>
               ) : (
-                <div className="overflow-x-auto border border-gray-200 rounded-lg shadow-md">
+                <div className="overflow-auto h-[90vh] border border-gray-200 rounded-lg shadow-md">
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="text-white bg-green-600">
                       <tr>
