@@ -130,7 +130,7 @@ export interface leadershipInterface {
  _id?: string;
  name :string;
  bio:string;
- sociallink:JSON;
+ socialLinks:JSON;
  profilePic:JSON;
  designation:string;
 }

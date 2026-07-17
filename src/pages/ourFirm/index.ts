@@ -9,7 +9,7 @@ type LeaderDetailType = {
     name: string;
     designation: string;
     thoughts: string[];
-    sociallink: string;
+    socialLinks: string;
     image: string;
 }
 

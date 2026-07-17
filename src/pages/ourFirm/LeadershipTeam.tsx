@@ -86,8 +86,8 @@ function LeadershipTeam() {
   };
 
   const getSocialLink = (leader: any): string => {
-    if (leader.sociallink) {
-      let link = leader.sociallink;
+    if (leader.socialLinks) {
+      let link = leader.socialLinks;
       
       // Handle stringified JSON
       if (typeof link === "string" && link.trim().startsWith("[")) {
@@ -111,7 +111,7 @@ function LeadershipTeam() {
 
       if (typeof link === "string") return formatUrl(link);
       if (typeof link === "object" && link !== null) {
-        const urlVal = (link as any).url || (link as any).link || (link as any).sociallink || "";
+        const urlVal = (link as any).url || (link as any).link || (link as any).socialLinks || "";
         return formatUrl(urlVal);
       }
     }

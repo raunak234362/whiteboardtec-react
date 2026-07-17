@@ -20,7 +20,7 @@ function AdminLeadership() {
   const [name, setName] = useState("");
   const [designation, setDesignation] = useState("");
   const [bio, setBio] = useState("");
-  const [sociallink, setSociallink] = useState("");
+  const [socialLinks, setSocialLinks] = useState("");
   const [profilePicFile, setProfilePicFile] = useState<File | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -52,8 +52,8 @@ function AdminLeadership() {
       
       // Handle sociallink parsing
       let linkStr = "";
-      if (leader.sociallink) {
-        let link = leader.sociallink as any;
+      if (leader.socialLinks) {
+        let link = leader.socialLinks as any;
         if (typeof link === "string" && link.trim().startsWith("[")) {
           try {
             link = JSON.parse(link);
@@ -71,17 +71,17 @@ function AdminLeadership() {
         if (typeof link === "string") {
           linkStr = link;
         } else if (typeof link === "object" && link !== null) {
-          linkStr = (link as any).url || (link as any).link || (link as any).sociallink || "";
+          linkStr = (link as any).url || (link as any).link || (link as any).socialLinks || "";
         }
       }
-      setSociallink(linkStr);
+      setSocialLinks(linkStr);
       setProfilePicFile(null);
     } else {
       setEditingLeader(null);
       setName("");
       setDesignation("");
       setBio("");
-      setSociallink("");
+      setSocialLinks("");
       setProfilePicFile(null);
     }
     setFormOpen(true);
@@ -111,7 +111,7 @@ function AdminLeadership() {
       formData.append("name", name);
       formData.append("designation", designation);
       formData.append("bio", bio);
-      formData.append("sociallink", sociallink);
+      formData.append("socialLinks", socialLinks);
       
       if (profilePicFile) {
         formData.append("profilePic", profilePicFile);
@@ -362,8 +362,8 @@ function AdminLeadership() {
                   </label>
                   <input
                     type="url"
-                    value={sociallink}
-                    onChange={(e) => setSociallink(e.target.value)}
+                    value={socialLinks}
+                    onChange={(e) => setSocialLinks(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-800"
                     placeholder="e.g. https://www.linkedin.com/in/..."
                     disabled={submitting}
