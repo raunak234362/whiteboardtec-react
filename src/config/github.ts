@@ -13,6 +13,17 @@ export const saveToGithub = async (
     throw new Error("GitHub token is required to save changes.");
   }
 
+  // Attempt to save locally if running in development mode (Vite plugin)
+  try {
+    await fetch("/api/save-json", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ filePath, content })
+    });
+  } catch (e) {
+    console.warn("Could not save locally. This is normal in production.", e);
+  }
+
   const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}`;
 
   try {
