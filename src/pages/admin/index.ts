@@ -6,6 +6,7 @@ import AdminPortfolio from "./AdminPortfolio";
 import AdminGallery from "./AdminGallery";
 import AdminBlogManager from "./AdminBlogManager";
 import AdminLeadership from "./contentmanagement/AdminLeadership";
+import EditOurFirm from "./contentmanagement/EditOurFirm";
 
 export {
     Login,
@@ -15,5 +16,6 @@ export {
     AdminGallery,
     AdminPortfolio,
     AdminBlogManager,
-    AdminLeadership
+    AdminLeadership,
+    EditOurFirm
 }
