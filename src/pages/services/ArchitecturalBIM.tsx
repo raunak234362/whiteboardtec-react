@@ -1,64 +1,81 @@
 import { useEffect } from "react";
-import { PageBanner, BannerPropType } from "../../components/banner";
+import { PageBanner } from "../../components/banner";
 import Newsletter from "../../components/newsletter/Newsletter";
 import Estimate from "../../components/estimation/Estimate";
+import architecturalBIMData from "../../data/architecturalBIM.json";
 
-const banner: BannerPropType = {
-  header: "Architectural",
-  subheader: "BIM services",
-  image:
-    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685621/banner-image/bim-banner_utszir.jpg",
-};
-
-const headSection: string[] = [
-  "As one of the early adopters of the Building Information Modeling (BIM) system, we understand how an elaborate 3D architectural design can set a conceptual project to life. As a matter of fact, our virtual models are so detailed that you can actually assess the feasibility and performance of a design even before the project execution. Putting to work the most up-to-date BIM tools combined with a design-thinking perspective, we generate stunning visual prototypes that count!",
-  "As BIM continues to revolutionize the construction industry, we continue to innovate the construction ecosystem with visuals that are enriched with technical clarity. Is it possible to validate the minuscule details with enhanced visualizations? YES, it is. And our portfolio speaks for us.",
-];
-
-const BIMDetailing: string[] = [
-  "3D, 4D & 5D Architectural Modeling & Design",
-  "3D Modeling",
-  "Shop Drawings / BIM Construction Plan",
-  "Clash Detection",
-  "Renders and other associated Visuals",
-  "Cost Estimation Services",
-];
-
-function ArchitecturalBIM() {
+function ArchitecturalBIM({ previewData, onSectionClick }: { previewData?: any; onSectionClick?: (sectionId: string) => void }) {
   useEffect(() => {
     document.title = "Architectural BIM Services - Whiteboard Tech";
-  });
+  }, []);
+
+  const data = previewData || architecturalBIMData;
+  const isEditMode = !!onSectionClick;
+
+  const handleClick = (e: React.MouseEvent, sectionId: string) => {
+    if (isEditMode && onSectionClick) {
+      e.stopPropagation();
+      e.preventDefault();
+      onSectionClick(sectionId);
+    }
+  };
+
+  const getEditClass = (_sectionId: string) => {
+    return isEditMode
+      ? "relative cursor-pointer hover:ring-4 hover:ring-blue-500 hover:ring-opacity-50 transition-all duration-200 rounded-md"
+      : "";
+  };
 
   return (
     <>
-      <PageBanner {...banner} />
+      <div
+        className={getEditClass("banner")}
+        onClick={(e) => handleClick(e, "banner")}
+      >
+        <PageBanner {...data.banner} />
+      </div>
 
       {/* Intro Section */}
       <div className="mx-auto my-16 px-6 md:px-12 lg:max-w-screen-lg xl:max-w-screen-xl">
-        <section className="rounded-3xl border-2 p-6 lg:p-10 grid grid-cols-[60%_40%] gap-8 shadow-md bg-white max-md:grid-cols-1">
-          <div className="order-1 leading-relaxed text-gray-700 max-md:order-2">
-            {headSection.map((desc, index) => (
-              <p key={index} className="text-lg mb-4 text-justify">
-                {desc}
-              </p>
+        <section className="rounded-3xl border-2 p-6 lg:p-10 grid grid-cols-1 lg:grid-cols-[60%_40%] gap-8 shadow-md bg-white">
+          <div 
+            className={`order-1 leading-relaxed text-gray-700 max-md:order-2 p-2 rounded ${getEditClass("intro")}`}
+            onClick={(e) => handleClick(e, "intro")}
+          >
+            {data.intro.headSection.map((desc: string, index: number) => (
+              <p 
+                key={index} 
+                className="text-lg mb-4 text-justify"
+                dangerouslySetInnerHTML={{ __html: desc }}
+              />
             ))}
-            <div className="mt-4 text-xl font-semibold text-black">
-              Collaborate seamlessly with all stakeholders at every touch point,
-              mitigate risks and impact overall revenues.
-            </div>
+            {data.intro.cta && (
+              <div className="mt-4 text-xl font-semibold text-black">
+                {data.intro.cta}
+              </div>
+            )}
           </div>
-          <Estimate head="Get your Architectural BIM Estimates done for FREE. Yes. You heard us right!" />
+          
+          <div 
+            className={`flex items-center justify-center p-2 rounded ${getEditClass("estimate")}`}
+            onClick={(e) => handleClick(e, "estimate")}
+          >
+            <Estimate {...data.estimate} />
+          </div>
         </section>
       </div>
 
       {/* Offerings Section */}
-      <div className="bg-gray-100 py-16">
+      <div 
+        className={`bg-gray-100 py-16 ${getEditClass("offerings")}`}
+        onClick={(e) => handleClick(e, "offerings")}
+      >
         <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-12">
           <h2 className="text-3xl font-semibold text-[#6abd45] mb-8">
             Our BIM Architectural Service Offerings
           </h2>
           <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {BIMDetailing.map((detail, index) => (
+            {data.offerings.map((detail: string, index: number) => (
               <div key={index} className="flex items-center gap-2">
                 <svg
                   className="h-6 w-6 text-[#6abd45] shrink-0"
@@ -77,10 +94,7 @@ function ArchitecturalBIM() {
         </div>
       </div>
 
-      {/* Newsletter Section */}
-      <div className="py-12 bg-white">
-        <Newsletter />
-      </div>
+      <Newsletter />
     </>
   );
 }

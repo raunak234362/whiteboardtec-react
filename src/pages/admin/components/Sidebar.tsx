@@ -54,18 +54,6 @@ function Sidebar() {
           </div>
         </NavLink>
         <NavLink
-          to="/admin/leadership"
-          className={({ isActive }) =>
-            `flex flex-col items-center justify-center py-2.5 h-fit  ${
-              isActive ? "bg-[#6abd45]" : "bg-gray-800 hover:bg-gray-500"
-            }`
-          }
-        >
-          <div>
-            <h1 className="font-semibold text-md">Leadership</h1>
-          </div>
-        </NavLink>
-        <NavLink
           to="/admin/portfolio"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center py-2.5 h-fit  ${
@@ -79,11 +67,12 @@ function Sidebar() {
         </NavLink>
         <NavLink
           to="/admin/career"
-          className={({ isActive }) =>
-            `flex flex-col items-center justify-center py-2.5 h-fit  ${
-              isActive ? "bg-[#6abd45]" : "bg-gray-800 hover:bg-gray-500"
-            }`
-          }
+          className={({ isActive }) => {
+            const isCareerActive = isActive || window.location.pathname.includes("/admin/career");
+            return `flex flex-col items-center justify-center py-2.5 h-fit  ${
+              isCareerActive ? "bg-[#6abd45]" : "bg-gray-800 hover:bg-gray-500"
+            }`;
+          }}
         >
           <div>
             <h1 className="font-semibold text-md">Careers</h1>
@@ -91,18 +80,19 @@ function Sidebar() {
         </NavLink>
         <NavLink
           to="/admin/connect-info"
-          className={({ isActive }) =>
-            `flex flex-col items-center justify-center py-2.5 h-fit  ${
-              isActive ? "bg-[#6abd45]" : "bg-gray-800 hover:bg-gray-500"
-            }`
-          }
+          className={({ isActive }) => {
+            const isConnectActive = isActive || window.location.pathname.includes("/admin/connect");
+            return `flex flex-col items-center justify-center py-2.5 h-fit  ${
+              isConnectActive ? "bg-[#6abd45]" : "bg-gray-800 hover:bg-gray-500"
+            }`;
+          }}
         >
           <div>
             <h1 className="font-semibold text-md">Connect</h1>
           </div>
         </NavLink>
         <NavLink
-          to="/admin/edit-our-firm"
+          to="/admin/project-station"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center py-2.5 h-fit  ${
               isActive ? "bg-[#6abd45]" : "bg-gray-800 hover:bg-gray-500"
@@ -110,7 +100,38 @@ function Sidebar() {
           }
         >
           <div>
+            <h1 className="font-semibold text-md">Project Station</h1>
+          </div>
+        </NavLink>
+        <NavLink
+          to="/admin/edit-our-firm"
+          className={({ isActive }) => {
+            const isOurFirmActive =
+              isActive ||
+              window.location.pathname.includes("/admin/edit-business-model") ||
+              window.location.pathname.includes("/admin/leadership");
+            return `flex flex-col items-center justify-center py-2.5 h-fit  ${
+              isOurFirmActive ? "bg-[#6abd45]" : "bg-gray-800 hover:bg-gray-500"
+            }`;
+          }}
+        >
+          <div>
             <h1 className="font-semibold text-md">Our Firm Pages</h1>
+          </div>
+        </NavLink>
+        <NavLink
+          to="/admin/services/structural-detailing"
+          className={({ isActive }) => {
+            const isServicesActive =
+              isActive ||
+              window.location.pathname.includes("/admin/services/");
+            return `flex flex-col items-center justify-center py-2.5 h-fit  ${
+              isServicesActive ? "bg-[#6abd45]" : "bg-gray-800 hover:bg-gray-500"
+            }`;
+          }}
+        >
+          <div>
+            <h1 className="font-semibold text-md">Service Pages</h1>
           </div>
         </NavLink>
       </div>

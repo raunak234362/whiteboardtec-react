@@ -1,5 +1,6 @@
 import Header from "./Header"
 import Sidebar from "./Sidebar"
+import SubNavbar from "./SubNavbar"
 
 type HeaderProp = {
     head: string;
@@ -19,5 +20,6 @@ export type CandidateApplication = {
 
 export {
     Header,
-    Sidebar
+    Sidebar,
+    SubNavbar
 }

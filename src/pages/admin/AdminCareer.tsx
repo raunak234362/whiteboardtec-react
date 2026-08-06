@@ -1,6 +1,6 @@
 import {  useEffect, useState } from "react";
 // import { Navigate } from "react-router-dom";
-import { Header, HeaderProp, Sidebar } from "./components";
+import { Header, HeaderProp, Sidebar, SubNavbar } from "./components";
 import { Dialog } from "@headlessui/react";
 import { useForm } from "react-hook-form";
 import Service from "../../config/service";
@@ -240,6 +240,10 @@ function AdminCareer() {
         {/* Main content */}
         <main className="flex flex-col overflow-auto">
           <Header {...header} />
+          <SubNavbar tabs={[
+            { name: "Job Roles", to: "/admin/career" },
+            { name: "Careers Page", to: "/admin/career/edit" }
+          ]} />
           <div className="flex items-center justify-between p-6 border-b border-gray-200">
             <h1 className="text-2xl font-bold text-gray-800">
               Current Job Openings

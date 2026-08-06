@@ -1,12 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import ourFirmData from "../../../data/ourFirm.json";
 import { saveToGithub } from "../../../config/github";
-import { Header, Sidebar } from "../components";
+import { Header, Sidebar, SubNavbar } from "../components";
 import OurFirm from "../../ourFirm/OurFirm";
 import { Jodit } from "jodit";
 import "jodit/es2021/jodit.min.css";
 
-const JoditWrapper = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => {
+const ourFirmTabs = [
+  { name: "Our Firm Details", to: "/admin/edit-our-firm" },
+  { name: "Business Model", to: "/admin/edit-business-model" },
+  { name: "Leadership Team", to: "/admin/leadership" },
+];
+
+const JoditWrapper = ({ value, onChange, height = 180 }: { value: string; onChange: (v: string) => void; height?: number }) => {
   const editorRef = useRef<HTMLDivElement>(null);
   const joditInstance = useRef<any>(null);
   const onChangeRef = useRef(onChange);
@@ -23,7 +29,7 @@ const JoditWrapper = ({ value, onChange }: { value: string; onChange: (v: string
             onChangeRef.current(newVal);
           }
         },
-        height: 250
+        height: height
       });
       joditInstance.current.value = value;
     }
@@ -54,6 +60,10 @@ export default function EditOurFirm() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+  // Resize Panel State
+  const [editorWidth, setEditorWidth] = useState(550);
+  const [isDragging, setIsDragging] = useState(false);
+
   const bannerRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
   const visionMissionRef = useRef<HTMLDivElement>(null);
@@ -62,6 +72,34 @@ export default function EditOurFirm() {
   const projectManagementRef = useRef<HTMLDivElement>(null);
 
   const header = { head: "Live Editor: Our Firm" };
+
+  const startResizing = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return;
+      // 250px is the Sidebar width. We constrain width between 350px and 950px.
+      const newWidth = Math.max(350, Math.min(e.clientX - 250, 950));
+      setEditorWidth(newWidth);
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    if (isDragging) {
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+    }
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging]);
 
   const handleSave = async () => {
     if (!githubToken) {
@@ -97,7 +135,6 @@ export default function EditOurFirm() {
     
     if (refs[sectionId]?.current) {
       refs[sectionId].current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      // Optional: Add a brief highlight effect
       const el = refs[sectionId].current;
       if (el) {
         el.classList.add('bg-yellow-50', 'transition-colors', 'duration-500');
@@ -109,18 +146,22 @@ export default function EditOurFirm() {
   };
 
   return (
-    <section className="w-full h-screen grid grid-cols-[250px_1fr] bg-gray-50 overflow-hidden">
+    <section className="w-full h-screen grid grid-cols-[250px_1fr] bg-gray-50 overflow-hidden select-none">
       {/* App Sidebar */}
-      <div className="bg-gray-800 overflow-y-auto">
+      <div className="bg-gray-800 overflow-y-auto select-none">
         <Sidebar />
       </div>
 
-      <main className="flex flex-col h-full overflow-hidden">
+      <main className="flex flex-col h-full overflow-hidden select-text">
         <Header {...header} />
+        <SubNavbar tabs={ourFirmTabs} />
 
         <div className="flex flex-row h-full overflow-hidden">
-          {/* EDITOR PANEL (Left side) */}
-          <div className="w-[550px] bg-white border-r flex flex-col h-full overflow-y-auto">
+          {/* EDITOR PANEL (Resizable Left side) */}
+          <div 
+            style={{ width: `${editorWidth}px` }}
+            className="bg-white border-r flex flex-col h-full overflow-y-auto animate-fade-in transition-all duration-75"
+          >
             {/* Publish Actions Sticky Header */}
             <div className="bg-gray-50 p-4 border-b sticky top-0 z-10 shadow-sm">
               <h3 className="font-bold mb-2">Publish Settings</h3>
@@ -135,7 +176,7 @@ export default function EditOurFirm() {
                 onClick={handleSave}
                 disabled={loading}
                 className={`w-full py-2 px-4 rounded font-bold text-white transition-colors text-sm ${
-                  loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+                  loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#6abd45] hover:bg-[#5aa33a]"
                 }`}
               >
                 {loading ? "Saving..." : "Update Page"}
@@ -148,32 +189,34 @@ export default function EditOurFirm() {
             </div>
 
             {/* Form Fields */}
-            <div className="p-4 space-y-6">
+            <div className="p-4 space-y-6 select-text">
+              {/* Banner Section */}
               <div className="border-b pb-4 p-2 rounded" ref={bannerRef}>
                 <h3 className="text-lg font-semibold mb-2">Banner</h3>
-                <label className="block text-xs font-medium text-gray-500 mb-1">Header</label>
-                <input
-                  className="w-full border p-2 rounded mb-2 text-sm"
+                <label className="block text-xs font-medium text-gray-500 mb-1">Header (Rich Text)</label>
+                <JoditWrapper
                   value={data.banner.header}
-                  onChange={(e) => setData(prev => ({ ...prev, banner: { ...prev.banner, header: e.target.value } }))}
+                  onChange={(val) => setData(prev => ({ ...prev, banner: { ...prev.banner, header: val } }))}
+                  height={120}
                 />
-                <label className="block text-xs font-medium text-gray-500 mb-1">Subheader</label>
-                <input
-                  className="w-full border p-2 rounded mb-2 text-sm"
+                <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Subheader (Rich Text)</label>
+                <JoditWrapper
                   value={data.banner.subheader}
-                  onChange={(e) => setData(prev => ({ ...prev, banner: { ...prev.banner, subheader: e.target.value } }))}
+                  onChange={(val) => setData(prev => ({ ...prev, banner: { ...prev.banner, subheader: val } }))}
+                  height={120}
                 />
               </div>
 
+              {/* Intro Section */}
               <div className="border-b pb-4 p-2 rounded" ref={introRef}>
                 <h3 className="text-lg font-semibold mb-2">Intro Section</h3>
-                <label className="block text-xs font-medium text-gray-500 mb-1">Heading</label>
-                <input
-                  className="w-full border p-2 rounded mb-2 text-sm"
+                <label className="block text-xs font-medium text-gray-500 mb-1">Heading (Rich Text)</label>
+                <JoditWrapper
                   value={data.intro.heading}
-                  onChange={(e) => setData(prev => ({ ...prev, intro: { ...prev.intro, heading: e.target.value } }))}
+                  onChange={(val) => setData(prev => ({ ...prev, intro: { ...prev.intro, heading: val } }))}
+                  height={120}
                 />
-                <label className="block text-xs font-medium text-gray-500 mb-1">Paragraph 1</label>
+                <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Paragraph 1</label>
                 <JoditWrapper
                   value={data.intro.paragraph1}
                   onChange={(val) => setData(prev => ({ ...prev, intro: { ...prev.intro, paragraph1: val } }))}
@@ -185,6 +228,7 @@ export default function EditOurFirm() {
                 />
               </div>
 
+              {/* Vision & Mission */}
               <div className="border-b pb-4 p-2 rounded" ref={visionMissionRef}>
                 <h3 className="text-lg font-semibold mb-2">Vision & Mission</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Vision</label>
@@ -199,56 +243,61 @@ export default function EditOurFirm() {
                 />
               </div>
               
-               <div className="pb-4 p-2 rounded" ref={largeProjectRef}>
+              {/* Large Project Section */}
+              <div className="border-b pb-4 p-2 rounded" ref={largeProjectRef}>
                 <h3 className="text-lg font-semibold mb-2">Large Project Section</h3>
-                <label className="block text-xs font-medium text-gray-500 mb-1">Heading</label>
-                <input
-                  className="w-full border p-2 rounded mb-2 text-sm"
+                <label className="block text-xs font-medium text-gray-500 mb-1">Heading (Rich Text)</label>
+                <JoditWrapper
                   value={data.largeProject.heading}
-                  onChange={(e) => setData(prev => ({ ...prev, largeProject: { ...prev.largeProject, heading: e.target.value } }))}
+                  onChange={(val) => setData(prev => ({ ...prev, largeProject: { ...prev.largeProject, heading: val } }))}
+                  height={120}
                 />
-                <label className="block text-xs font-medium text-gray-500 mb-1">Subheading</label>
-                <input
-                  className="w-full border p-2 rounded mb-2 text-sm"
+                <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Subheading (Rich Text)</label>
+                <JoditWrapper
                   value={data.largeProject.subheading}
-                  onChange={(e) => setData(prev => ({ ...prev, largeProject: { ...prev.largeProject, subheading: e.target.value } }))}
+                  onChange={(val) => setData(prev => ({ ...prev, largeProject: { ...prev.largeProject, subheading: val } }))}
+                  height={120}
                 />
-                <label className="block text-xs font-medium text-gray-500 mb-1">Description</label>
+                <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Description</label>
                 <JoditWrapper
                   value={data.largeProject.description}
                   onChange={(val) => setData(prev => ({ ...prev, largeProject: { ...prev.largeProject, description: val } }))}
                 />
               </div>
 
+              {/* Key Differentiators */}
               <div className="border-b pb-4 p-2 rounded" ref={keyDifferentiatorsRef}>
                 <h3 className="text-lg font-semibold mb-2">Key Differentiators</h3>
                 {data.keyDifferentiators.map((item: any, idx: number) => (
-                  <div key={idx} className="mb-6 border-l-4 border-blue-500 pl-3 relative bg-gray-50 p-2 rounded">
+                  <div key={idx} className="mb-6 border-l-4 border-blue-500 pl-3 relative bg-gray-50 p-3 rounded shadow-sm">
                     <button 
                       onClick={() => {
-                        setData(prev => {
-                          const newArr = [...prev.keyDifferentiators];
-                          newArr.splice(idx, 1);
-                          return { ...prev, keyDifferentiators: newArr };
-                        });
+                        const name = item.head.replace(/<[^>]*>/g, "") || `Differentiator #${idx + 1}`;
+                        if (window.confirm(`Are you sure to delete this section: "${name}"?`)) {
+                          setData(prev => {
+                            const newArr = [...prev.keyDifferentiators];
+                            newArr.splice(idx, 1);
+                            return { ...prev, keyDifferentiators: newArr };
+                          });
+                        }
                       }}
-                      className="absolute top-2 right-2 text-red-500 hover:text-red-700 text-xs font-bold"
+                      className="absolute top-2 right-2 text-red-500 hover:text-red-700 text-xs font-bold bg-white p-1 rounded border shadow-sm"
                     >
-                      Remove
+                      Delete Block
                     </button>
-                    <label className="block text-xs font-medium text-gray-500 mb-1">Heading</label>
-                    <input
-                      className="w-full border p-2 rounded mb-2 text-sm"
+                    <label className="block text-xs font-medium text-gray-500 mb-1">Heading (Rich Text)</label>
+                    <JoditWrapper
                       value={item.head}
-                      onChange={(e) => {
+                      onChange={(val) => {
                         setData(prev => {
                           const newArr = [...prev.keyDifferentiators];
-                          newArr[idx] = { ...newArr[idx], head: e.target.value };
+                          newArr[idx] = { ...newArr[idx], head: val };
                           return { ...prev, keyDifferentiators: newArr };
                         });
                       }}
+                      height={100}
                     />
-                    <label className="block text-xs font-medium text-gray-500 mb-1 mt-2">Body</label>
+                    <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Body</label>
                     <JoditWrapper
                       value={item.body}
                       onChange={(val) => {
@@ -263,27 +312,40 @@ export default function EditOurFirm() {
                 ))}
                 <button 
                   onClick={() => setData(prev => ({ ...prev, keyDifferentiators: [...prev.keyDifferentiators, { icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685578/icons/process_skpasx.png", head: "New Item", body: "Description..." }] }))}
-                  className="mt-2 w-full py-2 bg-blue-100 text-blue-700 rounded text-sm font-semibold hover:bg-blue-200"
+                  className="mt-2 w-full py-2 bg-blue-50 text-blue-600 border border-blue-300 border-dashed rounded text-sm font-semibold hover:bg-blue-100 transition-colors"
                 >
-                  + Add Differentiator
+                  + Add Key Differentiator Card
                 </button>
               </div>
 
+              {/* Project Management */}
               <div className="border-b pb-4 p-2 rounded" ref={projectManagementRef}>
-                <h3 className="text-lg font-semibold mb-2">Project Management</h3>
-                <label className="block text-xs font-medium text-gray-500 mb-1">Heading</label>
-                <input
-                  className="w-full border p-2 rounded mb-2 text-sm"
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="text-lg font-semibold">Project Management</h3>
+                  <button 
+                    onClick={() => {
+                      if (window.confirm('Are you sure to reset the Project Management section?')) {
+                        setData(prev => ({ ...prev, projectManagement: { heading: "<h3>Heading</h3>", description: "<p>Description</p>", features: [] } }));
+                      }
+                    }}
+                    className="text-xs text-red-500 hover:text-red-700 font-semibold"
+                  >
+                    Reset Section
+                  </button>
+                </div>
+                <label className="block text-xs font-medium text-gray-500 mb-1">Heading (Rich Text)</label>
+                <JoditWrapper
                   value={data.projectManagement.heading}
-                  onChange={(e) => setData(prev => ({ ...prev, projectManagement: { ...prev.projectManagement, heading: e.target.value } }))}
+                  onChange={(val) => setData(prev => ({ ...prev, projectManagement: { ...prev.projectManagement, heading: val } }))}
+                  height={120}
                 />
-                <label className="block text-xs font-medium text-gray-500 mb-1 mt-2">Description</label>
+                <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Description</label>
                 <JoditWrapper
                   value={data.projectManagement.description}
                   onChange={(val) => setData(prev => ({ ...prev, projectManagement: { ...prev.projectManagement, description: val } }))}
                 />
                 
-                <label className="block text-xs font-medium text-gray-500 mb-2 mt-4">Features List</label>
+                <label className="block text-xs font-medium text-gray-500 mb-2 mt-4 font-bold">Features List</label>
                 {data.projectManagement.features.map((feature: string, idx: number) => (
                   <div key={idx} className="flex flex-row items-center mb-2 gap-2">
                     <input
@@ -296,20 +358,24 @@ export default function EditOurFirm() {
                       })}
                     />
                     <button 
-                      onClick={() => setData(prev => {
-                        const newFeatures = [...prev.projectManagement.features];
-                        newFeatures.splice(idx, 1);
-                        return { ...prev, projectManagement: { ...prev.projectManagement, features: newFeatures } };
-                      })}
+                      onClick={() => {
+                        if (window.confirm(`Are you sure to delete this section: "Feature: ${feature || "Untitled"}"?`)) {
+                          setData(prev => {
+                            const newFeatures = [...prev.projectManagement.features];
+                            newFeatures.splice(idx, 1);
+                            return { ...prev, projectManagement: { ...prev.projectManagement, features: newFeatures } };
+                          });
+                        }
+                      }}
                       className="px-3 py-2 bg-red-100 text-red-600 rounded text-xs font-bold hover:bg-red-200"
                     >
-                      X
+                      Delete
                     </button>
                   </div>
                 ))}
                 <button 
-                  onClick={() => setData(prev => ({ ...prev, projectManagement: { ...prev.projectManagement, features: [...prev.projectManagement.features, "New Feature"] } }))}
-                  className="mt-2 w-full py-2 bg-blue-100 text-blue-700 rounded text-sm font-semibold hover:bg-blue-200"
+                  onClick={() => setData(prev => ({ ...prev, projectManagement: { ...prev.projectManagement, features: [...prev.projectManagement.features, "New Feature item"] } }))}
+                  className="mt-2 w-full py-1.5 bg-green-50 text-[#6abd45] border border-[#6abd45] border-dashed rounded text-xs font-semibold hover:bg-green-100 transition-colors"
                 >
                   + Add Feature
                 </button>
@@ -323,11 +389,15 @@ export default function EditOurFirm() {
                 {(data.additionalBlocks || []).map((block: any, idx: number) => (
                   <div key={idx} className="mb-6 border-l-4 border-green-500 pl-3 relative bg-gray-50 p-3 rounded">
                     <button 
-                      onClick={() => setData(prev => {
-                        const newBlocks = [...(prev.additionalBlocks || [])];
-                        newBlocks.splice(idx, 1);
-                        return { ...prev, additionalBlocks: newBlocks };
-                      })}
+                      onClick={() => {
+                        if (window.confirm(`Are you sure to delete this section: "${block.type} Block"?`)) {
+                          setData(prev => {
+                            const newBlocks = [...(prev.additionalBlocks || [])];
+                            newBlocks.splice(idx, 1);
+                            return { ...prev, additionalBlocks: newBlocks };
+                          });
+                        }
+                      }}
                       className="absolute top-2 right-2 text-red-500 hover:text-red-700 text-xs font-bold"
                     >
                       Remove
@@ -391,10 +461,20 @@ export default function EditOurFirm() {
             </div>
           </div>
 
+          {/* Resizer Handle */}
+          <div
+            onMouseDown={startResizing}
+            className={`w-2 bg-gray-200 hover:bg-green-500 cursor-col-resize transition-all duration-150 relative flex items-center justify-center ${
+              isDragging ? "bg-green-500 w-2.5" : ""
+            }`}
+          >
+            <div className="w-1 h-12 bg-gray-400 rounded-full"></div>
+          </div>
+
           {/* LIVE PREVIEW PANEL (Right side) */}
-          <div className="flex-1 bg-gray-200 overflow-y-auto relative">
+          <div className="flex-1 bg-gray-200 overflow-y-auto relative select-none">
             <div className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded shadow opacity-50 pointer-events-none z-10">Live Preview (Click a section to edit)</div>
-            <div className="w-full bg-white min-h-full pb-20">
+            <div className="w-full bg-white min-h-full pb-20 select-text">
               <OurFirm previewData={data} onSectionClick={handleSectionClick} />
             </div>
           </div>

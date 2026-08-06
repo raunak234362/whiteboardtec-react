@@ -1,0 +1,272 @@
+import React, { useState, useEffect, useRef } from "react";
+import businessModelData from "../../../data/businessModel.json";
+import { saveToGithub } from "../../../config/github";
+import { Header, Sidebar, SubNavbar } from "../components";
+import BusiessModel from "../../ourFirm/BusinessModel";
+import { Jodit } from "jodit";
+import "jodit/es2021/jodit.min.css";
+
+const ourFirmTabs = [
+  { name: "Our Firm Details", to: "/admin/edit-our-firm" },
+  { name: "Business Model", to: "/admin/edit-business-model" },
+  { name: "Leadership Team", to: "/admin/leadership" },
+];
+
+const JoditWrapper = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => {
+  const editorRef = useRef<HTMLDivElement>(null);
+  const joditInstance = useRef<any>(null);
+  const onChangeRef = useRef(onChange);
+
+  useEffect(() => {
+    onChangeRef.current = onChange;
+  }, [onChange]);
+
+  useEffect(() => {
+    if (editorRef.current && !joditInstance.current) {
+      joditInstance.current = Jodit.make(editorRef.current, {
+        events: {
+          change: (newVal: string) => {
+            onChangeRef.current(newVal);
+          }
+        },
+        height: 250
+      });
+      joditInstance.current.value = value;
+    }
+    return () => {
+      if (joditInstance.current) {
+        joditInstance.current.destruct();
+        joditInstance.current = null;
+      }
+    };
+  }, []);
+
+  return <div ref={editorRef} />;
+};
+
+interface ModelItem {
+  icon: string;
+  head: string;
+  body: string;
+}
+
+interface BusinessModelData {
+  banner: {
+    header: string;
+    image: string;
+  };
+  estimate: {
+    head: string;
+  };
+  models: ModelItem[];
+}
+
+export default function EditBusinessModel() {
+  const [data, setData] = useState<BusinessModelData>(businessModelData as BusinessModelData);
+  const [githubToken, setGithubToken] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const bannerRef = useRef<HTMLDivElement>(null);
+  const estimateRef = useRef<HTMLDivElement>(null);
+  const modelsRef = useRef<HTMLDivElement>(null);
+
+  const header = { head: "Live Editor: Business Model" };
+
+  const handleSave = async () => {
+    if (!githubToken) {
+      setMessage("Please enter a GitHub Personal Access Token to save changes.");
+      return;
+    }
+    setLoading(true);
+    setMessage("Saving to GitHub...");
+    try {
+      await saveToGithub(
+        "src/data/businessModel.json",
+        JSON.stringify(data, null, 2),
+        githubToken,
+        "Update Business Model page content via Admin CMS"
+      );
+      setMessage("Successfully saved to GitHub! Changes will be reflected shortly.");
+    } catch (error: any) {
+      setMessage(`Error: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSectionClick = (sectionId: string) => {
+    const refs: { [key: string]: React.RefObject<HTMLDivElement> } = {
+      banner: bannerRef,
+      estimate: estimateRef,
+      models: modelsRef
+    };
+    
+    if (refs[sectionId]?.current) {
+      refs[sectionId].current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const el = refs[sectionId].current;
+      if (el) {
+        el.classList.add('bg-yellow-50', 'transition-colors', 'duration-500');
+        setTimeout(() => {
+          el.classList.remove('bg-yellow-50');
+        }, 1500);
+      }
+    }
+  };
+
+  return (
+    <section className="w-full h-screen grid grid-cols-[250px_1fr] bg-gray-50 overflow-hidden">
+      {/* App Sidebar */}
+      <div className="bg-gray-800 overflow-y-auto">
+        <Sidebar />
+      </div>
+
+      <main className="flex flex-col h-full overflow-hidden">
+        <Header {...header} />
+        <SubNavbar tabs={ourFirmTabs} />
+
+        <div className="flex flex-row h-full overflow-hidden">
+          {/* EDITOR PANEL (Left side) */}
+          <div className="w-[550px] bg-white border-r flex flex-col h-full overflow-y-auto animate-fade-in">
+            {/* Publish Actions Sticky Header */}
+            <div className="bg-gray-50 p-4 border-b sticky top-0 z-10 shadow-sm">
+              <h3 className="font-bold mb-2">Publish Settings</h3>
+              <input
+                type="password"
+                className="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 mb-2 text-sm"
+                placeholder="GitHub Token (ghp_...)"
+                value={githubToken}
+                onChange={(e) => setGithubToken(e.target.value)}
+              />
+              <button
+                onClick={handleSave}
+                disabled={loading}
+                className={`w-full py-2 px-4 rounded font-bold text-white transition-colors text-sm ${
+                  loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#6abd45] hover:bg-[#5aa33a]"
+                }`}
+              >
+                {loading ? "Saving..." : "Update Page"}
+              </button>
+              {message && (
+                <div className={`mt-2 p-2 rounded text-xs ${message.includes("Error") || message.includes("Please enter") ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}>
+                  {message}
+                </div>
+              )}
+            </div>
+
+            {/* Form Fields */}
+            <div className="p-4 space-y-6">
+              {/* Banner Section */}
+              <div className="border-b pb-4 p-2 rounded" ref={bannerRef}>
+                <h3 className="text-lg font-semibold mb-2">Banner</h3>
+                <label className="block text-xs font-medium text-gray-500 mb-1">Header</label>
+                <input
+                  className="w-full border p-2 rounded mb-2 text-sm"
+                  value={data.banner.header}
+                  onChange={(e) => setData(prev => ({ ...prev, banner: { ...prev.banner, header: e.target.value } }))}
+                />
+                <label className="block text-xs font-medium text-gray-500 mb-1">Image URL</label>
+                <input
+                  className="w-full border p-2 rounded mb-2 text-sm"
+                  value={data.banner.image}
+                  onChange={(e) => setData(prev => ({ ...prev, banner: { ...prev.banner, image: e.target.value } }))}
+                />
+              </div>
+
+              {/* Estimate Section */}
+              <div className="border-b pb-4 p-2 rounded" ref={estimateRef}>
+                <h3 className="text-lg font-semibold mb-2">Estimate Header</h3>
+                <label className="block text-xs font-medium text-gray-500 mb-1">Heading</label>
+                <textarea
+                  className="w-full border p-2 rounded mb-2 text-sm h-20"
+                  value={data.estimate.head}
+                  onChange={(e) => setData(prev => ({ ...prev, estimate: { ...prev.estimate, head: e.target.value } }))}
+                />
+              </div>
+
+              {/* Models Section */}
+              <div className="pb-4 p-2 rounded" ref={modelsRef}>
+                <h3 className="text-lg font-semibold mb-2">Business Models</h3>
+                {data.models.map((item, idx) => (
+                  <div key={idx} className="mb-6 border-l-4 border-[#6abd45] pl-3 relative bg-gray-50 p-2 rounded">
+                    <button 
+                      onClick={() => {
+                        setData(prev => {
+                          const newArr = [...prev.models];
+                          newArr.splice(idx, 1);
+                          return { ...prev, models: newArr };
+                        });
+                      }}
+                      className="absolute top-2 right-2 text-red-500 hover:text-red-700 text-xs font-bold"
+                    >
+                      Remove
+                    </button>
+                    <label className="block text-xs font-medium text-gray-500 mb-1">Model Name</label>
+                    <input
+                      className="w-full border p-2 rounded mb-2 text-sm font-semibold"
+                      value={item.head}
+                      onChange={(e) => {
+                        setData(prev => {
+                          const newArr = [...prev.models];
+                          newArr[idx] = { ...newArr[idx], head: e.target.value };
+                          return { ...prev, models: newArr };
+                        });
+                      }}
+                    />
+                    <label className="block text-xs font-medium text-gray-500 mb-1">Icon URL</label>
+                    <input
+                      className="w-full border p-2 rounded mb-2 text-sm"
+                      value={item.icon}
+                      onChange={(e) => {
+                        setData(prev => {
+                          const newArr = [...prev.models];
+                          newArr[idx] = { ...newArr[idx], icon: e.target.value };
+                          return { ...prev, models: newArr };
+                        });
+                      }}
+                    />
+                    <label className="block text-xs font-medium text-gray-500 mb-1 mt-2">Description</label>
+                    <JoditWrapper
+                      value={item.body}
+                      onChange={(val) => {
+                        setData(prev => {
+                          const newArr = [...prev.models];
+                          newArr[idx] = { ...newArr[idx], body: val };
+                          return { ...prev, models: newArr };
+                        });
+                      }}
+                    />
+                  </div>
+                ))}
+                <button 
+                  onClick={() => setData(prev => ({ 
+                    ...prev, 
+                    models: [
+                      ...prev.models, 
+                      { 
+                        icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685578/icons/process_skpasx.png", 
+                        head: "New Business Model", 
+                        body: "<p>Description of the new business model...</p>" 
+                      }
+                    ] 
+                  }))}
+                  className="mt-2 w-full py-2 bg-green-50 text-[#6abd45] border border-[#6abd45] border-dashed rounded text-sm font-semibold hover:bg-green-100 transition-colors"
+                >
+                  + Add Business Model
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* LIVE PREVIEW PANEL (Right side) */}
+          <div className="flex-1 bg-gray-200 overflow-y-auto relative">
+            <div className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded shadow opacity-50 pointer-events-none z-10">Live Preview (Click a section to edit)</div>
+            <div className="w-full bg-white min-h-full pb-20">
+              <BusiessModel previewData={data} onSectionClick={handleSectionClick} />
+            </div>
+          </div>
+        </div>
+      </main>
+    </section>
+  );
+}

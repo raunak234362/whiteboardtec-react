@@ -1,247 +1,166 @@
 import { useEffect } from "react";
-import { PageBanner, BannerPropType } from "../../components/banner";
-import { Forms, FormType } from "../../components/forms/Forms";
+import { PageBanner } from "../../components/banner";
+import { Forms } from "../../components/forms/Forms";
+import connectData from "../../data/connect.json";
 
-type PhoneType = {
-  primary: string;
-  secondary?: string;
-};
-
-type MailType = {
-  email: string;
-};
-
-type AddressType = {
-  title: string;
-  addrLine1: string;
-  addrLine2?: string;
-  addrLine3?: string;
-  phone?: string;
-};
-
-type ContextType = {
-  heading: string;
-  body: string;
-  phone?: PhoneType[];
-  mail?: MailType[];
-  address?: AddressType[];
-};
-
-type DataType = {
-  banner: BannerPropType;
-  context: ContextType;
-  form: FormType;
-};
-
-const data: DataType = {
-  banner: {
-    header: "Connect",
-    subheader: "with us",
-    image:
-      "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685619/banner-image/contact-banner_xlqqbi.jpg",
-  },
-  context: {
-    heading: "We’d love to hear from you.",
-    body: "You can contact us by filling out the form, and a member of our team will get back to you within 24 hours or less. Or, if you have an immediate need, you can also call us on your support line.",
-    phone: [
-      {
-        primary: "1-612-605-5833",
-      },
-      {
-        primary: "1-612-216-5427",
-      },
-    ],
-    mail: [
-      {
-        email: "sales@whiteboardtec.com",
-      },
-      {
-        email: "hr@whiteboardtec.com",
-      },
-    ],
-    address: [
-      {
-        title: "USA",
-        addrLine1: "#19904, 64th Avenue, Corcoran,",
-        addrLine2: "MN 55340, USA",
-      },
-      {
-        title: "INDIA",
-        addrLine1: "No. 23/4, 1st Floor, Dr. Rajgopal Road, RMV 2nd Stage,",
-        addrLine2: "Sanjaynagar, Bengaluru-560094, Karnataka, India",
-        phone: "+91-6364063539",
-      },
-    ],
-  },
-  form: {
-    title: "Fill the form below",
-    field: [
-      {
-        name: "name",
-        type: "text",
-        placeholder: "Name",
-      },
-      {
-        name: "email",
-        type: "email",
-        placeholder: "Email",
-      },
-      {
-        name: "phone",
-        type: "text",
-        placeholder: "Phone",
-      },
-      {
-        name: "message",
-        type: "textarea",
-        placeholder: "Message",
-      },
-    ],
-  },
-};
-
-function Connect() {
+function Connect({ previewData, onSectionClick }: { previewData?: any; onSectionClick?: (sectionId: string) => void }) {
   useEffect(() => {
     document.title = "Connect - Whiteboard";
-  });
+  }, []);
 
-  
+  const data = previewData || connectData;
+  const isEditMode = !!onSectionClick;
+
+  const handleClick = (e: React.MouseEvent, sectionId: string) => {
+    if (isEditMode && onSectionClick) {
+      e.stopPropagation();
+      e.preventDefault();
+      onSectionClick(sectionId);
+    }
+  };
+
+  const getEditClass = (_sectionId: string) => {
+    return isEditMode
+      ? "relative cursor-pointer hover:ring-4 hover:ring-blue-500 hover:ring-opacity-50 transition-all duration-200 rounded-md"
+      : "";
+  };
 
   return (
     <>
-      <PageBanner {...data.banner} />
-      <section className="rounded-3xl m-40 border-2 p-4 grid grid-cols-[62%_38%] max-md:grid-cols-1 gap-3 shadow-md mx-auto my-10 lg:max-w-screen-lg xl:max-w-screen-xl">
+      <div
+        className={getEditClass("banner")}
+        onClick={(e) => handleClick(e, "banner")}
+      >
+        <PageBanner {...data.banner} />
+      </div>
+
+      <section className="rounded-3xl border-2 p-4 grid grid-cols-1 lg:grid-cols-[62%_38%] gap-3 shadow-md mx-auto my-16 lg:max-w-screen-lg xl:max-w-screen-xl bg-white">
         <div className="order-1 pr-10 m-4 max-md:order-2">
-          <div>
-            <div className="text-3xl font-bold my-2 text-[#6abd45]">
-              {data.context.heading}
-            </div>
-            <p className="text-lg leading-relaxed text-justify">
-              {data.context.body}
-            </p>
+          <div 
+            className={`p-2 rounded ${getEditClass("intro")}`}
+            onClick={(e) => handleClick(e, "intro")}
+          >
+            <div className="text-3xl font-bold my-2 text-[#6abd45]" dangerouslySetInnerHTML={{ __html: data.context.heading }} />
+            <p className="text-lg leading-relaxed text-justify" dangerouslySetInnerHTML={{ __html: data.context.body }} />
           </div>
 
-          <div className="flex flex-row flex-wrap justify-start mx-3 my-3 max-md:mx-0">
-            {data.context.phone?.map((phone, index) => {
+          <div 
+            className={`flex flex-row flex-wrap justify-start mx-3 my-3 max-md:mx-0 p-2 rounded ${getEditClass("phones")}`}
+            onClick={(e) => handleClick(e, "phones")}
+          >
+            {data.context.phone?.map((phone: any, index: number) => {
               return (
-                <>
-                  <div key={index} className="flex flex-row items-center mr-5">
-                    <span className="m-2 text-gray-700">
-                      <svg
-                        className="h-4 w-4 text-[#6abd45]"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        {" "}
-                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                      </svg>
+                <div key={index} className="flex flex-row items-center mr-5 py-2">
+                  <span className="m-2 text-gray-700">
+                    <svg
+                      className="h-4 w-4 text-[#6abd45]"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                    </svg>
+                  </span>
+                  <span className="text-gray-500">
+                    <span className="flex text-lg font-medium">
+                      <a href={`tel:${phone.primary}`} target="_blank" rel="noreferrer">
+                        {phone.primary}
+                      </a>
                     </span>
-                    <span className="text-gray-500">
-                      <span className="flex text-lg">
-                        <a href={`tel:${phone.primary}`} target="_blank">
-                          {phone.primary}
+                    {phone.secondary && (
+                      <span className="flex text-lg font-medium">
+                        <a href={`tel:${phone.secondary}`} target="_blank" rel="noreferrer">
+                          {phone.secondary}
                         </a>
                       </span>
-                      {phone.secondary && (
-                        <span className="flex text-lg">
-                          <a href={`tel:${phone.secondary}`} target="_blank">
-                            {phone.secondary}
-                          </a>
-                        </span>
-                      )}
-                    </span>
-                  </div>
-                </>
+                    )}
+                  </span>
+                </div>
               );
             })}
           </div>
 
-          <div className="flex flex-row flex-wrap items-center mx-3 my-3 max-md:mx-0">
+          <div 
+            className={`flex flex-row flex-wrap items-center mx-3 my-3 max-md:mx-0 p-2 rounded ${getEditClass("mails")}`}
+            onClick={(e) => handleClick(e, "mails")}
+          >
             <span className="m-2 text-gray-700 max-md:m-1">
               <svg
                 className="h-8 w-8 text-[#6abd45]"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
-                stroke-width="2"
+                strokeWidth="2"
                 stroke="currentColor"
                 fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                {" "}
-                <path stroke="none" d="M0 0h24v24H0z" />{" "}
-                <rect x="3" y="5" width="18" height="14" rx="2" />{" "}
+                <path stroke="none" d="M0 0h24v24H0z" />
+                <rect x="3" y="5" width="18" height="14" rx="2" />
                 <polyline points="3 7 12 13 21 7" />
               </svg>
             </span>
             <div className="flex flex-col items-start mr-5">
-              {data.context.mail?.map((mail, index) => {
+              {data.context.mail?.map((mail: any, index: number) => {
                 return (
-                  <>
-                    <span key={index} className="my-1 text-gray-500">
-                      <span className="flex text-lg text-start">
-                        <a href={`mailto:${mail.email}`} target="_blank">
-                          {mail.email}
-                        </a>
-                      </span>
+                  <span key={index} className="my-1 text-gray-500">
+                    <span className="flex text-lg text-start font-medium">
+                      <a href={`mailto:${mail.email}`} target="_blank" rel="noreferrer">
+                        {mail.email}
+                      </a>
                     </span>
-                  </>
+                  </span>
                 );
               })}
             </div>
           </div>
 
-          <div className="flex flex-col flex-wrap justify-start my-3">
-            {data.context.address?.map((addr, index) => {
+          <div 
+            className={`flex flex-col flex-wrap justify-start my-3 p-2 rounded ${getEditClass("addresses")}`}
+            onClick={(e) => handleClick(e, "addresses")}
+          >
+            {data.context.address?.map((addr: any, index: number) => {
               return (
-                <>
-                  <div key={index} className="flex flex-col my-3">
-                    <span className="text-black">
-                      <span className="flex text-3xl font-bold">
-                        {addr.title}
+                <div key={index} className="flex flex-col my-4">
+                  <span className="text-black">
+                    <span className="flex text-3xl font-bold text-[#6abd45]" dangerouslySetInnerHTML={{ __html: addr.title }} />
+                    {addr.addrLine1 && (
+                      <span className="flex text-lg mt-1 font-medium">{addr.addrLine1}</span>
+                    )}
+                    {addr.addrLine2 && (
+                      <span className="flex text-lg font-medium">{addr.addrLine2}</span>
+                    )}
+                    {addr.addrLine3 && (
+                      <span className="flex text-lg font-medium">{addr.addrLine3}</span>
+                    )}
+                    {addr.phone && (
+                      <span className="flex flex-row items-center text-sm mt-1">
+                        <span className="mr-2 text-gray-700">
+                          <svg
+                            className="h-5 w-5 text-[#6abd45]"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                          </svg>
+                        </span>
+                        <span className="text-gray-500 font-medium text-lg">
+                          <a href={`tel:${addr.phone}`} target="_blank" rel="noreferrer">
+                            {addr.phone}
+                          </a>
+                        </span>
                       </span>
-                      {addr.addrLine1 && (
-                        <span className="flex text-lg">{addr.addrLine1}</span>
-                      )}
-                      {addr.addrLine2 && (
-                        <span className="flex text-lg">{addr.addrLine2}</span>
-                      )}
-                      {addr.addrLine3 && (
-                        <span className="flex text-lg">{addr.addrLine3}</span>
-                      )}
-                      {addr.phone && (
-                        <span className="flex flex-row items-center text-sm">
-                          <span className="m-2 text-gray-700">
-                            <svg
-                              className="h-8 w-8 text-[#6abd45]"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              {" "}
-                              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                            </svg>
-                          </span>
-                          <span className="text-gray-500">
-                          <span className="flex items-center justify-start text-lg">
-                            <a href={`tel:${addr.phone}`} target="_blank">
-                              {addr.phone}
-                            </a>
-                          </span>
-                        </span>
-                        </span>
-                      )}
-                    </span>
-                  </div>
-                </>
+                    )}
+                  </span>
+                </div>
               );
             })}
           </div>
@@ -251,7 +170,6 @@ function Connect() {
           <Forms
             title={data.form?.title}
             field={data.form?.field}
-            
           />
         </div>
       </section>

@@ -1,0 +1,33 @@
+{
+  "banner": {
+    "header": "PEMB Design & Detailing",
+    "subheader": "",
+    "image": "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685616/banner-image/pemb-banner_anznpj.jpg"
+  },
+  "intro": {
+    "headSection": [
+      "Product innovations are constant to the construction ecosystem. Pre-Engineered Buildings bring a myriad of benefits such as reducing construction costs, driving sustainability, offering flexibility with design, and rapidly gaining traction within the infrastructure spheres. Our experience with PEMB Design and Detailing goes deep into critical infrastructure projects using MBS and Tekla Structures.",
+      "We specialize in all aspects of PEMB steel designing and detailing with our core practice area being Pre-Engineered Metal Buildings (PEMB), Structural Steel, Hybrid Structures, small or large. Leveraging the most up-to-date 3D modeling and design tools, we bring definitive value to any project. We comply with all leading industry standards such as ASD, LRFD, AISI and MBMA."
+    ]
+  },
+  "estimate": {
+    "head": "Get your PEMB Design and Detailing Estimates done for FREE. Yes. You heard us right!",
+    "body": "We will assess your projects absolutely free of cost and point out schedules that work best for your project's quick turnaround in no time at all!",
+    "bullets": [
+      "Integrated Project Management",
+      "Insights on how to Optimize Schedules",
+      "Weekly, Quarterly, Progress & Assessments of Projects"
+    ]
+  },
+  "portfolio": [
+    "Hybrid PEMB & Structural Steel Structures",
+    "Buildings with Mezzanines",
+    "Buildings with multiple cranes",
+    "High bay, low bay buildings",
+    "Buildings with Portal Frames",
+    "Fixed Based Column Bracings",
+    "Heavy Equipment Supporting Platforms",
+    "Buildings for Industrial and Commercial Construction",
+    "Buildings with miscellaneous attachments such as staircases, handrails, etc."
+  ]
+}

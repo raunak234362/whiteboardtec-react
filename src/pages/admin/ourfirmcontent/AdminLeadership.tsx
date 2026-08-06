@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
-import { Header, HeaderProp, Sidebar } from "../components";
+import { Header, HeaderProp, Sidebar, SubNavbar } from "../components";
 import { Dialog } from "@headlessui/react";
 import Service from "../../../config/service";
 import { leadershipInterface } from "../../../config/interface";
+
+const ourFirmTabs = [
+  { name: "Our Firm Details", to: "/admin/edit-our-firm" },
+  { name: "Business Model", to: "/admin/edit-business-model" },
+  { name: "Leadership Team", to: "/admin/leadership" },
+];
 
 const DEFAULT_AVATAR = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cmVjdCB3aWR0aD0nMTAwJyBoZWlnaHQ9JzEwMCcgZmlsbD0nI2UyZThmMCcvPjxjaXJjbGUgY3g9JzUwJyBjeT0nMzUnIHI9JzE4JyBmaWxsPScjY2JkNWUxJy8+PHBhdGggZD0nTTE1IDg1YzAtMTggMTUtMzAgMzUtMzBzMzUgMTIgMzUgMzAnIGZpbGw9JyNjYmQ1ZTEnLz48L3N2Zz4=";
 
@@ -195,6 +201,7 @@ function AdminLeadership() {
 
       <main className="flex flex-col">
         <Header {...header} />
+        <SubNavbar tabs={ourFirmTabs} />
 
         <div className="flex-grow p-8 overflow-auto bg-white">
           <div className="flex items-center justify-between mb-8">
