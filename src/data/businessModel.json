@@ -1,0 +1,33 @@
+{
+  "banner": {
+    "header": "<p>Business Modell</p>",
+    "subheader": "<p>Partnering to optimize your project delivery</p>",
+    "image": "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685620/banner-image/business-model-banner_m8ujfv.jpg"
+  },
+  "estimate": {
+    "head": "<p>Choose a model that suits your project requirements. Yes. You heard us right!</p>",
+    "body": "<p>We will assess your projects absolutely free of cost and point out schedules that work best for your project's quick turnaround in no time at all!</p>",
+    "bullets": [
+      "Integrated Project Management",
+      "Insights on how to Optimize Schedules",
+      "Weekly, Quarterly, Progress & Assessments of Projects"
+    ]
+  },
+  "models": [
+    {
+      "icon": "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685579/icons/pre-agreed_hgpaic.png",
+      "head": "<p>Pre Agreed Project Model</p>",
+      "body": "<p>A preferred model amongst our clients. We engage on a very specific, pre-defined scope, on a project to project basis. We will provide a clear execution strategy along with a detailed statement of work for your review. We begin once the SOW is signed off. While the advantages of this model are many, we secure you with a pre-negotiated price that locks project cost overruns. Plus, there is complete transparency throughout the execution phase.</p>"
+    },
+    {
+      "icon": "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685578/icons/process_skpasx.png",
+      "head": "<p>Time-and-Material Model</p>",
+      "body": "<p>We built this model to provide flexibility to our clients to modify the scope of varying workloads with repetitive work. The model works best with long/short-term contracts when using on-site or overseas labour at a fixed cost per month. The main advantage of this model is the availability of a team or a single resource at your disposal without incurring overheads needed to run the end-to-end execution of your project.</p>"
+    },
+    {
+      "icon": "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685578/icons/satellite-model_sb69ip.png",
+      "head": "<p>Satellite Office Model</p>",
+      "body": "<p>The advantage of having a global presence has a direct impact on business operations profitability and P&amp;L statements. An extended / satellite office can go a long way in improving your business investments such as excellent utilization of location specific resources. Additionally, these well qualified talented teams are available to you at lower captive costs than an onshore model.</p>"
+    }
+  ]
+}
