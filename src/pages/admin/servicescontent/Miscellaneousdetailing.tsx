@@ -1,20 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import miscellaneousDetailingData from "../../../data/miscellaneousDetailing.json";
 import { saveToGithub } from "../../../config/github";
-import { Header, Sidebar, SubNavbar, useSidebar } from "../components";
+import { Header, Sidebar, useSidebar } from "../components";
 import MiscellaneousSteel from "../../services/MiscellaneousSteel";
 import { Jodit } from "jodit";
 import "jodit/es2021/jodit.min.css";
 
-const servicesTabs = [
-  { name: "Structural Detailing", to: "/admin/services/structural-detailing" },
-  { name: "Miscellaneous Detailing", to: "/admin/services/miscellaneous-detailing" },
-  { name: "Connection Design", to: "/admin/services/connection-design" },
-  { name: "Architectural BIM", to: "/admin/services/architectural-bim" },
-  { name: "PEMB Detailing", to: "/admin/services/pemb-detailing" },
-  { name: "Rebar Estimation", to: "/admin/services/rebar-estimation" },
-  { name: "Steel Estimation", to: "/admin/services/steel-estimation" },
-];
+
 
 const JoditWrapper = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => {
   const editorRef = useRef<HTMLDivElement>(null);
@@ -139,7 +131,6 @@ export default function EditMiscellaneousDetailing() {
 
       <main className="flex flex-col h-full overflow-hidden">
         <Header {...header} />
-        <SubNavbar tabs={servicesTabs} />
 
         <div className="flex flex-row h-full overflow-hidden">
           {/* EDITOR PANEL (Left side) */}

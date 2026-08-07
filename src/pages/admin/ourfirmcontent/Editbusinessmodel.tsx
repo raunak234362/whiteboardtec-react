@@ -1,17 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import businessModelData from "../../../data/businessModel.json";
 import { saveToGithub } from "../../../config/github";
-import { Header, Sidebar, SubNavbar, useSidebar } from "../components";
+import { Header, Sidebar, useSidebar } from "../components";
 import BusiessModel from "../../ourFirm/BusinessModel";
 import { Jodit } from "jodit";
 import "jodit/es2021/jodit.min.css";
 
-const ourFirmTabs = [
-  { name: "Our Firm Details", to: "/admin/edit-our-firm" },
-  { name: "Business Model", to: "/admin/edit-business-model" },
-  { name: "Leadership Team", to: "/admin/leadership" },
-  { name: "Gallery", to: "/admin/gallery" },
-];
+
 
 const JoditWrapper = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => {
   const editorRef = useRef<HTMLDivElement>(null);
@@ -125,7 +120,6 @@ export default function EditBusinessModel() {
 
       <main className="flex flex-col h-full overflow-hidden">
         <Header {...header} />
-        <SubNavbar tabs={ourFirmTabs} />
 
         <div className="flex flex-row h-full overflow-hidden">
           {/* EDITOR PANEL (Left side) */}

@@ -42,7 +42,6 @@ import Connect from "./pages/connect/Connect.tsx";
 import {
   Admin,
   Login,
-  Dashboard,
   AdminCareer,
   AdminGallery,
   AdminPortfolio,
@@ -115,7 +114,6 @@ const route = createBrowserRouter(
       <Route path="/resources/wbt-blog/:id" element={<BlogDetails />} />
       <Route path="*" element={<Error />} />
       <Route path="/admin" element={<Admin />} />
-      <Route path="/admin/dashboard" element={<Dashboard />} />
       <Route path="/admin/blog" element={<AdminBlogManager />} />
       <Route path="/admin/connect-info" element={<ConnectInfo />} />
       <Route path="/admin/connect/edit" element={<EditConnect />} />

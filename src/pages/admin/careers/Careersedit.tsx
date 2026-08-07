@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import careersData from "../../../data/careers.json";
 import { saveToGithub } from "../../../config/github";
-import { Header, Sidebar, SubNavbar, useSidebar } from "../components";
+import { Header, Sidebar, useSidebar } from "../components";
 import Careers from "../../careers/Careers";
 import { Jodit } from "jodit";
 import "jodit/es2021/jodit.min.css";
@@ -171,10 +171,6 @@ export default function EditCareers() {
 
       <main className="flex flex-col h-full overflow-hidden select-text">
         <Header {...header} />
-        <SubNavbar tabs={[
-          { name: "Job Roles", to: "/admin/career" },
-          { name: "Careers Page", to: "/admin/career/edit" }
-        ]} />
 
         <div className="flex flex-row h-full overflow-hidden">
           {/* EDITOR PANEL (Resizable Left side) */}

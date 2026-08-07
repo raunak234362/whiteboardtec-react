@@ -35,6 +35,8 @@ function Sidebar() {
     services: path.includes("/admin/services/"),
     ourWork: path.includes("/admin/portfolio"),
     resources: path.includes("/admin/blog"),
+    connect: path.includes("/admin/connect-info") || path.includes("/admin/connect/edit"),
+    careers: path.includes("/admin/career"),
   });
 
   const toggleMenu = (menu: string) => {
@@ -51,6 +53,8 @@ function Sidebar() {
       services: prev.services || path.includes("/admin/services/"),
       ourWork: prev.ourWork || path.includes("/admin/portfolio"),
       resources: prev.resources || path.includes("/admin/blog"),
+      connect: prev.connect || path.includes("/admin/connect-info") || path.includes("/admin/connect/edit"),
+      careers: prev.careers || path.includes("/admin/career"),
     }));
   }, [path]);
 
@@ -69,19 +73,7 @@ function Sidebar() {
       </div>
 
       <div className="flex-1 py-4 overflow-y-auto space-y-1 select-none">
-        {/* Dashboard */}
-        <NavLink
-          to="/admin/dashboard"
-          className={({ isActive }) =>
-            `flex items-center px-6 py-3 text-sm font-medium transition-colors duration-150 ${
-              isActive
-                ? "bg-green-50/50 text-[#6abd45] border-l-4 border-[#6abd45] font-semibold"
-                : "text-gray-700 hover:bg-gray-50 hover:text-black"
-            }`
-          }
-        >
-          <span>Dashboard</span>
-        </NavLink>
+
 
         {/* Our Firm */}
         <div>
@@ -302,34 +294,85 @@ function Sidebar() {
         </NavLink>
 
         {/* Connect */}
-        <NavLink
-          to="/admin/connect-info"
-          className={({ isActive }) => {
-            const isConnectActive = isActive || path.includes("/admin/connect");
-            return `flex items-center px-6 py-3 text-sm font-medium transition-colors duration-150 ${
-              isConnectActive
-                ? "bg-green-50/50 text-[#6abd45] border-l-4 border-[#6abd45] font-semibold"
-                : "text-gray-700 hover:bg-gray-50 hover:text-black"
-            }`;
-          }}
-        >
-          <span>Connect</span>
-        </NavLink>
+        <div>
+          <button
+            onClick={() => toggleMenu("connect")}
+            className={`w-full flex items-center px-6 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-black transition-colors duration-150 ${
+              path.includes("/admin/connect-info") || path.includes("/admin/connect/edit")
+                ? "bg-green-50/20 text-[#6abd45] border-l-4 border-[#6abd45]"
+                : ""
+            }`}
+          >
+            <span>Connect</span>
+            {openMenus.connect ? <ChevronUp /> : <ChevronDown />}
+          </button>
+          
+          {openMenus.connect && (
+            <div className="bg-gray-50/30 py-1 pl-4 space-y-1">
+              <NavLink
+                to="/admin/connect/edit"
+                className={({ isActive }) =>
+                  `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
+                  }`
+                }
+              >
+                Connect Page
+              </NavLink>
+              <NavLink
+                to="/admin/connect-info"
+                className={({ isActive }) =>
+                  `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
+                  }`
+                }
+              >
+                Queries Received
+              </NavLink>
+            </div>
+          )}
+        </div>
 
         {/* Careers */}
-        <NavLink
-          to="/admin/career"
-          className={({ isActive }) => {
-            const isCareerActive = isActive || path.includes("/admin/career");
-            return `flex items-center px-6 py-3 text-sm font-medium transition-colors duration-150 ${
-              isCareerActive
-                ? "bg-green-50/50 text-[#6abd45] border-l-4 border-[#6abd45] font-semibold"
-                : "text-gray-700 hover:bg-gray-50 hover:text-black"
-            }`;
-          }}
-        >
-          <span>Careers</span>
-        </NavLink>
+        <div>
+          <button
+            onClick={() => toggleMenu("careers")}
+            className={`w-full flex items-center px-6 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-black transition-colors duration-150 ${
+              path.includes("/admin/career")
+                ? "bg-green-50/20 text-[#6abd45] border-l-4 border-[#6abd45]"
+                : ""
+            }`}
+          >
+            <span>Careers</span>
+            {openMenus.careers ? <ChevronUp /> : <ChevronDown />}
+          </button>
+          
+          {openMenus.careers && (
+            <div className="bg-gray-50/30 py-1 pl-4 space-y-1">
+              <NavLink
+                to="/admin/career"
+                end
+                className={({ isActive }) =>
+                  `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
+                  }`
+                }
+              >
+                Job Roles
+              </NavLink>
+              <NavLink
+                to="/admin/career/edit"
+                className={({ isActive }) =>
+                  `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
+                  }`
+                }
+              >
+                Careers Page
+              </NavLink>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Log Out Button at the bottom */}

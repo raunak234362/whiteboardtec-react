@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import connectData from "../../../data/connect.json";
 import { saveToGithub } from "../../../config/github";
-import { Header, Sidebar, SubNavbar, useSidebar } from "../components";
+import { Header, Sidebar, useSidebar } from "../components";
 import Connect from "../../connect/Connect";
 import { Jodit } from "jodit";
 import "jodit/es2021/jodit.min.css";
 
-const connectTabs = [
-  { name: "Connect Page", to: "/admin/connect/edit" },
-  { name: "Queries Received", to: "/admin/connect-info" }
-];
+
 
 const JoditWrapper = ({ value, onChange, height = 180 }: { value: string; onChange: (v: string) => void; height?: number }) => {
   const editorRef = useRef<HTMLDivElement>(null);
@@ -176,7 +173,6 @@ export default function EditConnect() {
 
       <main className="flex flex-col h-full overflow-hidden select-text">
         <Header {...header} />
-        <SubNavbar tabs={connectTabs} />
 
         <div className="flex flex-row h-full overflow-hidden">
           {/* EDITOR PANEL (Left side) */}

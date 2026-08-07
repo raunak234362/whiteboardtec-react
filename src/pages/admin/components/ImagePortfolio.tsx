@@ -158,54 +158,38 @@ function ImagePortfolio(props: ImagePortfolioProps) {
         open={isOpenJob}
         onClose={() => {
           setOpenJob(false);
-          reset(); // Reset form fields to initial props values
-          setNewSelectedFiles([]); // Clear new selected files on close
-          setProgress(0); // Reset progress
+          reset();
+          setNewSelectedFiles([]);
+          setProgress(0);
         }}
-        className="relative z-50"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
       >
-        <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
-        <div className="fixed inset-0 w-screen overflow-y-auto">
-          <div className="flex items-center justify-center min-h-full p-4">
-            <div className="bg-white w-full max-w-6xl p-6 rounded-lg shadow-lg flex flex-col max-h-[90vh] overflow-y-auto">
-              <div className="flex items-center justify-between mb-4">
-                <Dialog.Title className="text-lg font-semibold">
-                  Edit Gallery: {props.title}
-                </Dialog.Title>
-                <button
-                  onClick={() => {
-                    setOpenJob(false);
-                    reset();
-                    setNewSelectedFiles([]);
-                    setProgress(0);
-                  }}
-                  className="text-gray-400 hover:text-gray-800"
-                >
-                  <span className="sr-only">Close</span>
-                  <svg
-                    className="w-6 h-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              </div>
+        <div className="w-full max-w-6xl mx-auto">
+          <Dialog.Panel className="relative w-full bg-white rounded-xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-gray-150 pb-4 mb-6">
+              <Dialog.Title className="text-xl font-bold text-gray-900 uppercase tracking-wider">
+                Edit Gallery: {props.title}
+              </Dialog.Title>
+              <button
+                type="button"
+                onClick={() => {
+                  setOpenJob(false);
+                  reset();
+                  setNewSelectedFiles([]);
+                  setProgress(0);
+                }}
+                className="px-6 py-1.5 bg-red-50 text-black border-2 border-red-700/80 rounded-lg hover:bg-red-100 transition-all font-bold text-sm uppercase tracking-tight shadow-sm"
+              >
+                Close
+              </button>
+            </div>
 
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div className="space-y-4">
                   <div>
                     <label
                       htmlFor="edit-title"
-                      className="block mb-1 text-sm font-medium text-gray-700"
+                      className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5"
                     >
                       Project Title *
                     </label>
@@ -213,7 +197,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                       type="text"
                       id="edit-title"
                       {...register("title", { required: true })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#6abd45]/20 focus:border-[#6abd45] transition-all"
                       required
                     />
                   </div>
@@ -221,7 +205,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                   <div>
                     <label
                       htmlFor="edit-scope"
-                      className="block mb-1 text-sm font-medium text-gray-700"
+                      className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5"
                     >
                       Scope *
                     </label>
@@ -229,7 +213,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                       id="edit-Scope"
                       rows={3}
                       {...register("description", { required: true })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#6abd45]/20 focus:border-[#6abd45] transition-all"
                       required
                     />
                   </div>
@@ -237,7 +221,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                   <div>
                     <label
                       htmlFor="edit-location"
-                      className="block mb-1 text-sm font-medium text-gray-700"
+                      className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5"
                     >
                       Location *
                     </label>
@@ -245,34 +229,32 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                       type="text"
                       id="edit-location"
                       {...register("location", { required: true })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#6abd45]/20 focus:border-[#6abd45] transition-all"
                       required
                     />
                   </div>
 
                   <div>
-                    <label>
-                      <span className="block mb-1 text-sm font-medium text-gray-700">
-                        Project Type
-                      </span>
-                      <select
-                        {...register("type")}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                      >
-                        <option value="OTHER">Other</option>
-                        <option value="INSTITUTE">Institute</option>
-                        <option value="COMMERCIAL">Commercial</option>
-                        <option value="FACILITY_EXPENSION">
-                          Facility Expension
-                        </option>
-                        <option value="INDUSTRIAL">Industrial</option>
-                      </select>
+                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
+                      Project Type
                     </label>
+                    <select
+                      {...register("type")}
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#6abd45]/20 focus:border-[#6abd45] transition-all"
+                    >
+                      <option value="OTHER">Other</option>
+                      <option value="INSTITUTE">Institute</option>
+                      <option value="COMMERCIAL">Commercial</option>
+                      <option value="FACILITY_EXPENSION">
+                        Facility Expension
+                      </option>
+                      <option value="INDUSTRIAL">Industrial</option>
+                    </select>
 
                     {/* Conditional input for otherType */}
                     {typeValue === "OTHER" && (
-                      <label>
-                        <span className="block mb-1 text-sm font-medium text-gray-700">
+                      <label className="block mt-4">
+                        <span className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
                           Specify Other Type *
                         </span>
                         <input
@@ -280,7 +262,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                             required: "Please specify the project type",
                           })}
                           placeholder="Enter project type"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                          className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#6abd45]/20 focus:border-[#6abd45] transition-all"
                           type="text"
                         />
                       </label>
@@ -288,15 +270,15 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                   </div>
                   <div>
                     <label
-                      htmlFor="edit-department" // Changed ID for uniqueness within form
-                      className="block mb-1 text-sm font-medium text-gray-700"
+                      htmlFor="edit-department"
+                      className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5"
                     >
                       Department
                     </label>
                     <select
-                      id="edit-department" // Changed ID
+                      id="edit-department"
                       {...register("department")}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#6abd45]/20 focus:border-[#6abd45] transition-all"
                     >
                       <option value="OTHER">Select project type</option>
                       <option value="PEMB">PEMB</option>
@@ -310,7 +292,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                   <div>
                     <label
                       htmlFor="edit-technologyUsed"
-                      className="block mb-1 text-sm font-medium text-gray-700"
+                      className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5"
                     >
                       Detailing Software
                     </label>
@@ -318,15 +300,15 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                       type="text"
                       id="edit-technologyUsed"
                       {...register("technologyused", { required: true })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#6abd45]/20 focus:border-[#6abd45] transition-all"
                       placeholder="e.g., Tekla, SDS-2"
                       required
                     />
                   </div>
                   <div>
                     <label
-                      htmlFor="edit-technologyUsed"
-                      className="block mb-1 text-sm font-medium text-gray-700"
+                      htmlFor="edit-designingSoftware"
+                      className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5"
                     >
                       Designing Software
                     </label>
@@ -334,8 +316,8 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                       type="text"
                       id="edit-designingSoftware"
                       {...register("designingSoftware", { required: true })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                      placeholder="e.g., Tekla, SDS-2"
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#6abd45]/20 focus:border-[#6abd45] transition-all"
+                      placeholder="e.g., AutoCAD, Revit"
                       required
                     />
                   </div>
@@ -343,14 +325,14 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                   <div>
                     <label
                       htmlFor="edit-projectStatus"
-                      className="block mb-1 text-sm font-medium text-gray-700"
+                      className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5"
                     >
                       Project Status
                     </label>
                     <select
                       id="edit-projectStatus"
                       {...register("status", { required: true })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#6abd45]/20 focus:border-[#6abd45] transition-all"
                     >
                       <option value="PLANNING">Planning</option>
                       <option value="IN_PROGRESS">In Progress</option>
@@ -363,7 +345,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                   <div>
                     <label
                       htmlFor="edit-images"
-                      className="block mb-1 text-sm font-medium text-gray-700"
+                      className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5"
                     >
                       Project Images (Upload new to replace)
                     </label>
@@ -372,8 +354,8 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                       id="edit-images"
                       accept="image/*"
                       multiple
-                      onChange={handleNewFileChange} // Use the new handler
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      onChange={handleNewFileChange}
+                      className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border file:border-gray-250 file:text-xs file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100 file:cursor-pointer transition-colors"
                     />
 
                     {/* Display existing images if no new files are selected AND there are existing images */}
@@ -436,38 +418,26 @@ function ImagePortfolio(props: ImagePortfolioProps) {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex justify-center pt-4 mt-6 space-x-4 border-t">
+              <div className="flex gap-4 pt-4 mt-6 border-t border-gray-150">
                 <button
                   type="button"
                   onClick={handleUpdate}
-                  className="px-6 py-2 text-white transition-colors bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                  style={{ backgroundColor: "#6abd45", color: "#ffffff" }}
+                  className="flex-1 py-2.5 hover:!bg-[#5baf38] rounded-lg font-bold uppercase transition-all duration-150 shadow-md text-sm tracking-wide"
                 >
                   Update Project
                 </button>
                 <button
                   type="button"
                   onClick={handleDelete}
-                  className="px-6 py-2 text-white transition-colors bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                  className="flex-1 py-2.5 bg-red-650 hover:bg-red-700 text-red-600 border border-red-650 rounded-lg font-bold uppercase transition-all duration-150 shadow-md text-sm tracking-wide"
                 >
                   Delete Project
                 </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setOpenJob(false);
-                    reset();
-                    setNewSelectedFiles([]);
-                    setProgress(0);
-                  }}
-                  className="px-6 py-2 text-white transition-colors bg-gray-500 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-                >
-                  Cancel
-                </button>
               </div>
-            </div>
+            </Dialog.Panel>
           </div>
-        </div>
-      </Dialog>
+        </Dialog>
 
       {/* Image Viewer Modal */}
       <Dialog
@@ -600,22 +570,9 @@ function ImagePortfolio(props: ImagePortfolioProps) {
         <td className="px-6 py-4 text-center whitespace-nowrap">
           {props.images && props.images.length > 0 ? (
             <button
-              onClick={() => setImageOpen(true)} // Open the image viewer modal
-              className="inline-flex items-center text-sm font-semibold text-blue-600 transition-colors border border-transparent rounded-lg gap-x-2 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onClick={() => setImageOpen(true)}
+              className="px-2.5 py-1 text-sm text-blue-600 border border-blue-600 rounded hover:bg-blue-50 transition-colors font-semibold"
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
               View Image
             </button>
           ) : (
@@ -624,25 +581,12 @@ function ImagePortfolio(props: ImagePortfolioProps) {
         </td>
 
         <td className="px-6 py-4 text-center whitespace-nowrap">
-          <div className="flex items-center justify-center space-x-2">
+          <div className="flex items-center justify-center">
             <button
               type="button"
               onClick={() => setOpenJob(true)}
-              className="inline-flex items-center text-sm font-semibold text-blue-600 transition-colors border border-transparent rounded-lg gap-x-1 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-2.5 py-1 text-sm text-blue-600 border border-blue-600 rounded hover:bg-blue-50 transition-colors font-semibold"
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                />
-              </svg>
               Edit
             </button>
           </div>

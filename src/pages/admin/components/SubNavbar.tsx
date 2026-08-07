@@ -16,6 +16,7 @@ export default function SubNavbar({ tabs }: SubNavbarProps) {
         <NavLink
           key={tab.to}
           to={tab.to}
+          end
           className={({ isActive }) =>
             `px-4 py-1.5 text-sm font-bold border transition-all duration-200 uppercase tracking-wider rounded-sm ${
               isActive

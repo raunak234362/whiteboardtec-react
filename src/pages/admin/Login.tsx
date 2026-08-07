@@ -21,7 +21,7 @@ function Login() {
           
           if (response?.status === 200) {
             sessionStorage.setItem("token",token)
-            navigate("/admin/dashboard");
+            navigate("/admin/edit-our-firm");
             alert("login successful")
           }
           else if (response?.status === 401 || response?.status === 400) {

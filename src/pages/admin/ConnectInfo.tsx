@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Service from "../../config/service";
 import { ConnectProps } from "../../config/interface";
-import { Header, HeaderProp, Sidebar, SubNavbar, useSidebar } from "./components";
+import { Header, HeaderProp, Sidebar, useSidebar } from "./components";
 
 export default function ConnectInfo() {
   const { isSidebarOpen } = useSidebar();
@@ -44,10 +44,6 @@ export default function ConnectInfo() {
 
       <main className="flex flex-col min-w-0 h-screen overflow-hidden">
         <Header {...header} />
-        <SubNavbar tabs={[
-          { name: "Connect Page", to: "/admin/connect/edit" },
-          { name: "Queries Received", to: "/admin/connect-info" }
-        ]} />
 
         <div className="flex-grow p-8 overflow-auto bg-white">
           {loading && (

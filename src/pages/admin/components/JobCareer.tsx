@@ -71,23 +71,9 @@ console.log("ApplicantsModal props:", { jobTitle, applicants });
           </h2>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-full hover:bg-gray-100 text-gray-500 hover:text-gray-800 transition-colors focus:outline-none"
-            aria-label="Close modal"
+            className="px-6 py-1.5 bg-red-50 text-black border-2 border-red-700/80 rounded-lg hover:bg-red-100 transition-all font-bold text-sm uppercase tracking-tight shadow-sm"
           >
-            <svg
-              className="w-6 h-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            Close
           </button>
         </div>
 
@@ -231,7 +217,7 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
     setOpenJob(true);
   };
 
-  const handleUpdate = async (data: JobPortalInterface) => {
+  const handleUpdate = async (data: JobPortalInterface & { jdFile?: FileList }) => {
     // Expect JobPortalInterface for update logic
     if (!selectedJob) return;
     console.log("Updating job with data:", selectedJob);
@@ -240,8 +226,11 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
     formData.append("location", data.location);
     formData.append("type", data.type);
     formData.append("qualification", data.qualification);
-  
     formData.append("status", data.status ? "true" : "false");
+
+    if (data.jdFile && data.jdFile.length > 0) {
+      formData.append("jd", data.jdFile[0]);
+    }
 
     try {
       setLoading(true);
@@ -366,7 +355,7 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
                           `${import.meta.env.VITE_IMG_URL}${jobItem.jd[0]?.path}`
                         )
                       }
-                      className="text-blue-600 underline hover:text-blue-800"
+                      className="px-2 py-1 text-sm text-blue-600 border border-blue-600 rounded hover:bg-blue-50 transition-colors font-medium"
                     >
                       View
                     </button>
@@ -414,17 +403,17 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
 
       {/* Modal for editing job */}
       {isOpenJob && selectedJob && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-          <div className="relative w-full max-w-4xl p-6 bg-white rounded shadow-lg">
-            <div className="flex justify-between mb-4">
-              <h2 className="text-lg font-semibold">
-                Edit Job Role: {selectedJob.Role}
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="relative w-full max-w-2xl bg-white rounded-xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center border-b border-gray-150 pb-4 mb-4">
+              <h2 className="text-lg font-bold text-gray-900 uppercase tracking-wider">
+                Edit Job Role: <span className="text-[#6abd45]">{selectedJob.Role}</span>
               </h2>
               <button
                 onClick={() => setOpenJob(false)}
-                className="text-gray-400 hover:text-gray-800"
+                className="px-6 py-1.5 bg-red-50 text-black border-2 border-red-700/80 rounded-lg hover:bg-red-100 transition-all font-bold text-sm uppercase tracking-tight shadow-sm"
               >
-                x
+                Close
               </button>
             </div>
             {/* JobForm should be designed to take and return JobPortalResponse for updates */}

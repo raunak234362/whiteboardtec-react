@@ -1,17 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import ourFirmData from "../../../data/ourFirm.json";
 import { saveToGithub } from "../../../config/github";
-import { Header, Sidebar, SubNavbar, useSidebar } from "../components";
+import { Header, Sidebar, useSidebar } from "../components";
 import OurFirm from "../../ourFirm/OurFirm";
 import { Jodit } from "jodit";
 import "jodit/es2021/jodit.min.css";
 
-const ourFirmTabs = [
-  { name: "Our Firm Details", to: "/admin/edit-our-firm" },
-  { name: "Business Model", to: "/admin/edit-business-model" },
-  { name: "Leadership Team", to: "/admin/leadership" },
-  { name: "Gallery", to: "/admin/gallery" },
-];
+
 
 const JoditWrapper = ({ value, onChange, height = 180 }: { value: string; onChange: (v: string) => void; height?: number }) => {
   const editorRef = useRef<HTMLDivElement>(null);
@@ -156,7 +151,6 @@ export default function EditOurFirm() {
 
       <main className="flex flex-col h-full overflow-hidden select-text">
         <Header {...header} />
-        <SubNavbar tabs={ourFirmTabs} />
 
         <div className="flex flex-row h-full overflow-hidden">
           {/* EDITOR PANEL (Resizable Left side) */}

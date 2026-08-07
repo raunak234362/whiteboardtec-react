@@ -185,11 +185,11 @@ function AdminPortfolio() {
           setStatus(false);
           setProgress(0);
         }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
       >
-        <Dialog.Panel className="relative w-full max-w-4xl max-h-[90vh] overflow-auto rounded-lg bg-white p-6 shadow-lg">
-          <div className="flex items-center justify-between mb-6">
-            <Dialog.Title className="text-lg font-semibold text-gray-900">
+        <Dialog.Panel className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl bg-white p-6 shadow-2xl">
+          <div className="flex items-center justify-between border-b border-gray-150 pb-4 mb-6">
+            <Dialog.Title className="text-xl font-bold text-gray-900 uppercase tracking-wider">
               {isEditMode ? "Edit Portfolio" : "Add New Portfolio"}
             </Dialog.Title>
             <button
@@ -203,155 +203,105 @@ function AdminPortfolio() {
                 setStatus(false);
                 setProgress(0);
               }}
-              className="text-gray-400 hover:text-gray-800 focus:outline-none"
-              aria-label="Close modal"
+              className="px-6 py-1.5 bg-red-50 text-black border-2 border-red-700/80 rounded-lg hover:bg-red-100 transition-all font-bold text-sm uppercase tracking-tight shadow-sm"
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              Close
             </button>
           </div>
 
           {/* Form Inputs */}
-          <form>
-            <table className="w-full mx-auto border-separate border-spacing-y-4">
-              <tbody>
-                {[
-                  {
-                    label: "Title",
-                    value: title,
-                    type: "text",
-                    onChange: setTitle,
-                  },
-                  {
-                    label: "Description",
-                    value: description,
-                    type: "text",
-                    onChange: setDescription,
-                    placeholder: "Enter description",
-                  },
-                ].map(({ label, value, type, onChange, placeholder }, idx) => (
-                  <tr key={idx}>
-                    <td className="w-32 p-2 font-medium text-gray-800 align-top">
-                      {label}
-                    </td>
-                    <td className="p-2">
-                      <input
-                        type={type}
-                        value={value}
-                        onChange={(e) => onChange(e.target.value)}
-                        placeholder={placeholder}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                      />
-                    </td>
-                  </tr>
-                ))}
+          <form className="space-y-5">
+            <div>
+              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
+                Title *
+              </label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#6abd45]/20 focus:border-[#6abd45] transition-all"
+                required
+              />
+            </div>
 
-                <tr>
-                  <td className="p-2 font-medium text-gray-800 align-top">
-                    PDF
-                  </td>
-                  <td className="p-2">
-                    <input
-                      type="file"
-                      accept="application/pdf"
-                      onChange={handleFileChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                    />
-                    {progress > 0 && progress <= 100 && (
-                      <p className="mt-1 text-gray-600">
-                        {Math.round(progress)}%
-                      </p>
-                    )}
-                    {isEditMode && currentPortfolio?.file && !pdf && (
-                      <p className="mt-1 text-sm text-gray-500">
-                        Current PDF:{" "}
-                        <a
-                          href={`${import.meta.env.VITE_IMG_URL}${
-                            Array.isArray(currentPortfolio.file)
-                              ? (currentPortfolio.file[0] as { path?: string })
-                                  ?.path
-                              : (
-                                  currentPortfolio.file as
-                                    | { path?: string }
-                                    | null
-                                    | undefined
-                                )?.path || ""
-                          }`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-600 underline"
-                        >
-                          View
-                        </a>{" "}
-                        (Upload new to change)
-                      </p>
-                    )}
-                  </td>
-                </tr>
+            <div>
+              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
+                Description *
+              </label>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={4}
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#6abd45]/20 focus:border-[#6abd45] transition-all"
+                placeholder="Enter description"
+                required
+              />
+            </div>
 
-                <tr>
-                  <td className="p-2 font-medium text-gray-800 align-top">
-                    Status
-                  </td>
-                  <td className="flex items-center p-2 space-x-2">
-                    <input
-                      type="checkbox"
-                      checked={status}
-                      onChange={() => setStatus(!status)}
-                      className="w-5 h-5 border-gray-300 rounded focus:ring-2 focus:ring-green-500"
-                      id="statusCheckbox"
-                    />
-                    <label
-                      htmlFor="statusCheckbox"
-                      className={status ? "text-green-600" : "text-red-600"}
-                    >
-                      {status ? "Active" : "Inactive"}
-                    </label>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div>
+              <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
+                PDF Document
+              </label>
+              <input
+                type="file"
+                accept="application/pdf"
+                onChange={handleFileChange}
+                className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border file:border-gray-250 file:text-xs file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100 file:cursor-pointer transition-colors"
+              />
+              {progress > 0 && progress <= 100 && (
+                <p className="mt-1 text-gray-600 text-xs font-semibold">
+                  Upload progress: {Math.round(progress)}%
+                </p>
+              )}
+              {isEditMode && currentPortfolio?.file && !pdf && (
+                <p className="mt-1.5 text-xs text-gray-500">
+                  Current PDF:{" "}
+                  <a
+                    href={`${import.meta.env.VITE_IMG_URL}${
+                      Array.isArray(currentPortfolio.file)
+                        ? (currentPortfolio.file[0] as { path?: string })?.path
+                        : (currentPortfolio.file as { path?: string } | null | undefined)?.path || ""
+                    }`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 underline font-semibold hover:text-blue-800"
+                  >
+                    View Current Document
+                  </a>{" "}
+                  (Upload a new file to change)
+                </p>
+              )}
+            </div>
 
-            {/* Action Buttons */}
-            <div className="flex justify-center mt-6 space-x-6">
+            <div className="flex items-center gap-2 pt-2">
+              <input
+                type="checkbox"
+                id="statusCheckbox"
+                checked={status}
+                onChange={() => setStatus(!status)}
+                className="w-4.5 h-4.5 text-[#6abd45] border-gray-300 rounded focus:ring-[#6abd45] cursor-pointer"
+              />
+              <label
+                htmlFor="statusCheckbox"
+                className={`text-sm font-semibold select-none cursor-pointer ${
+                  status ? "text-green-600" : "text-red-650"
+                }`}
+              >
+                {status ? "Active" : "Inactive"}
+              </label>
+            </div>
+
+            <div className="pt-4">
               <button
                 type="button"
                 onClick={() => {
                   if (isEditMode) handleUpdateSubmit();
                   else handleAddSubmit();
                 }}
-                className="px-6 py-2 border border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 font-bold uppercase rounded-sm transition-all shadow-sm"
+                style={{ backgroundColor: "#6abd45", color: "#ffffff" }}
+                className="w-full py-2.5 hover:!bg-[#5baf38] rounded-lg font-bold uppercase transition-all duration-150 shadow-md text-sm tracking-wide"
               >
                 {isEditMode ? "Update" : "Add New"}
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setOpen(false);
-                  setIsEditMode(false);
-                  setCurrentPortfolio(null);
-                  setTitle("");
-                  setDescription("");
-                  setPdf(null);
-                  setStatus(false);
-                  setProgress(0);
-                }}
-                className="px-6 py-2 border border-red-600 text-red-600 bg-white hover:bg-red-50 font-bold uppercase rounded-sm transition-all shadow-sm"
-              >
-                Cancel
               </button>
             </div>
           </form>
@@ -387,54 +337,56 @@ function AdminPortfolio() {
             </button>
           </div>
 
-          <div className="p-6 overflow-auto bg-white rounded shadow">
-            <table className="min-w-full divide-y divide-gray-200 rounded shadow">
-              <thead className="text-white bg-green-600">
-                <tr>
-                  <th className="px-6 py-3 text-sm font-semibold text-left uppercase">
-                    Title
-                  </th>
-                  <th className="px-6 py-3 text-sm font-semibold text-left uppercase">
-                    Description
-                  </th>
-                  <th className="px-6 py-3 text-sm font-semibold text-left uppercase">
-                    Portfolio PDF
-                  </th>
-                  <th className="px-6 py-3 text-sm font-semibold text-center uppercase">
-                    Action
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {portfolios.length === 0 ? (
+          <div className="p-6">
+            <div className="overflow-auto border border-gray-200 rounded-lg shadow-md">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="text-black bg-[#6abd45]">
                   <tr>
-                    <td
-                      colSpan={4}
-                      className="px-6 py-4 font-medium text-center text-gray-500"
-                    >
-                      No portfolio projects found.
-                    </td>
+                    <th className="px-6 py-4 text-sm font-semibold text-left uppercase tracking-wider">
+                      Title
+                    </th>
+                    <th className="px-6 py-4 text-sm font-semibold text-left uppercase tracking-wider">
+                      Description
+                    </th>
+                    <th className="px-6 py-4 text-sm font-semibold text-center uppercase tracking-wider">
+                      Portfolio PDF
+                    </th>
+                    <th className="px-6 py-4 text-sm font-semibold text-center uppercase tracking-wider">
+                      Action
+                    </th>
                   </tr>
-                ) : (
-                  portfolios
-                    .filter((portfolio) => portfolio.id)
-                    .map((portfolio) => (
-                      <WorkPortfolio
-                        key={portfolio.id}
-                        {...portfolio}
-                        id={portfolio.id as string}
-                        status={
-                          typeof portfolio.status === "boolean"
-                            ? portfolio.status
-                            : portfolio.status === "active"
-                        }
-                        onEdit={(pf) => handleEdit(pf as PortfolioPropType)}
-                        onDelete={handleDelete}
-                      />
-                    ))
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {portfolios.length === 0 ? (
+                    <tr>
+                      <td
+                        colSpan={4}
+                        className="px-6 py-4 font-medium text-center text-gray-500"
+                      >
+                        No portfolio projects found.
+                      </td>
+                    </tr>
+                  ) : (
+                    portfolios
+                      .filter((portfolio) => portfolio.id)
+                      .map((portfolio) => (
+                        <WorkPortfolio
+                          key={portfolio.id}
+                          {...portfolio}
+                          id={portfolio.id as string}
+                          status={
+                            typeof portfolio.status === "boolean"
+                              ? portfolio.status
+                              : portfolio.status === "active"
+                          }
+                          onEdit={(pf) => handleEdit(pf as PortfolioPropType)}
+                          onDelete={handleDelete}
+                        />
+                      ))
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </main>
       </section>

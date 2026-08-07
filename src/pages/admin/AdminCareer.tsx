@@ -1,6 +1,6 @@
 import {  useEffect, useState } from "react";
 // import { Navigate } from "react-router-dom";
-import { Header, HeaderProp, Sidebar, SubNavbar, useSidebar } from "./components";
+import { Header, HeaderProp, Sidebar, useSidebar } from "./components";
 import { Dialog } from "@headlessui/react";
 import { useForm } from "react-hook-form";
 import Service from "../../config/service";
@@ -69,32 +69,18 @@ function AdminCareer() {
       <Dialog
         open={isOpen}
         onClose={() => setOpen(false)}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
       >
-        <Dialog.Panel className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-lg bg-white p-6 shadow-lg">
-          <div className="flex items-center justify-between mb-6">
-            <Dialog.Title className="text-xl font-semibold text-gray-800">
+        <Dialog.Panel className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl bg-white p-6 shadow-2xl">
+          <div className="flex items-center justify-between border-b border-gray-150 pb-4 mb-6">
+            <Dialog.Title className="text-xl font-bold text-gray-900 uppercase tracking-wider">
               Add New Job Role
             </Dialog.Title>
             <button
               onClick={() => setOpen(false)}
-              className="text-gray-400 transition hover:text-gray-800 focus:outline-none"
-              aria-label="Close modal"
+              className="px-6 py-1.5 bg-red-50 text-black border-2 border-red-700/80 rounded-lg hover:bg-red-100 transition-all font-bold text-sm uppercase tracking-tight shadow-sm"
             >
-              <svg
-                className="w-6 h-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              Close
             </button>
           </div>
 
@@ -212,19 +198,13 @@ function AdminCareer() {
             </div>
 
             {/* Form Buttons */}
-            <div className="flex justify-center gap-4">
+            <div className="pt-4">
               <button
                 type="submit"
-                className="px-6 py-2 border border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 font-bold uppercase rounded-sm transition-all shadow-sm"
+                style={{ backgroundColor: "#6abd45", color: "#ffffff" }}
+                className="w-full py-2.5 hover:!bg-[#5baf38] rounded-lg font-bold uppercase transition-all duration-150 shadow-md text-sm tracking-wide"
               >
                 Add Job
-              </button>
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                className="px-6 py-2 border border-red-600 text-red-600 bg-white hover:bg-red-50 font-bold uppercase rounded-sm transition-all shadow-sm"
-              >
-                Cancel
               </button>
             </div>
           </form>
@@ -241,10 +221,6 @@ function AdminCareer() {
         {/* Main content */}
         <main className="flex flex-col overflow-auto">
           <Header {...header} />
-          <SubNavbar tabs={[
-            { name: "Job Roles", to: "/admin/career" },
-            { name: "Careers Page", to: "/admin/career/edit" }
-          ]} />
           <div className="flex items-center justify-between p-6 border-b border-gray-200">
             <h1 className="text-2xl font-bold text-gray-800">
               Current Job Openings
