@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { Header, HeaderProp, Sidebar } from "./components";
+import { Header, HeaderProp, Sidebar, SubNavbar } from "./components";
+
+const ourFirmTabs = [
+  { name: "Our Firm Details", to: "/admin/edit-our-firm" },
+  { name: "Business Model", to: "/admin/edit-business-model" },
+  { name: "Leadership Team", to: "/admin/leadership" },
+  { name: "Gallery", to: "/admin/gallery" },
+];
 import { Dialog } from "@headlessui/react";
 import ImagePortfolio from "./components/ImagePortfolio";
 import Service from "../../config/service";
@@ -552,6 +559,7 @@ const AdminGallery = () => {
         </aside>
         <main className="flex flex-col overflow-auto">
           <Header {...header} />
+          <SubNavbar tabs={ourFirmTabs} />
           <div className="flex flex-row flex-wrap items-center justify-between m-4">
             <h1 className="text-2xl font-semibold text-gray-800">
               Gallery Management

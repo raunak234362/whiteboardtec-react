@@ -10,6 +10,7 @@ const ourFirmTabs = [
   { name: "Our Firm Details", to: "/admin/edit-our-firm" },
   { name: "Business Model", to: "/admin/edit-business-model" },
   { name: "Leadership Team", to: "/admin/leadership" },
+  { name: "Gallery", to: "/admin/gallery" },
 ];
 
 const JoditWrapper = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => {
