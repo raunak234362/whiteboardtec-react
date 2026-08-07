@@ -1,9 +1,9 @@
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
+@import "jodit/es2021/jodit.min.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 @layer utilities {
     /* Hide scrollbar for Chrome, Safari and Opera */
@@ -15,4 +15,35 @@
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
   }
+}
+
+/* Ensure rich-text HTML lists render proper bullet discs and numbers across the application */
+.jodit-wysiwyg ul,
+.jodit-container ul,
+.rich-text-editor ul,
+.prose ul {
+    list-style-type: disc !important;
+    list-style-position: outside !important;
+    padding-left: 2rem !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.jodit-wysiwyg ol,
+.jodit-container ol,
+.rich-text-editor ol,
+.prose ol {
+    list-style-type: decimal !important;
+    list-style-position: outside !important;
+    padding-left: 2rem !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.jodit-wysiwyg li,
+.jodit-container li,
+.rich-text-editor li,
+.prose li {
+    display: list-item !important;
+    list-style-position: outside !important;
 }

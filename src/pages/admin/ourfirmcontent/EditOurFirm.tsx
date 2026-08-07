@@ -1,41 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import ourFirmData from "../../../data/ourFirm.json";
-import { Header, Sidebar, useSidebar, PublishPanel } from "../components";
+import { Header, Sidebar, useSidebar, PublishPanel, RichTextEditor } from "../components";
 import OurFirm from "../../ourFirm/OurFirm";
-import { Jodit } from "jodit";
-import "jodit/es2021/jodit.min.css";
-
-const JoditWrapper = ({ value, onChange, height = 180 }: { value: string; onChange: (v: string) => void; height?: number }) => {
-  const editorRef = useRef<HTMLDivElement>(null);
-  const joditInstance = useRef<any>(null);
-  const onChangeRef = useRef(onChange);
-
-  useEffect(() => {
-    onChangeRef.current = onChange;
-  }, [onChange]);
-
-  useEffect(() => {
-    if (editorRef.current && !joditInstance.current) {
-      joditInstance.current = Jodit.make(editorRef.current, {
-        events: {
-          change: (newVal: string) => {
-            onChangeRef.current(newVal);
-          }
-        },
-        height: height
-      });
-      joditInstance.current.value = value;
-    }
-    return () => {
-      if (joditInstance.current) {
-        joditInstance.current.destruct();
-        joditInstance.current = null;
-      }
-    };
-  }, []);
-
-  return <div ref={editorRef} />;
-};
 
 interface OurFirmData {
   banner: any;
@@ -139,13 +105,13 @@ export default function EditOurFirm() {
               <div className="border-b pb-4 p-2 rounded" ref={bannerRef}>
                 <h3 className="text-lg font-semibold mb-2">Banner</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Header (Rich Text)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.banner.header}
                   onChange={(val) => setData(prev => ({ ...prev, banner: { ...prev.banner, header: val } }))}
                   height={120}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Subheader (Rich Text)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.banner.subheader}
                   onChange={(val) => setData(prev => ({ ...prev, banner: { ...prev.banner, subheader: val } }))}
                   height={120}
@@ -156,18 +122,18 @@ export default function EditOurFirm() {
               <div className="border-b pb-4 p-2 rounded" ref={introRef}>
                 <h3 className="text-lg font-semibold mb-2">Intro Section</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Heading (Rich Text)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.intro.heading}
                   onChange={(val) => setData(prev => ({ ...prev, intro: { ...prev.intro, heading: val } }))}
                   height={120}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Paragraph 1</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.intro.paragraph1}
                   onChange={(val) => setData(prev => ({ ...prev, intro: { ...prev.intro, paragraph1: val } }))}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Paragraph 2</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.intro.paragraph2}
                   onChange={(val) => setData(prev => ({ ...prev, intro: { ...prev.intro, paragraph2: val } }))}
                 />
@@ -177,12 +143,12 @@ export default function EditOurFirm() {
               <div className="border-b pb-4 p-2 rounded" ref={visionMissionRef}>
                 <h3 className="text-lg font-semibold mb-2">Vision & Mission</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Vision</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.visionMission.vision}
                   onChange={(val) => setData(prev => ({ ...prev, visionMission: { ...prev.visionMission, vision: val } }))}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Mission</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.visionMission.mission}
                   onChange={(val) => setData(prev => ({ ...prev, visionMission: { ...prev.visionMission, mission: val } }))}
                 />
@@ -192,19 +158,19 @@ export default function EditOurFirm() {
               <div className="border-b pb-4 p-2 rounded" ref={largeProjectRef}>
                 <h3 className="text-lg font-semibold mb-2">Large Project Section</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Heading (Rich Text)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.largeProject.heading}
                   onChange={(val) => setData(prev => ({ ...prev, largeProject: { ...prev.largeProject, heading: val } }))}
                   height={120}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Subheading (Rich Text)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.largeProject.subheading}
                   onChange={(val) => setData(prev => ({ ...prev, largeProject: { ...prev.largeProject, subheading: val } }))}
                   height={120}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Description</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.largeProject.description}
                   onChange={(val) => setData(prev => ({ ...prev, largeProject: { ...prev.largeProject, description: val } }))}
                 />
@@ -231,7 +197,7 @@ export default function EditOurFirm() {
                       Delete Block
                     </button>
                     <label className="block text-xs font-medium text-gray-500 mb-1">Heading (Rich Text)</label>
-                    <JoditWrapper
+                    <RichTextEditor
                       value={item.head}
                       onChange={(val) => {
                         setData(prev => {
@@ -243,7 +209,7 @@ export default function EditOurFirm() {
                       height={100}
                     />
                     <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Body</label>
-                    <JoditWrapper
+                    <RichTextEditor
                       value={item.body}
                       onChange={(val) => {
                         setData(prev => {
@@ -279,13 +245,13 @@ export default function EditOurFirm() {
                   </button>
                 </div>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Heading (Rich Text)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.projectManagement.heading}
                   onChange={(val) => setData(prev => ({ ...prev, projectManagement: { ...prev.projectManagement, heading: val } }))}
                   height={120}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Description</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.projectManagement.description}
                   onChange={(val) => setData(prev => ({ ...prev, projectManagement: { ...prev.projectManagement, description: val } }))}
                 />
@@ -350,7 +316,7 @@ export default function EditOurFirm() {
                     <h4 className="font-bold text-sm text-green-700 capitalize mb-3 border-b pb-1">{block.type} Block</h4>
                     
                     {block.type === 'text' && (
-                      <JoditWrapper
+                      <RichTextEditor
                         value={block.content}
                         onChange={(val) => setData(prev => {
                           const newBlocks = [...(prev.additionalBlocks || [])];

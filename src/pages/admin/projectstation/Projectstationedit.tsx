@@ -1,41 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import projectStationData from "../../../data/projectStation.json";
-import { Header, Sidebar, useSidebar, PublishPanel } from "../components";
+import { Header, Sidebar, useSidebar, PublishPanel, RichTextEditor } from "../components";
 import Portal from "../../portal/Portal";
-import { Jodit } from "jodit";
-import "jodit/es2021/jodit.min.css";
-
-const JoditWrapper = ({ value, onChange, height = 180 }: { value: string; onChange: (v: string) => void; height?: number }) => {
-  const editorRef = useRef<HTMLDivElement>(null);
-  const joditInstance = useRef<any>(null);
-  const onChangeRef = useRef(onChange);
-
-  useEffect(() => {
-    onChangeRef.current = onChange;
-  }, [onChange]);
-
-  useEffect(() => {
-    if (editorRef.current && !joditInstance.current) {
-      joditInstance.current = Jodit.make(editorRef.current, {
-        events: {
-          change: (newVal: string) => {
-            onChangeRef.current(newVal);
-          }
-        },
-        height: height
-      });
-      joditInstance.current.value = value;
-    }
-    return () => {
-      if (joditInstance.current) {
-        joditInstance.current.destruct();
-        joditInstance.current = null;
-      }
-    };
-  }, []);
-
-  return <div ref={editorRef} />;
-};
 
 interface ProjectStationData {
   banner: {
@@ -145,13 +111,13 @@ export default function EditProjectStation() {
               <div className="border-b pb-4 p-2 rounded" ref={bannerRef}>
                 <h3 className="text-lg font-semibold mb-2">Banner</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Header (Rich Text)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.banner.header}
                   onChange={(val) => setData(prev => ({ ...prev, banner: { ...prev.banner, header: val } }))}
                   height={120}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Subheader (Rich Text)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.banner.subheader || ""}
                   onChange={(val) => setData(prev => ({ ...prev, banner: { ...prev.banner, subheader: val } }))}
                   height={120}
@@ -168,13 +134,13 @@ export default function EditProjectStation() {
               <div className="border-b pb-4 p-2 rounded" ref={introTextRef}>
                 <h3 className="text-lg font-semibold mb-2">Intro Text Section</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Section Title (Rich Text)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.intro.title}
                   onChange={(val) => setData(prev => ({ ...prev, intro: { ...prev.intro, title: val } }))}
                   height={120}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Body Paragraph (HTML enabled)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.intro.body}
                   onChange={(val) => setData(prev => ({ ...prev, intro: { ...prev.intro, body: val } }))}
                 />
@@ -184,7 +150,7 @@ export default function EditProjectStation() {
               <div className="border-b pb-4 p-2 rounded" ref={introCardRef}>
                 <h3 className="text-lg font-semibold mb-2">Intro Call-out Card</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Quote Text (Rich Text)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.intro.quote}
                   onChange={(val) => setData(prev => ({ ...prev, intro: { ...prev.intro, quote: val } }))}
                   height={120}

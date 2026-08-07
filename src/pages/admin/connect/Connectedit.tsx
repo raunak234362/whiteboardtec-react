@@ -1,43 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import connectData from "../../../data/connect.json";
-import { Header, Sidebar, useSidebar, PublishPanel } from "../components";
+import { Header, Sidebar, useSidebar, PublishPanel, RichTextEditor } from "../components";
 import Connect from "../../connect/Connect";
-import { Jodit } from "jodit";
-import "jodit/es2021/jodit.min.css";
-
-
-
-const JoditWrapper = ({ value, onChange, height = 180 }: { value: string; onChange: (v: string) => void; height?: number }) => {
-  const editorRef = useRef<HTMLDivElement>(null);
-  const joditInstance = useRef<any>(null);
-  const onChangeRef = useRef(onChange);
-
-  useEffect(() => {
-    onChangeRef.current = onChange;
-  }, [onChange]);
-
-  useEffect(() => {
-    if (editorRef.current && !joditInstance.current) {
-      joditInstance.current = Jodit.make(editorRef.current, {
-        events: {
-          change: (newVal: string) => {
-            onChangeRef.current(newVal);
-          }
-        },
-        height: height
-      });
-      joditInstance.current.value = value;
-    }
-    return () => {
-      if (joditInstance.current) {
-        joditInstance.current.destruct();
-        joditInstance.current = null;
-      }
-    };
-  }, []);
-
-  return <div ref={editorRef} />;
-};
 
 interface ConnectPageData {
   banner: {
@@ -165,13 +129,13 @@ export default function EditConnect() {
               <div className="border-b pb-4 p-2 rounded" ref={bannerRef}>
                 <h3 className="text-lg font-semibold mb-2">Banner</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Header (Rich Text)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.banner.header}
                   onChange={(val) => setData(prev => ({ ...prev, banner: { ...prev.banner, header: val } }))}
                   height={120}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Subheader (Rich Text)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.banner.subheader}
                   onChange={(val) => setData(prev => ({ ...prev, banner: { ...prev.banner, subheader: val } }))}
                   height={120}
@@ -188,13 +152,13 @@ export default function EditConnect() {
               <div className="border-b pb-4 p-2 rounded" ref={introRef}>
                 <h3 className="text-lg font-semibold mb-2">Intro Section</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Heading Title (Rich Text)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.context.heading}
                   onChange={(val) => setData(prev => ({ ...prev, context: { ...prev.context, heading: val } }))}
                   height={120}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Body Text (HTML enabled)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.context.body}
                   onChange={(val) => setData(prev => ({ ...prev, context: { ...prev.context, body: val } }))}
                 />
@@ -320,7 +284,7 @@ export default function EditConnect() {
                       Delete
                     </button>
                     <label className="block text-[10px] text-gray-400 mb-1 font-semibold">Office Title (Rich Text)</label>
-                    <JoditWrapper
+                    <RichTextEditor
                       value={addr.title}
                       onChange={(val) => setData(prev => {
                         const newAddrs = [...prev.context.address];

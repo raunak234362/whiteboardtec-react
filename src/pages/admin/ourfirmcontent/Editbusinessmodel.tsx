@@ -1,41 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import businessModelData from "../../../data/businessModel.json";
-import { Header, Sidebar, useSidebar, PublishPanel } from "../components";
+import { Header, Sidebar, useSidebar, PublishPanel, RichTextEditor } from "../components";
 import BusiessModel from "../../ourFirm/BusinessModel";
-import { Jodit } from "jodit";
-import "jodit/es2021/jodit.min.css";
-
-const JoditWrapper = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => {
-  const editorRef = useRef<HTMLDivElement>(null);
-  const joditInstance = useRef<any>(null);
-  const onChangeRef = useRef(onChange);
-
-  useEffect(() => {
-    onChangeRef.current = onChange;
-  }, [onChange]);
-
-  useEffect(() => {
-    if (editorRef.current && !joditInstance.current) {
-      joditInstance.current = Jodit.make(editorRef.current, {
-        events: {
-          change: (newVal: string) => {
-            onChangeRef.current(newVal);
-          }
-        },
-        height: 250
-      });
-      joditInstance.current.value = value;
-    }
-    return () => {
-      if (joditInstance.current) {
-        joditInstance.current.destruct();
-        joditInstance.current = null;
-      }
-    };
-  }, []);
-
-  return <div ref={editorRef} />;
-};
 
 interface ModelItem {
   icon: string;
@@ -171,7 +137,7 @@ export default function EditBusinessModel() {
                       }}
                     />
                     <label className="block text-xs font-medium text-gray-500 mb-1 mt-2">Description</label>
-                    <JoditWrapper
+                    <RichTextEditor
                       value={item.body}
                       onChange={(val) => {
                         setData(prev => {

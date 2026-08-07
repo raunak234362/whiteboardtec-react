@@ -24,11 +24,13 @@ export type {
 }
 
 import { PublishPanel } from "./PublishPanel";
+import RichTextEditor from "./RichTextEditor";
 
 export {
     Header,
     Sidebar,
     SubNavbar,
     useSidebar,
-    PublishPanel
+    PublishPanel,
+    RichTextEditor
 }

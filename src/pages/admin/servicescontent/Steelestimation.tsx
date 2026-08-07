@@ -1,43 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import steelEstimationData from "../../../data/steelEstimation.json";
-import { Header, Sidebar, useSidebar, PublishPanel } from "../components";
+import { Header, Sidebar, useSidebar, PublishPanel, RichTextEditor } from "../components";
 import SteelEstimation from "../../services/SteelEstimations";
-import { Jodit } from "jodit";
-import "jodit/es2021/jodit.min.css";
-
-
-
-const JoditWrapper = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => {
-  const editorRef = useRef<HTMLDivElement>(null);
-  const joditInstance = useRef<any>(null);
-  const onChangeRef = useRef(onChange);
-
-  useEffect(() => {
-    onChangeRef.current = onChange;
-  }, [onChange]);
-
-  useEffect(() => {
-    if (editorRef.current && !joditInstance.current) {
-      joditInstance.current = Jodit.make(editorRef.current, {
-        events: {
-          change: (newVal: string) => {
-            onChangeRef.current(newVal);
-          }
-        },
-        height: 200
-      });
-      joditInstance.current.value = value;
-    }
-    return () => {
-      if (joditInstance.current) {
-        joditInstance.current.destruct();
-        joditInstance.current = null;
-      }
-    };
-  }, []);
-
-  return <div ref={editorRef} />;
-};
 
 interface DeliverableItem {
   text: string;
@@ -170,7 +134,7 @@ export default function EditSteelEstimation() {
                       Remove
                     </button>
                     <label className="block text-[10px] text-gray-400 mb-1">Paragraph {idx + 1}</label>
-                    <JoditWrapper
+                    <RichTextEditor
                       value={pText}
                       onChange={(val) => setData(prev => {
                         const newP = [...prev.intro.headSection];

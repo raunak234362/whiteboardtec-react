@@ -19,6 +19,7 @@
     "framer-motion": "^11.12.0",
     "heroicons": "^2.1.3",
     "jodit": "^4.13.13",
+    "jodit-react": "^5.4.70",
     "lucide-react": "^0.542.0",
     "pdfjs": "^2.5.3",
     "pdfjs-dist": "^4.10.38",
