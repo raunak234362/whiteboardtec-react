@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Header, HeaderProp, Sidebar, SubNavbar } from "../components";
+import { Header, HeaderProp, Sidebar, SubNavbar, useSidebar } from "../components";
 import { Dialog } from "@headlessui/react";
 import Service from "../../../config/service";
 import { leadershipInterface } from "../../../config/interface";
@@ -14,6 +14,7 @@ const ourFirmTabs = [
 const DEFAULT_AVATAR = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48cmVjdCB3aWR0aD0nMTAwJyBoZWlnaHQ9JzEwMCcgZmlsbD0nI2UyZThmMCcvPjxjaXJjbGUgY3g9JzUwJyBjeT0nMzUnIHI9JzE4JyBmaWxsPScjY2JkNWUxJy8+PHBhdGggZD0nTTE1IDg1YzAtMTggMTUtMzAgMzUtMzBzMzUgMTIgMzUgMzAnIGZpbGw9JyNjYmQ1ZTEnLz48L3N2Zz4=";
 
 function AdminLeadership() {
+  const { isSidebarOpen } = useSidebar();
   const header: HeaderProp = { head: "Leadership Management" };
 
   const [leaders, setLeaders] = useState<leadershipInterface[]>([]);
@@ -195,10 +196,10 @@ function AdminLeadership() {
   };
 
   return (
-    <section className="min-h-screen grid grid-cols-[20%_1fr] bg-gray-50">
-      <aside className="overflow-auto bg-white border-r border-gray-200">
-        <Sidebar />
-      </aside>
+    <section className={`min-h-screen grid ${isSidebarOpen ? "grid-cols-[260px_1fr]" : "grid-cols-[0px_1fr]"} bg-gray-50 transition-all duration-300`}>
+      <aside className={`overflow-auto bg-white border-r border-gray-200 transition-all duration-300 ${isSidebarOpen ? "w-[260px]" : "w-0 border-r-0 overflow-hidden"}`}>
+          <Sidebar />
+        </aside>
 
       <main className="flex flex-col">
         <Header {...header} />

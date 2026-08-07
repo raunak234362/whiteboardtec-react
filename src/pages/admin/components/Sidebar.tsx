@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 const ChevronDown = () => (
   <svg className="w-4 h-4 ml-auto transition-transform duration-200 text-gray-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -16,6 +16,19 @@ const ChevronUp = () => (
 function Sidebar() {
   const location = useLocation();
   const path = location.pathname;
+  const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    try {
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("user");
+      navigate("/admin/login");
+      alert("You have been logged out successfully.");
+    } catch (error) {
+      console.error("Error during logout:", error);
+      alert("An error occurred during logout. Please try again.");
+    }
+  };
 
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({
     ourFirm: path.includes("/admin/edit-our-firm") || path.includes("/admin/edit-business-model") || path.includes("/admin/leadership") || path.includes("/admin/gallery"),
@@ -317,6 +330,19 @@ function Sidebar() {
         >
           <span>Careers</span>
         </NavLink>
+      </div>
+
+      {/* Log Out Button at the bottom */}
+      <div className="p-4 border-t border-gray-200 bg-gray-50/50">
+        <button
+          onClick={handleLogOut}
+          className="w-full flex items-center justify-center gap-2 border border-red-500 text-red-500 hover:bg-red-50 hover:text-red-700 duration-150 text-sm rounded px-4 py-2 font-bold transition-all uppercase"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+          LOG OUT
+        </button>
       </div>
     </div>
   );

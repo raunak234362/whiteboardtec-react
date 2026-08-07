@@ -62,74 +62,101 @@ const ApplicantsModal: React.FC<ApplicantsModalProps> = ({
   if (!isOpen) return null;
 console.log("ApplicantsModal props:", { jobTitle, applicants });
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-      <div className="relative w-[90%] h-[90%] max-w-6xl bg-white rounded-lg shadow-lg p-6 overflow-hidden flex flex-col">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold text-[#6abd45]">
-            Applicants for "{jobTitle}"
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+      <div className="relative w-full max-w-7xl h-[85vh] bg-white rounded-xl shadow-2xl p-6 overflow-hidden flex flex-col">
+        {/* Modal Header */}
+        <div className="flex items-center justify-between border-b border-gray-150 pb-4 mb-4">
+          <h2 className="text-xl font-bold text-gray-900 uppercase tracking-wider">
+            Applicants for <span className="text-[#6abd45]">"{jobTitle}"</span>
           </h2>
           <button
             onClick={onClose}
-            className="text-3xl leading-none text-gray-400 hover:text-gray-800"
+            className="p-1.5 rounded-full hover:bg-gray-100 text-gray-500 hover:text-gray-800 transition-colors focus:outline-none"
+            aria-label="Close modal"
           >
-            &times;
+            <svg
+              className="w-6 h-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
           </button>
         </div>
 
         {applicants.length === 0 ? (
-          <p className="py-10 text-center text-gray-600">
-            No applications for this job role yet.
-          </p>
+          <div className="flex-grow flex items-center justify-center">
+            <p className="text-center text-gray-500 font-medium">
+              No applications for this job role yet.
+            </p>
+          </div>
         ) : (
-          <div className="flex-grow px-6 -mx-6 overflow-auto">
+          <div className="flex-grow overflow-auto border border-gray-200 rounded-lg shadow-md">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="sticky top-0 z-10 bg-gray-50">
+              <thead className="sticky top-0 z-10 text-black bg-[#6abd45]">
                 <tr>
-                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                  <th className="px-6 py-4 text-sm font-semibold text-left uppercase tracking-wider">
                     Applicant Name
                   </th>
-                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                  <th className="px-6 py-4 text-sm font-semibold text-left uppercase tracking-wider">
                     Email
                   </th>
-                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                  <th className="px-6 py-4 text-sm font-semibold text-left uppercase tracking-wider">
                     Phone
                   </th>
-                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                  <th className="px-6 py-4 text-sm font-semibold text-left uppercase tracking-wider">
                     Applied Date
                   </th>
-                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                  <th className="px-6 py-4 text-sm font-semibold text-left uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                  <th className="px-6 py-4 text-sm font-semibold text-left uppercase tracking-wider">
                     Resume
                   </th>
-                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                  <th className="px-6 py-4 text-sm font-semibold text-center uppercase tracking-wider">
                     Actions
                   </th>
-                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                    Contacted / Not Contacted
+                  <th className="px-6 py-4 text-sm font-semibold text-center uppercase tracking-wider">
+                    Contacted
                   </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {localApplicants.map((applicant) => (
-                  <tr key={applicant.id}>
-                    <td className="px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
+                  <tr key={applicant.id} className="hover:bg-gray-50 transition-colors duration-150">
+                    <td className="px-6 py-4 text-sm font-semibold text-gray-800 whitespace-nowrap">
                       {applicant.name}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                      {applicant.email}
+                    <td className="px-6 py-4 text-sm text-gray-600 whitespace-nowrap">
+                      <a href={`mailto:${applicant.email}`} className="hover:text-[#6abd45] hover:underline font-medium">
+                        {applicant.email}
+                      </a>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                      {applicant.phone}
+                    <td className="px-6 py-4 text-sm text-gray-600 whitespace-nowrap">
+                      <a href={`tel:${applicant.phone}`} className="hover:text-[#6abd45] hover:underline font-medium">
+                        {applicant.phone}
+                      </a>
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                       {new Date(applicant.createdAt).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                      {applicant.status ? "Contacted" : "Not Contacted"}
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${
+                        applicant.status 
+                          ? "bg-green-50 text-green-700 border border-green-200" 
+                          : "bg-yellow-50 text-yellow-700 border border-yellow-255"
+                      }`}>
+                        {applicant.status ? "Contacted" : "Not Contacted"}
+                      </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-blue-600 underline whitespace-nowrap">
+                    <td className="px-6 py-4 text-sm whitespace-nowrap">
                       {applicant.resume ? (
                         <a
                           href={`${import.meta.env.VITE_IMG_URL}${
@@ -137,25 +164,28 @@ console.log("ApplicantsModal props:", { jobTitle, applicants });
                           }`}
                           target="_blank"
                           rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-[#6abd45] hover:underline font-semibold"
                         >
-                          View Resume
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                          View PDF
                         </a>
                       ) : (
                         <span className="text-gray-400">N/A</span>
                       )}
                     </td>
-                    <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
+                    <td className="px-6 py-4 text-center whitespace-nowrap">
                       <button
                         onClick={() =>
                           onDeleteApplicant(applicant.jbroleId, applicant.id)
                         }
-                        className="ml-2 text-red-600 hover:text-red-900"
+                        className="px-2.5 py-1 text-xs text-red-650 border border-red-200 rounded hover:bg-red-50 hover:border-red-500 transition-colors font-semibold"
                       >
                         Delete
                       </button>
-                      {/* Add an "Edit Status" or "View Full Details" button here */}
                     </td>
-                    <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
+                    <td className="px-6 py-4 text-center whitespace-nowrap">
                       <input
                         type="checkbox"
                         name={`applicant-${applicant.id}`}
@@ -164,6 +194,7 @@ console.log("ApplicantsModal props:", { jobTitle, applicants });
                         onChange={(e) =>
                           updateStatus(applicant.jbroleId, applicant.id, e.target.checked)
                         }
+                        className="w-4.5 h-4.5 text-[#6abd45] border-gray-300 rounded focus:ring-[#6abd45] cursor-pointer"
                       />
                     </td>
                   </tr>
@@ -306,79 +337,80 @@ export const JobCareer = ({ job, onJobChange }: JobCareerProps) => {
       )}
 
       {/* Job Listing Table */}
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-[#6abd45] text-white">
-          <tr>
-            <th className="px-6 py-3 text-left">Role</th>
-            <th className="px-6 py-3 text-left">Location</th>
-            <th className="px-6 py-3 text-left">Type</th>
-            <th className="px-6 py-3 text-left">Qualification</th>
-            <th className="px-6 py-3 text-left">View PDF</th>
-            <th className="px-6 py-3 text-center">Actions</th>
-            <th className="px-6 py-3 text-center">Applicants</th>{" "}
-          
-          </tr>
-        </thead>
-        <tbody>
-          {job.map((jobItem) => (
-            <tr key={jobItem.id} className="hover:bg-gray-100">
-              <td className="px-6 py-4">{jobItem.Role}</td>
-              <td className="px-6 py-4">{jobItem.location}</td>
-              <td className="px-6 py-4">{jobItem.type}</td>
-              <td className="px-6 py-4">{jobItem.qualification}</td>
-              <td className="px-6 py-4">
-                {jobItem.jd ? ( // `jd` is now directly the URL string from JobPortalResponse
-                  <button
-                    // Assuming VITE_IMG_URL is the base URL for your static files/PDFs
-                    onClick={() =>
-                      setPdfUrl(
-                        `${import.meta.env.VITE_IMG_URL}${jobItem.jd[0]?.path}`
-                      )
-                    }
-                    className="text-blue-600 underline hover:text-blue-800"
-                  >
-                    View
-                  </button>
-                ) : (
-                  <span className="text-gray-400">No PDF</span>
-                )}
-              </td>
-              <td className="px-6 py-4 space-x-2 text-center">
-                <button
-                  className="px-2 py-1 text-sm text-blue-600 border border-blue-600 rounded hover:bg-blue-50"
-                  onClick={() =>
-                    handleEditClick({
-                      ...jobItem,
-                      id: String(jobItem.id),
-                      status: jobItem.status === true ? true : false,
-                      jd: jobItem.jd ? [jobItem.jd] : [], 
-                    })
-                  }
-                >
-                  Edit
-                </button>
-                <button
-                  className="px-2 py-1 text-sm text-red-600 border border-red-600 rounded hover:bg-red-50"
-                  onClick={() => handleDelete(jobItem.id)} // Pass string ID
-                  disabled={loading}
-                >
-                  {loading ? "Deleting..." : "Delete"}
-                </button>
-              </td>
-              {/* New Column Data for Applicants */}
-              <td className="px-6 py-4 text-center">
-                <button
-                  className="px-2 py-1 text-sm text-green-600 border border-green-600 rounded hover:bg-green-50"
-                  onClick={() => handleViewApplicants(jobItem.id, jobItem.Role)}
-                  disabled={loading}
-                >
-                  View Applicants
-                </button>
-              </td>
+      <div className="overflow-auto border border-gray-200 rounded-lg shadow-md">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="text-black bg-[#6abd45]">
+            <tr>
+              <th className="px-6 py-4 text-sm font-semibold text-left uppercase tracking-wider">Role</th>
+              <th className="px-6 py-4 text-sm font-semibold text-left uppercase tracking-wider">Location</th>
+              <th className="px-6 py-4 text-sm font-semibold text-left uppercase tracking-wider">Type</th>
+              <th className="px-6 py-4 text-sm font-semibold text-left uppercase tracking-wider">Qualification</th>
+              <th className="px-6 py-4 text-sm font-semibold text-left uppercase tracking-wider">View PDF</th>
+              <th className="px-6 py-4 text-sm font-semibold text-center uppercase tracking-wider">Actions</th>
+              <th className="px-6 py-4 text-sm font-semibold text-center uppercase tracking-wider">Applicants</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {job.map((jobItem) => (
+              <tr key={jobItem.id} className="hover:bg-gray-50 transition-colors duration-150">
+                <td className="px-6 py-4 font-semibold text-gray-800">{jobItem.Role}</td>
+                <td className="px-6 py-4 text-gray-600">{jobItem.location}</td>
+                <td className="px-6 py-4 text-gray-600">{jobItem.type}</td>
+                <td className="px-6 py-4 text-gray-600">{jobItem.qualification}</td>
+                <td className="px-6 py-4">
+                  {jobItem.jd ? ( // `jd` is now directly the URL string from JobPortalResponse
+                    <button
+                      // Assuming VITE_IMG_URL is the base URL for your static files/PDFs
+                      onClick={() =>
+                        setPdfUrl(
+                          `${import.meta.env.VITE_IMG_URL}${jobItem.jd[0]?.path}`
+                        )
+                      }
+                      className="text-blue-600 underline hover:text-blue-800"
+                    >
+                      View
+                    </button>
+                  ) : (
+                    <span className="text-gray-400">No PDF</span>
+                  )}
+                </td>
+                <td className="px-6 py-4 space-x-2 text-center">
+                  <button
+                    className="px-2 py-1 text-sm text-blue-600 border border-blue-600 rounded hover:bg-blue-50"
+                    onClick={() =>
+                      handleEditClick({
+                        ...jobItem,
+                        id: String(jobItem.id),
+                        status: jobItem.status === true ? true : false,
+                        jd: jobItem.jd ? [jobItem.jd] : [], 
+                      })
+                    }
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="px-2 py-1 text-sm text-red-600 border border-red-600 rounded hover:bg-red-50"
+                    onClick={() => handleDelete(jobItem.id)} // Pass string ID
+                    disabled={loading}
+                  >
+                    {loading ? "Deleting..." : "Delete"}
+                  </button>
+                </td>
+                {/* New Column Data for Applicants */}
+                <td className="px-6 py-4 text-center">
+                  <button
+                    className="px-2 py-1 text-sm text-green-600 border border-green-600 rounded hover:bg-green-50"
+                    onClick={() => handleViewApplicants(jobItem.id, jobItem.Role)}
+                    disabled={loading}
+                  >
+                    View Applicants
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* Modal for editing job */}
       {isOpenJob && selectedJob && (

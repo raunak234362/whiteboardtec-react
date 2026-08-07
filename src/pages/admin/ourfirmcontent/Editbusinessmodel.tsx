@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import businessModelData from "../../../data/businessModel.json";
 import { saveToGithub } from "../../../config/github";
-import { Header, Sidebar, SubNavbar } from "../components";
+import { Header, Sidebar, SubNavbar, useSidebar } from "../components";
 import BusiessModel from "../../ourFirm/BusinessModel";
 import { Jodit } from "jodit";
 import "jodit/es2021/jodit.min.css";
@@ -63,6 +63,7 @@ interface BusinessModelData {
 }
 
 export default function EditBusinessModel() {
+  const { isSidebarOpen } = useSidebar();
   const [data, setData] = useState<BusinessModelData>(businessModelData as BusinessModelData);
   const [githubToken, setGithubToken] = useState("");
   const [loading, setLoading] = useState(false);
@@ -116,11 +117,11 @@ export default function EditBusinessModel() {
   };
 
   return (
-    <section className="w-full h-screen grid grid-cols-[250px_1fr] bg-gray-50 overflow-hidden">
+    <section className={`w-full h-screen grid ${isSidebarOpen ? "grid-cols-[260px_1fr]" : "grid-cols-[0px_1fr]"} bg-gray-50 overflow-hidden transition-all duration-300`}>
       {/* App Sidebar */}
-      <aside className="overflow-auto bg-white border-r border-gray-200">
-        <Sidebar />
-      </aside>
+      <aside className={`overflow-auto bg-white border-r border-gray-200 transition-all duration-300 ${isSidebarOpen ? "w-[260px]" : "w-0 border-r-0 overflow-hidden"}`}>
+          <Sidebar />
+        </aside>
 
       <main className="flex flex-col h-full overflow-hidden">
         <Header {...header} />

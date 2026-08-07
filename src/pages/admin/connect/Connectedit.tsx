@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import connectData from "../../../data/connect.json";
 import { saveToGithub } from "../../../config/github";
-import { Header, Sidebar, SubNavbar } from "../components";
+import { Header, Sidebar, SubNavbar, useSidebar } from "../components";
 import Connect from "../../connect/Connect";
 import { Jodit } from "jodit";
 import "jodit/es2021/jodit.min.css";
 
 const connectTabs = [
-  { name: "Queries Received", to: "/admin/connect-info" },
-  { name: "Connect Page", to: "/admin/connect/edit" }
+  { name: "Connect Page", to: "/admin/connect/edit" },
+  { name: "Queries Received", to: "/admin/connect-info" }
 ];
 
 const JoditWrapper = ({ value, onChange, height = 180 }: { value: string; onChange: (v: string) => void; height?: number }) => {
@@ -78,6 +78,7 @@ interface ConnectPageData {
 }
 
 export default function EditConnect() {
+  const { isSidebarOpen } = useSidebar();
   const [data, setData] = useState<ConnectPageData>(connectData as ConnectPageData);
   const [githubToken, setGithubToken] = useState("");
   const [loading, setLoading] = useState(false);
@@ -167,11 +168,11 @@ export default function EditConnect() {
   };
 
   return (
-    <section className="w-full h-screen grid grid-cols-[250px_1fr] bg-gray-50 overflow-hidden select-none">
+    <section className={`w-full h-screen grid ${isSidebarOpen ? "grid-cols-[260px_1fr]" : "grid-cols-[0px_1fr]"} bg-gray-50 overflow-hidden select-none transition-all duration-300`}>
       {/* App Sidebar */}
-      <aside className="overflow-auto bg-white border-r border-gray-200 select-none">
-        <Sidebar />
-      </aside>
+      <aside className={`overflow-auto bg-white border-r border-gray-200 transition-all duration-300 ${isSidebarOpen ? "w-[260px]" : "w-0 border-r-0 overflow-hidden"}`}>
+          <Sidebar />
+        </aside>
 
       <main className="flex flex-col h-full overflow-hidden select-text">
         <Header {...header} />

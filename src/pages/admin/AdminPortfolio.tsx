@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { Header, HeaderProp, Sidebar } from "./components";
+import { Header, HeaderProp, Sidebar, useSidebar } from "./components";
 import WorkPortfolio from "./components/WorkPortfolio";
 import { PortfolioPropType } from "../../config/interface";
 import { Dialog } from "@headlessui/react";
 import Service from "../../config/service";
 
 function AdminPortfolio() {
+  const { isSidebarOpen } = useSidebar();
   const [portfolios, setPortfolio] = useState<PortfolioPropType[]>([]);
   const [isOpen, setOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -358,8 +359,8 @@ function AdminPortfolio() {
       </Dialog>
 
       {/* Main portfolio section */}
-      <section className="w-full grid grid-cols-[20%_80%] h-screen bg-gray-50">
-        <aside className="overflow-auto text-white bg-gray-900 border-r border-gray-300">
+      <section className={`w-full grid ${isSidebarOpen ? "grid-cols-[260px_1fr]" : "grid-cols-[0px_1fr]"} h-screen bg-gray-50 transition-all duration-300`}>
+        <aside className={`overflow-auto bg-white border-r border-gray-200 transition-all duration-300 ${isSidebarOpen ? "w-[260px]" : "w-0 border-r-0 overflow-hidden"}`}>
           <Sidebar />
         </aside>
 

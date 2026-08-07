@@ -1,5 +1,5 @@
 import  { useEffect, useState } from "react";
-import { Header, HeaderProp, Sidebar } from "./components"; 
+import { Header, HeaderProp, Sidebar, useSidebar } from "./components"; 
 import { Dialog } from "@headlessui/react";
 import { Editor } from "primereact/editor";
 import { useForm } from "react-hook-form";
@@ -7,6 +7,7 @@ import Service from "../../config/service";
 import { blogInterface } from "../../config/interface";
 
 function AdminBlogManager() {
+  const { isSidebarOpen } = useSidebar();
   const header: HeaderProp = { head: "Blog Management" };
 
   const [blogs, setBlogs] = useState<blogInterface[]>([]);
@@ -93,10 +94,10 @@ function AdminBlogManager() {
   };
 
   return (
-    <section className="min-h-screen grid grid-cols-[240px_1fr] bg-gray-50">
-      <aside className="overflow-auto bg-white border-r border-gray-200">
-        <Sidebar />
-      </aside>
+    <section className={`min-h-screen grid ${isSidebarOpen ? "grid-cols-[260px_1fr]" : "grid-cols-[0px_1fr]"} bg-gray-50 transition-all duration-300`}>
+      <aside className={`overflow-auto bg-white border-r border-gray-200 transition-all duration-300 ${isSidebarOpen ? "w-[260px]" : "w-0 border-r-0 overflow-hidden"}`}>
+          <Sidebar />
+        </aside>
 
       <main className="flex flex-col">
         <Header {...header} />

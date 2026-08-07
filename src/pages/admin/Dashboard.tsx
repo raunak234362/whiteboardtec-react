@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Header, HeaderProp, Sidebar } from "./components";
+import { Header, HeaderProp, Sidebar, useSidebar } from "./components";
 import Service from "../../config/service";
 
 type DashboardStats = {
@@ -34,6 +34,7 @@ function DashboardCard({
 }
 
 function Dashboard() {
+  const { isSidebarOpen } = useSidebar();
   const [stats, setStats] = useState<DashboardStats>({
     totalJobs: 0,
     activeJobs: 0,
@@ -103,9 +104,9 @@ function Dashboard() {
 
   return (
     <>
-      <section className="w-full min-h-screen grid grid-cols-[20%_1fr] bg-gray-50">
+      <section className={`w-full min-h-screen grid ${isSidebarOpen ? "grid-cols-[260px_1fr]" : "grid-cols-[0px_1fr]"} bg-gray-50 transition-all duration-300`}>
         {/* Sidebar */}
-        <aside className="overflow-auto bg-white border-r border-gray-200">
+        <aside className={`overflow-auto bg-white border-r border-gray-200 transition-all duration-300 ${isSidebarOpen ? "w-[260px]" : "w-0 border-r-0 overflow-hidden"}`}>
           <Sidebar />
         </aside>
 

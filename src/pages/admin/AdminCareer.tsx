@@ -1,6 +1,6 @@
 import {  useEffect, useState } from "react";
 // import { Navigate } from "react-router-dom";
-import { Header, HeaderProp, Sidebar, SubNavbar } from "./components";
+import { Header, HeaderProp, Sidebar, SubNavbar, useSidebar } from "./components";
 import { Dialog } from "@headlessui/react";
 import { useForm } from "react-hook-form";
 import Service from "../../config/service";
@@ -8,6 +8,7 @@ import { JobPortalResponse } from "../../config/interface";
 import JobCareer from "./components/JobCareer";
 
 function AdminCareer() {
+  const { isSidebarOpen } = useSidebar();
   // State & hooks
   const { register, handleSubmit, reset } = useForm<JobPortalResponse>();
   const [gettingdata, setGettingData] = useState<JobPortalResponse[]>([]);
@@ -231,9 +232,9 @@ function AdminCareer() {
       </Dialog>
 
       {/* Main Layout */}
-      <section className="w-full grid grid-cols-[20%_80%] h-screen bg-gray-50">
+      <section className={`w-full grid ${isSidebarOpen ? "grid-cols-[260px_1fr]" : "grid-cols-[0px_1fr]"} h-screen bg-gray-50 transition-all duration-300`}>
         {/* Sidebar */}
-        <aside className="overflow-auto text-white bg-gray-900 border-r border-gray-300">
+        <aside className={`overflow-auto bg-white border-r border-gray-200 transition-all duration-300 ${isSidebarOpen ? "w-[260px]" : "w-0 border-r-0 overflow-hidden"}`}>
           <Sidebar />
         </aside>
 

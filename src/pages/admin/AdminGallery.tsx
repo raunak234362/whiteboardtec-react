@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { Header, HeaderProp, Sidebar, SubNavbar } from "./components";
+import { Header, HeaderProp, Sidebar, SubNavbar, useSidebar } from "./components";
 
 const ourFirmTabs = [
   { name: "Our Firm Details", to: "/admin/edit-our-firm" },
@@ -48,6 +48,7 @@ function useMultipleFileUpload() {
 }
 
 const AdminGallery = () => {
+  const { isSidebarOpen } = useSidebar();
   const { selectedFiles, onFileChange, removeFile, clearFiles } =
     useMultipleFileUpload();
 
@@ -550,11 +551,8 @@ const AdminGallery = () => {
       </Dialog>
 
       {/* Main section */}
-      <section className="w-full grid grid-cols-[20%_80%] min-h-screen">
-        <aside
-          className="text-white bg-gray-900 border-r border-gray-300"
-          style={{ minHeight: "100vh" }}
-        >
+      <section className={`w-full grid ${isSidebarOpen ? "grid-cols-[260px_1fr]" : "grid-cols-[0px_1fr]"} min-h-screen transition-all duration-300`}>
+        <aside className={`overflow-auto bg-white border-r border-gray-200 transition-all duration-300 ${isSidebarOpen ? "w-[260px]" : "w-0 border-r-0 overflow-hidden"}`}>
           <Sidebar />
         </aside>
         <main className="flex flex-col overflow-auto">
