@@ -118,9 +118,9 @@ export default function EditBusinessModel() {
   return (
     <section className="w-full h-screen grid grid-cols-[250px_1fr] bg-gray-50 overflow-hidden">
       {/* App Sidebar */}
-      <div className="bg-gray-800 overflow-y-auto">
+      <aside className="overflow-auto bg-white border-r border-gray-200">
         <Sidebar />
-      </div>
+      </aside>
 
       <main className="flex flex-col h-full overflow-hidden">
         <Header {...header} />
@@ -142,8 +142,10 @@ export default function EditBusinessModel() {
               <button
                 onClick={handleSave}
                 disabled={loading}
-                className={`w-full py-2 px-4 rounded font-bold text-white transition-colors text-sm ${
-                  loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#6abd45] hover:bg-[#5aa33a]"
+                className={`w-full py-2 px-4 border rounded font-bold text-sm uppercase transition-all shadow-sm ${
+                  loading
+                    ? "border-gray-200 text-gray-400 bg-gray-50 cursor-not-allowed"
+                    : "border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50"
                 }`}
               >
                 {loading ? "Saving..." : "Update Page"}

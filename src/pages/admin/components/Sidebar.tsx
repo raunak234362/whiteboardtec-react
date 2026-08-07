@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 const ChevronDown = () => (
-  <svg className="w-4 h-4 ml-auto transition-transform duration-200" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+  <svg className="w-4 h-4 ml-auto transition-transform duration-200 text-gray-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
   </svg>
 );
 
 const ChevronUp = () => (
-  <svg className="w-4 h-4 ml-auto transition-transform duration-200" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+  <svg className="w-4 h-4 ml-auto transition-transform duration-200 text-gray-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
   </svg>
 );
@@ -42,16 +42,15 @@ function Sidebar() {
   }, [path]);
 
   return (
-    <div className="flex flex-col h-full text-white bg-gray-900 font-sans">
-      <div>
+    <div className="flex flex-col h-full bg-white text-gray-800 font-sans border-r border-gray-200">
+      <div className="p-4 border-b border-gray-100 flex items-center justify-center">
         <NavLink to="/">
-          <div className="flex items-center justify-center py-4 h-fit">
+          <div className="flex items-center justify-center py-2 h-fit">
             <img
               src="https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685727/logos/whiteboardtec-logo_oztrhh.png"
               alt="logo"
-              className="w-8 h-8 mx-1"
+              className="h-16 w-auto object-contain"
             />
-            <h1 className="text-xl font-bold tracking-tight">Whiteboard</h1>
           </div>
         </NavLink>
       </div>
@@ -62,7 +61,9 @@ function Sidebar() {
           to="/admin/dashboard"
           className={({ isActive }) =>
             `flex items-center px-6 py-3 text-sm font-medium transition-colors duration-150 ${
-              isActive ? "bg-[#6abd45] text-white" : "text-gray-300 hover:bg-gray-800 hover:text-white"
+              isActive
+                ? "bg-green-50/50 text-[#6abd45] border-l-4 border-[#6abd45] font-semibold"
+                : "text-gray-700 hover:bg-gray-50 hover:text-black"
             }`
           }
         >
@@ -73,8 +74,10 @@ function Sidebar() {
         <div>
           <button
             onClick={() => toggleMenu("ourFirm")}
-            className={`w-full flex items-center px-6 py-3 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-colors duration-150 ${
-              path.includes("/admin/edit-our-firm") || path.includes("/admin/edit-business-model") || path.includes("/admin/leadership") || path.includes("/admin/gallery") ? "bg-gray-800/50 text-white border-l-4 border-[#6abd45]" : ""
+            className={`w-full flex items-center px-6 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-black transition-colors duration-150 ${
+              path.includes("/admin/edit-our-firm") || path.includes("/admin/edit-business-model") || path.includes("/admin/leadership") || path.includes("/admin/gallery")
+                ? "bg-green-50/20 text-[#6abd45] border-l-4 border-[#6abd45]"
+                : ""
             }`}
           >
             <span>Our Firm</span>
@@ -82,12 +85,12 @@ function Sidebar() {
           </button>
           
           {openMenus.ourFirm && (
-            <div className="bg-gray-950/50 py-1 pl-4 space-y-1">
+            <div className="bg-gray-50/30 py-1 pl-4 space-y-1">
               <NavLink
                 to="/admin/edit-our-firm"
                 className={({ isActive }) =>
                   `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
-                    isActive ? "text-[#6abd45] font-bold" : "text-gray-400 hover:text-white"
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
                   }`
                 }
               >
@@ -97,7 +100,7 @@ function Sidebar() {
                 to="/admin/edit-business-model"
                 className={({ isActive }) =>
                   `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
-                    isActive ? "text-[#6abd45] font-bold" : "text-gray-400 hover:text-white"
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
                   }`
                 }
               >
@@ -107,7 +110,7 @@ function Sidebar() {
                 to="/admin/leadership"
                 className={({ isActive }) =>
                   `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
-                    isActive ? "text-[#6abd45] font-bold" : "text-gray-400 hover:text-white"
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
                   }`
                 }
               >
@@ -117,7 +120,7 @@ function Sidebar() {
                 to="/admin/gallery"
                 className={({ isActive }) =>
                   `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
-                    isActive ? "text-[#6abd45] font-bold" : "text-gray-400 hover:text-white"
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
                   }`
                 }
               >
@@ -131,8 +134,8 @@ function Sidebar() {
         <div>
           <button
             onClick={() => toggleMenu("services")}
-            className={`w-full flex items-center px-6 py-3 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-colors duration-150 ${
-              path.includes("/admin/services/") ? "bg-gray-800/50 text-white border-l-4 border-[#6abd45]" : ""
+            className={`w-full flex items-center px-6 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-black transition-colors duration-150 ${
+              path.includes("/admin/services/") ? "bg-green-50/20 text-[#6abd45] border-l-4 border-[#6abd45]" : ""
             }`}
           >
             <span>Services</span>
@@ -140,12 +143,12 @@ function Sidebar() {
           </button>
           
           {openMenus.services && (
-            <div className="bg-gray-950/50 py-1 pl-4 space-y-1">
+            <div className="bg-gray-50/30 py-1 pl-4 space-y-1">
               <NavLink
                 to="/admin/services/structural-detailing"
                 className={({ isActive }) =>
                   `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
-                    isActive ? "text-[#6abd45] font-bold" : "text-gray-400 hover:text-white"
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
                   }`
                 }
               >
@@ -155,7 +158,7 @@ function Sidebar() {
                 to="/admin/services/miscellaneous-detailing"
                 className={({ isActive }) =>
                   `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
-                    isActive ? "text-[#6abd45] font-bold" : "text-gray-400 hover:text-white"
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
                   }`
                 }
               >
@@ -165,7 +168,7 @@ function Sidebar() {
                 to="/admin/services/connection-design"
                 className={({ isActive }) =>
                   `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
-                    isActive ? "text-[#6abd45] font-bold" : "text-gray-400 hover:text-white"
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
                   }`
                 }
               >
@@ -175,7 +178,7 @@ function Sidebar() {
                 to="/admin/services/architectural-bim"
                 className={({ isActive }) =>
                   `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
-                    isActive ? "text-[#6abd45] font-bold" : "text-gray-400 hover:text-white"
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
                   }`
                 }
               >
@@ -185,7 +188,7 @@ function Sidebar() {
                 to="/admin/services/pemb-detailing"
                 className={({ isActive }) =>
                   `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
-                    isActive ? "text-[#6abd45] font-bold" : "text-gray-400 hover:text-white"
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
                   }`
                 }
               >
@@ -195,7 +198,7 @@ function Sidebar() {
                 to="/admin/services/rebar-estimation"
                 className={({ isActive }) =>
                   `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
-                    isActive ? "text-[#6abd45] font-bold" : "text-gray-400 hover:text-white"
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
                   }`
                 }
               >
@@ -205,7 +208,7 @@ function Sidebar() {
                 to="/admin/services/steel-estimation"
                 className={({ isActive }) =>
                   `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
-                    isActive ? "text-[#6abd45] font-bold" : "text-gray-400 hover:text-white"
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
                   }`
                 }
               >
@@ -219,8 +222,8 @@ function Sidebar() {
         <div>
           <button
             onClick={() => toggleMenu("ourWork")}
-            className={`w-full flex items-center px-6 py-3 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-colors duration-150 ${
-              path.includes("/admin/portfolio") ? "bg-gray-800/50 text-white border-l-4 border-[#6abd45]" : ""
+            className={`w-full flex items-center px-6 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-black transition-colors duration-150 ${
+              path.includes("/admin/portfolio") ? "bg-green-50/20 text-[#6abd45] border-l-4 border-[#6abd45]" : ""
             }`}
           >
             <span>Our Work</span>
@@ -228,12 +231,12 @@ function Sidebar() {
           </button>
           
           {openMenus.ourWork && (
-            <div className="bg-gray-950/50 py-1 pl-4 space-y-1">
+            <div className="bg-gray-50/30 py-1 pl-4 space-y-1">
               <NavLink
                 to="/admin/portfolio"
                 className={({ isActive }) =>
                   `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
-                    isActive ? "text-[#6abd45] font-bold" : "text-gray-400 hover:text-white"
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
                   }`
                 }
               >
@@ -247,8 +250,8 @@ function Sidebar() {
         <div>
           <button
             onClick={() => toggleMenu("resources")}
-            className={`w-full flex items-center px-6 py-3 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white transition-colors duration-150 ${
-              path.includes("/admin/blog") ? "bg-gray-800/50 text-white border-l-4 border-[#6abd45]" : ""
+            className={`w-full flex items-center px-6 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-black transition-colors duration-150 ${
+              path.includes("/admin/blog") ? "bg-green-50/20 text-[#6abd45] border-l-4 border-[#6abd45]" : ""
             }`}
           >
             <span>Resources</span>
@@ -256,12 +259,12 @@ function Sidebar() {
           </button>
           
           {openMenus.resources && (
-            <div className="bg-gray-950/50 py-1 pl-4 space-y-1">
+            <div className="bg-gray-50/30 py-1 pl-4 space-y-1">
               <NavLink
                 to="/admin/blog"
                 className={({ isActive }) =>
                   `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
-                    isActive ? "text-[#6abd45] font-bold" : "text-gray-400 hover:text-white"
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
                   }`
                 }
               >
@@ -276,7 +279,9 @@ function Sidebar() {
           to="/admin/project-station"
           className={({ isActive }) =>
             `flex items-center px-6 py-3 text-sm font-medium transition-colors duration-150 ${
-              isActive ? "bg-[#6abd45] text-white" : "text-gray-300 hover:bg-gray-800 hover:text-white"
+              isActive
+                ? "bg-green-50/50 text-[#6abd45] border-l-4 border-[#6abd45] font-semibold"
+                : "text-gray-700 hover:bg-gray-50 hover:text-black"
             }`
           }
         >
@@ -289,7 +294,9 @@ function Sidebar() {
           className={({ isActive }) => {
             const isConnectActive = isActive || path.includes("/admin/connect");
             return `flex items-center px-6 py-3 text-sm font-medium transition-colors duration-150 ${
-              isConnectActive ? "bg-[#6abd45] text-white" : "text-gray-300 hover:bg-gray-800 hover:text-white"
+              isConnectActive
+                ? "bg-green-50/50 text-[#6abd45] border-l-4 border-[#6abd45] font-semibold"
+                : "text-gray-700 hover:bg-gray-50 hover:text-black"
             }`;
           }}
         >
@@ -302,7 +309,9 @@ function Sidebar() {
           className={({ isActive }) => {
             const isCareerActive = isActive || path.includes("/admin/career");
             return `flex items-center px-6 py-3 text-sm font-medium transition-colors duration-150 ${
-              isCareerActive ? "bg-[#6abd45] text-white" : "text-gray-300 hover:bg-gray-800 hover:text-white"
+              isCareerActive
+                ? "bg-green-50/50 text-[#6abd45] border-l-4 border-[#6abd45] font-semibold"
+                : "text-gray-700 hover:bg-gray-50 hover:text-black"
             }`;
           }}
         >

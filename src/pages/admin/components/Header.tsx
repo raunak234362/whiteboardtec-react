@@ -24,18 +24,18 @@ function Header(prop: HeaderProp) {
 
   return (
     <>
-      <div className="flex flex-wrap items-center justify-between w-full px-3 py-1 mt-0 bg-gray-800">
-        <div className="text-2xl font-bold text-[#6abd45] mx-3">
+      <div className="flex flex-wrap items-center justify-between w-full px-6 py-3 mt-0 bg-white border-b border-gray-200 shadow-sm">
+        <div className="text-xl font-bold text-gray-900 mx-3 uppercase tracking-wider">
           {prop.head}
         </div>
         <button
-          className="text-white mx-3 border-2 border-white hover:text-gray-800 hover:bg-white hover:border-[#6abd45] duration-100 text-md bg-[#6abd45] rounded-xl px-2 py-0.5 my-1 font-semibold"
+          className="mx-3 border border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 duration-150 text-sm rounded px-4 py-1.5 font-bold transition-all"
           onClick={(e) => {
             e.preventDefault(); // Prevent default form submission behavior if button is inside a form
             handleLogOut();
           }}
         >
-          Log Out
+          LOG OUT
         </button>
       </div>
     </>

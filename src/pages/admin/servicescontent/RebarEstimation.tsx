@@ -143,9 +143,9 @@ export default function EditRebarEstimation() {
   return (
     <section className="w-full h-screen grid grid-cols-[250px_1fr] bg-gray-50 overflow-hidden">
       {/* App Sidebar */}
-      <div className="bg-gray-800 overflow-y-auto">
+      <aside className="overflow-auto bg-white border-r border-gray-200">
         <Sidebar />
-      </div>
+      </aside>
 
       <main className="flex flex-col h-full overflow-hidden">
         <Header {...header} />
@@ -167,8 +167,10 @@ export default function EditRebarEstimation() {
               <button
                 onClick={handleSave}
                 disabled={loading}
-                className={`w-full py-2 px-4 rounded font-bold text-white transition-colors text-sm ${
-                  loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#6abd45] hover:bg-[#5aa33a]"
+                className={`w-full py-2 px-4 border rounded font-bold text-sm uppercase transition-all shadow-sm ${
+                  loading
+                    ? "border-gray-200 text-gray-400 bg-gray-50 cursor-not-allowed"
+                    : "border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50"
                 }`}
               >
                 {loading ? "Saving..." : "Update Page"}
@@ -247,7 +249,7 @@ export default function EditRebarEstimation() {
                       description: [...prev.headSection.description, "<p>New paragraph content...</p>"] 
                     } 
                   }))}
-                  className="mt-2 w-full py-1.5 bg-green-50 text-[#6abd45] border border-[#6abd45] border-dashed rounded text-xs font-semibold hover:bg-green-100 transition-colors"
+                  className="mt-2 w-full py-1.5 border border-dashed border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 rounded-sm text-xs font-bold uppercase transition-all shadow-sm"
                 >
                   + Add Paragraph
                 </button>
@@ -300,7 +302,7 @@ export default function EditRebarEstimation() {
                       bullets: [...(prev.estimate.bullets || []), "New Bullet Point"] 
                     } 
                   }))}
-                  className="mt-1 w-full py-1 bg-green-50 text-[#6abd45] border border-[#6abd45] border-dashed rounded text-xs font-semibold hover:bg-green-100 transition-colors"
+                  className="mt-1 w-full py-1.5 border border-dashed border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 rounded-sm text-xs font-bold uppercase transition-all shadow-sm"
                 >
                   + Add Bullet Point
                 </button>
@@ -334,7 +336,7 @@ export default function EditRebarEstimation() {
                 ))}
                 <button 
                   onClick={() => setData(prev => ({ ...prev, rebarDetailing: [...prev.rebarDetailing, "New Detailing Offering"] }))}
-                  className="mt-2 w-full py-1.5 bg-green-50 text-[#6abd45] border border-[#6abd45] border-dashed rounded text-xs font-semibold hover:bg-green-100 transition-colors"
+                  className="mt-2 w-full py-1.5 border border-dashed border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 rounded-sm text-xs font-bold uppercase transition-all shadow-sm"
                 >
                   + Add Detailing Offering
                 </button>
@@ -375,7 +377,7 @@ export default function EditRebarEstimation() {
                         description: [...prev.rebarEstimation.description, "New Estimation Detail"] 
                       } 
                     }))}
-                    className="mt-2 w-full py-1.5 bg-green-50 text-[#6abd45] border border-[#6abd45] border-dashed rounded text-xs font-semibold hover:bg-green-100 transition-colors"
+                    className="mt-2 w-full py-1.5 border border-dashed border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 rounded-sm text-xs font-bold uppercase transition-all shadow-sm"
                   >
                     + Add Estimation Detail
                   </button>
@@ -414,7 +416,7 @@ export default function EditRebarEstimation() {
                         description: [...prev.rebarStructures.description, "New Structure Detail"] 
                       } 
                     }))}
-                    className="mt-2 w-full py-1.5 bg-green-50 text-[#6abd45] border border-[#6abd45] border-dashed rounded text-xs font-semibold hover:bg-green-100 transition-colors"
+                    className="mt-2 w-full py-1.5 border border-dashed border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 rounded-sm text-xs font-bold uppercase transition-all shadow-sm"
                   >
                     + Add Structure Detail
                   </button>
@@ -463,7 +465,7 @@ export default function EditRebarEstimation() {
                     ...prev, 
                     workDone: [...prev.workDone, { title: "New Project", desc: "State – 0.00 MT" }] 
                   }))}
-                  className="mt-2 w-full py-1.5 bg-green-50 text-[#6abd45] border border-[#6abd45] border-dashed rounded text-xs font-semibold hover:bg-green-100 transition-colors"
+                  className="mt-2 w-full py-1.5 border border-dashed border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 rounded-sm text-xs font-bold uppercase transition-all shadow-sm"
                 >
                   + Add Work Done Project
                 </button>
@@ -497,7 +499,7 @@ export default function EditRebarEstimation() {
                 ))}
                 <button 
                   onClick={() => setData(prev => ({ ...prev, jobDone: [...prev.jobDone, "New Job Entry"] }))}
-                  className="mt-2 w-full py-1.5 bg-green-50 text-[#6abd45] border border-[#6abd45] border-dashed rounded text-xs font-semibold hover:bg-green-100 transition-colors"
+                  className="mt-2 w-full py-1.5 border border-dashed border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 rounded-sm text-xs font-bold uppercase transition-all shadow-sm"
                 >
                   + Add Job Entry
                 </button>

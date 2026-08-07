@@ -214,14 +214,14 @@ function AdminCareer() {
             <div className="flex justify-center gap-4">
               <button
                 type="submit"
-                className="px-6 py-2 text-green-600 transition bg-green-600 rounded-md shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="px-6 py-2 border border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 font-bold uppercase rounded-sm transition-all shadow-sm"
               >
                 Add Job
               </button>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="px-6 py-2 text-white transition bg-red-600 rounded-md shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="px-6 py-2 border border-red-600 text-red-600 bg-white hover:bg-red-50 font-bold uppercase rounded-sm transition-all shadow-sm"
               >
                 Cancel
               </button>
@@ -250,7 +250,7 @@ function AdminCareer() {
             </h1>
             <button
               onClick={() => setOpen(true)}
-              className="px-5 py-2 text-white transition bg-blue-600 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-5 py-2 border border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 font-bold uppercase rounded-sm transition-all shadow-sm"
             >
               + Add New Job
             </button>

@@ -94,7 +94,7 @@ function AdminBlogManager() {
 
   return (
     <section className="min-h-screen grid grid-cols-[240px_1fr] bg-gray-50">
-      <aside className="h-screen text-white bg-gray-900 border-r border-gray-300">
+      <aside className="overflow-auto bg-white border-r border-gray-200">
         <Sidebar />
       </aside>
 
@@ -109,7 +109,7 @@ function AdminBlogManager() {
             <button
               type="button"
               onClick={() => openForm()}
-              className="inline-flex items-center justify-center px-6 py-3 font-semibold text-green-500 bg-green-600 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="inline-flex items-center justify-center px-6 py-3 border border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 font-bold uppercase rounded-sm transition-all shadow-sm"
             >
               + Add New Blog
             </button>
@@ -160,13 +160,13 @@ function AdminBlogManager() {
                       <td className="flex justify-center px-6 py-4 space-x-4">
                         <button
                           onClick={() => openForm(blog)}
-                          className="px-4 py-2 font-semibold text-white bg-blue-600 rounded hover:bg-blue-700"
+                          className="px-4 py-2 border border-black text-black bg-white hover:bg-gray-100 font-bold uppercase rounded-sm transition-all shadow-sm"
                         >
                           Edit
                         </button>
                         <button
                           onClick={() => handleDelete(blog.id)}
-                          className="px-4 py-2 font-semibold text-white bg-red-600 rounded hover:bg-red-700"
+                          className="px-4 py-2 border border-red-600 text-red-600 bg-white hover:bg-red-50 font-bold uppercase rounded-sm transition-all shadow-sm"
                         >
                           Delete
                         </button>
@@ -236,14 +236,14 @@ function AdminBlogManager() {
                     type="button"
                     onClick={() => setFormOpen(false)}
                     disabled={loading}
-                    className="px-5 py-2 text-gray-700 border border-gray-300 rounded hover:bg-red-700 disabled:opacity-50"
+                    className="px-5 py-2 border border-red-600 text-red-600 bg-white hover:bg-red-50 font-bold uppercase rounded-sm transition-all shadow-sm disabled:opacity-50"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={loading}
-                    className="px-5 py-2 text-green-500 bg-green-600 border border-green-600 rounded hover:bg-green-700 disabled:opacity-50"
+                    className="px-5 py-2 border border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 font-bold uppercase rounded-sm transition-all shadow-sm disabled:opacity-50"
                   >
                     {editingBlog ? "Update" : "Add"}
                   </button>

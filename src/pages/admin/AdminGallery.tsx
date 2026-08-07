@@ -525,7 +525,7 @@ const AdminGallery = () => {
                   <button
                     type="submit"
                     disabled={isUploading || selectedFiles.length === 0}
-                    className="px-6 py-2 text-white transition bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                    className="px-6 py-2 border border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 font-bold uppercase rounded-sm transition-all shadow-sm disabled:bg-gray-100 disabled:border-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed"
                   >
                     {isUploading ? "Uploading..." : "Add Gallery Project"}
                   </button>
@@ -538,7 +538,7 @@ const AdminGallery = () => {
                       setIsUploading(false);
                     }}
                     disabled={isUploading}
-                    className="px-6 py-2 text-white transition bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                    className="px-6 py-2 border border-red-600 text-red-600 bg-white hover:bg-red-50 font-bold uppercase rounded-sm transition-all shadow-sm disabled:bg-gray-100 disabled:border-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed"
                   >
                     Cancel
                   </button>
@@ -566,7 +566,7 @@ const AdminGallery = () => {
             </h1>
             <button
               onClick={() => setOpen(true)}
-              className="px-4 py-2 text-white transition bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="px-4 py-2 border border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 font-bold uppercase rounded-sm transition-all shadow-sm"
             >
               Add New Project
             </button>

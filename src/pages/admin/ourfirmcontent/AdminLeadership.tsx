@@ -196,7 +196,7 @@ function AdminLeadership() {
 
   return (
     <section className="min-h-screen grid grid-cols-[20%_1fr] bg-gray-50">
-      <aside className="bg-gray-900 text-white min-h-screen">
+      <aside className="overflow-auto bg-white border-r border-gray-200">
         <Sidebar />
       </aside>
 
@@ -212,7 +212,7 @@ function AdminLeadership() {
             <button
               type="button"
               onClick={() => openForm()}
-              className="inline-flex items-center justify-center px-5 py-2.5 font-semibold text-white bg-green-500 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors duration-200"
+              className="inline-flex items-center justify-center px-5 py-2.5 border border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 font-bold uppercase rounded-sm transition-all shadow-sm"
             >
               + Add New Leader
             </button>
@@ -288,13 +288,13 @@ function AdminLeadership() {
                           <div className="flex justify-center space-x-3">
                             <button
                               onClick={() => openForm(leader)}
-                              className="px-3.5 py-1.5 font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-md transition-colors duration-200 text-sm shadow"
+                              className="px-3.5 py-1.5 border border-black text-black bg-white hover:bg-gray-100 font-bold uppercase rounded-sm transition-all shadow-sm text-xs"
                             >
                               Edit
                             </button>
                             <button
                               onClick={() => handleDelete(leader)}
-                              className="px-3.5 py-1.5 font-semibold text-white bg-red-500 hover:bg-red-600 rounded-md transition-colors duration-200 text-sm shadow"
+                              className="px-3.5 py-1.5 border border-red-600 text-red-600 bg-white hover:bg-red-50 font-bold uppercase rounded-sm transition-all shadow-sm text-xs"
                             >
                               Delete
                             </button>
@@ -412,14 +412,14 @@ function AdminLeadership() {
                     type="button"
                     onClick={() => setFormOpen(false)}
                     disabled={submitting}
-                    className="px-5 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 font-semibold transition-colors duration-200 disabled:opacity-50"
+                    className="px-5 py-2 border border-red-600 text-red-600 bg-white hover:bg-red-50 font-bold uppercase rounded-sm transition-all shadow-sm disabled:opacity-50"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="px-5 py-2 text-white bg-green-500 hover:bg-green-600 rounded-md font-semibold transition-colors duration-200 disabled:opacity-50 shadow"
+                    className="px-5 py-2 border border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 font-bold uppercase rounded-sm transition-all shadow-sm disabled:opacity-50"
                   >
                     {submitting ? "Saving..." : editingLeader ? "Update Details" : "Add Team Leader"}
                   </button>

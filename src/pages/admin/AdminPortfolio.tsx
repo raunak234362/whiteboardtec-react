@@ -331,7 +331,7 @@ function AdminPortfolio() {
                   if (isEditMode) handleUpdateSubmit();
                   else handleAddSubmit();
                 }}
-                className="px-6 py-2 text-green-600 transition bg-green-600 rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="px-6 py-2 border border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 font-bold uppercase rounded-sm transition-all shadow-sm"
               >
                 {isEditMode ? "Update" : "Add New"}
               </button>
@@ -348,7 +348,7 @@ function AdminPortfolio() {
                   setStatus(false);
                   setProgress(0);
                 }}
-                className="px-6 py-2 text-white transition bg-red-600 rounded-md shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="px-6 py-2 border border-red-600 text-red-600 bg-white hover:bg-red-50 font-bold uppercase rounded-sm transition-all shadow-sm"
               >
                 Cancel
               </button>
@@ -370,7 +370,7 @@ function AdminPortfolio() {
               Portfolio Projects
             </h1>
             <button
-              className="px-6 py-2 text-white transition bg-green-600 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="px-6 py-2 border border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 font-bold uppercase rounded-sm transition-all shadow-sm"
               onClick={() => {
                 setOpen(true);
                 setIsEditMode(false);
