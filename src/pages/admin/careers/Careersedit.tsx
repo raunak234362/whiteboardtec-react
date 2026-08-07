@@ -191,13 +191,13 @@ export default function EditCareers() {
               <button
                 onClick={handleSave}
                 disabled={loading}
-                className={`w-full py-2 px-4 border rounded font-bold text-sm uppercase transition-all shadow-sm ${
+                className={`w-full py-2 px-4 rounded font-bold text-sm uppercase transition-all shadow flex items-center justify-center gap-2 ${
                   loading
-                    ? "border-gray-200 text-gray-400 bg-gray-50 cursor-not-allowed"
-                    : "border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50"
+                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    : "bg-[#6abd45] text-white hover:bg-[#5aa839] active:scale-[0.99]"
                 }`}
               >
-                {loading ? "Saving..." : "Update Page"}
+                {loading ? "Pushing to GitHub..." : "🚀 Push to GitHub"}
               </button>
               {message && (
                 <div className={`mt-2 p-2 rounded text-xs ${message.includes("Error") || message.includes("Please enter") ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}>

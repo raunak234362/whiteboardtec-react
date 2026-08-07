@@ -26,49 +26,69 @@ export const saveToGithub = async (
 
   const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}`;
 
-  try {
-    // 1. Get the current file to get its SHA (required for updating an existing file)
-    let sha = "";
+  const fetchLatestSha = async () => {
     try {
       const getResponse = await axios.get<any>(url, {
         headers: {
           Authorization: `token ${token}`,
           Accept: "application/vnd.github.v3+json",
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Pragma: "no-cache",
         },
         params: {
           ref: GITHUB_BRANCH,
+          _t: Date.now(),
         },
       });
-      sha = getResponse.data.sha;
+      return getResponse.data.sha;
     } catch (err: any) {
       if (err.response && err.response.status !== 404) {
         throw err;
       }
-      // If 404, file doesn't exist yet, we just create it (sha remains empty)
+      return "";
     }
+  };
+
+  try {
+    // 1. Get the current file SHA with cache busting
+    let sha = await fetchLatestSha();
 
     // 2. Encode content to base64
     const base64Content = btoa(unescape(encodeURIComponent(content)));
 
-    // 3. Put the updated content
-    const payload: any = {
-      message: commitMessage,
-      content: base64Content,
-      branch: GITHUB_BRANCH,
+    // Helper for PUT request
+    const attemptPut = async (currentSha: string) => {
+      const payload: any = {
+        message: commitMessage,
+        content: base64Content,
+        branch: GITHUB_BRANCH,
+      };
+
+      if (currentSha) {
+        payload.sha = currentSha;
+      }
+
+      return await axios.put(url, payload, {
+        headers: {
+          Authorization: `token ${token}`,
+          Accept: "application/vnd.github.v3+json",
+        },
+      });
     };
 
-    if (sha) {
-      payload.sha = sha;
+    // 3. Put the updated content, with auto-retry on 409 SHA conflict
+    try {
+      const putResponse = await attemptPut(sha);
+      return putResponse.data;
+    } catch (putErr: any) {
+      if (putErr.response && putErr.response.status === 409) {
+        console.warn("SHA mismatch (409 Conflict). Fetching latest SHA and retrying...");
+        const freshSha = await fetchLatestSha();
+        const putResponse = await attemptPut(freshSha);
+        return putResponse.data;
+      }
+      throw putErr;
     }
-
-    const putResponse = await axios.put(url, payload, {
-      headers: {
-        Authorization: `token ${token}`,
-        Accept: "application/vnd.github.v3+json",
-      },
-    });
-
-    return putResponse.data;
   } catch (error: any) {
     console.error("GitHub API Error:", error);
     const status = error.response?.status;
