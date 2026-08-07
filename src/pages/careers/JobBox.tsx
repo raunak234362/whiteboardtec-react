@@ -230,12 +230,12 @@ function JobBox(job: JobDescType) {
                   alert("Job description is not available.");
                 }
               }}
-              className="border-2 rounded-full border-black border-opacity-50 text-center opacity-80 text-md px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
+              className="border-2 rounded-full border-black border-opacity-50 text-center opacity-80 text-base px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
             >
               Download JD ➤{" "}
             </a>
             <button
-              className="border-2 rounded-full max-md:mt-5 border-black border-opacity-50 opacity-80 text-md px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
+              className="border-2 rounded-full max-md:mt-5 border-black border-opacity-50 opacity-80 text-base px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
               onClick={(e) => {
                 e.preventDefault();
                 setOpenJob(true);

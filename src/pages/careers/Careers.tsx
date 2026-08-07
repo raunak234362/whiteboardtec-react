@@ -99,39 +99,43 @@ function Careers({ previewData, onSectionClick }: { previewData?: any; onSection
           </section>
 
           <div 
-            className={`my-2 text-4xl font-semibold text-black mt-12 px-2 p-2 rounded ${getEditClass("campusRecruitment")}`}
+            className={`my-2 mt-12 px-2 p-2 rounded ${getEditClass("campusRecruitment")}`}
             onClick={(e) => handleClick(e, "campusRecruitment")}
           >
-            Campus Recruitment
+            <div className="text-4xl font-semibold text-black">
+              Campus Recruitment
+            </div>
             <section className="grid grid-cols-1 mt-6 gap-y-5 gap-x-10 md:grid-cols-2">
-              <div className="bg-white border-2 shadow-md rounded-3xl p-6">
-                <div className="text-[#6abd45] text-2xl font-semibold mb-4" dangerouslySetInnerHTML={{ __html: data.campusRecruitment.title }} />
-                <div className="my-2 space-y-1">
-                  <div className="text-lg text-gray-700 font-normal">
-                    {data.campusRecruitment.location}
+              <div className="bg-white border-2 shadow-md rounded-3xl drop-shadow-md">
+                <div className="p-3 m-5">
+                  <div className="text-[#6abd45] text-2xl font-semibold" dangerouslySetInnerHTML={{ __html: data.campusRecruitment.title }} />
+                  <div className="my-2">
+                    <div className="text-lg text-gray-700">
+                      {data.campusRecruitment.location}
+                    </div>
+                    <div className="text-lg text-gray-700">
+                      {data.campusRecruitment.jobType}
+                    </div>
+                    <div className="text-lg text-gray-700">
+                      {data.campusRecruitment.qualification}
+                    </div>
                   </div>
-                  <div className="text-lg text-gray-700 font-normal">
-                    {data.campusRecruitment.jobType}
+                  <div className="flex flex-col flex-wrap mt-5 mb-0 md:flex-row justify-evenly">
+                    <Link
+                      to={data.campusRecruitment.registerUrl}
+                      target="_blank"
+                      className="border-2 rounded-full border-black border-opacity-50 text-center opacity-80 text-base px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
+                    >
+                      Register ➤
+                    </Link>
+                    <Link
+                      to={data.campusRecruitment.testUrl}
+                      target="_blank"
+                      className="border-2 text-center rounded-full max-md:mt-5 border-black border-opacity-50 opacity-80 text-base px-5 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg"
+                    >
+                      Test ➤
+                    </Link>
                   </div>
-                  <div className="text-lg text-gray-700 font-normal">
-                    {data.campusRecruitment.qualification}
-                  </div>
-                </div>
-                <div className="flex flex-col md:flex-row mt-6 gap-4 justify-start">
-                  <Link
-                    to={data.campusRecruitment.registerUrl}
-                    target="_blank"
-                    className="border-2 rounded-full border-black border-opacity-50 text-center text-md px-6 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg transition-all"
-                  >
-                    Register ➤
-                  </Link>
-                  <Link
-                    to={data.campusRecruitment.testUrl}
-                    target="_blank"
-                    className="border-2 text-center rounded-full border-black border-opacity-50 text-md px-6 py-2 hover:bg-[#6abd45] hover:text-white hover:border-white hover:shadow-lg transition-all"
-                  >
-                    Test ➤
-                  </Link>
                 </div>
               </div>
             </section>
