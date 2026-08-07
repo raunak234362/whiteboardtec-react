@@ -76,21 +76,23 @@ export const PublishPanel: React.FC<PublishPanelProps> = ({ filePath, data }) =>
           onClick={handleSaveLocal}
           disabled={loading}
           type="button"
-          className="flex-1 py-2 px-3 border border-gray-300 rounded font-semibold text-xs bg-white hover:bg-gray-50 text-gray-700 shadow-sm transition-all active:scale-95"
+          style={{ backgroundColor: "#ffffff", color: "#1f2937", borderColor: "#d1d5db" }}
+          className="flex-1 py-2.5 px-3 border rounded-md font-bold text-xs shadow-sm transition-all hover:bg-gray-100 active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
         >
-          💾 Save Draft
+          <span>💾</span> Save Draft
         </button>
         <button
           onClick={handlePublishAll}
           disabled={loading}
           type="button"
-          className={`flex-1 py-2 px-3 rounded font-bold text-xs uppercase transition-all shadow flex items-center justify-center gap-1 ${
-            loading
-              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-[#6abd45] text-white hover:bg-[#5aa839] active:scale-95"
-          }`}
+          style={{
+            backgroundColor: loading ? "#9ca3af" : "#6abd45",
+            color: "#ffffff",
+            border: "none",
+          }}
+          className="flex-1 py-2.5 px-3 rounded-md font-bold text-xs uppercase shadow-md transition-all flex items-center justify-center gap-1.5 hover:brightness-105 active:scale-95 bg-green-200 text-black cursor-pointer"
         >
-          {loading ? "Publishing..." : `🚀 Publish ${stagedCount > 1 ? `All (${stagedCount})` : "to GitHub"}`}
+          <span>🚀</span> {loading ? "Publishing..." : `Publish ${stagedCount > 1 ? `All (${stagedCount})` : "to GitHub"}`}
         </button>
       </div>
       {message && (
