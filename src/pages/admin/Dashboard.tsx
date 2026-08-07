@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Header, HeaderProp, Sidebar } from "./components";
+import { Header, HeaderProp, Sidebar, useSidebar } from "./components";
 import Service from "../../config/service";
 
 type DashboardStats = {
@@ -34,6 +34,7 @@ function DashboardCard({
 }
 
 function Dashboard() {
+  const { isSidebarOpen } = useSidebar();
   const [stats, setStats] = useState<DashboardStats>({
     totalJobs: 0,
     activeJobs: 0,
@@ -103,57 +104,59 @@ function Dashboard() {
 
   return (
     <>
-      <section className="w-full min-h-screen grid grid-cols-[20%_1fr] bg-gray-50">
+      <section className={`w-full min-h-screen grid ${isSidebarOpen ? "grid-cols-[260px_1fr]" : "grid-cols-[0px_1fr]"} bg-gray-50 transition-all duration-300`}>
         {/* Sidebar */}
-        <div style={{ minHeight: "95.2vh" }} className="bg-gray-800">
+        <aside className={`overflow-auto bg-white border-r border-gray-200 transition-all duration-300 ${isSidebarOpen ? "w-[260px]" : "w-0 border-r-0 overflow-hidden"}`}>
           <Sidebar />
-        </div>
+        </aside>
 
         {/* Main Content */}
-        <main className="flex flex-col max-w-full px-8 py-10 overflow-auto">
+        <main className="flex flex-col overflow-auto">
           <Header {...header} />
-
-          {loading && (
-            <div className="flex items-center justify-center py-20">
-              <span className="text-lg text-gray-600">
-                Loading dashboard...
-              </span>
-            </div>
-          )}
-
-          {error && (
-            <div className="flex items-center justify-center py-20">
-              <span className="text-lg text-red-600">{error}</span>
-            </div>
-          )}
-
-          {!loading && !error && (
-            <>
-              <div className="flex flex-col items-center justify-center mb-12">
-                <h1 className="max-w-4xl text-5xl font-extrabold leading-tight text-center text-gray-900">
-                  Welcome to Whiteboard
-                </h1>
-                <p className="max-w-2xl mt-4 text-lg text-center text-gray-600">
-                  {/* Optional info here */}
-                </p>
+          
+          <div className="flex-grow px-8 py-10">
+            {loading && (
+              <div className="flex items-center justify-center py-20">
+                <span className="text-lg text-gray-600">
+                  Loading dashboard...
+                </span>
               </div>
+            )}
 
-              <div className="grid grid-cols-1 gap-8 px-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                <DashboardCard title="Total Jobs" value={stats.totalJobs} />
-                <DashboardCard title="Active Jobs" value={stats.activeJobs} />
-                <DashboardCard title="Applicants" value={stats.applicants} />
-                <DashboardCard
-                  title="Gallery Images"
-                  value={stats.galleryImages}
-                />
-                <DashboardCard
-                  title="Total Portfolios"
-                  value={stats.portfolios}
-                />
-                <DashboardCard title="Blogs Posted" value={stats.blogs} />
+            {error && (
+              <div className="flex items-center justify-center py-20">
+                <span className="text-lg text-red-600">{error}</span>
               </div>
-            </>
-          )}
+            )}
+
+            {!loading && !error && (
+              <>
+                <div className="flex flex-col items-center justify-center mb-12">
+                  <h1 className="max-w-4xl text-5xl font-extrabold leading-tight text-center text-gray-900">
+                    Welcome to Whiteboard
+                  </h1>
+                  <p className="max-w-2xl mt-4 text-lg text-center text-gray-600">
+                    {/* Optional info here */}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 gap-8 px-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                  <DashboardCard title="Total Jobs" value={stats.totalJobs} />
+                  <DashboardCard title="Active Jobs" value={stats.activeJobs} />
+                  <DashboardCard title="Applicants" value={stats.applicants} />
+                  <DashboardCard
+                    title="Gallery Images"
+                    value={stats.galleryImages}
+                  />
+                  <DashboardCard
+                    title="Total Portfolios"
+                    value={stats.portfolios}
+                  />
+                  <DashboardCard title="Blogs Posted" value={stats.blogs} />
+                </div>
+              </>
+            )}
+          </div>
         </main>
       </section>
     </>

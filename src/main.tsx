@@ -42,11 +42,22 @@ import Connect from "./pages/connect/Connect.tsx";
 import {
   Admin,
   Login,
-  Dashboard,
   AdminCareer,
   AdminGallery,
   AdminPortfolio,
   AdminLeadership,
+  EditOurFirm,
+  EditBusinessModel,
+  StructuralDetailing,
+  MiscellaneousDetailing,
+  SteelEstimation as SteelEstimationAdmin,
+  ConnectionDesign,
+  ArchitecturalBIM as ArchitecturalBIMAdmin,
+  PEMBDetailing,
+  RebarEstimation,
+  EditProjectStation,
+  EditCareers,
+  EditConnect,
 } from "./pages/admin";
 import "tw-elements-react/dist/css/tw-elements-react.min.css";
 import GalleryImages from "./pages/ourFirm/GalleryImages.tsx";
@@ -103,15 +114,26 @@ const route = createBrowserRouter(
       <Route path="/resources/wbt-blog/:id" element={<BlogDetails />} />
       <Route path="*" element={<Error />} />
       <Route path="/admin" element={<Admin />} />
-      <Route path="/admin/dashboard" element={<Dashboard />} />
       <Route path="/admin/blog" element={<AdminBlogManager />} />
       <Route path="/admin/connect-info" element={<ConnectInfo />} />
+      <Route path="/admin/connect/edit" element={<EditConnect />} />
       // New route for connect info
       <Route path="/admin/login" element={<Login />} />
       <Route path="/admin/career" element={<AdminCareer />} />
+      <Route path="/admin/career/edit" element={<EditCareers />} />
       <Route path="/admin/portfolio" element={<AdminPortfolio />} />
       <Route path="/admin/gallery" element={<AdminGallery />} />
       <Route path="/admin/leadership" element={<AdminLeadership />} />
+      <Route path="/admin/edit-our-firm" element={<EditOurFirm />} />
+      <Route path="/admin/edit-business-model" element={<EditBusinessModel />} />
+      <Route path="/admin/services/structural-detailing" element={<StructuralDetailing />} />
+      <Route path="/admin/services/miscellaneous-detailing" element={<MiscellaneousDetailing />} />
+      <Route path="/admin/services/steel-estimation" element={<SteelEstimationAdmin />} />
+      <Route path="/admin/services/connection-design" element={<ConnectionDesign />} />
+      <Route path="/admin/services/architectural-bim" element={<ArchitecturalBIMAdmin />} />
+      <Route path="/admin/services/pemb-detailing" element={<PEMBDetailing />} />
+      <Route path="/admin/services/rebar-estimation" element={<RebarEstimation />} />
+      <Route path="/admin/project-station" element={<EditProjectStation />} />
     </Route>
   )
 );
