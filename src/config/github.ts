@@ -28,21 +28,23 @@ export const saveToGithub = async (
 
   const fetchLatestSha = async () => {
     try {
+      const formattedToken = token.trim().startsWith("token ") || token.trim().startsWith("Bearer ")
+        ? token.trim()
+        : `token ${token.trim()}`;
+
       const getResponse = await axios.get<any>(url, {
         headers: {
-          Authorization: `token ${token}`,
+          Authorization: formattedToken,
           Accept: "application/vnd.github.v3+json",
-          "Cache-Control": "no-cache, no-store, must-revalidate",
-          Pragma: "no-cache",
         },
         params: {
           ref: GITHUB_BRANCH,
           _t: Date.now(),
         },
       });
-      return getResponse.data.sha;
+      return getResponse.data?.sha || "";
     } catch (err: any) {
-      if (err.response && err.response.status !== 404) {
+      if (!err.response || err.response.status !== 404) {
         throw err;
       }
       return "";
@@ -58,6 +60,10 @@ export const saveToGithub = async (
 
     // Helper for PUT request
     const attemptPut = async (currentSha: string) => {
+      const formattedToken = token.trim().startsWith("token ") || token.trim().startsWith("Bearer ")
+        ? token.trim()
+        : `token ${token.trim()}`;
+
       const payload: any = {
         message: commitMessage,
         content: base64Content,
@@ -70,7 +76,7 @@ export const saveToGithub = async (
 
       return await axios.put(url, payload, {
         headers: {
-          Authorization: `token ${token}`,
+          Authorization: formattedToken,
           Accept: "application/vnd.github.v3+json",
         },
       });
@@ -91,17 +97,103 @@ export const saveToGithub = async (
     }
   } catch (error: any) {
     console.error("GitHub API Error:", error);
-    const status = error.response?.status;
     let errorMsg =
       error.response?.data?.message ||
       error.message ||
       "Failed to save to GitHub";
 
-    if (status === 404) {
-      errorMsg =
-        "Not Found (404). This usually means your GitHub Token is invalid, expired, or DOES NOT have the 'repo' scope checked. Please generate a new Classic Token with 'repo' permissions.";
-    }
-
     throw new Error(errorMsg);
   }
+};
+
+export const saveLocalDraft = async (filePath: string, content: string) => {
+  // 1. Attempt to save locally if running in development mode (Vite plugin)
+  try {
+    await fetch("/api/save-json", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ filePath, content })
+    });
+  } catch (e) {
+    console.warn("Could not save locally. This is normal in production.", e);
+  }
+
+  // 2. Stage in localStorage
+  try {
+    const staged = getStagedChangesMap();
+    staged[filePath] = {
+      filePath,
+      content,
+      updatedAt: new Date().toISOString(),
+    };
+    localStorage.setItem("staged_cms_updates", JSON.stringify(staged));
+  } catch (e) {
+    console.error("Failed to save to localStorage staging:", e);
+  }
+};
+
+export const getStagedChangesMap = (): Record<string, { filePath: string; content: string; updatedAt: string }> => {
+  try {
+    const raw = localStorage.getItem("staged_cms_updates");
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+};
+
+export const getStagedCount = (): number => {
+  return Object.keys(getStagedChangesMap()).length;
+};
+
+export const clearStagedChanges = () => {
+  try {
+    localStorage.removeItem("staged_cms_updates");
+  } catch (e) {
+    console.error("Failed to clear staged changes:", e);
+  }
+};
+
+export const publishAllStagedToGithub = async (
+  token: string,
+  currentFilePath?: string,
+  currentContent?: string,
+  onProgress?: (msg: string) => void
+) => {
+  if (!token) {
+    throw new Error("GitHub token is required to save changes.");
+  }
+
+  // If current file was provided, save/stage it first
+  if (currentFilePath && currentContent) {
+    await saveLocalDraft(currentFilePath, currentContent);
+  }
+
+  const stagedMap = getStagedChangesMap();
+  const filePaths = Object.keys(stagedMap);
+
+  if (filePaths.length === 0) {
+    throw new Error("No updates found in storage to publish.");
+  }
+
+  let publishedCount = 0;
+
+  for (let i = 0; i < filePaths.length; i++) {
+    const path = filePaths[i];
+    const item = stagedMap[path];
+    if (onProgress) {
+      onProgress(`[${i + 1}/${filePaths.length}] Publishing ${path} to GitHub...`);
+    }
+
+    const filename = path.split("/").pop() || path;
+    await saveToGithub(
+      path,
+      item.content,
+      token,
+      `Update ${filename} via Admin CMS Batch Publish`
+    );
+    publishedCount++;
+  }
+
+  clearStagedChanges();
+  return publishedCount;
 };

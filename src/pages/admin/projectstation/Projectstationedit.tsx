@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import projectStationData from "../../../data/projectStation.json";
-import { saveToGithub } from "../../../config/github";
-import { Header, Sidebar, useSidebar } from "../components";
+import { Header, Sidebar, useSidebar, PublishPanel } from "../components";
 import Portal from "../../portal/Portal";
 import { Jodit } from "jodit";
 import "jodit/es2021/jodit.min.css";
@@ -59,9 +58,6 @@ interface ProjectStationData {
 export default function EditProjectStation() {
   const { isSidebarOpen } = useSidebar();
   const [data, setData] = useState<ProjectStationData>(projectStationData as ProjectStationData);
-  const [githubToken, setGithubToken] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
 
   // Resize Panel State
   const [editorWidth, setEditorWidth] = useState(550);
@@ -102,27 +98,7 @@ export default function EditProjectStation() {
     };
   }, [isDragging]);
 
-  const handleSave = async () => {
-    if (!githubToken) {
-      setMessage("Please enter a GitHub Personal Access Token to save changes.");
-      return;
-    }
-    setLoading(true);
-    setMessage("Saving to GitHub...");
-    try {
-      await saveToGithub(
-        "src/data/projectStation.json",
-        JSON.stringify(data, null, 2),
-        githubToken,
-        "Update Project Station page content via Admin CMS"
-      );
-      setMessage("Successfully saved to GitHub! Changes will be reflected shortly.");
-    } catch (error: any) {
-      setMessage(`Error: ${error.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
+
 
   const handleSectionClick = (sectionId: string) => {
     const refs: { [key: string]: React.RefObject<HTMLDivElement> } = {
@@ -161,32 +137,7 @@ export default function EditProjectStation() {
             className="bg-white border-r flex flex-col h-full overflow-y-auto animate-fade-in transition-all duration-75"
           >
             {/* Publish Actions Sticky Header */}
-            <div className="bg-gray-50 p-4 border-b sticky top-0 z-10 shadow-sm">
-              <h3 className="font-bold mb-2">Publish Settings</h3>
-              <input
-                type="password"
-                className="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 mb-2 text-sm"
-                placeholder="GitHub Token (ghp_...)"
-                value={githubToken}
-                onChange={(e) => setGithubToken(e.target.value)}
-              />
-              <button
-                onClick={handleSave}
-                disabled={loading}
-                className={`w-full py-2 px-4 rounded font-bold text-sm uppercase transition-all shadow flex items-center justify-center gap-2 ${
-                  loading
-                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    : "bg-[#6abd45] text-white hover:bg-[#5aa839] active:scale-[0.99]"
-                }`}
-              >
-                {loading ? "Pushing to GitHub..." : "🚀 Push to GitHub"}
-              </button>
-              {message && (
-                <div className={`mt-2 p-2 rounded text-xs ${message.includes("Error") || message.includes("Please enter") ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}>
-                  {message}
-                </div>
-              )}
-            </div>
+            <PublishPanel filePath="src/data/projectStation.json" data={data} />
 
             {/* Form Fields */}
             <div className="p-4 space-y-6 select-text">

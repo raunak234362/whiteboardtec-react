@@ -23,9 +23,12 @@ export type {
     CandidateApplication
 }
 
+import { PublishPanel } from "./PublishPanel";
+
 export {
     Header,
     Sidebar,
     SubNavbar,
-    useSidebar
+    useSidebar,
+    PublishPanel
 }

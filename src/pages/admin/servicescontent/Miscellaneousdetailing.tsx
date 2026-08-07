@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import miscellaneousDetailingData from "../../../data/miscellaneousDetailing.json";
-import { saveToGithub } from "../../../config/github";
-import { Header, Sidebar, useSidebar } from "../components";
+import { Header, Sidebar, useSidebar, PublishPanel } from "../components";
 import MiscellaneousSteel from "../../services/MiscellaneousSteel";
 import { Jodit } from "jodit";
 import "jodit/es2021/jodit.min.css";
@@ -67,9 +66,6 @@ interface MiscellaneousDetailingData {
 export default function EditMiscellaneousDetailing() {
   const { isSidebarOpen } = useSidebar();
   const [data, setData] = useState<MiscellaneousDetailingData>(miscellaneousDetailingData as MiscellaneousDetailingData);
-  const [githubToken, setGithubToken] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
 
   const bannerRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
@@ -79,27 +75,7 @@ export default function EditMiscellaneousDetailing() {
 
   const header = { head: "Live Editor: Miscellaneous Steel Detailing" };
 
-  const handleSave = async () => {
-    if (!githubToken) {
-      setMessage("Please enter a GitHub Personal Access Token to save changes.");
-      return;
-    }
-    setLoading(true);
-    setMessage("Saving to GitHub...");
-    try {
-      await saveToGithub(
-        "src/data/miscellaneousDetailing.json",
-        JSON.stringify(data, null, 2),
-        githubToken,
-        "Update Miscellaneous Steel Detailing page content via Admin CMS"
-      );
-      setMessage("Successfully saved to GitHub! Changes will be reflected shortly.");
-    } catch (error: any) {
-      setMessage(`Error: ${error.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
+
 
   const handleSectionClick = (sectionId: string) => {
     const refs: { [key: string]: React.RefObject<HTMLDivElement> } = {
@@ -136,32 +112,7 @@ export default function EditMiscellaneousDetailing() {
           {/* EDITOR PANEL (Left side) */}
           <div className="w-[550px] bg-white border-r flex flex-col h-full overflow-y-auto animate-fade-in">
             {/* Publish Actions Sticky Header */}
-            <div className="bg-gray-50 p-4 border-b sticky top-0 z-10 shadow-sm">
-              <h3 className="font-bold mb-2">Publish Settings</h3>
-              <input
-                type="password"
-                className="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 mb-2 text-sm"
-                placeholder="GitHub Token (ghp_...)"
-                value={githubToken}
-                onChange={(e) => setGithubToken(e.target.value)}
-              />
-              <button
-                onClick={handleSave}
-                disabled={loading}
-                className={`w-full py-2 px-4 rounded font-bold text-sm uppercase transition-all shadow flex items-center justify-center gap-2 ${
-                  loading
-                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    : "bg-[#6abd45] text-white hover:bg-[#5aa839] active:scale-[0.99]"
-                }`}
-              >
-                {loading ? "Pushing to GitHub..." : "🚀 Push to GitHub"}
-              </button>
-              {message && (
-                <div className={`mt-2 p-2 rounded text-xs ${message.includes("Error") || message.includes("Please enter") ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}>
-                  {message}
-                </div>
-              )}
-            </div>
+            <PublishPanel filePath="src/data/miscellaneousDetailing.json" data={data} />
 
             {/* Form Fields */}
             <div className="p-4 space-y-6">
