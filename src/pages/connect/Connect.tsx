@@ -34,7 +34,7 @@ function Connect({ previewData, onSectionClick }: { previewData?: any; onSection
         <PageBanner {...data.banner} />
       </div>
 
-      <section className="rounded-3xl border-2 p-4 grid grid-cols-1 lg:grid-cols-[62%_38%] gap-3 shadow-md mx-auto my-16 lg:max-w-screen-lg xl:max-w-screen-xl bg-white">
+      <section className="rounded-3xl border-2 p-4 grid grid-cols-2 md:grid-cols-[62%_38%] gap-3 shadow-md mx-auto my-16 lg:max-w-screen-lg xl:max-w-screen-xl bg-white">
         <div className="order-1 pr-10 m-4 max-md:order-2">
           <div 
             className={`p-2 rounded ${getEditClass("intro")}`}
@@ -166,7 +166,7 @@ function Connect({ previewData, onSectionClick }: { previewData?: any; onSection
           </div>
         </div>
 
-        <div className="flex flex-wrap justify-center order-2 max-md:order-1">
+        <div className="flex flex-wrap justify-center order-2 mt-10 max-md:order-1">
           <Forms
             title={data.form?.title}
             field={data.form?.field}
