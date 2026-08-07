@@ -102,7 +102,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         value={value}
         config={config as any}
         onBlur={(newContent) => onChange(newContent)}
-        onChange={() => {}}
+        onChange={(newContent) => onChange(newContent)}
       />
     </div>
   );
