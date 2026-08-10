@@ -61,6 +61,19 @@ export default function EditOurFirm() {
   const [editorWidth, setEditorWidth] = useState(550);
   const [isDragging, setIsDragging] = useState(false);
 
+  // Mode View State: split (edit + preview) or preview (preview only)
+  const [mode, setMode] = useState<"split" | "preview">("split");
+  const [isChangingMode, setIsChangingMode] = useState(false);
+
+  const handleModeChange = (newMode: "split" | "preview") => {
+    if (newMode === mode) return;
+    setIsChangingMode(true);
+    setTimeout(() => {
+      setMode(newMode);
+      setIsChangingMode(false);
+    }, 600);
+  };
+
   const bannerRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
   const visionMissionRef = useRef<HTMLDivElement>(null);
@@ -152,12 +165,54 @@ export default function EditOurFirm() {
       <main className="flex flex-col h-full overflow-hidden select-text">
         <Header {...header} />
 
-        <div className="flex flex-row h-full overflow-hidden">
-          {/* EDITOR PANEL (Resizable Left side) */}
-          <div 
-            style={{ width: `${editorWidth}px` }}
-            className="bg-white border-r flex flex-col h-full overflow-y-auto animate-fade-in transition-all duration-75"
-          >
+        {/* Mode Switcher Tabs */}
+        <div className="bg-white border-b px-6 py-2.5 flex items-center justify-center shadow-sm z-10">
+          <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg border border-gray-200">
+            <button
+              type="button"
+              onClick={() => handleModeChange("split")}
+              style={{
+                backgroundColor: mode === "split" ? "#6abd45" : "transparent",
+                color: mode === "split" ? "#ffffff" : "#000000"
+              }}
+              className="px-6 py-2 text-xs font-bold uppercase tracking-wider rounded-md transition-all shadow-sm focus:outline-none"
+            >
+              Split View
+            </button>
+            <button
+              type="button"
+              onClick={() => handleModeChange("preview")}
+              style={{
+                backgroundColor: mode === "preview" ? "#6abd45" : "transparent",
+                color: mode === "preview" ? "#ffffff" : "#000000"
+              }}
+              className="px-6 py-2 text-xs font-bold uppercase tracking-wider rounded-md transition-all shadow-sm focus:outline-none"
+            >
+              Live Preview
+            </button>
+          </div>
+        </div>
+
+        {isChangingMode ? (
+          <div className="flex-grow flex flex-col justify-center items-center bg-gray-50 h-full">
+            <div className="relative flex items-center justify-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-[#6abd45]"></div>
+              <div className="absolute text-[#6abd45] font-bold text-xs uppercase tracking-widest animate-pulse">
+                WBT
+              </div>
+            </div>
+            <p className="text-gray-500 text-sm mt-4 font-semibold uppercase tracking-widest animate-pulse">
+              Loading Layout...
+            </p>
+          </div>
+        ) : (
+          <div className="flex flex-row h-full overflow-hidden">
+            {/* EDITOR PANEL (Resizable Left side) */}
+            {mode === "split" && (
+              <div 
+                style={{ width: `${editorWidth}px` }}
+                className="bg-white border-r flex flex-col h-full overflow-y-auto animate-fade-in transition-all duration-75"
+              >
             {/* Publish Actions Sticky Header */}
             <div className="bg-gray-50 p-4 border-b sticky top-0 z-10 shadow-sm">
               <h3 className="font-bold mb-2">Publish Settings</h3>
@@ -458,26 +513,35 @@ export default function EditOurFirm() {
 
             </div>
           </div>
+          )}
 
           {/* Resizer Handle */}
-          <div
-            onMouseDown={startResizing}
-            className={`w-2 bg-gray-200 hover:bg-green-500 cursor-col-resize transition-all duration-150 relative flex items-center justify-center ${
-              isDragging ? "bg-green-500 w-2.5" : ""
-            }`}
-          >
-            <div className="w-1 h-12 bg-gray-400 rounded-full"></div>
-          </div>
+          {mode === "split" && (
+            <div
+              onMouseDown={startResizing}
+              className={`w-2 bg-gray-200 hover:bg-green-500 cursor-col-resize transition-all duration-150 relative flex items-center justify-center ${
+                isDragging ? "bg-green-500 w-2.5" : ""
+              }`}
+            >
+              <div className="w-1 h-12 bg-gray-400 rounded-full"></div>
+            </div>
+          )}
 
           {/* LIVE PREVIEW PANEL (Right side) */}
           <div className="flex-1 bg-gray-200 overflow-y-auto relative select-none">
-            <div className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded shadow opacity-50 pointer-events-none z-10">Live Preview (Click a section to edit)</div>
+            <div className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded shadow opacity-50 pointer-events-none z-10">
+              Live Preview {mode === "split" && "(Click a section to edit)"}
+            </div>
             <div className="w-full bg-white min-h-full pb-20 select-text">
-              <OurFirm previewData={data} onSectionClick={handleSectionClick} />
+              <OurFirm 
+                previewData={data} 
+                onSectionClick={mode === "split" ? handleSectionClick : undefined} 
+              />
             </div>
           </div>
 
-        </div>
+          </div>
+        )}
       </main>
     </section>
   );
