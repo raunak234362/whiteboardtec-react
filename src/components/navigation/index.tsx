@@ -180,7 +180,7 @@ const NavigationBar = (): JSX.Element => {
         className="flex flex-wrap mx-auto md:justify-end lg:max-w-screen-lg xl:max-w-screen-xl max-md:justify-start"
         style={{ display: display && !navShow ? "none" : "" }}
       >
-        <ul className="flex flex-col flex-wrap mx-5 md:flex-row text-md max-md:w-full">
+        <ul className="flex flex-col flex-wrap mx-5 md:flex-row text-md max-md:w-full list-none">
           {window.innerWidth <= 768 && <ExtraHeader />}
           {NavRoute.map((route) => (
             <NavBar key={route.name} {...route} navShow={setnavShow}/>

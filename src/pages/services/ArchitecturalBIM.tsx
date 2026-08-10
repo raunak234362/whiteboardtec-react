@@ -37,12 +37,12 @@ function ArchitecturalBIM({ previewData, onSectionClick }: { previewData?: any; 
 
       {/* Intro Section */}
       <div className="mx-auto my-16 px-6 md:px-12 lg:max-w-screen-lg xl:max-w-screen-xl">
-        <section className="rounded-3xl border-2 p-6 lg:p-10 grid grid-cols-1 lg:grid-cols-[60%_40%] gap-8 shadow-md bg-white">
+        <section className="rounded-3xl border-2 p-6 lg:p-10 grid sm:grid-cols-1 lg:grid-cols-[60%_40%] gap-8 shadow-md bg-white">
           <div 
             className={`order-1 leading-relaxed text-gray-700 max-md:order-2 p-2 rounded ${getEditClass("intro")}`}
             onClick={(e) => handleClick(e, "intro")}
           >
-            {data.intro.headSection.map((desc: string, index: number) => (
+              {data.intro.headSection.map((desc: string, index: number) => (
               <p 
                 key={index} 
                 className="text-lg mb-4 text-justify"
@@ -52,10 +52,11 @@ function ArchitecturalBIM({ previewData, onSectionClick }: { previewData?: any; 
             {data.intro.cta && (
               <div className="mt-4 text-xl font-semibold text-black" dangerouslySetInnerHTML={{ __html: data.intro.cta }} />
             )}
+            
           </div>
-          
+
           <div 
-            className={`flex items-center justify-center p-2 rounded ${getEditClass("estimate")}`}
+            className={`order-2 flex items-center justify-center p-2 rounded ${getEditClass("estimate")}`}
             onClick={(e) => handleClick(e, "estimate")}
           >
             <Estimate {...data.estimate} />

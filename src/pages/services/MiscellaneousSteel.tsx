@@ -37,7 +37,7 @@ function MiscellaneousSteel({ previewData, onSectionClick }: { previewData?: any
       <section className="flex flex-wrap justify-center items-start mx-auto w-full">
         <div className="flex flex-wrap flex-col w-full">
           <div className="mx-auto my-20 lg:max-w-screen-lg xl:max-w-screen-xl px-4 w-full">
-            <section className="rounded-3xl border-2 p-6 grid grid-cols-1 lg:grid-cols-[60%_40%] gap-6 shadow-md bg-white">
+            <section className="rounded-3xl border-2 p-6 grid sm:grid-cols-1 lg:grid-cols-[60%_40%] gap-6 shadow-md bg-white">
               <div 
                 className={`order-1 leading-loose text-gray-700 max-md:order-2 p-2 rounded ${getEditClass("intro")}`}
                 onClick={(e) => handleClick(e, "intro")}
@@ -105,7 +105,7 @@ function MiscellaneousSteel({ previewData, onSectionClick }: { previewData?: any
           className={`mx-auto w-full lg:max-w-screen-lg xl:max-w-screen-xl px-4 mt-6 ${getEditClass("miscTypes")}`}
           onClick={(e) => handleClick(e, "miscTypes")}
         >
-          <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-6 border-2 shadow-md rounded-2xl bg-white mb-20">
+          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-6 border-2 shadow-md rounded-2xl bg-white mb-20">
             {data.miscTypes?.map((type: any, index: number) => {
               return (
                 <div key={index} className="leading-loose text-gray-700">

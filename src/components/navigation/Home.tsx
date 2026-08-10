@@ -44,7 +44,7 @@ function Home(props: NavRouteType): JSX.Element {
                   {props.name}
                 </div>
               </NavLink>
-              <ul>
+              <ul className="list-none">
                 {props.child?.map((child) => (
                   <NavLink key={child.name} to={props.path + child.path}>
                     <li className="text-white text-left text-md p-1 px-3 hover:text-[#6abd45]">

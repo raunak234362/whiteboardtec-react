@@ -20,22 +20,42 @@
 /* Ensure rich text & HTML lists render bullet dots and numbers across all pages and live previews */
 @layer base {
   ul {
-    list-style-type: disc !important;
-    list-style-position: inside !important;
-    margin-top: 0.25rem !important;
-    margin-bottom: 0.25rem !important;
-    padding-left: 1rem !important;
+    list-style-type: disc;
+    list-style-position: inside;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    padding-left: 1rem;
   }
   ol {
-    list-style-type: decimal !important;
-    list-style-position: inside !important;
-    margin-top: 0.25rem !important;
-    margin-bottom: 0.25rem !important;
-    padding-left: 1rem !important;
+    list-style-type: decimal;
+    list-style-position: inside;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    padding-left: 1rem;
   }
   li {
-    display: list-item !important;
+    display: list-item;
   }
+}
+
+/* Reset list styles for navigation and custom menus to override base list styles */
+nav ul,
+nav li,
+.list-none,
+.list-none li {
+  list-style-type: none !important;
+  padding-left: 0 !important;
+}
+
+/* Specific class to override the !important base list styles for custom arrow bullets in Estimate components */
+.estimate-bullets-list {
+  list-style-type: none !important;
+  padding-left: 0 !important;
+}
+
+.estimate-bullets-list li {
+  display: flex !important;
+  list-style-type: none !important;
 }
 
 /* Jodit Editor Specific List Styles */

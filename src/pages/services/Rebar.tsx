@@ -36,7 +36,7 @@ function Rebar({ previewData, onSectionClick }: { previewData?: any; onSectionCl
       </div>
 
       <div className="my-16 max-md:mx-3 px-4 flex flex-wrap justify-start items-start mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
-        <section className="rounded-3xl border-2 p-4 grid grid-cols-1 lg:grid-cols-[60%_40%] gap-6 shadow-md bg-white">
+        <section className="rounded-3xl border-2 p-4 grid sm:grid-cols-1 lg:grid-cols-[60%_40%] gap-6 shadow-md bg-white">
           <div 
             className={`order-1 m-4 leading-loose text-gray-700 max-md:order-2 p-2 rounded ${getEditClass("headSection")}`}
             onClick={(e) => handleClick(e, "headSection")}
@@ -57,7 +57,7 @@ function Rebar({ previewData, onSectionClick }: { previewData?: any; onSectionCl
             )}
           </div>
           <div 
-            className={`flex items-center justify-center p-2 rounded ${getEditClass("estimate")}`}
+            className={`order-2 flex items-center justify-center p-2 rounded ${getEditClass("estimate")}`}
             onClick={(e) => handleClick(e, "estimate")}
           >
             <Estimate {...data.estimate} />

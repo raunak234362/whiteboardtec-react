@@ -21,7 +21,7 @@ function Estimate({
         <div className="text-2xl font-bold" dangerouslySetInnerHTML={{ __html: head }} />
         <div className="m-5 ml-0 text-md text-justify leading-relaxed" dangerouslySetInnerHTML={{ __html: body }} />
         <div className="text-md my-2 mr-5 text-justify">
-          <ul className="list-none list-inside space-y-2">
+          <ul className="estimate-bullets-list list-none list-inside space-y-2">
             {bullets.map((bullet, idx) => (
               <li key={idx} className="flex items-start gap-2">
                 <span className="mt-1">

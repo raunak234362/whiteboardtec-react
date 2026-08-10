@@ -53,9 +53,19 @@ function Careers({ previewData, onSectionClick }: { previewData?: any; onSection
       </div>
 
       <div className="mx-auto my-16 lg:max-w-screen-lg xl:max-w-screen-xl px-4">
-        <section className="rounded-3xl border-2 p-4 grid grid-cols-1 lg:grid-cols-[60%_40%] gap-4 shadow-md bg-white">
+        <section className="rounded-3xl border-2 p-4 grid sm:grid-cols-1 lg:grid-cols-[60%_40%] gap-4 shadow-md bg-white">
+           <div 
+            className={`order-2 flex flex-wrap justify-center max-md:order-1 p-2 rounded ${getEditClass("tagline")}`}
+            onClick={(e) => handleClick(e, "tagline")}
+          >
+            <div className="bg-[#6abd45] rounded-xl flex flex-wrap flex-col w-full h-fit shadow-2xl m-4 p-4">
+              {data.headSection.tagline?.map((tag: string, index: number) => (
+                <h1 key={index} className="pb-2 text-2xl text-white font-semibold" dangerouslySetInnerHTML={{ __html: tag }} />
+              ))}
+            </div>
+          </div>
           <div 
-            className={`order-1 m-4 leading-loose max-md:order-2 p-2 rounded ${getEditClass("headSection")}`}
+            className={`order-1 m-4 leading-loose my-auto max-md:order-2 p-2 rounded ${getEditClass("headSection")}`}
             onClick={(e) => handleClick(e, "headSection")}
           >
             <div className="text-3xl font-bold my-2 text-[#6abd45]" dangerouslySetInnerHTML={{ __html: data.headSection.title }} />
@@ -68,16 +78,7 @@ function Careers({ previewData, onSectionClick }: { previewData?: any; onSection
             ))}
           </div>
 
-          <div 
-            className={`flex flex-wrap justify-center order-2 max-md:order-1 p-2 rounded ${getEditClass("tagline")}`}
-            onClick={(e) => handleClick(e, "tagline")}
-          >
-            <div className="bg-[#6abd45] rounded-xl flex flex-wrap flex-col w-full h-fit shadow-2xl m-4 p-4">
-              {data.headSection.tagline?.map((tag: string, index: number) => (
-                <h1 key={index} className="pb-2 text-2xl text-white font-semibold" dangerouslySetInnerHTML={{ __html: tag }} />
-              ))}
-            </div>
-          </div>
+         
         </section>
       </div>
 
@@ -176,9 +177,9 @@ function Careers({ previewData, onSectionClick }: { previewData?: any; onSection
         onClick={(e) => handleClick(e, "equalOpportunity")}
       >
         <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-4">
-          <section className="p-2 grid grid-cols-1 lg:grid-cols-[35%_65%] gap-8 items-center bg-white rounded-3xl shadow border">
+          <section className="p-2 grid sm:grid-cols-1 lg:grid-cols-[65%_35%] gap-8 items-center bg-white rounded-3xl shadow border">
             {data.equalOpportunity.image && (
-              <div className="flex items-center justify-center p-4">
+              <div className="order-2 flex items-center justify-center p-4">
                 <img
                   src={data.equalOpportunity.image}
                   alt="Equal Opportunity"
@@ -186,7 +187,7 @@ function Careers({ previewData, onSectionClick }: { previewData?: any; onSection
                 />
               </div>
             )}
-            <div className="flex flex-col justify-center p-4">
+            <div className="flex order-1 flex-col justify-center p-4">
               <div className="text-[#6abd45] text-3xl font-semibold mb-4" dangerouslySetInnerHTML={{ __html: data.equalOpportunity.title }} />
               <div className="text-lg text-justify text-gray-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: data.equalOpportunity.body }} />
             </div>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import connectionDesignData from "../../../data/connectionDesign.json";
 import { Header, Sidebar, useSidebar, PublishPanel, RichTextEditor } from "../components";
 import PESEStampig from "../../services/PESEStampig";
@@ -185,12 +185,12 @@ export default function EditConnectionDesign() {
               <div className="border-b pb-4 p-2 rounded" ref={introRef}>
                 <h3 className="text-lg font-semibold mb-2">Connection Solutions</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Section Title</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.intro.title}
                   onChange={(val) => setData(prev => ({ ...prev, intro: { ...prev.intro, title: val } }))}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1">Call to Action (CTA)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.intro.cta}
                   onChange={(val) => setData(prev => ({ ...prev, intro: { ...prev.intro, cta: val } }))}
                 />
@@ -237,12 +237,12 @@ export default function EditConnectionDesign() {
               <div className="border-b pb-4 p-2 rounded" ref={estimateRef}>
                 <h3 className="text-lg font-semibold mb-2">Estimate Details</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Heading</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.estimate.head}
                   onChange={(val) => setData(prev => ({ ...prev, estimate: { ...prev.estimate, head: val } }))}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1">Body Text</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.estimate.body}
                   onChange={(val) => setData(prev => ({ ...prev, estimate: { ...prev.estimate, body: val } }))}
                 />
@@ -288,12 +288,12 @@ export default function EditConnectionDesign() {
               <div className="pb-4 p-2 rounded" ref={stampingRef}>
                 <h3 className="text-lg font-semibold mb-2">PE/SE Stamping</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Stamping Title</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.stamping.title}
                   onChange={(val) => setData(prev => ({ ...prev, stamping: { ...prev.stamping, title: val } }))}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1">Call to Action (CTA)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.stamping.cta}
                   onChange={(val) => setData(prev => ({ ...prev, stamping: { ...prev.stamping, cta: val } }))}
                 />

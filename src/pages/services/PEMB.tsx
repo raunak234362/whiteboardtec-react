@@ -58,7 +58,7 @@ function PEMB({ previewData, onSectionClick }: { previewData?: any; onSectionCli
 
       {/* Head Section */}
       <div className="mx-auto my-16 lg:max-w-screen-lg xl:max-w-screen-xl px-8">
-        <section className="rounded-3xl border-2 p-6 grid grid-cols-1 lg:grid-cols-[60%_40%] gap-6 shadow-md bg-white">
+        <section className="rounded-3xl border-2 p-6 grid sm:grid-cols-1 lg:grid-cols-[60%_40%] gap-6 shadow-md bg-white">
           <div 
             className={`order-1 leading-loose text-gray-700 max-md:order-2 p-2 rounded ${getEditClass("intro")}`}
             onClick={(e) => handleClick(e, "intro")}
@@ -72,7 +72,7 @@ function PEMB({ previewData, onSectionClick }: { previewData?: any; onSectionCli
             ))}
           </div>
           <div 
-            className={`flex items-center justify-center p-2 rounded ${getEditClass("estimate")}`}
+            className={`order-2 flex items-center justify-center p-2 rounded ${getEditClass("estimate")}`}
             onClick={(e) => handleClick(e, "estimate")}
           >
             <Estimate {...data.estimate} />

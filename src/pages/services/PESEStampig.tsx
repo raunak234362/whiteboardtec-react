@@ -37,7 +37,7 @@ function PESEStampig({ previewData, onSectionClick }: { previewData?: any; onSec
 
       {/* Connection Solutions Section */}
       <div className="mx-auto my-20 lg:max-w-screen-lg xl:max-w-screen-xl px-4">
-        <section className="rounded-3xl border-2 p-6 grid grid-cols-1 lg:grid-cols-[60%_40%] gap-6 shadow-md bg-white">
+        <section className="rounded-3xl border-2 p-6 grid sm:grid-cols-1 lg:grid-cols-[60%_40%] gap-6 shadow-md bg-white">
           <div 
             className={`leading-loose text-gray-700 p-2 rounded ${getEditClass("intro")}`}
             onClick={(e) => handleClick(e, "intro")}
@@ -71,7 +71,7 @@ function PESEStampig({ previewData, onSectionClick }: { previewData?: any; onSec
         onClick={(e) => handleClick(e, "stamping")}
       >
         <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-4">
-          <section className="grid grid-cols-1 lg:grid-cols-[65%_35%] gap-6 items-center">
+          <section className="grid sm:grid-cols-1 lg:grid-cols-[65%_35%] gap-6 items-center">
             {/* Text */}
             <div>
               <h2 className="text-[#6abd45] text-3xl font-semibold mb-4" dangerouslySetInnerHTML={{ __html: data.stamping.title }} />

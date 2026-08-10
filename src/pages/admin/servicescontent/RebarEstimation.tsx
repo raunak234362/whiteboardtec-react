@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import rebarEstimationData from "../../../data/rebarEstimation.json";
 import { Header, Sidebar, useSidebar, PublishPanel, RichTextEditor } from "../components";
 import Rebar from "../../services/Rebar";
@@ -200,7 +200,7 @@ export default function EditRebarEstimation() {
               <div className="border-b pb-4 p-2 rounded" ref={headSectionRef}>
                 <h3 className="text-lg font-semibold mb-2">Intro Section</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Green Alert Title</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.headSection.title}
                   onChange={(val) => setData(prev => ({ ...prev, headSection: { ...prev.headSection, title: val } }))}
                 />
@@ -247,12 +247,12 @@ export default function EditRebarEstimation() {
               <div className="border-b pb-4 p-2 rounded" ref={estimateRef}>
                 <h3 className="text-lg font-semibold mb-2">Estimate Details</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Heading</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.estimate.head}
                   onChange={(val) => setData(prev => ({ ...prev, estimate: { ...prev.estimate, head: val } }))}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1">Body Text</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.estimate.body}
                   onChange={(val) => setData(prev => ({ ...prev, estimate: { ...prev.estimate, body: val } }))}
                 />
