@@ -166,11 +166,17 @@ function LeadershipTeam() {
                       </div>
                     </div>
 
-                    <div className="text-lg font-normal leading-relaxed text-justify text-gray-700">
+                    <div className="text-lg font-normal leading-relaxed text-justify text-gray-700 break-words" style={{ wordBreak: "break-word", overflowWrap: "break-word" }}>
                       <style>{`
+                        .thought-description {
+                          word-break: break-word !important;
+                          overflow-wrap: break-word !important;
+                        }
                         .thought-description * {
                           max-width: 100% !important;
                           box-sizing: border-box !important;
+                          word-break: break-word !important;
+                          overflow-wrap: break-word !important;
                         }
                         .thought-description table {
                           width: 100% !important;
