@@ -50,9 +50,7 @@ function ArchitecturalBIM({ previewData, onSectionClick }: { previewData?: any; 
               />
             ))}
             {data.intro.cta && (
-              <div className="mt-4 text-xl font-semibold text-black">
-                {data.intro.cta}
-              </div>
+              <div className="mt-4 text-xl font-semibold text-black" dangerouslySetInnerHTML={{ __html: data.intro.cta }} />
             )}
           </div>
           

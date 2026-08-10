@@ -61,6 +61,35 @@ interface StructuralDetailingData {
 
 export default function StructuralDetailing() {
   const { isSidebarOpen } = useSidebar();
+  const [editorWidth, setEditorWidth] = useState(550);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const startResizing = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return;
+      const newWidth = Math.max(350, Math.min(e.clientX - 250, 950));
+      setEditorWidth(newWidth);
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    if (isDragging) {
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+    }
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging]);
   const [mode, setMode] = useState<"split" | "preview">("split");
   const [isChangingMode, setIsChangingMode] = useState(false);
 
@@ -182,7 +211,7 @@ export default function StructuralDetailing() {
           <div className="flex flex-row h-full overflow-hidden">
           {/* EDITOR PANEL (Left side) */}
           {mode === "split" && (
-          <div className="w-[550px] bg-white border-r flex flex-col h-full overflow-y-auto">
+          <div style={{ width: `${editorWidth}px` }} className="bg-white border-r flex flex-col h-full overflow-y-auto transition-all duration-75">
             {/* Publish Actions Sticky Header */}
             <div className="bg-gray-50 p-4 border-b sticky top-0 z-10 shadow-sm">
               <h3 className="font-bold mb-2">Publish Settings</h3>
@@ -240,10 +269,9 @@ export default function StructuralDetailing() {
               <div className="border-b pb-4 p-2 rounded" ref={introRef}>
                 <h3 className="text-lg font-semibold mb-2">Intro Section</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Title</label>
-                <input
-                  className="w-full border p-2 rounded mb-4 text-sm"
+                <JoditWrapper
                   value={data.intro.title}
-                  onChange={(e) => setData(prev => ({ ...prev, intro: { ...prev.intro, title: e.target.value } }))}
+                  onChange={(val) => setData(prev => ({ ...prev, intro: { ...prev.intro, title: val } }))}
                 />
 
                 <label className="block text-xs font-medium text-gray-500 mb-2 font-bold">Intro Paragraphs</label>
@@ -288,16 +316,14 @@ export default function StructuralDetailing() {
               <div className="border-b pb-4 p-2 rounded" ref={estimateRef}>
                 <h3 className="text-lg font-semibold mb-2">Estimate Details</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Heading</label>
-                <textarea
-                  className="w-full border p-2 rounded mb-2 text-sm h-16"
+                <JoditWrapper
                   value={data.estimate.head}
-                  onChange={(e) => setData(prev => ({ ...prev, estimate: { ...prev.estimate, head: e.target.value } }))}
+                  onChange={(val) => setData(prev => ({ ...prev, estimate: { ...prev.estimate, head: val } }))}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1">Body Text</label>
-                <textarea
-                  className="w-full border p-2 rounded mb-2 text-sm h-20"
+                <JoditWrapper
                   value={data.estimate.body}
-                  onChange={(e) => setData(prev => ({ ...prev, estimate: { ...prev.estimate, body: e.target.value } }))}
+                  onChange={(val) => setData(prev => ({ ...prev, estimate: { ...prev.estimate, body: val } }))}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1 mt-2">Bullet Points</label>
                 {data.estimate.bullets?.map((bullet, idx) => (
@@ -409,6 +435,19 @@ export default function StructuralDetailing() {
           </div>
           )}
 
+
+          
+          {/* Resizer Handle */}
+          {mode === "split" && (
+            <div
+              onMouseDown={startResizing}
+              className={`w-2 bg-gray-200 hover:bg-green-500 cursor-col-resize transition-all duration-150 relative flex items-center justify-center ${
+                isDragging ? "bg-green-500 w-2.5" : ""
+              }`}
+            >
+              <div className="w-1 h-12 bg-gray-400 rounded-full"></div>
+            </div>
+          )}
 
           {/* LIVE PREVIEW PANEL (Right side) */}
           <div className="flex-1 bg-gray-200 overflow-y-auto relative">

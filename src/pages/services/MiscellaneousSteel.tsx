@@ -42,9 +42,7 @@ function MiscellaneousSteel({ previewData, onSectionClick }: { previewData?: any
                 className={`order-1 leading-loose text-gray-700 max-md:order-2 p-2 rounded ${getEditClass("intro")}`}
                 onClick={(e) => handleClick(e, "intro")}
               >
-                <div className="my-2 text-xl font-semibold text-Black">
-                  {data.intro.title}
-                </div>
+                <div className="my-2 text-xl font-semibold text-Black" dangerouslySetInnerHTML={{ __html: data.intro.title }} />
                 {data.intro.headSection?.map((desc: string, index: number) => {
                   return (
                     <p

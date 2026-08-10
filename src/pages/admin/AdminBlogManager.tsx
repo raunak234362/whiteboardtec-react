@@ -203,8 +203,8 @@ function AdminBlogManager() {
           onClose={() => !loading && setFormOpen(false)}
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
         >
-          <div className="w-full max-w-5xl mx-auto">
-            <Dialog.Panel className="relative w-full bg-white rounded-xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto">
+          <div className="w-full max-w-[95vw] xl:max-w-[85vw] mx-auto">
+            <Dialog.Panel className="relative w-full bg-white rounded-xl shadow-2xl p-6 max-h-[92vh] overflow-y-auto">
               <div className="flex items-center justify-between border-b border-gray-150 pb-4 mb-6">
                 <Dialog.Title className="text-xl font-bold text-gray-900 uppercase tracking-wider">
                   {editingBlog ? "Edit Blog" : "Add New Blog"}
@@ -285,7 +285,7 @@ function AdminBlogManager() {
                         <Editor
                           value={content}
                           onTextChange={(e) => setContent(e.htmlValue ?? "")}
-                          style={{ height: "280px" }}
+                          style={{ height: "380px" }}
                           className="border border-gray-200 rounded-lg overflow-hidden"
                         />
                       </div>
