@@ -1,9 +1,9 @@
 @import "slick-carousel/slick/slick.css";
 @import "slick-carousel/slick/slick-theme.css";
+@import "jodit/es2021/jodit.min.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 @layer utilities {
     /* Hide scrollbar for Chrome, Safari and Opera */
@@ -15,4 +15,59 @@
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
   }
+}
+
+/* Ensure rich text & HTML lists render bullet dots and numbers across all pages and live previews */
+@layer base {
+  ul {
+    list-style-type: disc !important;
+    list-style-position: inside !important;
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
+    padding-left: 1rem !important;
+  }
+  ol {
+    list-style-type: decimal !important;
+    list-style-position: inside !important;
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
+    padding-left: 1rem !important;
+  }
+  li {
+    display: list-item !important;
+  }
+}
+
+/* Jodit Editor Specific List Styles */
+.rich-text-editor .jodit-wysiwyg ul,
+.rich-text-editor .jodit-container ul,
+.rich-text-editor .jodit-workplace ul,
+.jodit-wysiwyg ul,
+.jodit-container ul {
+    list-style-type: disc !important;
+    list-style-position: inside !important;
+    padding-left: 1.5rem !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.rich-text-editor .jodit-wysiwyg ol,
+.rich-text-editor .jodit-container ol,
+.rich-text-editor .jodit-workplace ol,
+.jodit-wysiwyg ol,
+.jodit-container ol {
+    list-style-type: decimal !important;
+    list-style-position: inside !important;
+    padding-left: 1.5rem !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.rich-text-editor .jodit-wysiwyg li,
+.rich-text-editor .jodit-container li,
+.rich-text-editor .jodit-workplace li,
+.jodit-wysiwyg li,
+.jodit-container li {
+    display: list-item !important;
+    list-style-position: inside !important;
 }

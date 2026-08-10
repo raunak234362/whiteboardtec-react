@@ -1,44 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import connectData from "../../../data/connect.json";
-import { saveToGithub } from "../../../config/github";
-import { Header, Sidebar, useSidebar } from "../components";
+import { Header, Sidebar, useSidebar, PublishPanel, RichTextEditor } from "../components";
 import Connect from "../../connect/Connect";
-import { Jodit } from "jodit";
-import "jodit/es2021/jodit.min.css";
-
-
-
-const JoditWrapper = ({ value, onChange, height = 180 }: { value: string; onChange: (v: string) => void; height?: number }) => {
-  const editorRef = useRef<HTMLDivElement>(null);
-  const joditInstance = useRef<any>(null);
-  const onChangeRef = useRef(onChange);
-
-  useEffect(() => {
-    onChangeRef.current = onChange;
-  }, [onChange]);
-
-  useEffect(() => {
-    if (editorRef.current && !joditInstance.current) {
-      joditInstance.current = Jodit.make(editorRef.current, {
-        events: {
-          change: (newVal: string) => {
-            onChangeRef.current(newVal);
-          }
-        },
-        height: height
-      });
-      joditInstance.current.value = value;
-    }
-    return () => {
-      if (joditInstance.current) {
-        joditInstance.current.destruct();
-        joditInstance.current = null;
-      }
-    };
-  }, []);
-
-  return <div ref={editorRef} />;
-};
 
 interface ConnectPageData {
   banner: {
@@ -88,9 +51,6 @@ export default function EditConnect() {
     }, 600);
   };
   const [data, setData] = useState<ConnectPageData>(connectData as ConnectPageData);
-  const [githubToken, setGithubToken] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
 
   // Resize Panel State
   const [editorWidth, setEditorWidth] = useState(550);
@@ -132,27 +92,7 @@ export default function EditConnect() {
     };
   }, [isDragging]);
 
-  const handleSave = async () => {
-    if (!githubToken) {
-      setMessage("Please enter a GitHub Personal Access Token to save changes.");
-      return;
-    }
-    setLoading(true);
-    setMessage("Saving to GitHub...");
-    try {
-      await saveToGithub(
-        "src/data/connect.json",
-        JSON.stringify(data, null, 2),
-        githubToken,
-        "Update Connect page content via Admin CMS"
-      );
-      setMessage("Successfully saved to GitHub! Changes will be reflected shortly.");
-    } catch (error: any) {
-      setMessage(`Error: ${error.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
+
 
   const handleSectionClick = (sectionId: string) => {
     const refs: { [key: string]: React.RefObject<HTMLDivElement> } = {
@@ -234,32 +174,7 @@ export default function EditConnect() {
             className="bg-white border-r flex flex-col h-full overflow-y-auto animate-fade-in transition-all duration-75"
           >
             {/* Publish Actions Sticky Header */}
-            <div className="bg-gray-50 p-4 border-b sticky top-0 z-10 shadow-sm">
-              <h3 className="font-bold mb-2">Publish Settings</h3>
-              <input
-                type="password"
-                className="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 mb-2 text-sm"
-                placeholder="GitHub Token (ghp_...)"
-                value={githubToken}
-                onChange={(e) => setGithubToken(e.target.value)}
-              />
-              <button
-                onClick={handleSave}
-                disabled={loading}
-                className={`w-full py-2 px-4 border rounded font-bold text-sm uppercase transition-all shadow-sm ${
-                  loading
-                    ? "border-gray-200 text-gray-400 bg-gray-50 cursor-not-allowed"
-                    : "border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50"
-                }`}
-              >
-                {loading ? "Saving..." : "Update Page"}
-              </button>
-              {message && (
-                <div className={`mt-2 p-2 rounded text-xs ${message.includes("Error") || message.includes("Please enter") ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}>
-                  {message}
-                </div>
-              )}
-            </div>
+            <PublishPanel filePath="src/data/connect.json" data={data} />
 
             {/* Form Fields */}
             <div className="p-4 space-y-6 select-text">
@@ -267,13 +182,13 @@ export default function EditConnect() {
               <div className="border-b pb-4 p-2 rounded" ref={bannerRef}>
                 <h3 className="text-lg font-semibold mb-2">Banner</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Header (Rich Text)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.banner.header}
                   onChange={(val) => setData(prev => ({ ...prev, banner: { ...prev.banner, header: val } }))}
                   height={120}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Subheader (Rich Text)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.banner.subheader}
                   onChange={(val) => setData(prev => ({ ...prev, banner: { ...prev.banner, subheader: val } }))}
                   height={120}
@@ -290,13 +205,13 @@ export default function EditConnect() {
               <div className="border-b pb-4 p-2 rounded" ref={introRef}>
                 <h3 className="text-lg font-semibold mb-2">Intro Section</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Heading Title (Rich Text)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.context.heading}
                   onChange={(val) => setData(prev => ({ ...prev, context: { ...prev.context, heading: val } }))}
                   height={120}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Body Text (HTML enabled)</label>
-                <JoditWrapper
+                <RichTextEditor
                   value={data.context.body}
                   onChange={(val) => setData(prev => ({ ...prev, context: { ...prev.context, body: val } }))}
                 />
@@ -422,7 +337,7 @@ export default function EditConnect() {
                       Delete
                     </button>
                     <label className="block text-[10px] text-gray-400 mb-1 font-semibold">Office Title (Rich Text)</label>
-                    <JoditWrapper
+                    <RichTextEditor
                       value={addr.title}
                       onChange={(val) => setData(prev => {
                         const newAddrs = [...prev.context.address];

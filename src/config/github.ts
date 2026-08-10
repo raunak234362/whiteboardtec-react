@@ -26,62 +26,174 @@ export const saveToGithub = async (
 
   const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}`;
 
-  try {
-    // 1. Get the current file to get its SHA (required for updating an existing file)
-    let sha = "";
+  const fetchLatestSha = async () => {
     try {
+      const formattedToken = token.trim().startsWith("token ") || token.trim().startsWith("Bearer ")
+        ? token.trim()
+        : `token ${token.trim()}`;
+
       const getResponse = await axios.get<any>(url, {
         headers: {
-          Authorization: `token ${token}`,
+          Authorization: formattedToken,
           Accept: "application/vnd.github.v3+json",
         },
         params: {
           ref: GITHUB_BRANCH,
+          _t: Date.now(),
         },
       });
-      sha = getResponse.data.sha;
+      return getResponse.data?.sha || "";
     } catch (err: any) {
-      if (err.response && err.response.status !== 404) {
+      if (!err.response || err.response.status !== 404) {
         throw err;
       }
-      // If 404, file doesn't exist yet, we just create it (sha remains empty)
+      return "";
     }
+  };
+
+  try {
+    // 1. Get the current file SHA with cache busting
+    let sha = await fetchLatestSha();
 
     // 2. Encode content to base64
     const base64Content = btoa(unescape(encodeURIComponent(content)));
 
-    // 3. Put the updated content
-    const payload: any = {
-      message: commitMessage,
-      content: base64Content,
-      branch: GITHUB_BRANCH,
+    // Helper for PUT request
+    const attemptPut = async (currentSha: string) => {
+      const formattedToken = token.trim().startsWith("token ") || token.trim().startsWith("Bearer ")
+        ? token.trim()
+        : `token ${token.trim()}`;
+
+      const payload: any = {
+        message: commitMessage,
+        content: base64Content,
+        branch: GITHUB_BRANCH,
+      };
+
+      if (currentSha) {
+        payload.sha = currentSha;
+      }
+
+      return await axios.put(url, payload, {
+        headers: {
+          Authorization: formattedToken,
+          Accept: "application/vnd.github.v3+json",
+        },
+      });
     };
 
-    if (sha) {
-      payload.sha = sha;
+    // 3. Put the updated content, with auto-retry on 409 SHA conflict
+    try {
+      const putResponse = await attemptPut(sha);
+      return putResponse.data;
+    } catch (putErr: any) {
+      if (putErr.response && putErr.response.status === 409) {
+        console.warn("SHA mismatch (409 Conflict). Fetching latest SHA and retrying...");
+        const freshSha = await fetchLatestSha();
+        const putResponse = await attemptPut(freshSha);
+        return putResponse.data;
+      }
+      throw putErr;
     }
-
-    const putResponse = await axios.put(url, payload, {
-      headers: {
-        Authorization: `token ${token}`,
-        Accept: "application/vnd.github.v3+json",
-      },
-    });
-
-    return putResponse.data;
   } catch (error: any) {
     console.error("GitHub API Error:", error);
-    const status = error.response?.status;
     let errorMsg =
       error.response?.data?.message ||
       error.message ||
       "Failed to save to GitHub";
 
-    if (status === 404) {
-      errorMsg =
-        "Not Found (404). This usually means your GitHub Token is invalid, expired, or DOES NOT have the 'repo' scope checked. Please generate a new Classic Token with 'repo' permissions.";
-    }
-
     throw new Error(errorMsg);
   }
+};
+
+export const saveLocalDraft = async (filePath: string, content: string) => {
+  // 1. Attempt to save locally if running in development mode (Vite plugin)
+  try {
+    await fetch("/api/save-json", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ filePath, content })
+    });
+  } catch (e) {
+    console.warn("Could not save locally. This is normal in production.", e);
+  }
+
+  // 2. Stage in localStorage
+  try {
+    const staged = getStagedChangesMap();
+    staged[filePath] = {
+      filePath,
+      content,
+      updatedAt: new Date().toISOString(),
+    };
+    localStorage.setItem("staged_cms_updates", JSON.stringify(staged));
+  } catch (e) {
+    console.error("Failed to save to localStorage staging:", e);
+  }
+};
+
+export const getStagedChangesMap = (): Record<string, { filePath: string; content: string; updatedAt: string }> => {
+  try {
+    const raw = localStorage.getItem("staged_cms_updates");
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+};
+
+export const getStagedCount = (): number => {
+  return Object.keys(getStagedChangesMap()).length;
+};
+
+export const clearStagedChanges = () => {
+  try {
+    localStorage.removeItem("staged_cms_updates");
+  } catch (e) {
+    console.error("Failed to clear staged changes:", e);
+  }
+};
+
+export const publishAllStagedToGithub = async (
+  token: string,
+  currentFilePath?: string,
+  currentContent?: string,
+  onProgress?: (msg: string) => void
+) => {
+  if (!token) {
+    throw new Error("GitHub token is required to save changes.");
+  }
+
+  // If current file was provided, save/stage it first
+  if (currentFilePath && currentContent) {
+    await saveLocalDraft(currentFilePath, currentContent);
+  }
+
+  const stagedMap = getStagedChangesMap();
+  const filePaths = Object.keys(stagedMap);
+
+  if (filePaths.length === 0) {
+    throw new Error("No updates found in storage to publish.");
+  }
+
+  let publishedCount = 0;
+
+  for (let i = 0; i < filePaths.length; i++) {
+    const path = filePaths[i];
+    const item = stagedMap[path];
+    if (onProgress) {
+      onProgress(`[${i + 1}/${filePaths.length}] Publishing ${path} to GitHub...`);
+    }
+
+    const filename = path.split("/").pop() || path;
+    await saveToGithub(
+      path,
+      item.content,
+      token,
+      `Update ${filename} via Admin CMS Batch Publish`
+    );
+    publishedCount++;
+  }
+
+  clearStagedChanges();
+  return publishedCount;
 };

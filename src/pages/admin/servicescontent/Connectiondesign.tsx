@@ -1,44 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import connectionDesignData from "../../../data/connectionDesign.json";
-import { saveToGithub } from "../../../config/github";
-import { Header, Sidebar, useSidebar } from "../components";
+import { Header, Sidebar, useSidebar, PublishPanel, RichTextEditor } from "../components";
 import PESEStampig from "../../services/PESEStampig";
-import { Jodit } from "jodit";
-import "jodit/es2021/jodit.min.css";
-
-
-
-const JoditWrapper = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => {
-  const editorRef = useRef<HTMLDivElement>(null);
-  const joditInstance = useRef<any>(null);
-  const onChangeRef = useRef(onChange);
-
-  useEffect(() => {
-    onChangeRef.current = onChange;
-  }, [onChange]);
-
-  useEffect(() => {
-    if (editorRef.current && !joditInstance.current) {
-      joditInstance.current = Jodit.make(editorRef.current, {
-        events: {
-          change: (newVal: string) => {
-            onChangeRef.current(newVal);
-          }
-        },
-        height: 180
-      });
-      joditInstance.current.value = value;
-    }
-    return () => {
-      if (joditInstance.current) {
-        joditInstance.current.destruct();
-        joditInstance.current = null;
-      }
-    };
-  }, []);
-
-  return <div ref={editorRef} />;
-};
 
 interface ConnectionDesignData {
   banner: {
@@ -107,9 +70,6 @@ export default function EditConnectionDesign() {
     }, 600);
   };
   const [data, setData] = useState<ConnectionDesignData>(connectionDesignData as ConnectionDesignData);
-  const [githubToken, setGithubToken] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
 
   const bannerRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
@@ -117,28 +77,6 @@ export default function EditConnectionDesign() {
   const stampingRef = useRef<HTMLDivElement>(null);
 
   const header = { head: "Live Editor: Connection Design & Stamping" };
-
-  const handleSave = async () => {
-    if (!githubToken) {
-      setMessage("Please enter a GitHub Personal Access Token to save changes.");
-      return;
-    }
-    setLoading(true);
-    setMessage("Saving to GitHub...");
-    try {
-      await saveToGithub(
-        "src/data/connectionDesign.json",
-        JSON.stringify(data, null, 2),
-        githubToken,
-        "Update Connection Design & Stamping page content via Admin CMS"
-      );
-      setMessage("Successfully saved to GitHub! Changes will be reflected shortly.");
-    } catch (error: any) {
-      setMessage(`Error: ${error.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleSectionClick = (sectionId: string) => {
     const refs: { [key: string]: React.RefObject<HTMLDivElement> } = {
@@ -216,32 +154,7 @@ export default function EditConnectionDesign() {
           {mode === "split" && (
           <div style={{ width: `${editorWidth}px` }} className="bg-white border-r flex flex-col h-full overflow-y-auto transition-all duration-75 animate-fade-in">
             {/* Publish Actions Sticky Header */}
-            <div className="bg-gray-50 p-4 border-b sticky top-0 z-10 shadow-sm">
-              <h3 className="font-bold mb-2">Publish Settings</h3>
-              <input
-                type="password"
-                className="w-full border border-gray-300 p-2 rounded focus:ring-2 focus:ring-blue-500 mb-2 text-sm"
-                placeholder="GitHub Token (ghp_...)"
-                value={githubToken}
-                onChange={(e) => setGithubToken(e.target.value)}
-              />
-              <button
-                onClick={handleSave}
-                disabled={loading}
-                className={`w-full py-2 px-4 border rounded font-bold text-sm uppercase transition-all shadow-sm ${
-                  loading
-                    ? "border-gray-200 text-gray-400 bg-gray-50 cursor-not-allowed"
-                    : "border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50"
-                }`}
-              >
-                {loading ? "Saving..." : "Update Page"}
-              </button>
-              {message && (
-                <div className={`mt-2 p-2 rounded text-xs ${message.includes("Error") || message.includes("Please enter") ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}>
-                  {message}
-                </div>
-              )}
-            </div>
+            <PublishPanel filePath="src/data/connectionDesign.json" data={data} />
 
             {/* Form Fields */}
             <div className="p-4 space-y-6">
@@ -296,7 +209,7 @@ export default function EditConnectionDesign() {
                       Remove
                     </button>
                     <label className="block text-[10px] text-gray-400 mb-1">Paragraph {idx + 1}</label>
-                    <JoditWrapper
+                    <RichTextEditor
                       value={pText}
                       onChange={(val) => setData(prev => {
                         const newP = [...prev.intro.headSection];
@@ -405,7 +318,7 @@ export default function EditConnectionDesign() {
                       Remove
                     </button>
                     <label className="block text-[10px] text-gray-400 mb-1">Paragraph {idx + 1}</label>
-                    <JoditWrapper
+                    <RichTextEditor
                       value={pText}
                       onChange={(val) => setData(prev => {
                         const newP = [...prev.stamping.paragraphs];

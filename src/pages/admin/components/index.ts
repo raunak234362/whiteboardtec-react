@@ -23,9 +23,14 @@ export type {
     CandidateApplication
 }
 
+import { PublishPanel } from "./PublishPanel";
+import RichTextEditor from "./RichTextEditor";
+
 export {
     Header,
     Sidebar,
     SubNavbar,
-    useSidebar
+    useSidebar,
+    PublishPanel,
+    RichTextEditor
 }
