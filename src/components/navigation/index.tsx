@@ -192,7 +192,7 @@ const NavigationBar = (): JSX.Element => {
 };
 
 const HomeNav = (): JSX.Element => {
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState(true);
 
   return (
     <>

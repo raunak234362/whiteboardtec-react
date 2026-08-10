@@ -42,9 +42,7 @@ function PESEStampig({ previewData, onSectionClick }: { previewData?: any; onSec
             className={`leading-loose text-gray-700 p-2 rounded ${getEditClass("intro")}`}
             onClick={(e) => handleClick(e, "intro")}
           >
-            <h2 className="text-3xl font-bold mb-4 text-[#6abd45]">
-              {data.intro.title}
-            </h2>
+            <h2 className="text-3xl font-bold mb-4 text-[#6abd45]" dangerouslySetInnerHTML={{ __html: data.intro.title }} />
             {data.intro.headSection?.map((desc: string, index: number) => (
               <p
                 key={index}
@@ -53,9 +51,7 @@ function PESEStampig({ previewData, onSectionClick }: { previewData?: any; onSec
               />
             ))}
             {data.intro.cta && (
-              <p className="mt-4 text-xl font-semibold text-black">
-                {data.intro.cta}
-              </p>
+              <p className="mt-4 text-xl font-semibold text-black" dangerouslySetInnerHTML={{ __html: data.intro.cta }} />
             )}
           </div>
 
@@ -78,17 +74,13 @@ function PESEStampig({ previewData, onSectionClick }: { previewData?: any; onSec
           <section className="grid grid-cols-1 lg:grid-cols-[65%_35%] gap-6 items-center">
             {/* Text */}
             <div>
-              <h2 className="text-[#6abd45] text-3xl font-semibold mb-4">
-                {data.stamping.title}
-              </h2>
+              <h2 className="text-[#6abd45] text-3xl font-semibold mb-4" dangerouslySetInnerHTML={{ __html: data.stamping.title }} />
               <div className="text-lg text-justify space-y-4">
                 {data.stamping.paragraphs?.map((pText: string, index: number) => (
                   <p key={index} dangerouslySetInnerHTML={{ __html: pText }} />
                 ))}
                 {data.stamping.cta && (
-                  <p className="font-semibold text-black pt-2">
-                    {data.stamping.cta}
-                  </p>
+                  <p className="font-semibold text-black pt-2" dangerouslySetInnerHTML={{ __html: data.stamping.cta }} />
                 )}
               </div>
             </div>

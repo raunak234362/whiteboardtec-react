@@ -30,6 +30,46 @@ interface SteelEstimationData {
 
 export default function EditSteelEstimation() {
   const { isSidebarOpen } = useSidebar();
+  const [editorWidth, setEditorWidth] = useState(550);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const startResizing = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return;
+      const newWidth = Math.max(350, Math.min(e.clientX - 250, 950));
+      setEditorWidth(newWidth);
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    if (isDragging) {
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+    }
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging]);
+  const [mode, setMode] = useState<"split" | "preview">("split");
+  const [isChangingMode, setIsChangingMode] = useState(false);
+
+  const handleModeChange = (newMode: "split" | "preview") => {
+    if (newMode === mode) return;
+    setIsChangingMode(true);
+    setTimeout(() => {
+      setMode(newMode);
+      setIsChangingMode(false);
+    }, 600);
+  };
   const [data, setData] = useState<SteelEstimationData>(steelEstimationData as SteelEstimationData);
 
   const bannerRef = useRef<HTMLDivElement>(null);
@@ -73,9 +113,51 @@ export default function EditSteelEstimation() {
       <main className="flex flex-col h-full overflow-hidden">
         <Header {...header} />
 
-        <div className="flex flex-row h-full overflow-hidden">
+        {/* Mode Switcher Tabs */}
+        <div className="bg-white border-b px-6 py-2.5 flex items-center justify-center shadow-sm z-10">
+          <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg border border-gray-200">
+            <button
+              type="button"
+              onClick={() => handleModeChange("split")}
+              style={{
+                backgroundColor: mode === "split" ? "#6abd45" : "transparent",
+                color: mode === "split" ? "#ffffff" : "#000000"
+              }}
+              className="px-6 py-2 text-xs font-bold uppercase tracking-wider rounded-md transition-all shadow-sm focus:outline-none"
+            >
+              Split View
+            </button>
+            <button
+              type="button"
+              onClick={() => handleModeChange("preview")}
+              style={{
+                backgroundColor: mode === "preview" ? "#6abd45" : "transparent",
+                color: mode === "preview" ? "#ffffff" : "#000000"
+              }}
+              className="px-6 py-2 text-xs font-bold uppercase tracking-wider rounded-md transition-all shadow-sm focus:outline-none"
+            >
+              Live Preview
+            </button>
+          </div>
+        </div>
+
+        {isChangingMode ? (
+          <div className="flex-grow flex flex-col justify-center items-center bg-gray-50 h-full">
+            <div className="relative flex items-center justify-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-[#6abd45]"></div>
+              <div className="absolute text-[#6abd45] font-bold text-xs uppercase tracking-widest animate-pulse">
+                WBT
+              </div>
+            </div>
+            <p className="text-gray-500 text-sm mt-4 font-semibold uppercase tracking-widest animate-pulse">
+              Loading Layout...
+            </p>
+          </div>
+        ) : (
+          <div className="flex flex-row h-full overflow-hidden">
           {/* EDITOR PANEL (Left side) */}
-          <div className="w-[550px] bg-white border-r flex flex-col h-full overflow-y-auto animate-fade-in">
+          {mode === "split" && (
+          <div style={{ width: `${editorWidth}px` }} className="bg-white border-r flex flex-col h-full overflow-y-auto transition-all duration-75 animate-fade-in">
             {/* Publish Actions Sticky Header */}
             <PublishPanel filePath="src/data/steelEstimation.json" data={data} />
 
@@ -108,10 +190,9 @@ export default function EditSteelEstimation() {
               <div className="border-b pb-4 p-2 rounded" ref={introRef}>
                 <h3 className="text-lg font-semibold mb-2">Intro Section</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Title</label>
-                <input
-                  className="w-full border p-2 rounded mb-2 text-sm font-semibold"
+                <JoditWrapper
                   value={data.intro.title}
-                  onChange={(e) => setData(prev => ({ ...prev, intro: { ...prev.intro, title: e.target.value } }))}
+                  onChange={(val) => setData(prev => ({ ...prev, intro: { ...prev.intro, title: val } }))}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1">Image URL</label>
                 <input
@@ -162,16 +243,14 @@ export default function EditSteelEstimation() {
               <div className="border-b pb-4 p-2 rounded" ref={estimateRef}>
                 <h3 className="text-lg font-semibold mb-2">Estimate Details</h3>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Heading</label>
-                <textarea
-                  className="w-full border p-2 rounded mb-2 text-sm h-16"
+                <JoditWrapper
                   value={data.estimate.head}
-                  onChange={(e) => setData(prev => ({ ...prev, estimate: { ...prev.estimate, head: e.target.value } }))}
+                  onChange={(val) => setData(prev => ({ ...prev, estimate: { ...prev.estimate, head: val } }))}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1">Body Text</label>
-                <textarea
-                  className="w-full border p-2 rounded mb-2 text-sm h-20"
+                <JoditWrapper
                   value={data.estimate.body}
-                  onChange={(e) => setData(prev => ({ ...prev, estimate: { ...prev.estimate, body: e.target.value } }))}
+                  onChange={(val) => setData(prev => ({ ...prev, estimate: { ...prev.estimate, body: val } }))}
                 />
                 <label className="block text-xs font-medium text-gray-500 mb-1 mt-2">Bullet Points</label>
                 {data.estimate.bullets?.map((bullet, idx) => (
@@ -227,12 +306,11 @@ export default function EditSteelEstimation() {
                       Remove
                     </button>
                     <label className="block text-[10px] text-gray-400 mb-1">Take-off Details (Format: heading: description)</label>
-                    <textarea
-                      className="w-full border p-2 rounded text-sm h-20"
+                    <JoditWrapper
                       value={takeoff}
-                      onChange={(e) => setData(prev => {
+                      onChange={(val) => setData(prev => {
                         const newTakeoffs = [...prev.takeoffs];
-                        newTakeoffs[idx] = e.target.value;
+                        newTakeoffs[idx] = val;
                         return { ...prev, takeoffs: newTakeoffs };
                       })}
                     />
@@ -262,12 +340,11 @@ export default function EditSteelEstimation() {
                       Remove
                     </button>
                     <label className="block text-[10px] text-gray-400 mb-1">Text</label>
-                    <input
-                      className="w-full border p-2 rounded text-sm mb-2"
+                    <JoditWrapper
                       value={item.text}
-                      onChange={(e) => setData(prev => {
+                      onChange={(val) => setData(prev => {
                         const newD = [...prev.deliverables];
-                        newD[idx] = { ...newD[idx], text: e.target.value };
+                        newD[idx] = { ...newD[idx], text: val };
                         return { ...prev, deliverables: newD };
                       })}
                     />
@@ -301,15 +378,31 @@ export default function EditSteelEstimation() {
 
             </div>
           </div>
+          )}
+
+
+          
+          {/* Resizer Handle */}
+          {mode === "split" && (
+            <div
+              onMouseDown={startResizing}
+              className={`w-2 bg-gray-200 hover:bg-green-500 cursor-col-resize transition-all duration-150 relative flex items-center justify-center ${
+                isDragging ? "bg-green-500 w-2.5" : ""
+              }`}
+            >
+              <div className="w-1 h-12 bg-gray-400 rounded-full"></div>
+            </div>
+          )}
 
           {/* LIVE PREVIEW PANEL (Right side) */}
           <div className="flex-1 bg-gray-200 overflow-y-auto relative">
             <div className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded shadow opacity-50 pointer-events-none z-10">Live Preview (Click a section to edit)</div>
             <div className="w-full bg-white min-h-full pb-20">
-              <SteelEstimation previewData={data} onSectionClick={handleSectionClick} />
+              <SteelEstimation previewData={data} onSectionClick={mode === "split" ? handleSectionClick : undefined} />
             </div>
           </div>
-        </div>
+          </div>
+        )}
       </main>
     </section>
   );

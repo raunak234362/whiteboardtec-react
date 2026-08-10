@@ -52,9 +52,7 @@ function SteelEstimation({ previewData, onSectionClick }: { previewData?: any; o
             onClick={(e) => handleClick(e, "intro")}
           >
             <div className="leading-relaxed text-gray-700 mb-6">
-              <p className="text-3xl font-bold text-[#6abd45] mb-4">
-                {data.intro.title}
-              </p>
+              <p className="text-3xl font-bold text-[#6abd45] mb-4" dangerouslySetInnerHTML={{ __html: data.intro.title }} />
               {data.intro.headSection.map((desc: string, index: number) => (
                 <p
                   key={index}
@@ -98,6 +96,16 @@ function SteelEstimation({ previewData, onSectionClick }: { previewData?: any; o
 
           <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {data.takeoffs.map((detail: string, index: number) => {
+              const hasHtml = /<[a-z][\s\S]*>/i.test(detail);
+              if (hasHtml) {
+                return (
+                  <div
+                    key={index}
+                    className="bg-white text-gray-800 p-6 rounded-2xl shadow-md border list-description"
+                    dangerouslySetInnerHTML={{ __html: detail }}
+                  />
+                );
+              }
               const [heading, description] = detail.split(":");
               return (
                 <div
@@ -132,9 +140,7 @@ function SteelEstimation({ previewData, onSectionClick }: { previewData?: any; o
                 <div className="mb-4 bg-gray-50 p-4 rounded-full shadow-inner">
                   {iconMap[item.iconKey] || <FileText className="w-12 h-12 text-[#6abd45]" />}
                 </div>
-                <p className="text-base text-gray-700 font-medium">
-                  {item.text}
-                </p>
+                <p className="text-base text-gray-700 font-medium" dangerouslySetInnerHTML={{ __html: item.text }} />
               </div>
             ))}
           </section>

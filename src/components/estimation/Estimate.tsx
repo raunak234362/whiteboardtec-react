@@ -18,10 +18,8 @@ function Estimate({
   return (
     <>
       <div className="bg-[#6abd45] rounded-xl md:order-1 order-first p-4 mx-5 text-white w-full">
-        <div className="text-2xl font-bold">{head}</div>
-        <div className="m-5 ml-0 text-md text-justify leading-relaxed">
-          {body}
-        </div>
+        <div className="text-2xl font-bold" dangerouslySetInnerHTML={{ __html: head }} />
+        <div className="m-5 ml-0 text-md text-justify leading-relaxed" dangerouslySetInnerHTML={{ __html: body }} />
         <div className="text-md my-2 mr-5 text-justify">
           <ul className="list-none list-inside space-y-2">
             {bullets.map((bullet, idx) => (

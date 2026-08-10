@@ -67,9 +67,7 @@ function StructuralSteel({ previewData, onSectionClick }: { previewData?: any; o
                 className={`leading-loose text-gray-700 p-2 rounded ${getEditClass("intro")}`}
                 onClick={(e) => handleClick(e, "intro")}
               >
-                <h2 className="text-3xl font-bold mb-4 text-[#6abd45]">
-                  {data.intro.title}
-                </h2>
+                <h2 className="text-3xl font-bold mb-4 text-[#6abd45]" dangerouslySetInnerHTML={{ __html: data.intro.title }} />
                 {data.intro.headSection.map((desc: string, index: number) => (
                   <p
                     key={index}
