@@ -52,17 +52,17 @@ function NavBar(props: NavRouteType & { navShow: (show: boolean) => void }): JSX
           >
             {props.child && (
               <>
-                <div className="py-1">
+                <ul className="py-2 pl-8 pr-4 list-disc text-left">
                   {props.child.map((child) => (
-                    <Menu.Item key={child.name}>
+                    <Menu.Item key={child.name} as="li">
                       {({ active }) => (
                         <NavLink
                           to={props.path + child.path}
                           className={Dropdown(
                             active
-                              ? "bg-gray-100 text-[#6abd45]"
+                              ? "text-[#6abd45]"
                               : "text-gray-700",
-                            "block md:px-4 py-2 text-sm  max-md:border-b-[1px] max-md:border-gray-300 text-left max-md:px-8"
+                            "block py-1 text-sm max-md:border-b-[1px] max-md:border-gray-300 hover:text-[#6abd45]"
                           )}
                           onClick={() => { props.navShow(false); }}
                         >
@@ -71,7 +71,7 @@ function NavBar(props: NavRouteType & { navShow: (show: boolean) => void }): JSX
                       )}
                     </Menu.Item>
                   ))}
-                </div>
+                </ul>
               </>
             )}
           </Menu.Items>

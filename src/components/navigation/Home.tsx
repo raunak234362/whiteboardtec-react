@@ -40,14 +40,14 @@ function Home(props: NavRouteType): JSX.Element {
               }`}
             >
               <NavLink to={props.path}>
-                <div className="text-white bg-[#6abd45] text-start px-3 py-1 text-xl">
+                <div className="text-white bg-[#6abd45] text-start px-6 py-2 text-xl font-semibold">
                   {props.name}
                 </div>
               </NavLink>
-              <ul className="list-none">
+              <ul className="list-disc pl-8 py-2 text-left">
                 {props.child?.map((child) => (
                   <NavLink key={child.name} to={props.path + child.path}>
-                    <li className="text-white text-left text-md p-1 px-3 hover:text-[#6abd45]">
+                    <li className="text-white text-left text-md py-1 pr-3 hover:text-[#6abd45]">
                       {child.name}
                     </li>
                   </NavLink>
