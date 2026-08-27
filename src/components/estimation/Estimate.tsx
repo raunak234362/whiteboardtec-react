@@ -16,11 +16,11 @@ function Estimate({
   ] 
 }: EstimateProps) {
   return (
-    <>
-      <div className="bg-[#6abd45] rounded-xl md:order-1 order-first p-4 mx-5 text-white w-full">
+    <div className="bg-[#6abd45] rounded-xl border-2 border-[#6abd45] shadow-lg drop-shadow-lg p-6 text-white h-full w-full flex flex-col justify-between">
+      <div>
         <div className="text-2xl font-bold" dangerouslySetInnerHTML={{ __html: head }} />
-        <div className="m-5 ml-0 text-md text-justify leading-relaxed" dangerouslySetInnerHTML={{ __html: body }} />
-        <div className="text-md my-2 mr-5 text-justify">
+        <div className="my-4 text-md text-justify leading-relaxed" dangerouslySetInnerHTML={{ __html: body }} />
+        <div className="text-md my-2">
           <ul className="estimate-bullets-list list-none list-inside space-y-2">
             {bullets.map((bullet, idx) => (
               <li key={idx} className="flex items-start gap-2">
@@ -44,16 +44,16 @@ function Estimate({
             ))}
           </ul>
         </div>
-        <div className="mt-5 mb-0 flex flex-wrap flex-col md:flex-row items-center">
-          <Link
-            to="mailto:sales@whiteboardtec.com"
-            className="border-2 rounded-full border-white border-opacity-90 duration-200 ease-in-out text-md px-5 py-2 hover:bg-white hover:text-[#6abd45] hover:border-white hover:shadow-xl font-semibold"
-          >
-            Get Estimate ➤
-          </Link>
-        </div>
       </div>
-    </>
+      <div className="mt-5 flex flex-wrap items-center">
+        <Link
+          to="mailto:sales@whiteboardtec.com"
+          className="border-2 rounded-full border-white border-opacity-90 duration-200 ease-in-out text-md px-5 py-2 hover:bg-white hover:text-[#6abd45] hover:border-white hover:shadow-xl font-semibold inline-block"
+        >
+          Get Estimate ➤
+        </Link>
+      </div>
+    </div>
   );
 }
 

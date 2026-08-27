@@ -17,6 +17,7 @@ import RebarEstimation from "./servicescontent/RebarEstimation";
 import EditProjectStation from "./projectstation/Projectstationedit";
 import EditCareers from "./careers/Careersedit";
 import EditConnect from "./connect/Connectedit";
+import EditNotification from "./EditNotification";
 
 export {
     Login,
@@ -37,5 +38,6 @@ export {
     RebarEstimation,
     EditProjectStation,
     EditCareers,
-    EditConnect
+    EditConnect,
+    EditNotification
 }

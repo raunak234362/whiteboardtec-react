@@ -48,21 +48,21 @@ function NavBar(props: NavRouteType & { navShow: (show: boolean) => void }): JSX
           <Menu.Items
             onMouseOver={() => setActive(true)}
             onMouseOut={() => setActive(false)}
-            className="md:absolute left-0 md:z-10 mt-0 w-56 max-md:w-full origin-top-right md:rounded-md bg-white md:shadow-lg md:ring-1 md:ring-black md:ring-opacity-5 focus:outline-none"
+            className="md:absolute left-0 md:z-10 mt-0 w-64 max-md:w-full origin-top-right md:rounded-md bg-white md:shadow-lg md:ring-1 md:ring-black md:ring-opacity-5 focus:outline-none"
           >
             {props.child && (
               <>
-                <ul className="py-2 pl-8 pr-4 list-disc text-left">
+                <ul className="py-2 !pl-5 !pr-4 list-none text-left" style={{ paddingLeft: "1.25rem", paddingRight: "1rem" }}>
                   {props.child.map((child) => (
-                    <Menu.Item key={child.name} as="li">
+                    <Menu.Item key={child.name} as="li" className="!pl-0">
                       {({ active }) => (
                         <NavLink
                           to={props.path + child.path}
                           className={Dropdown(
                             active
-                              ? "text-[#6abd45]"
+                              ? "text-[#6abd45] font-semibold bg-green-50/50"
                               : "text-gray-700",
-                            "block py-1 text-sm max-md:border-b-[1px] max-md:border-gray-300 hover:text-[#6abd45]"
+                            "block px-2 py-1.5 text-sm rounded max-md:border-b-[1px] max-md:border-gray-300 hover:text-[#6abd45] transition-colors"
                           )}
                           onClick={() => { props.navShow(false); }}
                         >

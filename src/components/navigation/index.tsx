@@ -1,9 +1,11 @@
 import { Dialog } from "@headlessui/react";
 import Home from "./Home";
 import { NavBar } from "./NavBar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ExtraHeader from "../header/ExtraHeader";
 // import popupimage from "../../../public/popup.png"; // Adjust the path as necessary
+
+import defaultNotificationData from "../../data/notification.json";
 
 type NavRouteType = {
   name: string;
@@ -17,6 +19,7 @@ type NotificationType = {
   description: string;
   link?: string;
   image?: string;
+  enabled?: boolean;
 };
 
 const NavRoute: NavRouteType[] = [
@@ -129,14 +132,7 @@ const NavRoute: NavRouteType[] = [
   },
 ];
 
-const Notification: NotificationType = {
-  title: "NASCC - The Steel Conference 2026",
-  description:
-    "We are exhibiting at NASCC - The Steel Conference 2026. Click Here to see the floor plan to reach us at the show.",
-  // link: "https://www.nascc.aisc.org/",
-  image:
-    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685709/route-image/careers_jvwsl8.jpg",
-};
+const Notification: NotificationType = defaultNotificationData as NotificationType;
 
 const NavigationBar = (): JSX.Element => {
   const [display] = useState<boolean>(window.innerWidth <= 768);
@@ -191,55 +187,76 @@ const NavigationBar = (): JSX.Element => {
   );
 };
 
-const HomeNav = (): JSX.Element => {
-  const [isOpen, setOpen] = useState(false);
+interface HomeNavProps {
+  previewNotification?: NotificationType;
+}
+
+const HomeNav = ({ previewNotification }: HomeNavProps = {}): JSX.Element => {
+  const activeNotification = previewNotification || Notification;
+  const isEnabled = activeNotification.enabled !== false;
+  const [isOpen, setOpen] = useState(isEnabled);
+
+  useEffect(() => {
+    setOpen(activeNotification.enabled == false);
+  }, [activeNotification.enabled]);
 
   return (
     <>
-      <Dialog
-        open={isOpen}
-        onClose={() => setOpen(false)}
-        className="relative z-50"
-      >
-        <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
-        <div className="fixed inset-0 w-screen overflow-y-auto">
-          <div className="flex items-center justify-center min-h-full p-4">
-            <Dialog.Panel className="bg-white w-3/5 h-3/4 rounded-3xl p-5 bg-opacity-60 border-slate-800 border-[3px] drop-shadow-lg shadow-inner">
-              <Dialog.Title className="text-2xl font-extrabold">
-                {Notification.title}
-              </Dialog.Title>
-              <Dialog.Description className="my-3 text-justify">
-                {Notification.description}
-              </Dialog.Description>
-              {Notification.image && (
-                <div className="flex flex-wrap items-center justify-center">
+      {isEnabled && (
+        <Dialog
+          open={isOpen}
+          onClose={() => setOpen(false)}
+          className="relative z-50"
+        >
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" aria-hidden="true" />
+          <div className="fixed inset-0 w-screen overflow-y-auto p-4 flex items-center justify-center">
+            <Dialog.Panel className="bg-white max-h-[85vh] w-11/12 md:w-3/4 lg:w-1/2 rounded-xl p-6 border-2 border-slate-800 drop-shadow-2xl shadow-2xl flex flex-col justify-between overflow-hidden relative">
+              {/* Header Info */}
+              <div className="shrink-0 mb-2 text-center md:text-left">
+                {activeNotification.title && (
+                  <Dialog.Title className="text-xl md:text-2xl font-extrabold text-gray-900">
+                    {activeNotification.title}
+                  </Dialog.Title>
+                )}
+                {activeNotification.description && (
+                  <Dialog.Description className="mt-2 text-sm md:text-base text-gray-700 leading-relaxed text-justify">
+                    {activeNotification.description}
+                  </Dialog.Description>
+                )}
+              </div>
+
+              {/* Image Container constrained to remaining height */}
+              {activeNotification.image && (
+                <div className="flex-1 min-h-0 my-3 flex items-center justify-center overflow-hidden">
                   <img
-                    src={Notification.image}
-                    alt={Notification.title}
-                    className="w-5/6 h-auto rounded-2xl"
+                    src={activeNotification.image}
+                    alt={activeNotification.title || "Notification"}
+                    className="max-h-full max-w-full object-contain rounded-lg shadow-sm"
                   />
                 </div>
               )}
-              <div className="flex flex-wrap items-center justify-center my-3">
-                {Notification.link && (
+
+              {/* Action Buttons */}
+              <div className="shrink-0 flex items-center justify-center gap-6 mt-3 pt-3 border-t border-gray-100">
+                {activeNotification.link && (
                   <button
-                    onClick={() => window.open(Notification.link, "_blank")}
-                    className="px-4 mx-5 text-xl font-semibold text-white bg-green-600 border-2 border-green-600 rounded-md hover:bg-slate-200 hover:border-green-600 hover:text-green-600"
+                    onClick={() => window.open(activeNotification.link, "_blank")}
+                    className="px-6 py-2 text-lg font-semibold text-white bg-green-600 border-2 border-green-600 rounded-md hover:bg-slate-100 hover:border-green-600 hover:text-green-600 transition-colors shadow-sm cursor-pointer"
                   >
                     View
                   </button>
                 )}
                 <button
                   onClick={() => setOpen(false)}
-                  className="px-4 mx-5 text-xl font-semibold text-white bg-red-600 border-2 border-red-600 rounded-md hover:bg-slate-200 hover:border-red-600 hover:text-red-600"
+                  className="px-6 py-2 text-lg font-semibold text-white bg-red-600 border-2 border-red-600 rounded-md hover:bg-slate-100 hover:border-red-600 hover:text-red-600 transition-colors shadow-sm cursor-pointer"
                 >
                   Close
                 </button>
               </div>
             </Dialog.Panel>
           </div>
-        </div>
-      </Dialog>
+        </Dialog>
+      )}
 
       <div className="relative flex item-center md:h-[83vh]">
         <div
@@ -263,3 +280,4 @@ const HomeNav = (): JSX.Element => {
 export type { NavRouteType, NotificationType };
 
 export { NavigationBar, HomeNav };
+

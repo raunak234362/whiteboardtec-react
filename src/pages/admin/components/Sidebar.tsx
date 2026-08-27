@@ -373,6 +373,20 @@ function Sidebar() {
             </div>
           )}
         </div>
+
+        {/* Notification Popup */}
+        <NavLink
+          to="/admin/notification"
+          className={({ isActive }) =>
+            `flex items-center px-6 py-3 text-sm font-medium transition-colors duration-150 ${
+              isActive
+                ? "bg-green-50/50 text-[#6abd45] border-l-4 border-[#6abd45] font-semibold"
+                : "text-gray-700 hover:bg-gray-50 hover:text-black"
+            }`
+          }
+        >
+          <span>Notification Popup</span>
+        </NavLink>
       </div>
 
       {/* Log Out Button at the bottom */}

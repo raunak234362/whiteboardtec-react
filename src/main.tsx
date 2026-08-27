@@ -58,6 +58,7 @@ import {
   EditProjectStation,
   EditCareers,
   EditConnect,
+  EditNotification,
 } from "./pages/admin";
 import "tw-elements-react/dist/css/tw-elements-react.min.css";
 import GalleryImages from "./pages/ourFirm/GalleryImages.tsx";
@@ -134,6 +135,7 @@ const route = createBrowserRouter(
       <Route path="/admin/services/pemb-detailing" element={<PEMBDetailing />} />
       <Route path="/admin/services/rebar-estimation" element={<RebarEstimation />} />
       <Route path="/admin/project-station" element={<EditProjectStation />} />
+      <Route path="/admin/notification" element={<EditNotification />} />
     </Route>
   )
 );

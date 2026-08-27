@@ -33,10 +33,10 @@ function BusiessModel({ previewData, onSectionClick }: { previewData?: any; onSe
       >
         <PageBanner {...data.banner} />
       </div>
-      <div className="pt-3 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl">
-        <section className="grid grid-cols-1 p-2 mt-3 mb-10 gap-y-10 gap-x-0 md:gap-y-5 md:gap-x-10 md:grid-cols-2">
+      <div className="pt-3 mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-4">
+        <section className="grid grid-cols-1 my-10 gap-8 md:grid-cols-2 items-stretch">
           <div
-            className={getEditClass("estimate")}
+            className={`h-full ${getEditClass("estimate")}`}
             onClick={(e) => handleClick(e, "estimate")}
           >
             <Estimate head={data.estimate.head} />
@@ -45,16 +45,16 @@ function BusiessModel({ previewData, onSectionClick }: { previewData?: any; onSe
             return model && (
               <div
                 key={index}
-                className={`rounded-xl border-2 shadow-lg drop-shadow-lg bg-white order-${index} ${getEditClass("models")}`}
+                className={`rounded-xl border-2 shadow-lg drop-shadow-lg bg-white h-full flex flex-col justify-between ${getEditClass("models")}`}
                 onClick={(e) => handleClick(e, "models")}
               >
-                <div className="p-3 m-5">
-                  <div className="text-2xl text-black flex items-center gap-3">
-                    {model.icon && <img src={model.icon} alt="icon" className="w-16 h-16" />}
+                <div className="p-6">
+                  <div className="text-2xl text-black flex items-center gap-3 font-semibold">
+                    {model.icon && <img src={model.icon} alt="icon" className="w-12 h-12 object-contain shrink-0" />}
                     <span>{model.head}</span>
                   </div>
                   <div 
-                    className="my-2 text-lg text-justify text-gray-700 leading-relaxed"
+                    className="mt-4 text-md text-justify text-gray-700 leading-relaxed"
                     dangerouslySetInnerHTML={{ __html: model.body }}
                   />
                 </div>
