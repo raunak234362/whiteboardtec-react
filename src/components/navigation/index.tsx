@@ -197,7 +197,7 @@ const HomeNav = ({ previewNotification }: HomeNavProps = {}): JSX.Element => {
   const [isOpen, setOpen] = useState(isEnabled);
 
   useEffect(() => {
-    setOpen(activeNotification.enabled !== false);
+    setOpen(activeNotification.enabled == false);
   }, [activeNotification.enabled]);
 
   return (
