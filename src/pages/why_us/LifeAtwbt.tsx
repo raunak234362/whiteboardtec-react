@@ -216,7 +216,7 @@ const LifeAtwbt = () => {
         </section>
 
         {/* 5. OPPORTUNITIES & CAREERS CTA SECTION */}
-        <section className="bg-gradient-to-r from-gray-900 via-slate-800 to-gray-900 rounded-3xl p-10 text-white shadow-2xl text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8 mb-10">
+        <section className="bg-gray-50 rounded-3xl p-10 text-black shadow-2xl text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8 mb-10">
           <div className="max-w-2xl">
             <span className="text-[#6abd45] font-semibold text-sm uppercase tracking-widest">
               Opportunities
@@ -224,7 +224,7 @@ const LifeAtwbt = () => {
             <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-3">
               What roles are available?
             </h2>
-            <p className="text-gray-300 text-md leading-relaxed">
+            <p className="text-gray-700 text-md leading-relaxed">
               We are constantly seeking talented Structural Detailers, Connection Designers, BIM Engineers, Estimators, and Trainees to join our growing team.
             </p>
           </div>
