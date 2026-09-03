@@ -59,6 +59,12 @@ const lifeHighlights = [
     image: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685709/route-image/connect_rrusr9.jpg",
     badge: "Wellbeing",
   },
+  {
+    title: "Continuous Learning & Growth",
+    desc: "Regular training sessions, workshops, and mentorship programs designed to enhance your technical skills and accelerate career progression.",
+    image: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685611/banner-image/team-banner_p2bvys.jpg",
+    badge: "Growth",
+  },
 ];
 
 const growthPoints = [
