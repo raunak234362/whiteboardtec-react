@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { BannerPropType, PageBanner } from "../../components/banner";
 import { HeadSectionType, JobDescType } from ".";
 import JobBox from "./JobBox";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Service from "../../config/service";
 
 const banner: BannerPropType = {
@@ -44,6 +44,7 @@ const treeData = [
 
 function Careers() {
   const [job, setJob] = useState<JobDescType[]>([]);
+  const { hash } = useLocation();
 
   const fetchJob = async () => {
     try {
@@ -66,6 +67,18 @@ function Careers() {
     fetchJob();
   }, []);
 
+  useEffect(() => {
+    if (hash) {
+      const targetId = hash.replace("#", "");
+      const element = document.getElementById(targetId);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 150);
+      }
+    }
+  }, [hash, job]);
+
   return (
     <>
       <PageBanner {...banner} />
@@ -82,10 +95,10 @@ function Careers() {
             ))}
           </div>
 
-          <div className="flex flex-wrap justify-center order-2 max-md:order-1">
-            <div className="bg-[#6abd45] rounded-xl flex flex-wrap flex-col w-full h-fit shadow-2xl m-4 mr-8">
+          <div className="order-2 max-md:order-1 p-4 flex flex-col">
+            <div className="bg-[#6abd45] rounded-2xl flex flex-col justify-center w-full h-full shadow-xl p-6 text-white">
               {headSection.tagline?.map((tag, index) => (
-                <h1 key={index} className="p-4 pb-2 text-2xl text-white">
+                <h1 key={index} className="p-3 text-2xl md:text-3xl font-semibold leading-snug">
                   {tag}
                 </h1>
               ))}
@@ -96,7 +109,7 @@ function Careers() {
 
       <div className="bg-gray-100">
         <div className="pt-3 mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
-          <div className="my-2 text-4xl font-semibold text-black mt-7 px-2">
+          <div id="current-openings" className="my-2 text-4xl font-semibold text-black mt-7 px-2 scroll-mt-28">
             Current Openings
           </div>
           <section className="grid grid-cols-1 p-2 mt-3 gap-y-5 gap-x-10 md:grid-cols-2">

@@ -92,28 +92,40 @@ const NavRoute: NavRouteType[] = [
       },
     ],
   },
-  {
-    name: "Resources",
-    path: "/resources",
-    image:
-      "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685704/route-image/resources_twem7r.jpg",
-    child: [
-      {
-        name: "WBT Blog",
-        path: "/wbt-blog",
-      },
-      {
-        name: "Case Studies",
-        path: "/case-studies",
-      },
-    ],
-  },
+  // {
+  //   name: "Resources",
+  //   path: "/resources",
+  //   image:
+  //     "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685704/route-image/resources_twem7r.jpg",
+  //   child: [
+  //     {
+  //       name: "WBT Blog",
+  //       path: "/wbt-blog",
+  //     },
+  //     {
+  //       name: "Case Studies",
+  //       path: "/case-studies",
+  //     },
+  //   ],
+  // },
   {
     name: "Project Station",
     path: "/portal",
     image:"https://res.cloudinary.com/dp7yxzrgw/image/upload/v1776406740/download_x0mzka.jpg",
    
       
+  },
+  {
+    name: "Why Us",
+    path: "/why-us",
+    image:
+      "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685708/route-image/our-firm_qbwtod.jpg",
+    child: [
+      {
+        name: "Life at WBT",
+        path: "/life-at-wbt",
+      },
+    ],
   },
   {
     name: "Careers",

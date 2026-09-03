@@ -38,6 +38,7 @@ import BlogDetails from "./pages/resources/BlogDetails.tsx";
 
 import Portal from "./pages/portal/Portal.tsx";
 import Careers from "./pages/careers/Careers.tsx";
+import { LifeAtwbt } from "./pages/why_us";
 import Connect from "./pages/connect/Connect.tsx";
 import {
   Admin,
@@ -95,6 +96,8 @@ const route = createBrowserRouter(
       <Route path="/our-work" element={<Portfolio />} />
       <Route path="/our-work/project-portfolio" element={<Portfolio />} />
       <Route path="/portal" element={<Portal />} />
+      <Route path="/why-us" element={<LifeAtwbt />} />
+      <Route path="/why-us/life-at-wbt" element={<LifeAtwbt />} />
       <Route path="/career" element={<Careers />} />
       <Route path="/connect" element={<Connect />} />
       <Route path="/resources" element={<Resources />} />

@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { Fragment, useEffect } from "react";
 import { NavRouteType } from ".";
 import { Menu, Transition } from "@headlessui/react";
@@ -9,7 +9,11 @@ function Dropdown(...classes: string[]) {
 }
 
 function NavBar(props: NavRouteType & { navShow: (show: boolean) => void }): JSX.Element {
+  const location = useLocation();
   const [isactive, setActive] = useState(false);
+
+  const isCurrent = location.pathname === props.path || location.pathname.startsWith(props.path + "/");
+
   useEffect(() => {
     const isMobile = () => window.innerWidth <= 768;
 
@@ -31,8 +35,22 @@ function NavBar(props: NavRouteType & { navShow: (show: boolean) => void }): JSX
         onMouseOut={() => setActive(false)}
       >
         <div className="max-md:border-b-[1px] max-md:border-gray-300">
-          <Menu.Button className="md:inline-flex flex max-md:justify-between max-md:flex-wrap w-full md:justify-center justify-start gap-x-1.5 hover:bg-[#6abd45] px-3 py-2 text-md text-gray-900 mx-1 rounded-t-md ">
-            <NavLink to={props.path} onClick={() => { props.navShow(false); }}>{props.name}</NavLink>
+          <Menu.Button
+            style={isCurrent ? { backgroundColor: "#6abd45", color: "#ffffff" } : undefined}
+            className={`md:inline-flex flex max-md:justify-between max-md:flex-wrap w-full md:justify-center justify-start gap-x-1.5 px-3 py-2 text-md mx-1 rounded-t-md transition-colors ${
+              isCurrent
+                ? "bg-[#6abd45] text-white"
+                : "text-gray-900 hover:bg-[#6abd45] hover:text-white group"
+            }`}
+          >
+            <NavLink
+              to={props.path}
+              style={isCurrent ? { color: "#ffffff" } : undefined}
+              className={isCurrent ? "text-white" : "text-gray-900 group-hover:text-white"}
+              onClick={() => { props.navShow(false); }}
+            >
+              {props.name}
+            </NavLink>
           </Menu.Button>
         </div>
         <Transition
@@ -53,24 +71,27 @@ function NavBar(props: NavRouteType & { navShow: (show: boolean) => void }): JSX
             {props.child && (
               <>
                 <div className="py-1">
-                  {props.child.map((child) => (
-                    <Menu.Item key={child.name}>
-                      {({ active }) => (
-                        <NavLink
-                          to={props.path + child.path}
-                          className={Dropdown(
-                            active
-                              ? "bg-gray-100 text-[#6abd45]"
-                              : "text-gray-700",
-                            "block md:px-4 py-2 text-sm  max-md:border-b-[1px] max-md:border-gray-300 text-left max-md:px-8"
-                          )}
-                          onClick={() => { props.navShow(false); }}
-                        >
-                          {child.name}
-                        </NavLink>
-                      )}
-                    </Menu.Item>
-                  ))}
+                  {props.child.map((child) => {
+                    const isChildActive = location.pathname === props.path + child.path;
+                    return (
+                      <Menu.Item key={child.name}>
+                        {({ active }) => (
+                          <NavLink
+                            to={props.path + child.path}
+                            className={Dropdown(
+                              active || isChildActive
+                                ? "bg-gray-100 text-[#6abd45]"
+                                : "text-gray-700",
+                              "block md:px-4 py-2 text-sm max-md:border-b-[1px] max-md:border-gray-300 text-left max-md:px-8"
+                            )}
+                            onClick={() => { props.navShow(false); }}
+                          >
+                            {child.name}
+                          </NavLink>
+                        )}
+                      </Menu.Item>
+                    );
+                  })}
                 </div>
               </>
             )}
