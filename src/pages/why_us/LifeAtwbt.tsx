@@ -238,7 +238,7 @@ const LifeAtwbt = () => {
           <div>
             <Link
               to="/career#current-openings"
-              className="inline-flex items-center gap-2 bg-[#6abd45] hover:bg-green-600 text-white font-bold text-lg px-8 py-4 rounded-full shadow-lg transition-all transform hover:scale-105 whitespace-nowrap"
+              className="inline-flex items-center gap-2 bg-[#6abd45] text-white font-bold text-lg px-8 py-4 rounded-full shadow-lg transition-all transform hover:scale-105 whitespace-nowrap"
             >
               Explore Open Positions in Careers →
             </Link>
