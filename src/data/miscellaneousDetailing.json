@@ -1,0 +1,74 @@
+{
+  "banner": {
+    "header": "Miscellaneous",
+    "subheader": "Steel Detailing",
+    "image": "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685618/banner-image/misc-banner_x3hbow.jpg"
+  },
+  "intro": {
+    "title": "We specialize in miscellaneous steel detailing for residential, commercial and industrial projects.",
+    "headSection": [
+      "Our portfolio spans across structural steel elements such as complex staircases, hand railings and other intricate misc. steel construction items. We understand the detailing needs from a fabrication point of view and execute comprehensive drawings that conform to your unique requirements..",
+      "Using the latest 3D modeling tools and in compliance with the AISC code, we will make sure you present your bids on time and in entirety.",
+      "No job is too small for us and nothing is miscellaneous when you add an element of technical clarity to it."
+    ]
+  },
+  "estimate": {
+    "head": "Get your Miscellaneous Steel Detailing Estimates done for FREE. Yes. You heard us right!",
+    "body": "We will assess your projects absolutely free of cost and point out schedules that work best for your project's quick turnaround in no time at all!",
+    "bullets": [
+      "Integrated Project Management",
+      "Insights on how to Optimize Schedules",
+      "Weekly, Quarterly, Progress & Assessments of Projects"
+    ]
+  },
+  "capabilities": [
+    "Egress Stairs (Switch back/Box stair/Scissor stairs) with Railing",
+    "Ship ladder",
+    "Industrial access stairs with railing",
+    "Safety gates",
+    "Platform guardrails",
+    "Bollards",
+    "Platform grating/ checkered plate",
+    "Dumpster gate",
+    "Ladder with / without gage",
+    "Embeds"
+  ],
+  "miscTypes": [
+    {
+      "title": "Types of Railing patterns",
+      "description": [
+        "Picket Type Railing",
+        "Inline Rail System",
+        "Mesh Type"
+      ]
+    },
+    {
+      "title": "Types of Stringer Material",
+      "description": [
+        "Channel",
+        "Plate",
+        "Built-up tube",
+        "Rolled tube"
+      ]
+    },
+    {
+      "title": "Types of Treads",
+      "description": [
+        "Concrete pan",
+        "Checkered plate",
+        "Tuff tread",
+        "Tuff coat"
+      ]
+    },
+    {
+      "title": "Types of Codes",
+      "description": [
+        "AISC",
+        "IBC",
+        "UBC",
+        "OSHA",
+        "BOCA, etc"
+      ]
+    }
+  ]
+}

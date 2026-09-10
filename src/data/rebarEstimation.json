@@ -1,0 +1,91 @@
+{
+  "banner": {
+    "header": "Rebar Estimation",
+    "subheader": "and Detailing",
+    "image": "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685614/banner-image/reber-banner_uigcbv.jpg"
+  },
+  "headSection": {
+    "title": "Allow us to help you submit quantitative bids with precise rebar estimates that make you stand out in the crowd.",
+    "description": [
+      "While our detailing estimates cover all data points required by a sales estimator, it also helps to forecast the rebar requirements for the fabrication shop. Estimating the accurate usage of rebar helps in eliminating waste and identifying the crucial accessories required during the fabrication process. We understand how important it is to produce an error-free bar bending schedule that fits into the concrete framework, avoiding rework and cost overruns.",
+      "Using the latest 3D modeling tools and in compliance with the AISC, ASTM, CRSI, ACI, RSIC, IS, and BS building codes, our rebar detailers generate precise estimates and drawings that help you visualize your projects."
+    ]
+  },
+  "estimate": {
+    "head": "Get Rebar Detailing Estimates FREE. Yes, you heard us right!",
+    "body": "We will assess your projects absolutely free of cost and point out schedules that work best for your project's quick turnaround in no time at all!",
+    "bullets": [
+      "Integrated Project Management",
+      "Insights on how to Optimize Schedules",
+      "Weekly, Quarterly, Progress & Assessments of Projects"
+    ]
+  },
+  "rebarDetailing": [
+    "Rebar placing / Shop drawing as per customers’ requirement",
+    "Bar bending schedules (BBS).",
+    "Miscellaneous site work detailing",
+    "Section, Elevation detail drawings",
+    "Masonry (CMU) wall detailing",
+    "ASA bar listing output",
+    "DWG, PDF, DXF, TIFF files"
+  ],
+  "rebarEstimation": {
+    "title": "Rebar Estimation",
+    "description": [
+      "Total estimation summary as per client’s requirement",
+      "Rebar take-off summary",
+      "List of accessories e.g. Chairs, Bolsters, Wire mesh",
+      "Outputs in MS Excel, ASA estimation, Soule estimation formats"
+    ]
+  },
+  "rebarStructures": {
+    "title": "Structures Detailed",
+    "description": [
+      "Residential, Commercial, Industrial Buildings",
+      "Metro rails & bridges",
+      "Parking garages",
+      "Oil, Gas and Chemical plants and refineries",
+      "Tilt-up panels",
+      "WWTP (Waste Water Treatment Plant)"
+    ]
+  },
+  "workDone": [
+    {
+      "title": "York County Resource Recovery Center",
+      "desc": "Pennsylvania – 572.88 MT"
+    },
+    {
+      "title": "York County Resource Recovery Center",
+      "desc": "OH – 727.04 MT"
+    },
+    {
+      "title": "Baltimore ESA Transport Facility",
+      "desc": "Baltimore – 195.17 MT"
+    },
+    {
+      "title": "Memorial Hospital",
+      "desc": "Pennsylvania – 231.75 MT"
+    },
+    {
+      "title": "Pennsylvania State WWTP",
+      "desc": "PA – 546.55 MT"
+    },
+    {
+      "title": "York County Tipping Hall",
+      "desc": "PA – 627.38 MT"
+    },
+    {
+      "title": "CPV Charles Cooling Tower",
+      "desc": "Pennsylvania – 203.76 MT"
+    }
+  ],
+  "jobDone": [
+    "1st Place Condos – 900 MT",
+    "Burnham Tower – 500 MT",
+    "Potawatomi Casino – 5000 MT",
+    "Johnson City – 2000 MT",
+    "UMNC Health Center – 4000 MT",
+    "Gansevoort Park, Bronx Community College – 700 MT",
+    "Edison High School – 1000 MT"
+  ]
+}

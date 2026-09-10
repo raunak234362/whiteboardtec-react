@@ -1,0 +1,41 @@
+{
+  "banner": {
+    "header": "Structural Steel",
+    "subheader": "Detailing",
+    "image": "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685614/banner-image/services_wmb8hr.jpg"
+  },
+  "intro": {
+    "title": "Steel industry continues to evolve",
+    "headSection": [
+      "We mean it when we say, we understand your pressures. The complexity when it comes to the execution of incomplete drawings, project fulfillment schedules and frequent cost overruns. You need an experienced detailer like us to step up, quickly understand, get it right and deliver drawings that are error-free and compliant.",
+      "As the Steel Industry continues to evolve, we continue to drive fresh perspectives into the Detailing Services ecosystem. Because of our innate ability to understand the process of construction, and how it can impact the construction and engineering, we place extreme importance on achieving the synchronization of material functionality at all touch points."
+    ]
+  },
+  "estimate": {
+    "head": "Get your Steel Detailing Estimates done for FREE. Yes. You heard us right!",
+    "body": "We will assess your projects absolutely free of cost and point out schedules that work best for your project's quick turnaround in no time at all!",
+    "bullets": [
+      "Integrated Project Management",
+      "Insights on how to Optimize Schedules",
+      "Weekly, Quarterly, Progress & Assessments of Projects"
+    ]
+  },
+  "services": [
+    "3D Modeling",
+    "Creation of Shop Drawings",
+    "Erection Drawings",
+    "Connection Design Coordination",
+    "BIM Coordination",
+    "Project Management"
+  ],
+  "portfolio": [
+    "Residential Projects",
+    "Industrial Projects",
+    "High-Rise Developments",
+    "Commercial Buildings",
+    "Energy Efficient Buildings",
+    "Warehouses",
+    "Aircraft Hangers",
+    "Senior Living Developments"
+  ]
+}

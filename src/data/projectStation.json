@@ -1,0 +1,36 @@
+{
+  "banner": {
+    "header": "Project Station Version-1.0",
+    "image": "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1775469582/banner-image/c2ea0c85f441d187ad372369eda5f7ef_c2ck15.jpg"
+  },
+  "intro": {
+    "title": "Whiteboard Structural Detailing Project Management is now Seamless.",
+    "body": "Tired of juggling emails, file versions, and project updates? Project Station is our answer to seamless project management. Built specifically for structural steel detailing, it's your central hub for documents, collaboration, and real-time communication with our team—accessible anytime, anywhere.",
+    "quote": "\"A tool designed to help you stay responsive and manage all your projects on the go.\"",
+    "buttonText": "Enter Project Station",
+    "buttonUrl": "https://ps.whiteboardtec.com/"
+  },
+  "features": [
+    {
+      "title": "Easy Document Upload"
+    },
+    {
+      "title": "Real-time Collaboration"
+    },
+    {
+      "title": "Documentation Version Control"
+    },
+    {
+      "title": "Instant Submittals"
+    },
+    {
+      "title": "No Upload Limits"
+    },
+    {
+      "title": "Live Project Progress Notifications"
+    },
+    {
+      "title": "RFI Management"
+    }
+  ]
+}

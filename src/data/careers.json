@@ -1,0 +1,49 @@
+{
+  "banner": {
+    "header": "Careers at",
+    "subheader": "Whiteboard",
+    "image": "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685619/banner-image/career-banner_ccqwcf.jpg"
+  },
+  "headSection": {
+    "title": "Our people just don't get to work because they have to.",
+    "description": [
+      "They get to work knowing the work they do is substantially important in shaping up the future of how steel is being used in construction. They realize that their contributions lead to ground-breaking realities and innovations across a diverse range of sectors. They are a part of our team because what we do matters. We are on a mission to create a sustainable future and a better tomorrow.",
+      "We're super passionate about what we do and we need like-minded individuals who can join us in our revolutionary journey. If you have the skills, we have the opportunities, technologies, and resources that will expand your learning horizons."
+    ],
+    "tagline": [
+      "Innovate, Collaborate and Thrive!",
+      "Be empowered to change the world with us!"
+    ]
+  },
+  "campusRecruitment": {
+    "title": "Campus Recruitment",
+    "location": "Location: Bengaluru, India",
+    "jobType": "Job Type: Full Time",
+    "qualification": "Qualification: Degree",
+    "registerUrl": "http://106.51.141.125:808/#/register",
+    "testUrl": "http://106.51.141.125:808/#/student/",
+    "note": "We might just be a part of the recruitment drive at your college. Follow our social handles for more information on campus events."
+  },
+  "treeData": [
+    {
+      "icon": "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685580/icons/people-icon_o8b5nn.png",
+      "head": "Our People",
+      "body": "Work with the best and the brightest minds in the industry. Imagine having everyday access to thought leaders and process champions who have been pivotal in driving sustainable construction technologies. At the heart of who we are today, are our people. People who have shared the vision with us and continue to push the frontiers of innovation in our industry."
+    },
+    {
+      "icon": "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685576/icons/work-icon_qbsh4o.png",
+      "head": "Work Environment",
+      "body": "A state-of-the-art facility that fosters innovation and promotes healthy productivity. A transparent office space that doesn't confine your creative juices and promotes interaction with our awesome community of people. Plus, who doesn't like a good blend of carefully sourced caffeine and a fully loaded pantry with cookies on us round the clock?"
+    },
+    {
+      "icon": "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685577/icons/tech-icon_e2gofv.png",
+      "head": "Tools & Technology",
+      "body": "Get trained and hands-on with every modern software and tools that are used in our tradecraft. We believe if the right people are given the right tools, there is no definitive limit to what they can go out and achieve. From modern BIM tools to contemporary 3D modeling software, we work only with the best to drive outcomes for our clients."
+    }
+  ],
+  "equalOpportunity": {
+    "title": "Equal Opportunity Employer",
+    "body": "Whiteboard is an Equal Opportunity Employer and provides equal opportunities to all its employees regardless of their race, color, religion, gender, age, disability or marital status. We are committed to diversity and inclusion in the workplace and treat all our employees and potential employees fairly at all times.",
+    "image": "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753698627/banner-image/a7cd38ce-7cdf-4b7e-b843-52cbbe584baf.png"
+  }
+}

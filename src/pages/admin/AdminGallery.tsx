@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { Header, HeaderProp, Sidebar } from "./components";
+import { Header, HeaderProp, Sidebar, useSidebar } from "./components";
+
+
 import { Dialog } from "@headlessui/react";
 import ImagePortfolio from "./components/ImagePortfolio";
 import Service from "../../config/service";
@@ -41,6 +43,7 @@ function useMultipleFileUpload() {
 }
 
 const AdminGallery = () => {
+  const { isSidebarOpen } = useSidebar();
   const { selectedFiles, onFileChange, removeFile, clearFiles } =
     useMultipleFileUpload();
 
@@ -193,50 +196,37 @@ const AdminGallery = () => {
       <Dialog
         open={isOpen}
         onClose={() => {
-          setOpen(false);
-          reset();
-          clearFiles();
-          setIsUploading(false);
+          if (!isUploading) {
+            setOpen(false);
+            reset();
+            clearFiles();
+            setIsUploading(false);
+          }
         }}
-        className="relative z-50"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
       >
-        <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
-        <div className="fixed inset-0 w-screen overflow-y-auto">
-          <div className="flex items-center justify-center min-h-full p-4">
-            <div className="bg-white w-full max-w-6xl p-6 rounded-lg shadow-lg flex flex-col max-h-[90vh] overflow-y-auto">
-              <div className="flex items-center justify-between mb-4">
-                <Dialog.Title className="text-lg font-semibold">
-                  Add New Gallery Project
-                </Dialog.Title>
-                <button
-                  onClick={() => {
-                    setOpen(false);
-                    reset();
-                    clearFiles();
-                    setIsUploading(false);
-                  }}
-                  className="text-gray-400 hover:text-gray-800"
-                  disabled={isUploading}
-                >
-                  <span className="sr-only">Close</span>
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="w-full max-w-6xl mx-auto">
+          <Dialog.Panel className="relative w-full bg-white rounded-xl shadow-2xl p-6 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-gray-150 pb-4 mb-6">
+              <Dialog.Title className="text-xl font-bold text-gray-900 uppercase tracking-wider">
+                Add New Gallery Project
+              </Dialog.Title>
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  reset();
+                  clearFiles();
+                  setIsUploading(false);
+                }}
+                className="px-6 py-1.5 bg-red-50 text-black border-2 border-red-700/80 rounded-lg hover:bg-red-100 transition-all font-bold text-sm uppercase tracking-tight shadow-sm"
+                disabled={isUploading}
+              >
+                Close
+              </button>
+            </div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                   {/* Left column */}
                   <div className="space-y-4">
                     <label>
@@ -513,41 +503,24 @@ const AdminGallery = () => {
                     )}
                   </div>
                 </div>
-                {/* Action Buttons */}
-                <div className="flex justify-center pt-6 space-x-4 border-t">
+                <div className="pt-4">
                   <button
                     type="submit"
                     disabled={isUploading || selectedFiles.length === 0}
-                    className="px-6 py-2 text-white transition bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                    style={{ backgroundColor: "#6abd45", color: "#ffffff" }}
+                    className="w-full py-2.5 hover:!bg-[#5baf38] rounded-lg font-bold uppercase transition-all duration-150 shadow-md text-sm tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isUploading ? "Uploading..." : "Add Gallery Project"}
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setOpen(false);
-                      reset();
-                      clearFiles();
-                      setIsUploading(false);
-                    }}
-                    disabled={isUploading}
-                    className="px-6 py-2 text-white transition bg-red-500 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
-                  >
-                    Cancel
-                  </button>
                 </div>
               </form>
-            </div>
+            </Dialog.Panel>
           </div>
-        </div>
-      </Dialog>
+        </Dialog>
 
       {/* Main section */}
-      <section className="w-full grid grid-cols-[20%_80%] min-h-screen">
-        <aside
-          className="text-white bg-gray-900 border-r border-gray-300"
-          style={{ minHeight: "100vh" }}
-        >
+      <section className={`w-full grid ${isSidebarOpen ? "grid-cols-[260px_1fr]" : "grid-cols-[0px_1fr]"} min-h-screen transition-all duration-300`}>
+        <aside className={`overflow-auto bg-white border-r border-gray-200 transition-all duration-300 ${isSidebarOpen ? "w-[260px]" : "w-0 border-r-0 overflow-hidden"}`}>
           <Sidebar />
         </aside>
         <main className="flex flex-col overflow-auto">
@@ -558,26 +531,26 @@ const AdminGallery = () => {
             </h1>
             <button
               onClick={() => setOpen(true)}
-              className="px-4 py-2 text-white transition bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="px-4 py-2 border border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 font-bold uppercase rounded-sm transition-all shadow-sm"
             >
               Add New Project
             </button>
           </div>
 
-          <div className="mx-4 overflow-hidden bg-white rounded-lg shadow">
+          <div className="mx-4 overflow-auto border border-gray-200 rounded-lg shadow-md">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-green-500">
+              <thead className="text-black bg-[#6abd45]">
                 <tr>
-                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">
+                  <th className="px-6 py-3 text-xs font-semibold tracking-wider text-left uppercase">
                     Project Details
                   </th>
-                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">
+                  <th className="px-6 py-3 text-xs font-semibold tracking-wider text-left uppercase">
                     Type & Status
                   </th>
-                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-white uppercase">
+                  <th className="px-6 py-3 text-xs font-semibold tracking-wider text-left uppercase">
                     Images
                   </th>
-                  <th className="px-6 py-3 text-xs font-medium tracking-wider text-center text-white uppercase">
+                  <th className="px-6 py-3 text-xs font-semibold tracking-wider text-center uppercase">
                     Actions
                   </th>
                 </tr>

@@ -1,6 +1,6 @@
 import {  useEffect, useState } from "react";
 // import { Navigate } from "react-router-dom";
-import { Header, HeaderProp, Sidebar } from "./components";
+import { Header, HeaderProp, Sidebar, useSidebar } from "./components";
 import { Dialog } from "@headlessui/react";
 import { useForm } from "react-hook-form";
 import Service from "../../config/service";
@@ -8,6 +8,7 @@ import { JobPortalResponse } from "../../config/interface";
 import JobCareer from "./components/JobCareer";
 
 function AdminCareer() {
+  const { isSidebarOpen } = useSidebar();
   // State & hooks
   const { register, handleSubmit, reset } = useForm<JobPortalResponse>();
   const [gettingdata, setGettingData] = useState<JobPortalResponse[]>([]);
@@ -68,32 +69,18 @@ function AdminCareer() {
       <Dialog
         open={isOpen}
         onClose={() => setOpen(false)}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
       >
-        <Dialog.Panel className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-lg bg-white p-6 shadow-lg">
-          <div className="flex items-center justify-between mb-6">
-            <Dialog.Title className="text-xl font-semibold text-gray-800">
+        <Dialog.Panel className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-xl bg-white p-6 shadow-2xl">
+          <div className="flex items-center justify-between border-b border-gray-150 pb-4 mb-6">
+            <Dialog.Title className="text-xl font-bold text-gray-900 uppercase tracking-wider">
               Add New Job Role
             </Dialog.Title>
             <button
               onClick={() => setOpen(false)}
-              className="text-gray-400 transition hover:text-gray-800 focus:outline-none"
-              aria-label="Close modal"
+              className="px-6 py-1.5 bg-red-50 text-black border-2 border-red-700/80 rounded-lg hover:bg-red-100 transition-all font-bold text-sm uppercase tracking-tight shadow-sm"
             >
-              <svg
-                className="w-6 h-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              Close
             </button>
           </div>
 
@@ -211,19 +198,13 @@ function AdminCareer() {
             </div>
 
             {/* Form Buttons */}
-            <div className="flex justify-center gap-4">
+            <div className="pt-4">
               <button
                 type="submit"
-                className="px-6 py-2 text-green-600 transition bg-green-600 rounded-md shadow hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                style={{ backgroundColor: "#6abd45", color: "#ffffff" }}
+                className="w-full py-2.5 hover:!bg-[#5baf38] rounded-lg font-bold uppercase transition-all duration-150 shadow-md text-sm tracking-wide"
               >
                 Add Job
-              </button>
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                className="px-6 py-2 text-white transition bg-red-600 rounded-md shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
-              >
-                Cancel
               </button>
             </div>
           </form>
@@ -231,9 +212,9 @@ function AdminCareer() {
       </Dialog>
 
       {/* Main Layout */}
-      <section className="w-full grid grid-cols-[20%_80%] h-screen bg-gray-50">
+      <section className={`w-full grid ${isSidebarOpen ? "grid-cols-[260px_1fr]" : "grid-cols-[0px_1fr]"} h-screen bg-gray-50 transition-all duration-300`}>
         {/* Sidebar */}
-        <aside className="overflow-auto text-white bg-gray-900 border-r border-gray-300">
+        <aside className={`overflow-auto bg-white border-r border-gray-200 transition-all duration-300 ${isSidebarOpen ? "w-[260px]" : "w-0 border-r-0 overflow-hidden"}`}>
           <Sidebar />
         </aside>
 
@@ -246,7 +227,7 @@ function AdminCareer() {
             </h1>
             <button
               onClick={() => setOpen(true)}
-              className="px-5 py-2 text-white transition bg-blue-600 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-5 py-2 border border-[#6abd45] text-[#6abd45] bg-white hover:bg-green-50 font-bold uppercase rounded-sm transition-all shadow-sm"
             >
               + Add New Job
             </button>

@@ -31,17 +31,14 @@ function LeadershipTeam() {
     fetchLeaders();
   }, []);
 
-  const getThoughts = (leader: any): string[] => {
-    if (leader.thoughts && Array.isArray(leader.thoughts)) {
+  const getThoughtsHTML = (leader: any): string => {
+    if (leader.thoughts) {
+      if (Array.isArray(leader.thoughts)) {
+        return leader.thoughts.map((t: string) => `<p class="my-2">${t}</p>`).join("");
+      }
       return leader.thoughts;
     }
-    if (leader.bio) {
-      return leader.bio
-        .split("\n")
-        .map((t: string) => t.trim())
-        .filter((t: string) => t !== "");
-    }
-    return [];
+    return leader.bio || "";
   };
 
   const getImageUrl = (leader: any): string => {
@@ -136,7 +133,7 @@ function LeadershipTeam() {
             {leaders.map((leader, index) => {
               const name = leader.name;
               const designation = leader.designation;
-              const thoughts = getThoughts(leader);
+              const thoughtsHTML = getThoughtsHTML(leader);
               const imageUrl = getImageUrl(leader);
               const socialLink = getSocialLink(leader);
               return (
@@ -169,12 +166,49 @@ function LeadershipTeam() {
                       </div>
                     </div>
 
-                    <div className="text-lg font-normal leading-relaxed text-justify text-gray-700">
-                      {thoughts.map((thought, idx) => (
-                        <p key={idx} className="my-2">
-                          {thought}
-                        </p>
-                      ))}
+                    <div className="text-lg font-normal leading-relaxed text-justify text-gray-700 break-words" style={{ wordBreak: "break-word", overflowWrap: "break-word" }}>
+                      <style>{`
+                        .thought-description {
+                          word-break: break-word !important;
+                          overflow-wrap: break-word !important;
+                        }
+                        .thought-description * {
+                          max-width: 100% !important;
+                          box-sizing: border-box !important;
+                          word-break: break-word !important;
+                          overflow-wrap: break-word !important;
+                        }
+                        .thought-description table {
+                          width: 100% !important;
+                          table-layout: fixed !important;
+                          border-collapse: collapse !important;
+                        }
+                        .thought-description td, .thought-description th {
+                          word-break: break-word !important;
+                          padding: 8px !important;
+                          border: 1px solid #f3f4f6 !important;
+                        }
+                        .thought-description img {
+                          max-width: 100% !important;
+                          height: auto !important;
+                          border-radius: 8px !important;
+                        }
+                        .thought-description a {
+                          color: #2563eb !important;
+                          word-break: break-all !important;
+                          text-decoration: underline !important;
+                        }
+                        .thought-description p { margin-bottom: 1rem !important; }
+                        .thought-description ul { list-style-type: disc !important; padding-left: 1.5rem !important; margin-bottom: 1rem !important; }
+                        .thought-description ol { list-style-type: decimal !important; padding-left: 1.5rem !important; margin-bottom: 1rem !important; }
+                        .thought-description li { margin-bottom: 0.5rem !important; }
+                      `}</style>
+                      <div
+                        className="thought-description text-gray-700 text-lg font-normal leading-relaxed text-justify wrap-break-word max-w-none"
+                        dangerouslySetInnerHTML={{
+                          __html: thoughtsHTML,
+                        }}
+                      />
                     </div>
                   </div>
 

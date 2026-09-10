@@ -9,7 +9,7 @@ function Admin() {
 
     if (token){
         return (
-          <Navigate to='/admin/dashboard'/>
+          <Navigate to='/admin/edit-our-firm'/>
         )
     } else {
         return (

@@ -1,0 +1,65 @@
+{
+  "banner": {
+    "header": "Connect",
+    "subheader": "with us",
+    "image": "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685619/banner-image/contact-banner_xlqqbi.jpg"
+  },
+  "context": {
+    "heading": "We’d love to hear from you.",
+    "body": "You can contact us by filling out the form, and a member of our team will get back to you within 24 hours or less. Or, if you have an immediate need, you can also call us on your support line.",
+    "phone": [
+      {
+        "primary": "1-612-605-5833"
+      },
+      {
+        "primary": "1-612-216-5427"
+      }
+    ],
+    "mail": [
+      {
+        "email": "sales@whiteboardtec.com"
+      },
+      {
+        "email": "hr@whiteboardtec.com"
+      }
+    ],
+    "address": [
+      {
+        "title": "USA",
+        "addrLine1": "#19904, 64th Avenue, Corcoran,",
+        "addrLine2": "MN 55340, USA"
+      },
+      {
+        "title": "INDIA",
+        "addrLine1": "No. 23/4, 1st Floor, Dr. Rajgopal Road, RMV 2nd Stage,",
+        "addrLine2": "Sanjaynagar, Bengaluru-560094, Karnataka, India",
+        "phone": "+91-6364063539"
+      }
+    ]
+  },
+  "form": {
+    "title": "Fill the form below",
+    "field": [
+      {
+        "name": "name",
+        "type": "text",
+        "placeholder": "Name"
+      },
+      {
+        "name": "email",
+        "type": "email",
+        "placeholder": "Email"
+      },
+      {
+        "name": "phone",
+        "type": "text",
+        "placeholder": "Phone"
+      },
+      {
+        "name": "message",
+        "type": "textarea",
+        "placeholder": "Message"
+      }
+    ]
+  }
+}

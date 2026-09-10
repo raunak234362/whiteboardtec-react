@@ -1,0 +1,31 @@
+{
+  "banner": {
+    "header": "Architectural",
+    "subheader": "BIM services",
+    "image": "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685621/banner-image/bim-banner_utszir.jpg"
+  },
+  "intro": {
+    "headSection": [
+      "As one of the early adopters of the Building Information Modeling (BIM) system, we understand how an elaborate 3D architectural design can set a conceptual project to life. As a matter of fact, our virtual models are so detailed that you can actually assess the feasibility and performance of a design even before the project execution. Putting to work the most up-to-date BIM tools combined with a design-thinking perspective, we generate stunning visual prototypes that count!",
+      "As BIM continues to revolutionize the construction industry, we continue to innovate the construction ecosystem with visuals that are enriched with technical clarity. Is it possible to validate the minuscule details with enhanced visualizations? YES, it is. And our portfolio speaks for us."
+    ],
+    "cta": "Collaborate seamlessly with all stakeholders at every touch point, mitigate risks and impact overall revenues."
+  },
+  "estimate": {
+    "head": "Get your Architectural BIM Estimates done for FREE. Yes. You heard us right!",
+    "body": "We will assess your projects absolutely free of cost and point out schedules that work best for your project's quick turnaround in no time at all!",
+    "bullets": [
+      "Integrated Project Management",
+      "Insights on how to Optimize Schedules",
+      "Weekly, Quarterly, Progress & Assessments of Projects"
+    ]
+  },
+  "offerings": [
+    "3D, 4D & 5D Architectural Modeling & Design",
+    "3D Modeling",
+    "Shop Drawings / BIM Construction Plan",
+    "Clash Detection",
+    "Renders and other associated Visuals",
+    "Cost Estimation Services"
+  ]
+}

@@ -1,0 +1,461 @@
+import React, { useState, useEffect, useRef } from "react";
+import ourFirmData from "../../../data/ourFirm.json";
+import { Header, Sidebar, useSidebar, PublishPanel, RichTextEditor } from "../components";
+import OurFirm from "../../ourFirm/OurFirm";
+
+interface OurFirmData {
+  banner: any;
+  intro: any;
+  visionMission: any;
+  largeProject: any;
+  keyDifferentiators: any[];
+  projectManagement: any;
+  additionalBlocks?: any[];
+}
+
+export default function EditOurFirm() {
+  const { isSidebarOpen } = useSidebar();
+  const [data, setData] = useState<OurFirmData>(ourFirmData as OurFirmData);
+
+  // Resize Panel State
+  const [editorWidth, setEditorWidth] = useState(550);
+  const [isDragging, setIsDragging] = useState(false);
+
+  // Mode View State: split (edit + preview) or preview (preview only)
+  const [mode, setMode] = useState<"split" | "preview">("split");
+  const [isChangingMode, setIsChangingMode] = useState(false);
+
+  const handleModeChange = (newMode: "split" | "preview") => {
+    if (newMode === mode) return;
+    setIsChangingMode(true);
+    setTimeout(() => {
+      setMode(newMode);
+      setIsChangingMode(false);
+    }, 600);
+  };
+
+  const bannerRef = useRef<HTMLDivElement>(null);
+  const introRef = useRef<HTMLDivElement>(null);
+  const visionMissionRef = useRef<HTMLDivElement>(null);
+  const largeProjectRef = useRef<HTMLDivElement>(null);
+  const keyDifferentiatorsRef = useRef<HTMLDivElement>(null);
+  const projectManagementRef = useRef<HTMLDivElement>(null);
+
+  const header = { head: "Live Editor: Our Firm" };
+
+  const startResizing = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return;
+      // 250px is the Sidebar width. We constrain width between 350px and 950px.
+      const newWidth = Math.max(350, Math.min(e.clientX - 250, 950));
+      setEditorWidth(newWidth);
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    if (isDragging) {
+      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mouseup", handleMouseUp);
+    }
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging]);
+
+  const handleSectionClick = (sectionId: string) => {
+    const refs: { [key: string]: React.RefObject<HTMLDivElement> } = {
+      banner: bannerRef,
+      intro: introRef,
+      visionMission: visionMissionRef,
+      largeProject: largeProjectRef,
+      keyDifferentiators: keyDifferentiatorsRef,
+      projectManagement: projectManagementRef
+    };
+    
+    if (refs[sectionId]?.current) {
+      refs[sectionId].current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const el = refs[sectionId].current;
+      if (el) {
+        el.classList.add('bg-yellow-50', 'transition-colors', 'duration-500');
+        setTimeout(() => {
+          el.classList.remove('bg-yellow-50');
+        }, 1500);
+      }
+    }
+  };
+
+  return (
+    <section className={`w-full h-screen grid ${isSidebarOpen ? "grid-cols-[260px_1fr]" : "grid-cols-[0px_1fr]"} bg-gray-50 overflow-hidden select-none transition-all duration-300`}>
+      {/* App Sidebar */}
+      <aside className={`overflow-auto bg-white border-r border-gray-200 transition-all duration-300 ${isSidebarOpen ? "w-[260px]" : "w-0 border-r-0 overflow-hidden"}`}>
+          <Sidebar />
+        </aside>
+
+      <main className="flex flex-col h-full overflow-hidden select-text">
+        <Header {...header} />
+
+        {/* Mode Switcher Tabs */}
+        <div className="bg-white border-b px-6 py-2.5 flex items-center justify-center shadow-sm z-10">
+          <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg border border-gray-200">
+            <button
+              type="button"
+              onClick={() => handleModeChange("split")}
+              style={{
+                backgroundColor: mode === "split" ? "#6abd45" : "transparent",
+                color: mode === "split" ? "#ffffff" : "#000000"
+              }}
+              className="px-6 py-2 text-xs font-bold uppercase tracking-wider rounded-md transition-all shadow-sm focus:outline-none"
+            >
+              Split View
+            </button>
+            <button
+              type="button"
+              onClick={() => handleModeChange("preview")}
+              style={{
+                backgroundColor: mode === "preview" ? "#6abd45" : "transparent",
+                color: mode === "preview" ? "#ffffff" : "#000000"
+              }}
+              className="px-6 py-2 text-xs font-bold uppercase tracking-wider rounded-md transition-all shadow-sm focus:outline-none"
+            >
+              Live Preview
+            </button>
+          </div>
+        </div>
+
+        {isChangingMode ? (
+          <div className="flex-grow flex flex-col justify-center items-center bg-gray-50 h-full">
+            <div className="relative flex items-center justify-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-[#6abd45]"></div>
+              <div className="absolute text-[#6abd45] font-bold text-xs uppercase tracking-widest animate-pulse">
+                WBT
+              </div>
+            </div>
+            <p className="text-gray-500 text-sm mt-4 font-semibold uppercase tracking-widest animate-pulse">
+              Loading Layout...
+            </p>
+          </div>
+        ) : (
+          <div className="flex flex-row h-full overflow-hidden">
+            {/* EDITOR PANEL (Resizable Left side) */}
+            {mode === "split" && (
+              <div 
+                style={{ width: `${editorWidth}px` }}
+                className="bg-white border-r flex flex-col h-full overflow-y-auto animate-fade-in transition-all duration-75"
+              >
+            {/* Publish Actions Sticky Header */}
+            <PublishPanel filePath="src/data/ourFirm.json" data={data} />
+
+            {/* Form Fields */}
+            <div className="p-4 space-y-6 select-text">
+              {/* Banner Section */}
+              <div className="border-b pb-4 p-2 rounded" ref={bannerRef}>
+                <h3 className="text-lg font-semibold mb-2">Banner</h3>
+                <label className="block text-xs font-medium text-gray-500 mb-1">Header (Rich Text)</label>
+                <RichTextEditor
+                  value={data.banner.header}
+                  onChange={(val) => setData(prev => ({ ...prev, banner: { ...prev.banner, header: val } }))}
+                  height={120}
+                />
+                <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Subheader (Rich Text)</label>
+                <RichTextEditor
+                  value={data.banner.subheader}
+                  onChange={(val) => setData(prev => ({ ...prev, banner: { ...prev.banner, subheader: val } }))}
+                  height={120}
+                />
+              </div>
+
+              {/* Intro Section */}
+              <div className="border-b pb-4 p-2 rounded" ref={introRef}>
+                <h3 className="text-lg font-semibold mb-2">Intro Section</h3>
+                <label className="block text-xs font-medium text-gray-500 mb-1">Heading (Rich Text)</label>
+                <RichTextEditor
+                  value={data.intro.heading}
+                  onChange={(val) => setData(prev => ({ ...prev, intro: { ...prev.intro, heading: val } }))}
+                  height={120}
+                />
+                <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Paragraph 1</label>
+                <RichTextEditor
+                  value={data.intro.paragraph1}
+                  onChange={(val) => setData(prev => ({ ...prev, intro: { ...prev.intro, paragraph1: val } }))}
+                />
+                <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Paragraph 2</label>
+                <RichTextEditor
+                  value={data.intro.paragraph2}
+                  onChange={(val) => setData(prev => ({ ...prev, intro: { ...prev.intro, paragraph2: val } }))}
+                />
+              </div>
+
+              {/* Vision & Mission */}
+              <div className="border-b pb-4 p-2 rounded" ref={visionMissionRef}>
+                <h3 className="text-lg font-semibold mb-2">Vision & Mission</h3>
+                <label className="block text-xs font-medium text-gray-500 mb-1">Vision</label>
+                <RichTextEditor
+                  value={data.visionMission.vision}
+                  onChange={(val) => setData(prev => ({ ...prev, visionMission: { ...prev.visionMission, vision: val } }))}
+                />
+                <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Mission</label>
+                <RichTextEditor
+                  value={data.visionMission.mission}
+                  onChange={(val) => setData(prev => ({ ...prev, visionMission: { ...prev.visionMission, mission: val } }))}
+                />
+              </div>
+              
+              {/* Large Project Section */}
+              <div className="border-b pb-4 p-2 rounded" ref={largeProjectRef}>
+                <h3 className="text-lg font-semibold mb-2">Large Project Section</h3>
+                <label className="block text-xs font-medium text-gray-500 mb-1">Heading (Rich Text)</label>
+                <RichTextEditor
+                  value={data.largeProject.heading}
+                  onChange={(val) => setData(prev => ({ ...prev, largeProject: { ...prev.largeProject, heading: val } }))}
+                  height={120}
+                />
+                <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Subheading (Rich Text)</label>
+                <RichTextEditor
+                  value={data.largeProject.subheading}
+                  onChange={(val) => setData(prev => ({ ...prev, largeProject: { ...prev.largeProject, subheading: val } }))}
+                  height={120}
+                />
+                <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Description</label>
+                <RichTextEditor
+                  value={data.largeProject.description}
+                  onChange={(val) => setData(prev => ({ ...prev, largeProject: { ...prev.largeProject, description: val } }))}
+                />
+              </div>
+
+              {/* Key Differentiators */}
+              <div className="border-b pb-4 p-2 rounded" ref={keyDifferentiatorsRef}>
+                <h3 className="text-lg font-semibold mb-2">Key Differentiators</h3>
+                {data.keyDifferentiators.map((item: any, idx: number) => (
+                  <div key={idx} className="mb-6 border-l-4 border-blue-500 pl-3 relative bg-gray-50 p-3 rounded shadow-sm">
+                    <button 
+                      onClick={() => {
+                        const name = item.head.replace(/<[^>]*>/g, "") || `Differentiator #${idx + 1}`;
+                        if (window.confirm(`Are you sure to delete this section: "${name}"?`)) {
+                          setData(prev => {
+                            const newArr = [...prev.keyDifferentiators];
+                            newArr.splice(idx, 1);
+                            return { ...prev, keyDifferentiators: newArr };
+                          });
+                        }
+                      }}
+                      className="absolute top-2 right-2 text-red-500 hover:text-red-700 text-xs font-bold bg-white p-1 rounded border shadow-sm"
+                    >
+                      Delete Block
+                    </button>
+                    <label className="block text-xs font-medium text-gray-500 mb-1">Heading (Rich Text)</label>
+                    <RichTextEditor
+                      value={item.head}
+                      onChange={(val) => {
+                        setData(prev => {
+                          const newArr = [...prev.keyDifferentiators];
+                          newArr[idx] = { ...newArr[idx], head: val };
+                          return { ...prev, keyDifferentiators: newArr };
+                        });
+                      }}
+                      height={100}
+                    />
+                    <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Body</label>
+                    <RichTextEditor
+                      value={item.body}
+                      onChange={(val) => {
+                        setData(prev => {
+                          const newArr = [...prev.keyDifferentiators];
+                          newArr[idx] = { ...newArr[idx], body: val };
+                          return { ...prev, keyDifferentiators: newArr };
+                        });
+                      }}
+                    />
+                  </div>
+                ))}
+                <button 
+                  onClick={() => setData(prev => ({ ...prev, keyDifferentiators: [...prev.keyDifferentiators, { icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685578/icons/process_skpasx.png", head: "New Item", body: "Description..." }] }))}
+                  className="mt-2 w-full py-2 bg-blue-50 text-blue-600 border border-blue-300 border-dashed rounded text-sm font-semibold hover:bg-blue-100 transition-colors"
+                >
+                  + Add Key Differentiator Card
+                </button>
+              </div>
+
+              {/* Project Management */}
+              <div className="border-b pb-4 p-2 rounded" ref={projectManagementRef}>
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="text-lg font-semibold">Project Management</h3>
+                  <button 
+                    onClick={() => {
+                      if (window.confirm('Are you sure to reset the Project Management section?')) {
+                        setData(prev => ({ ...prev, projectManagement: { heading: "<h3>Heading</h3>", description: "<p>Description</p>", features: [] } }));
+                      }
+                    }}
+                    className="text-xs text-red-500 hover:text-red-700 font-semibold"
+                  >
+                    Reset Section
+                  </button>
+                </div>
+                <label className="block text-xs font-medium text-gray-500 mb-1">Heading (Rich Text)</label>
+                <RichTextEditor
+                  value={data.projectManagement.heading}
+                  onChange={(val) => setData(prev => ({ ...prev, projectManagement: { ...prev.projectManagement, heading: val } }))}
+                  height={120}
+                />
+                <label className="block text-xs font-medium text-gray-500 mb-1 mt-4">Description</label>
+                <RichTextEditor
+                  value={data.projectManagement.description}
+                  onChange={(val) => setData(prev => ({ ...prev, projectManagement: { ...prev.projectManagement, description: val } }))}
+                />
+                
+                <label className="block text-xs font-medium text-gray-500 mb-2 mt-4 font-bold">Features List</label>
+                {data.projectManagement.features.map((feature: string, idx: number) => (
+                  <div key={idx} className="flex flex-row items-center mb-2 gap-2">
+                    <input
+                      className="flex-1 border p-2 rounded text-sm"
+                      value={feature}
+                      onChange={(e) => setData(prev => {
+                        const newFeatures = [...prev.projectManagement.features];
+                        newFeatures[idx] = e.target.value;
+                        return { ...prev, projectManagement: { ...prev.projectManagement, features: newFeatures } };
+                      })}
+                    />
+                    <button 
+                      onClick={() => {
+                        if (window.confirm(`Are you sure to delete this section: "Feature: ${feature || "Untitled"}"?`)) {
+                          setData(prev => {
+                            const newFeatures = [...prev.projectManagement.features];
+                            newFeatures.splice(idx, 1);
+                            return { ...prev, projectManagement: { ...prev.projectManagement, features: newFeatures } };
+                          });
+                        }
+                      }}
+                      className="px-3 py-2 bg-red-100 text-red-600 rounded text-xs font-bold hover:bg-red-200"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                ))}
+                <button 
+                  onClick={() => setData(prev => ({ ...prev, projectManagement: { ...prev.projectManagement, features: [...prev.projectManagement.features, "New Feature item"] } }))}
+                  className="mt-2 w-full py-1.5 bg-green-50 text-[#6abd45] border border-[#6abd45] border-dashed rounded text-xs font-semibold hover:bg-green-100 transition-colors"
+                >
+                  + Add Feature
+                </button>
+              </div>
+
+              {/* ADDITIONAL WORDPRESS-STYLE BLOCKS */}
+              <div className="pb-4 p-2 rounded">
+                <h3 className="text-lg font-semibold mb-2">Custom Dynamic Blocks</h3>
+                <p className="text-xs text-gray-500 mb-4">Add WordPress-style custom blocks to the bottom of your page.</p>
+                
+                {(data.additionalBlocks || []).map((block: any, idx: number) => (
+                  <div key={idx} className="mb-6 border-l-4 border-green-500 pl-3 relative bg-gray-50 p-3 rounded">
+                    <button 
+                      onClick={() => {
+                        if (window.confirm(`Are you sure to delete this section: "${block.type} Block"?`)) {
+                          setData(prev => {
+                            const newBlocks = [...(prev.additionalBlocks || [])];
+                            newBlocks.splice(idx, 1);
+                            return { ...prev, additionalBlocks: newBlocks };
+                          });
+                        }
+                      }}
+                      className="absolute top-2 right-2 text-red-500 hover:text-red-700 text-xs font-bold"
+                    >
+                      Remove
+                    </button>
+                    <h4 className="font-bold text-sm text-green-700 capitalize mb-3 border-b pb-1">{block.type} Block</h4>
+                    
+                    {block.type === 'text' && (
+                      <RichTextEditor
+                        value={block.content}
+                        onChange={(val) => setData(prev => {
+                          const newBlocks = [...(prev.additionalBlocks || [])];
+                          newBlocks[idx] = { ...newBlocks[idx], content: val };
+                          return { ...prev, additionalBlocks: newBlocks };
+                        })}
+                      />
+                    )}
+
+                    {block.type === 'quote' && (
+                      <>
+                        <label className="block text-xs font-medium text-gray-500 mb-1">Quote Text</label>
+                        <textarea
+                          className="w-full border p-2 rounded mb-2 text-sm h-16"
+                          value={block.text}
+                          onChange={(e) => setData(prev => {
+                            const newBlocks = [...(prev.additionalBlocks || [])];
+                            newBlocks[idx] = { ...newBlocks[idx], text: e.target.value };
+                            return { ...prev, additionalBlocks: newBlocks };
+                          })}
+                        />
+                        <label className="block text-xs font-medium text-gray-500 mb-1">Author Name</label>
+                        <input
+                          className="w-full border p-2 rounded text-sm"
+                          value={block.author}
+                          onChange={(e) => setData(prev => {
+                            const newBlocks = [...(prev.additionalBlocks || [])];
+                            newBlocks[idx] = { ...newBlocks[idx], author: e.target.value };
+                            return { ...prev, additionalBlocks: newBlocks };
+                          })}
+                        />
+                      </>
+                    )}
+                  </div>
+                ))}
+                
+                <div className="flex gap-2 mt-4">
+                  <button 
+                    onClick={() => setData(prev => ({ ...prev, additionalBlocks: [...(prev.additionalBlocks || []), { type: 'text', content: '<p>New text block...</p>' }] }))}
+                    className="flex-1 py-2 bg-green-100 text-green-700 rounded text-sm font-semibold hover:bg-green-200"
+                  >
+                    + Rich Text Block
+                  </button>
+                  <button 
+                    onClick={() => setData(prev => ({ ...prev, additionalBlocks: [...(prev.additionalBlocks || []), { type: 'quote', text: 'This is a great quote!', author: 'John Doe' }] }))}
+                    className="flex-1 py-2 bg-green-100 text-green-700 rounded text-sm font-semibold hover:bg-green-200"
+                  >
+                    + Quote Block
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          )}
+
+          {/* Resizer Handle */}
+          {mode === "split" && (
+            <div
+              onMouseDown={startResizing}
+              className={`w-2 bg-gray-200 hover:bg-green-500 cursor-col-resize transition-all duration-150 relative flex items-center justify-center ${
+                isDragging ? "bg-green-500 w-2.5" : ""
+              }`}
+            >
+              <div className="w-1 h-12 bg-gray-400 rounded-full"></div>
+            </div>
+          )}
+
+          {/* LIVE PREVIEW PANEL (Right side) */}
+          <div className="flex-1 bg-gray-200 overflow-y-auto relative select-none">
+            <div className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded shadow opacity-50 pointer-events-none z-10">
+              Live Preview {mode === "split" && "(Click a section to edit)"}
+            </div>
+            <div className="w-full bg-white min-h-full pb-20 select-text">
+              <OurFirm 
+                previewData={data} 
+                onSectionClick={mode === "split" ? handleSectionClick : undefined} 
+              />
+            </div>
+          </div>
+
+          </div>
+        )}
+      </main>
+    </section>
+  );
+}
