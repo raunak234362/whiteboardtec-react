@@ -134,3 +134,12 @@ export interface leadershipInterface {
  profilePic:JSON;
  designation:string;
 }
+export interface whyUsPicInterface {
+  id: string;
+  tag: string;
+  title: string;
+  description: string;
+  image: string[] | JSON;
+  order: number;
+}
+

@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import { PageBanner } from "../../components/banner";
 import { JobDescType } from ".";
 import JobBox from "./JobBox";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Service from "../../config/service";
 import careersData from "../../data/careers.json";
 
 function Careers({ previewData, onSectionClick }: { previewData?: any; onSectionClick?: (sectionId: string) => void }) {
   const [job, setJob] = useState<JobDescType[]>([]);
-  const { hash } = useLocation();
 
   const fetchJob = async () => {
     try {

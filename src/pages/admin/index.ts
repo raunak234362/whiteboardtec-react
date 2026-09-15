@@ -18,6 +18,7 @@ import EditProjectStation from "./projectstation/Projectstationedit";
 import EditCareers from "./careers/Careersedit";
 import EditConnect from "./connect/Connectedit";
 import EditNotification from "./EditNotification";
+import WhyUs from "./whyUs/WhyUs";
 
 export {
     Login,
@@ -39,5 +40,6 @@ export {
     EditProjectStation,
     EditCareers,
     EditConnect,
-    EditNotification
+    EditNotification,
+    WhyUs
 }

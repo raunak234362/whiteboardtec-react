@@ -1,6 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BannerPropType, PageBanner } from "../../components/banner";
+import Service from "../../config/service";
+import { getWhyUsImageUrl } from "../admin/whyUs/WhyUs";
 
 const banner: BannerPropType = {
   header: "Life at",
@@ -81,9 +83,40 @@ const growthPoints = [
 ];
 
 const LifeAtwbt = () => {
+  const [cards, setCards] = useState<
+    Array<{ title: string; desc: string; image: string; badge: string }>
+  >([]);
+
   useEffect(() => {
     document.title = "Life at WBT - Whiteboard";
+
+    const loadCards = async () => {
+      try {
+        const data = await Service.whyUsPicGet();
+        if (data && data.length > 0) {
+          const sorted = data.slice().sort((a, b) => {
+            const orderA = Number(a.order) || 0;
+            const orderB = Number(b.order) || 0;
+            return orderA - orderB;
+          });
+          setCards(
+            sorted.map((item) => ({
+              title: item.title,
+              desc: item.description,
+              badge: item.tag,
+              image: getWhyUsImageUrl(item.image),
+            }))
+          );
+        }
+      } catch (err) {
+        console.warn("Could not fetch dynamic Why Us cards, using fallback:", err);
+      }
+    };
+
+    loadCards();
   }, []);
+
+  const displayHighlights = cards.length > 0 ? cards : lifeHighlights;
 
   return (
     <>
@@ -158,23 +191,23 @@ const LifeAtwbt = () => {
             <h2 className="text-4xl font-bold text-black mt-2">
               Accelerate Your Career Path
             </h2>
+            <p className="text-lg text-gray-700 mt-2">
+              We empower you to evolve from skilled technicians to industry-leading engineering consultants.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {growthPoints.map((gp, index) => (
+            {growthPoints.map((gp, idx) => (
               <div
-                key={index}
-                className="bg-white rounded-2xl border p-6 shadow-sm flex flex-col justify-between"
+                key={idx}
+                className="bg-white p-6 rounded-2xl border-2 shadow-sm hover:shadow-md transition-shadow"
               >
-                <div>
-                  
-                  <h3 className="text-2xl font-bold text-black mb-3">
-                    {gp.question}
-                  </h3>
-                  <p className="text-gray-700 text-md leading-relaxed text-justify">
-                    {gp.answer}
-                  </p>
-                </div>
+                <h4 className="text-xl font-bold text-[#6abd45] mb-2">
+                  {gp.question}
+                </h4>
+                <p className="text-gray-700 leading-relaxed text-justify">
+                  {gp.answer}
+                </p>
               </div>
             ))}
           </div>
@@ -191,7 +224,7 @@ const LifeAtwbt = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {lifeHighlights.map((hl, idx) => (
+            {displayHighlights.map((hl, idx) => (
               <div
                 key={idx}
                 className="bg-white border-2 shadow-md rounded-3xl overflow-hidden flex flex-col justify-between transition-all hover:shadow-xl hover:-translate-y-1"

@@ -6,7 +6,8 @@ import {
   IJobApplication,
   blogInterface,
   ConnectProps,
-  leadershipInterface
+  leadershipInterface,
+  whyUsPicInterface
 } from "./interface";
 import api from "./api";
 
@@ -598,6 +599,67 @@ class Service {
       });
       const resData = response.data as ApiResponse<leadershipInterface>;
       console.log("response for leadership", resData);
+      return resData.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  static async whyUsAdd(payload: FormData): Promise<whyUsPicInterface> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.post("whyUsPic/create", payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      const resData = response.data as ApiResponse<whyUsPicInterface>;
+      console.log("response for whyUsPicAdd", resData);
+      return resData.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+  static async whyUsPicGet(): Promise<whyUsPicInterface[]> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.get("whyUsPic/all", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const resData = response.data as ApiResponse<whyUsPicInterface[]>;
+      console.log("response for whyUsPicGet", resData);
+      return resData.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+  static async whyUsPicGetbyId(id: string): Promise<whyUsPicInterface> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.get(`whyUsPic/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const resData = response.data as ApiResponse<whyUsPicInterface>;
+      console.log("response for whyUsPicGetbyId", resData);
+      return resData.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  static async whyUsPicDelete(id: string): Promise<whyUsPicInterface> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.delete(`whyUsPic/delete/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const resData = response.data as ApiResponse<whyUsPicInterface>;
+      console.log("response for whyUsPicDelete", resData);
       return resData.data;
     } catch (error) {
       console.error(error);

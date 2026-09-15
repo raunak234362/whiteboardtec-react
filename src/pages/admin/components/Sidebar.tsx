@@ -37,6 +37,7 @@ function Sidebar() {
     resources: path.includes("/admin/blog"),
     connect: path.includes("/admin/connect-info") || path.includes("/admin/connect/edit"),
     careers: path.includes("/admin/career"),
+    whyUs: path.includes("/admin/why-us"),
   });
 
   const toggleMenu = (menu: string) => {
@@ -55,6 +56,7 @@ function Sidebar() {
       resources: prev.resources || path.includes("/admin/blog"),
       connect: prev.connect || path.includes("/admin/connect-info") || path.includes("/admin/connect/edit"),
       careers: prev.careers || path.includes("/admin/career"),
+      whyUs: prev.whyUs || path.includes("/admin/why-us"),
     }));
   }, [path]);
 
@@ -292,6 +294,36 @@ function Sidebar() {
         >
           <span>Project Station</span>
         </NavLink>
+
+        {/* Why Us */}
+        <div>
+          <button
+            onClick={() => toggleMenu("whyUs")}
+            className={`w-full flex items-center px-6 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-black transition-colors duration-150 ${
+              path.includes("/admin/why-us")
+                ? "bg-green-50/20 text-[#6abd45] border-l-4 border-[#6abd45]"
+                : ""
+            }`}
+          >
+            <span>Why Us</span>
+            {openMenus.whyUs ? <ChevronUp /> : <ChevronDown />}
+          </button>
+          
+          {openMenus.whyUs && (
+            <div className="bg-gray-50/30 py-1 pl-4 space-y-1">
+              <NavLink
+                to="/admin/why-us"
+                className={({ isActive }) =>
+                  `flex items-center px-6 py-2 text-xs font-medium transition-colors duration-150 ${
+                    isActive ? "text-[#6abd45] font-bold border-l-2 border-[#6abd45] pl-2" : "text-gray-600 hover:text-black hover:bg-gray-100/50 pl-2"
+                  }`
+                }
+              >
+                Life at WBT Cards
+              </NavLink>
+            </div>
+          )}
+        </div>
 
         {/* Connect */}
         <div>
