@@ -8,64 +8,76 @@ import {
   X,
   Upload,
   Image as ImageIcon,
-  Layers,
-  ArrowUpDown,
   RefreshCw,
   AlertCircle,
-  Sparkles,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
-import { Header, HeaderProp, Sidebar, useSidebar } from "../components";
+import { Header, HeaderProp, Sidebar, useSidebar, RichTextEditor } from "../components";
 import Service from "../../../config/service";
 import { whyUsPicInterface } from "../../../config/interface";
 
-const TAG_PRESETS = [
-  "Outings & Fun",
-  "Celebrations",
-  "Rewards",
-  "Workplace",
-  "Wellbeing",
-  "Growth",
-];
 
 const DEFAULT_CARD_IMAGE =
   "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685708/route-image/our-firm_qbwtod.jpg";
 
-/** Helper to robustly extract image URL from various backend formats */
-export const getWhyUsImageUrl = (image: any): string => {
-  if (!image) return DEFAULT_CARD_IMAGE;
+/** Helper to extract all image URLs from various backend formats */
+export const getWhyUsImageUrls = (image: any): string[] => {
+  if (!image) return [DEFAULT_CARD_IMAGE];
 
-  // If it's already a direct string URL
+  // If it's already a direct string URL or a JSON string
   if (typeof image === "string") {
     const trimmed = image.trim();
     if (trimmed.startsWith("[") || trimmed.startsWith("{")) {
       try {
         const parsed = JSON.parse(trimmed);
-        return getWhyUsImageUrl(parsed);
+        return getWhyUsImageUrls(parsed);
       } catch {
-        return trimmed || DEFAULT_CARD_IMAGE;
+        return [trimmed || DEFAULT_CARD_IMAGE];
       }
     }
-    return trimmed || DEFAULT_CARD_IMAGE;
+    return [trimmed || DEFAULT_CARD_IMAGE];
   }
 
   // If it's an array
   if (Array.isArray(image)) {
-    if (image.length === 0) return DEFAULT_CARD_IMAGE;
-    return getWhyUsImageUrl(image[0]);
+    if (image.length === 0) return [DEFAULT_CARD_IMAGE];
+    const urls = image
+      .map((item) => {
+        if (typeof item === "string") return item.trim();
+        if (typeof item === "object" && item) {
+          return (
+            item.secureUrl ||
+            item.secure_url ||
+            item.url ||
+            item.path ||
+            ""
+          );
+        }
+        return "";
+      })
+      .filter(Boolean);
+    return urls.length > 0 ? urls : [DEFAULT_CARD_IMAGE];
   }
 
   // If it's an object with url / secureUrl / secure_url
-  if (typeof image === "object") {
-    return (
+  if (typeof image === "object" && image) {
+    const url =
       image.secureUrl ||
       image.secure_url ||
       image.url ||
       image.path ||
-      DEFAULT_CARD_IMAGE
-    );
+      DEFAULT_CARD_IMAGE;
+    return [url];
   }
 
-  return DEFAULT_CARD_IMAGE;
+  return [DEFAULT_CARD_IMAGE];
+};
+
+/** Helper to robustly extract primary image URL */
+export const getWhyUsImageUrl = (image: any): string => {
+  const list = getWhyUsImageUrls(image);
+  return list[0] || DEFAULT_CARD_IMAGE;
 };
 
 const WhyUs: React.FC = () => {
@@ -84,12 +96,15 @@ const WhyUs: React.FC = () => {
   const [formTitle, setFormTitle] = useState<string>("");
   const [formDescription, setFormDescription] = useState<string>("");
   const [formOrder, setFormOrder] = useState<number>(1);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [filePreview, setFilePreview] = useState<string | null>(null);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [filePreviews, setFilePreviews] = useState<string[]>([]);
+  const [previewActiveIdx, setPreviewActiveIdx] = useState<number>(0);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
   const fileInputId = useId();
 
   // Inspect / View Modal State
   const [viewCard, setViewCard] = useState<whyUsPicInterface | null>(null);
+  const [viewImageIndex, setViewImageIndex] = useState<number>(0);
   const [isViewModalOpen, setIsViewModalOpen] = useState<boolean>(false);
   const [isFetchingDetails, setIsFetchingDetails] = useState<boolean>(false);
 
@@ -142,24 +157,61 @@ const WhyUs: React.FC = () => {
     setFormTitle("");
     setFormDescription("");
     setFormOrder(maxOrder + 1);
-    setSelectedFile(null);
-    setFilePreview(null);
+    setSelectedFiles([]);
+    setFilePreviews([]);
+    setPreviewActiveIdx(0);
     setIsAddModalOpen(true);
   };
 
   const handleCloseAddModal = () => {
     if (isSubmitting) return;
     setIsAddModalOpen(false);
-    setSelectedFile(null);
-    setFilePreview(null);
+    setSelectedFiles([]);
+    setFilePreviews([]);
+    setPreviewActiveIdx(0);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setSelectedFile(file);
-      const url = URL.createObjectURL(file);
-      setFilePreview(url);
+    if (e.target.files && e.target.files.length > 0) {
+      const added = Array.from(e.target.files);
+      const combined = [...selectedFiles, ...added];
+      setSelectedFiles(combined);
+      setFilePreviews(combined.map((f) => URL.createObjectURL(f)));
+      e.target.value = "";
+    }
+  };
+
+  const removeSelectedFile = (idxToRemove: number) => {
+    const updated = selectedFiles.filter((_, idx) => idx !== idxToRemove);
+    setSelectedFiles(updated);
+    setFilePreviews(updated.map((f) => URL.createObjectURL(f)));
+    if (previewActiveIdx >= updated.length) {
+      setPreviewActiveIdx(Math.max(0, updated.length - 1));
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const dropped = Array.from(e.dataTransfer.files).filter((f) =>
+        f.type.startsWith("image/")
+      );
+      if (dropped.length > 0) {
+        const combined = [...selectedFiles, ...dropped];
+        setSelectedFiles(combined);
+        setFilePreviews(combined.map((f) => URL.createObjectURL(f)));
+      }
     }
   };
 
@@ -175,12 +227,13 @@ const WhyUs: React.FC = () => {
       alert("Please provide a title for the card.");
       return;
     }
-    if (!formDescription.trim()) {
+    const strippedDesc = formDescription.replace(/<[^>]*>/g, "").trim();
+    if (!strippedDesc) {
       alert("Please provide a description.");
       return;
     }
-    if (!selectedFile) {
-      alert("Please select an image for this card.");
+    if (selectedFiles.length === 0) {
+      alert("Please select at least one image for this card.");
       return;
     }
 
@@ -190,10 +243,15 @@ const WhyUs: React.FC = () => {
       formData.append("tag", formTag.trim());
       formData.append("title", formTitle.trim());
       formData.append("description", formDescription.trim());
-      formData.append("image", selectedFile);
+      formData.append("order", String(formOrder ?? 1));
+
+      // Append multiple images for backend array ingestion
+      selectedFiles.forEach((file) => {
+        formData.append("image", file);
+      });
 
       await Service.whyUsAdd(formData);
-      alert("Card added successfully!");
+      alert(`Card with ${selectedFiles.length} image(s) added successfully!`);
       handleCloseAddModal();
       await fetchCards();
     } catch (err: any) {
@@ -211,6 +269,7 @@ const WhyUs: React.FC = () => {
   const handleViewCard = async (card: whyUsPicInterface) => {
     setIsFetchingDetails(true);
     setViewCard(card);
+    setViewImageIndex(0);
     setIsViewModalOpen(true);
     try {
       const freshData = await Service.whyUsPicGetbyId(card.id);
@@ -219,7 +278,6 @@ const WhyUs: React.FC = () => {
       }
     } catch (err: any) {
       console.error("Error fetching card details by ID:", err);
-      // Keep displaying the current card from state if byId fails
     } finally {
       setIsFetchingDetails(false);
     }
@@ -269,21 +327,9 @@ const WhyUs: React.FC = () => {
           {/* Top Banner Header */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-gray-200">
             <div>
-              <div className="flex items-center gap-2">
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-[#509633]">
-                  Public Section
-                </span>
-                <span className="text-xs text-gray-500">
-                  /why-us &bull; "What does working here actually feel like?"
-                </span>
-              </div>
               <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mt-1">
                 Why Us - Highlight Cards
               </h1>
-              <p className="text-sm text-gray-600 mt-1">
-                Manage the interactive feature cards displayed on the public
-                "Life at WBT" section.
-              </p>
             </div>
 
             <div className="flex items-center gap-3">
@@ -303,61 +349,15 @@ const WhyUs: React.FC = () => {
               <button
                 type="button"
                 onClick={handleOpenAddModal}
-                className="inline-flex items-center gap-2 px-5 py-2 bg-[#6abd45] hover:bg-[#5da73d] text-white rounded-lg text-sm font-bold shadow transition transform hover:-translate-y-0.5"
+                style={{ backgroundColor: "#6abd45", color: "#ffffff" }}
+                className="inline-flex items-center gap-2 px-5 py-2 !bg-[#6abd45] hover:!bg-[#5da73d] !text-white rounded-lg text-sm font-bold shadow transition transform hover:-translate-y-0.5 cursor-pointer"
               >
-                <Plus className="w-4 h-4 stroke-[3]" />
-                <span>Add New Card</span>
+                <Plus className="w-4 h-4 stroke-[3] text-white" />
+                <span className="text-white">Add New Card</span>
               </button>
             </div>
           </div>
-
-          {/* Metrics summary bar */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
-            <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-green-50 flex items-center justify-center text-[#6abd45]">
-                <Layers className="w-6 h-6" />
-              </div>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">
-                  Total Cards
-                </p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {cards.length}
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
-                <ArrowUpDown className="w-6 h-6" />
-              </div>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">
-                  Sorting
-                </p>
-                <p className="text-sm font-semibold text-gray-800">
-                  Ascending by Order #
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-amber-50 flex items-center justify-center text-amber-600">
-                <Sparkles className="w-6 h-6" />
-              </div>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">
-                  Next Order #
-                </p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {cards.reduce(
-                    (max, c) => Math.max(max, Number(c.order) || 0),
-                    0
-                  ) + 1}
-                </p>
-              </div>
-            </div>
-          </div>
+         
 
           {/* Cards Content Area */}
           {loading && (
@@ -399,10 +399,11 @@ const WhyUs: React.FC = () => {
               <button
                 type="button"
                 onClick={handleOpenAddModal}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[#6abd45] hover:bg-[#5da73d] text-white rounded-xl text-sm font-bold shadow transition"
+                style={{ backgroundColor: "#6abd45", color: "#ffffff" }}
+                className="inline-flex items-center gap-2 px-6 py-3 !bg-[#6abd45] hover:!bg-[#5da73d] !text-white rounded-xl text-sm font-bold shadow transition cursor-pointer"
               >
-                <Plus className="w-4 h-4 stroke-[3]" />
-                <span>Add Your First Card</span>
+                <Plus className="w-4 h-4 stroke-[3] text-white" />
+                <span className="text-white">Add Your First Card</span>
               </button>
             </div>
           )}
@@ -411,7 +412,8 @@ const WhyUs: React.FC = () => {
           {!loading && !error && cards.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-6">
               {cards.map((card) => {
-                const imgUrl = getWhyUsImageUrl(card.image);
+                const cardImages = getWhyUsImageUrls(card.image);
+                const primaryImg = cardImages[0] || DEFAULT_CARD_IMAGE;
                 const isDeleting = deletingId === card.id;
 
                 return (
@@ -422,11 +424,10 @@ const WhyUs: React.FC = () => {
                     {/* Top image with badge */}
                     <div className="relative h-48 overflow-hidden bg-gray-100">
                       <img
-                        src={imgUrl}
+                        src={primaryImg}
                         alt={card.title}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         onError={(e) => {
-                          // Fallback if image fails to load
                           (e.target as HTMLImageElement).src =
                             DEFAULT_CARD_IMAGE;
                         }}
@@ -440,6 +441,14 @@ const WhyUs: React.FC = () => {
                       <span className="absolute top-3 right-3 bg-black/75 backdrop-blur-sm text-white text-xs font-mono font-semibold px-2.5 py-1 rounded-full shadow">
                         #{card.order}
                       </span>
+
+                      {/* Multiple images indicator */}
+                      {cardImages.length > 1 && (
+                        <span className="absolute bottom-2.5 right-2.5 bg-black/75 backdrop-blur-sm text-white text-[11px] font-semibold px-2.5 py-1 rounded-md shadow flex items-center gap-1.5">
+                          <ImageIcon className="w-3 h-3 text-[#6abd45]" />
+                          <span>{cardImages.length} images</span>
+                        </span>
+                      )}
                     </div>
 
                     {/* Card Body */}
@@ -448,9 +457,10 @@ const WhyUs: React.FC = () => {
                         <h3 className="text-xl font-bold text-gray-900 mb-2 leading-tight">
                           {card.title}
                         </h3>
-                        <p className="text-gray-600 text-sm leading-relaxed text-justify line-clamp-4">
-                          {card.description}
-                        </p>
+                        <div
+                          className="text-gray-600 text-sm leading-relaxed text-justify line-clamp-4 prose prose-sm max-w-none"
+                          dangerouslySetInnerHTML={{ __html: card.description }}
+                        />
                       </div>
 
                       {/* Card Footer Actions */}
@@ -521,7 +531,7 @@ const WhyUs: React.FC = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-4xl transform overflow-hidden rounded-3xl bg-white p-6 md:p-8 text-left align-middle shadow-2xl transition-all">
+                <Dialog.Panel className="w-full max-w-4xl max-h-[90vh] overflow-y-auto transform rounded-3xl bg-white p-6 md:p-8 text-left align-middle shadow-2xl transition-all">
                   {/* Modal Header */}
                   <div className="flex items-center justify-between pb-4 border-b border-gray-100">
                     <div>
@@ -564,26 +574,6 @@ const WhyUs: React.FC = () => {
                             className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#6abd45] focus:border-transparent text-sm"
                             required
                           />
-                          {/* Quick Tag Presets */}
-                          <div className="flex flex-wrap gap-1.5 mt-2">
-                            <span className="text-[11px] text-gray-500 self-center mr-1">
-                              Presets:
-                            </span>
-                            {TAG_PRESETS.map((preset) => (
-                              <button
-                                key={preset}
-                                type="button"
-                                onClick={() => setFormTag(preset)}
-                                className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border transition ${
-                                  formTag === preset
-                                    ? "bg-[#6abd45] text-white border-[#6abd45]"
-                                    : "bg-gray-100 hover:bg-gray-200 text-gray-700 border-gray-200"
-                                }`}
-                              >
-                                {preset}
-                              </button>
-                            ))}
-                          </div>
                         </div>
 
                         {/* Title */}
@@ -606,13 +596,10 @@ const WhyUs: React.FC = () => {
                           <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
                             Description <span className="text-red-500">*</span>
                           </label>
-                          <textarea
+                          <RichTextEditor
                             value={formDescription}
-                            onChange={(e) => setFormDescription(e.target.value)}
-                            rows={4}
-                            placeholder="Describe what employees experience and celebrate..."
-                            className="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#6abd45] focus:border-transparent text-sm resize-none"
-                            required
+                            onChange={(val) => setFormDescription(val)}
+                            height={220}
                           />
                         </div>
 
@@ -637,53 +624,134 @@ const WhyUs: React.FC = () => {
 
                         {/* Image Upload */}
                         <div>
-                          <label className="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
-                            Card Cover Image <span className="text-red-500">*</span>
-                          </label>
-                          <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-2xl hover:border-[#6abd45] transition bg-gray-50">
-                            <div className="space-y-1 text-center">
-                              <Upload className="mx-auto h-10 w-10 text-gray-400" />
-                              <div className="flex text-sm text-gray-600 justify-center">
+                          <div className="flex items-center justify-between mb-1.5">
+                            <label className="block text-xs font-bold uppercase tracking-wider text-gray-700">
+                              Card Images <span className="text-red-500">*</span>
+                            </label>
+                            <span className="text-[11px] text-gray-500 font-medium">
+                              Multiple files supported
+                            </span>
+                          </div>
+
+                          <div
+                            onDragOver={handleDragOver}
+                            onDragLeave={handleDragLeave}
+                            onDrop={handleDrop}
+                            className={`mt-1 flex flex-col justify-center items-center px-6 pt-5 pb-6 border-2 border-dashed rounded-2xl transition bg-gray-50 ${
+                              isDragging
+                                ? "border-[#6abd45] bg-green-50/50 scale-[0.99]"
+                                : "border-gray-300 hover:border-[#6abd45]"
+                            }`}
+                          >
+                            <div className="space-y-2 text-center">
+                              <Upload className="mx-auto h-9 w-9 text-gray-400" />
+                              <div className="flex text-sm text-gray-600 justify-center items-center gap-2">
                                 <label
                                   htmlFor={fileInputId}
-                                  className="relative cursor-pointer bg-white rounded-md font-bold text-[#6abd45] hover:text-[#589c37] focus-within:outline-none px-2 py-0.5 border border-gray-200"
+                                  className="relative cursor-pointer bg-white rounded-md font-bold text-[#6abd45] hover:text-[#589c37] focus-within:outline-none px-3 py-1 border border-gray-200 shadow-sm"
                                 >
-                                  <span>Choose File</span>
+                                  <span>Choose Images</span>
                                   <input
                                     id={fileInputId}
                                     type="file"
                                     accept="image/*"
+                                    multiple
                                     onChange={handleFileChange}
                                     className="sr-only"
                                   />
                                 </label>
-                                <p className="pl-2 self-center">or drag and drop</p>
+                                <p className="self-center">or drag and drop here</p>
                               </div>
                               <p className="text-xs text-gray-500">
-                                PNG, JPG, WEBP up to 10MB
+                                PNG, JPG, WEBP • Select one or multiple images
                               </p>
-                              {selectedFile && (
-                                <p className="text-xs font-bold text-[#509633] mt-2 bg-green-50 py-1 px-3 rounded-full inline-block">
-                                  ✓ Selected: {selectedFile.name} ({(selectedFile.size / 1024).toFixed(1)} KB)
-                                </p>
-                              )}
                             </div>
                           </div>
+
+                          {/* Selected files preview gallery */}
+                          {selectedFiles.length > 0 && (
+                            <div className="mt-3 space-y-2">
+                              <div className="flex items-center justify-between text-xs font-bold text-gray-700">
+                                <span>Selected Images ({selectedFiles.length})</span>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setSelectedFiles([]);
+                                    setFilePreviews([]);
+                                    setPreviewActiveIdx(0);
+                                  }}
+                                  className="text-red-500 hover:text-red-700 font-semibold"
+                                >
+                                  Clear all
+                                </button>
+                              </div>
+                              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-48 overflow-y-auto p-2 bg-gray-50 rounded-xl border border-gray-200">
+                                {selectedFiles.map((file, idx) => (
+                                  <div
+                                    key={idx}
+                                    onClick={() => setPreviewActiveIdx(idx)}
+                                    className={`relative group rounded-lg overflow-hidden border-2 bg-white p-1 cursor-pointer transition ${
+                                      previewActiveIdx === idx
+                                        ? "border-[#6abd45] ring-2 ring-[#6abd45]/30"
+                                        : "border-gray-200 hover:border-gray-300"
+                                    }`}
+                                  >
+                                    <img
+                                      src={filePreviews[idx]}
+                                      alt={file.name}
+                                      className="w-full h-16 object-cover rounded"
+                                    />
+                                    <button
+                                      type="button"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        removeSelectedFile(idx);
+                                      }}
+                                      className="absolute top-1.5 right-1.5 bg-red-500 text-white rounded-full p-1 opacity-90 hover:opacity-100 shadow transition"
+                                      title="Remove image"
+                                    >
+                                      <X className="w-3 h-3 stroke-[3]" />
+                                    </button>
+                                    <p
+                                      className="text-[10px] text-gray-700 truncate mt-1 px-0.5 font-medium"
+                                      title={file.name}
+                                    >
+                                      {file.name}
+                                    </p>
+                                    <p className="text-[9px] text-gray-400 px-0.5">
+                                      {(file.size / 1024).toFixed(1)} KB
+                                    </p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
 
                       {/* Right: Live Card Preview (5 cols) */}
                       <div className="lg:col-span-5 flex flex-col">
-                        <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">
-                          Live Public Card Preview
-                        </label>
+                        <div className="flex items-center justify-between mb-2">
+                          <label className="block text-xs font-bold uppercase tracking-wider text-gray-500">
+                            Live Public Card Preview
+                          </label>
+                          {filePreviews.length > 1 && (
+                            <span className="text-[11px] text-[#6abd45] font-bold">
+                              Viewing photo {previewActiveIdx + 1} of {filePreviews.length}
+                            </span>
+                          )}
+                        </div>
 
                         <div className="bg-white border-2 border-gray-200 shadow-md rounded-3xl overflow-hidden flex flex-col justify-between my-auto">
                           <div className="relative h-48 overflow-hidden bg-gray-100">
                             <img
-                              src={filePreview || DEFAULT_CARD_IMAGE}
+                              src={
+                                filePreviews[previewActiveIdx] ||
+                                filePreviews[0] ||
+                                DEFAULT_CARD_IMAGE
+                              }
                               alt="Preview"
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-cover transition-all duration-300"
                             />
                             <span className="absolute top-3 left-3 bg-[#6abd45] text-white text-xs font-bold px-3 py-1 rounded-full shadow">
                               {formTag || "Badge Tag"}
@@ -691,26 +759,56 @@ const WhyUs: React.FC = () => {
                             <span className="absolute top-3 right-3 bg-black/70 text-white text-xs font-mono font-semibold px-2.5 py-1 rounded-full shadow">
                               #{formOrder || 1}
                             </span>
+                            {filePreviews.length > 1 && (
+                              <span className="absolute bottom-2.5 right-2.5 bg-black/75 backdrop-blur-sm text-white text-[11px] font-semibold px-2 py-0.5 rounded-md shadow flex items-center gap-1">
+                                <ImageIcon className="w-3 h-3 text-[#6abd45]" />
+                                <span>{filePreviews.length} photos</span>
+                              </span>
+                            )}
                           </div>
+
+                          {/* Mini thumbnails ribbon if multiple images */}
+                          {filePreviews.length > 1 && (
+                            <div className="flex gap-1.5 p-2 bg-gray-50 border-b border-gray-100 overflow-x-auto">
+                              {filePreviews.map((pUrl, pIdx) => (
+                                <button
+                                  key={pIdx}
+                                  type="button"
+                                  onClick={() => setPreviewActiveIdx(pIdx)}
+                                  className={`relative rounded-md overflow-hidden flex-shrink-0 w-12 h-10 border-2 transition ${
+                                    previewActiveIdx === pIdx
+                                      ? "border-[#6abd45] ring-2 ring-[#6abd45]/30"
+                                      : "border-transparent opacity-60 hover:opacity-100"
+                                  }`}
+                                >
+                                  <img
+                                    src={pUrl}
+                                    alt=""
+                                    className="w-full h-full object-cover"
+                                  />
+                                </button>
+                              ))}
+                            </div>
+                          )}
 
                           <div className="p-6 flex-1 flex flex-col justify-between">
                             <div>
                               <h3 className="text-xl font-bold text-black mb-2 leading-tight">
                                 {formTitle || "Card Title Goes Here"}
                               </h3>
-                              <p className="text-gray-700 text-sm leading-relaxed text-justify">
-                                {formDescription ||
-                                  "This is a live preview of the description text that visitors will read on the Life at WBT page."}
-                              </p>
+                              <div
+                                className="text-gray-700 text-sm leading-relaxed text-justify prose prose-sm max-w-none"
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    formDescription ||
+                                    "This is a live preview of the description text that visitors will read on the Life at WBT page.",
+                                }}
+                              />
                             </div>
                           </div>
                         </div>
 
-                        <div className="mt-4 p-3 bg-gray-50 rounded-xl border border-gray-200 text-xs text-gray-500">
-                          ℹ️ The card will be uploaded to Cloudinary via the backend{" "}
-                          <code className="font-mono text-gray-700 font-bold">whyUsPic/create</code>{" "}
-                          endpoint.
-                        </div>
+                        
                       </div>
                     </div>
 
@@ -728,17 +826,18 @@ const WhyUs: React.FC = () => {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#6abd45] hover:bg-[#5da73d] text-white rounded-xl text-sm font-bold shadow transition disabled:opacity-50"
+                        style={{ backgroundColor: "#6abd45", color: "#ffffff" }}
+                        className="inline-flex items-center gap-2 px-6 py-2.5 !bg-[#6abd45] hover:!bg-[#5da73d] !text-white rounded-xl text-sm font-bold shadow transition disabled:opacity-50 cursor-pointer"
                       >
                         {isSubmitting ? (
                           <>
-                            <RefreshCw className="w-4 h-4 animate-spin" />
-                            <span>Uploading & Saving...</span>
+                            <RefreshCw className="w-4 h-4 animate-spin text-white" />
+                            <span className="text-white">Uploading & Saving...</span>
                           </>
                         ) : (
                           <>
-                            <Plus className="w-4 h-4 stroke-[3]" />
-                            <span>Create Card</span>
+                            <Plus className="w-4 h-4 stroke-[3] text-white" />
+                            <span className="text-white">Create Card</span>
                           </>
                         )}
                       </button>
@@ -807,22 +906,85 @@ const WhyUs: React.FC = () => {
                     </button>
                   </div>
 
-                  {viewCard && (
-                    <div className="mt-6 space-y-6">
-                      {/* Image preview */}
-                      <div className="relative h-64 rounded-2xl overflow-hidden bg-gray-100 border border-gray-200">
-                        <img
-                          src={getWhyUsImageUrl(viewCard.image)}
-                          alt={viewCard.title}
-                          className="w-full h-full object-cover"
-                        />
-                        <span className="absolute top-3 left-3 bg-[#6abd45] text-white text-xs font-bold px-3 py-1 rounded-full shadow">
-                          {viewCard.tag}
-                        </span>
-                        <span className="absolute top-3 right-3 bg-black/75 text-white text-xs font-mono font-semibold px-3 py-1 rounded-full shadow">
-                          Order: #{viewCard.order}
-                        </span>
-                      </div>
+                  {viewCard && (() => {
+                    const viewImages = getWhyUsImageUrls(viewCard.image);
+                    const currentImg = viewImages[viewImageIndex] || viewImages[0];
+
+                    return (
+                      <div className="mt-6 space-y-6">
+                        {/* Interactive Multi-Image viewer */}
+                        <div className="space-y-2">
+                          <div className="relative h-64 sm:h-72 rounded-2xl overflow-hidden bg-gray-100 border border-gray-200">
+                            <img
+                              src={currentImg}
+                              alt={viewCard.title}
+                              className="w-full h-full object-cover transition-all duration-300"
+                            />
+                            <span className="absolute top-3 left-3 bg-[#6abd45] text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                              {viewCard.tag}
+                            </span>
+                            <span className="absolute top-3 right-3 bg-black/75 text-white text-xs font-mono font-semibold px-3 py-1 rounded-full shadow">
+                              Order: #{viewCard.order}
+                            </span>
+
+                            {/* Left/Right navigation arrows if multiple images */}
+                            {viewImages.length > 1 && (
+                              <>
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    setViewImageIndex((prev) =>
+                                      prev === 0 ? viewImages.length - 1 : prev - 1
+                                    )
+                                  }
+                                  className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white p-2 rounded-full backdrop-blur-sm transition"
+                                  title="Previous image"
+                                >
+                                  <ChevronLeft className="w-5 h-5" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    setViewImageIndex((prev) =>
+                                      prev === viewImages.length - 1 ? 0 : prev + 1
+                                    )
+                                  }
+                                  className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white p-2 rounded-full backdrop-blur-sm transition"
+                                  title="Next image"
+                                >
+                                  <ChevronRight className="w-5 h-5" />
+                                </button>
+                                <span className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-sm text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+                                  {viewImageIndex + 1} / {viewImages.length}
+                                </span>
+                              </>
+                            )}
+                          </div>
+
+                          {/* Gallery Thumbnail Strip */}
+                          {viewImages.length > 1 && (
+                            <div className="flex gap-2 p-1.5 bg-gray-50 rounded-xl border border-gray-200 overflow-x-auto">
+                              {viewImages.map((imgUrl, imgIdx) => (
+                                <button
+                                  key={imgIdx}
+                                  type="button"
+                                  onClick={() => setViewImageIndex(imgIdx)}
+                                  className={`relative rounded-lg overflow-hidden flex-shrink-0 w-16 h-12 border-2 transition ${
+                                    viewImageIndex === imgIdx
+                                      ? "border-[#6abd45] ring-2 ring-[#6abd45]/40"
+                                      : "border-transparent opacity-60 hover:opacity-100"
+                                  }`}
+                                >
+                                  <img
+                                    src={imgUrl}
+                                    alt=""
+                                    className="w-full h-full object-cover"
+                                  />
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
 
                       {/* Fields */}
                       <div className="space-y-3 text-sm">
@@ -839,9 +1001,10 @@ const WhyUs: React.FC = () => {
                           <span className="text-xs font-bold uppercase tracking-wider text-gray-400 block">
                             Description
                           </span>
-                          <p className="text-gray-700 leading-relaxed text-justify mt-1">
-                            {viewCard.description}
-                          </p>
+                          <div
+                            className="text-gray-700 leading-relaxed text-justify mt-1 prose prose-sm max-w-none"
+                            dangerouslySetInnerHTML={{ __html: viewCard.description }}
+                          />
                         </div>
 
                         <div className="grid grid-cols-2 gap-4 pt-2">
@@ -874,7 +1037,8 @@ const WhyUs: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                  )}
+                    );
+                  })()}
 
                   <div className="mt-6 pt-4 border-t border-gray-100 flex justify-end">
                     <button

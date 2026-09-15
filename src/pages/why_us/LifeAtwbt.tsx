@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { BannerPropType, PageBanner } from "../../components/banner";
 import Service from "../../config/service";
-import { getWhyUsImageUrl } from "../admin/whyUs/WhyUs";
+import { getWhyUsImageUrl, getWhyUsImageUrls } from "../admin/whyUs/WhyUs";
 
 const banner: BannerPropType = {
   header: "Life at",
@@ -82,9 +83,101 @@ const growthPoints = [
   },
 ];
 
+const LifeHighlightCard = ({
+  hl,
+}: {
+  hl: {
+    title: string;
+    desc: string;
+    image: string;
+    images?: string[];
+    badge: string;
+  };
+}) => {
+  const images =
+    hl.images && hl.images.length > 0 ? hl.images : [hl.image];
+  const [currentIdx, setCurrentIdx] = useState(0);
+
+  return (
+    <div className="bg-white border-2 shadow-md rounded-3xl overflow-hidden flex flex-col justify-between transition-all hover:shadow-xl hover:-translate-y-1">
+      <div className="relative h-48 overflow-hidden bg-gray-200 group">
+        <img
+          src={images[currentIdx] || hl.image}
+          alt={hl.title}
+          className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+        />
+        <span className="absolute top-3 left-3 bg-[#6abd45] text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+          {hl.badge}
+        </span>
+
+        {images.length > 1 && (
+          <>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentIdx((prev) =>
+                  prev === 0 ? images.length - 1 : prev - 1
+                );
+              }}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white p-1.5 rounded-full backdrop-blur-sm opacity-0 group-hover:opacity-100 transition"
+              title="Previous photo"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                setCurrentIdx((prev) =>
+                  prev === images.length - 1 ? 0 : prev + 1
+                );
+              }}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white p-1.5 rounded-full backdrop-blur-sm opacity-0 group-hover:opacity-100 transition"
+              title="Next photo"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+
+            {/* Dots */}
+            <div className="absolute bottom-2 inset-x-0 flex justify-center gap-1.5">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setCurrentIdx(i)}
+                  className={`w-2 h-2 rounded-full transition ${
+                    currentIdx === i ? "bg-white scale-125 shadow" : "bg-white/50"
+                  }`}
+                  title={`View photo ${i + 1}`}
+                />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+      <div className="p-6 flex-1 flex flex-col justify-between">
+        <div>
+          <h3 className="text-xl font-bold text-black mb-2">{hl.title}</h3>
+          <div
+            className="text-gray-700 text-sm leading-relaxed text-justify prose prose-sm max-w-none"
+            dangerouslySetInnerHTML={{ __html: hl.desc }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const LifeAtwbt = () => {
   const [cards, setCards] = useState<
-    Array<{ title: string; desc: string; image: string; badge: string }>
+    Array<{
+      title: string;
+      desc: string;
+      image: string;
+      images?: string[];
+      badge: string;
+    }>
   >([]);
 
   useEffect(() => {
@@ -105,6 +198,7 @@ const LifeAtwbt = () => {
               desc: item.description,
               badge: item.tag,
               image: getWhyUsImageUrl(item.image),
+              images: getWhyUsImageUrls(item.image),
             }))
           );
         }
@@ -225,31 +319,7 @@ const LifeAtwbt = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {displayHighlights.map((hl, idx) => (
-              <div
-                key={idx}
-                className="bg-white border-2 shadow-md rounded-3xl overflow-hidden flex flex-col justify-between transition-all hover:shadow-xl hover:-translate-y-1"
-              >
-                <div className="relative h-48 overflow-hidden bg-gray-200">
-                  <img
-                    src={hl.image}
-                    alt={hl.title}
-                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                  />
-                  <span className="absolute top-3 left-3 bg-[#6abd45] text-white text-xs font-bold px-3 py-1 rounded-full shadow">
-                    {hl.badge}
-                  </span>
-                </div>
-                <div className="p-6 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-xl font-bold text-black mb-2">
-                      {hl.title}
-                    </h3>
-                    <p className="text-gray-700 text-sm leading-relaxed text-justify">
-                      {hl.desc}
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <LifeHighlightCard key={idx} hl={hl} />
             ))}
           </div>
         </section>
