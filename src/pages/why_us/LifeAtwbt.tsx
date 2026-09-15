@@ -83,87 +83,108 @@ const growthPoints = [
   },
 ];
 
-const LifeHighlightCard = ({
-  hl,
+const GroupedHighlightCard = ({
+  cover,
+  onOpenModal,
 }: {
-  hl: {
-    title: string;
-    desc: string;
-    image: string;
-    images?: string[];
-    badge: string;
-  };
+  cover: any;
+  onOpenModal: () => void;
 }) => {
-  const images =
-    hl.images && hl.images.length > 0 ? hl.images : [hl.image];
-  const [currentIdx, setCurrentIdx] = useState(0);
+  const coverImage = cover.images && cover.images.length > 0 ? cover.images[0] : cover.image;
 
   return (
-    <div className="bg-white border-2 shadow-md rounded-3xl overflow-hidden flex flex-col justify-between transition-all hover:shadow-xl hover:-translate-y-1">
+    <div 
+      className="bg-white border-2 shadow-md rounded-3xl overflow-hidden flex flex-col justify-between transition-all hover:shadow-xl hover:-translate-y-1 cursor-pointer"
+      onClick={onOpenModal}
+    >
       <div className="relative h-48 overflow-hidden bg-gray-200 group">
         <img
-          src={images[currentIdx] || hl.image}
-          alt={hl.title}
-          className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+          src={coverImage}
+          alt={cover.title}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <span className="absolute top-3 left-3 bg-[#6abd45] text-white text-xs font-bold px-3 py-1 rounded-full shadow">
-          {hl.badge}
+        <span className="absolute top-3 left-3 bg-[#6abd45] text-white text-xs font-bold px-3 py-1 rounded-full shadow z-10">
+          {cover.badge}
         </span>
-
-        {images.length > 1 && (
-          <>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                setCurrentIdx((prev) =>
-                  prev === 0 ? images.length - 1 : prev - 1
-                );
-              }}
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white p-1.5 rounded-full backdrop-blur-sm opacity-0 group-hover:opacity-100 transition"
-              title="Previous photo"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                setCurrentIdx((prev) =>
-                  prev === images.length - 1 ? 0 : prev + 1
-                );
-              }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white p-1.5 rounded-full backdrop-blur-sm opacity-0 group-hover:opacity-100 transition"
-              title="Next photo"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-
-            {/* Dots */}
-            <div className="absolute bottom-2 inset-x-0 flex justify-center gap-1.5">
-              {images.map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => setCurrentIdx(i)}
-                  className={`w-2 h-2 rounded-full transition ${
-                    currentIdx === i ? "bg-white scale-125 shadow" : "bg-white/50"
-                  }`}
-                  title={`View photo ${i + 1}`}
-                />
-              ))}
-            </div>
-          </>
-        )}
+        
+        {/* Overlay on hover */}
+        <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+          <span className="text-white font-bold text-lg text-center px-4">
+            View all {cover.badge} images
+          </span>
+        </div>
       </div>
       <div className="p-6 flex-1 flex flex-col justify-between">
         <div>
-          <h3 className="text-xl font-bold text-black mb-2">{hl.title}</h3>
+          <h3 className="text-xl font-bold text-black mb-2">{cover.title}</h3>
           <div
-            className="text-gray-700 text-sm leading-relaxed text-justify prose prose-sm max-w-none"
-            dangerouslySetInnerHTML={{ __html: hl.desc }}
+            className="text-gray-700 text-sm leading-relaxed text-justify prose prose-sm max-w-none line-clamp-4"
+            dangerouslySetInnerHTML={{ __html: cover.desc }}
           />
         </div>
+      </div>
+    </div>
+  );
+};
+
+const PostCarousel = ({ images, title }: { images: string[]; title: string }) => {
+  const [currentIdx, setCurrentIdx] = useState(0);
+
+  if (!images || images.length === 0) return null;
+  if (images.length === 1) {
+    return (
+      <div className="relative overflow-hidden rounded-2xl bg-gray-200 aspect-[16/9] shadow-sm max-w-4xl mx-auto">
+        <img 
+          src={images[0]} 
+          alt={title}
+          className="w-full h-full object-contain cursor-pointer transition-transform duration-500 hover:scale-[1.02]"
+          onClick={() => window.open(images[0], "_blank")}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative overflow-hidden rounded-2xl bg-gray-200 aspect-[16/9] shadow-sm max-w-4xl mx-auto group">
+      <img 
+        src={images[currentIdx]} 
+        alt={`${title} - ${currentIdx + 1}`}
+        className="w-full h-full object-contain cursor-pointer transition-transform duration-500 group-hover:scale-[1.02]"
+        onClick={() => window.open(images[currentIdx], "_blank")}
+      />
+      
+      {/* Prev Button */}
+      <button
+        onClick={(e) => { e.stopPropagation(); setCurrentIdx((prev) => prev === 0 ? images.length - 1 : prev - 1); }}
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white rounded-full p-3 transition opacity-0 group-hover:opacity-100"
+      >
+        <ChevronLeft className="w-8 h-8" />
+      </button>
+
+      {/* Next Button */}
+      <button
+        onClick={(e) => { e.stopPropagation(); setCurrentIdx((prev) => prev === images.length - 1 ? 0 : prev + 1); }}
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white rounded-full p-3 transition opacity-0 group-hover:opacity-100"
+      >
+        <ChevronRight className="w-8 h-8" />
+      </button>
+
+      {/* Dots */}
+      <div className="absolute bottom-4 inset-x-0 flex justify-center gap-2 z-10 flex-wrap px-4">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={(e) => { e.stopPropagation(); setCurrentIdx(i); }}
+            className={`w-3 h-3 rounded-full transition-all ${
+              currentIdx === i ? "bg-white scale-125 shadow-md" : "bg-white/50 hover:bg-white/80"
+            }`}
+          />
+        ))}
+      </div>
+      
+      {/* Counter */}
+      <div className="absolute top-4 right-4 bg-black/60 text-white text-sm font-medium px-3 py-1 rounded-full backdrop-blur-md">
+        {currentIdx + 1} / {images.length}
       </div>
     </div>
   );
@@ -179,6 +200,19 @@ const LifeAtwbt = () => {
       badge: string;
     }>
   >([]);
+  const [modalItems, setModalItems] = useState<typeof cards>([]);
+  const [activePost, setActivePost] = useState<typeof cards[0] | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (items: typeof cards) => {
+    setModalItems(items);
+    setActivePost(null);
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setActivePost(null);
+  };
 
   useEffect(() => {
     document.title = "Life at WBT - Whiteboard";
@@ -211,6 +245,20 @@ const LifeAtwbt = () => {
   }, []);
 
   const displayHighlights = cards.length > 0 ? cards : lifeHighlights;
+
+  const groupedHighlights = displayHighlights.reduce((acc, curr) => {
+    const badge = curr.badge || "Other";
+    if (!acc[badge]) {
+      acc[badge] = {
+        cover: curr,
+        items: [],
+      };
+    }
+    acc[badge].items.push(curr);
+    return acc;
+  }, {} as Record<string, { cover: typeof displayHighlights[0]; items: typeof displayHighlights }>);
+
+  const groupedCards = Object.values(groupedHighlights);
 
   return (
     <>
@@ -318,8 +366,12 @@ const LifeAtwbt = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {displayHighlights.map((hl, idx) => (
-              <LifeHighlightCard key={idx} hl={hl} />
+            {groupedCards.map((group, idx) => (
+              <GroupedHighlightCard 
+                key={idx} 
+                cover={group.cover} 
+                onOpenModal={() => openModal(group.items)}
+              />
             ))}
           </div>
         </section>
@@ -349,6 +401,84 @@ const LifeAtwbt = () => {
         </section>
 
       </div>
+
+      {/* Detailed Posts Modal */}
+      {isModalOpen && modalItems.length > 0 && (
+        <div 
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 md:p-8 backdrop-blur-sm"
+          onClick={closeModal}
+        >
+          <div 
+            className="relative w-[90%] h-full flex flex-col bg-gray-100 rounded-3xl overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-6 bg-white border-b border-gray-200">
+              <h2 className="text-3xl font-bold text-[#6abd45]">
+                {modalItems[0].badge} Highlights
+              </h2>
+              <button
+                onClick={closeModal}
+                className="text-gray-500 hover:text-black hover:bg-gray-200 rounded-full p-2 transition"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            {/* Modal Content */}
+            <div className="flex-1 overflow-y-auto p-6 md:p-10">
+              {activePost ? (
+                <div className="flex flex-col h-full mx-auto w-full">
+                  <button 
+                    onClick={() => setActivePost(null)}
+                    className="self-start mb-6 text-[#6abd45] hover:underline flex items-center gap-1 font-bold text-lg transition-all hover:-translate-x-1"
+                  >
+                    <ChevronLeft className="w-5 h-5" /> Back to {modalItems[0]?.badge}
+                  </button>
+                  <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 flex flex-col lg:flex-row gap-8 lg:items-start">
+                    <div className="w-full lg:w-3/5 flex-shrink-0">
+                      <PostCarousel images={activePost.images && activePost.images.length > 0 ? activePost.images : [activePost.image]} title={activePost.title} />
+                    </div>
+                    <div className="w-full lg:w-2/5 flex flex-col">
+                      <h3 className="text-3xl font-bold text-black mb-6">{activePost.title}</h3>
+                      <div 
+                        className="prose prose-sm md:prose-base max-w-none text-gray-700 leading-relaxed text-justify"
+                        dangerouslySetInnerHTML={{ __html: activePost.desc }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {modalItems.map((item, idx) => {
+                    const coverImg = item.images && item.images.length > 0 ? item.images[0] : item.image;
+                    return (
+                      <div 
+                        key={idx} 
+                        className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden cursor-pointer transition-transform hover:scale-[1.02] group"
+                        onClick={() => setActivePost(item)}
+                      >
+                        <div className="relative h-56 overflow-hidden bg-gray-200">
+                          <img src={coverImg} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                          <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                             <span className="text-white font-bold text-lg px-4 py-2 border-2 border-white rounded-full backdrop-blur-sm">View Post</span>
+                          </div>
+                        </div>
+                        <div className="p-6">
+                          <h4 className="text-xl font-bold mb-3">{item.title}</h4>
+                          <div className="text-sm text-gray-600 line-clamp-3 prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: item.desc }} />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
