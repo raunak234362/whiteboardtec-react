@@ -134,18 +134,18 @@ const PostCarousel = ({ images, title }: { images: string[]; title: string }) =>
     if (!images || images.length <= 1) return;
     const interval = setInterval(() => {
       setCurrentIdx((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-    }, 3000);
+    }, 2000);
     return () => clearInterval(interval);
   }, [images]);
 
   if (!images || images.length === 0) return null;
   if (images.length === 1) {
     return (
-      <div className="relative overflow-hidden rounded-2xl bg-gray-200 aspect-[16/9] shadow-sm max-w-4xl mx-auto">
+      <div className="relative overflow-hidden w-full h-full bg-black flex items-center justify-center">
         <img 
           src={images[0]} 
           alt={title}
-          className="w-full h-full object-contain cursor-pointer transition-transform duration-500 hover:scale-[1.02]"
+          className="w-full h-full object-cover cursor-pointer transition-transform duration-500 hover:scale-[1.02]"
           onClick={() => window.open(images[0], "_blank")}
         />
       </div>
@@ -153,18 +153,22 @@ const PostCarousel = ({ images, title }: { images: string[]; title: string }) =>
   }
 
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-gray-200 aspect-[16/9] shadow-sm max-w-4xl mx-auto group">
-      <img 
-        src={images[currentIdx]} 
-        alt={`${title} - ${currentIdx + 1}`}
-        className="w-full h-full object-contain cursor-pointer transition-transform duration-500 group-hover:scale-[1.02]"
-        onClick={() => window.open(images[currentIdx], "_blank")}
-      />
+    <div className="relative overflow-hidden w-full h-full bg-black group flex items-center justify-center">
+      {images.map((img, idx) => (
+        <img 
+          key={idx}
+          src={img} 
+          alt={`${title} - ${idx + 1}`}
+          className="absolute top-0 left-0 w-full h-full object-cover cursor-pointer transition-transform duration-1000 ease-out"
+          style={{ transform: `translateX(${(currentIdx - idx) * 100}%)` }}
+          onClick={() => window.open(img, "_blank")}
+        />
+      ))}
       
       {/* Prev Button */}
       <button
         onClick={(e) => { e.stopPropagation(); setCurrentIdx((prev) => prev === 0 ? images.length - 1 : prev - 1); }}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white rounded-full p-3 transition opacity-0 group-hover:opacity-100"
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white rounded-full p-3 transition opacity-0 group-hover:opacity-100 z-10"
       >
         <ChevronLeft className="w-8 h-8" />
       </button>
@@ -172,7 +176,7 @@ const PostCarousel = ({ images, title }: { images: string[]; title: string }) =>
       {/* Next Button */}
       <button
         onClick={(e) => { e.stopPropagation(); setCurrentIdx((prev) => prev === images.length - 1 ? 0 : prev + 1); }}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white rounded-full p-3 transition opacity-0 group-hover:opacity-100"
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white rounded-full p-3 transition opacity-0 group-hover:opacity-100 z-10"
       >
         <ChevronRight className="w-8 h-8" />
       </button>
@@ -191,7 +195,7 @@ const PostCarousel = ({ images, title }: { images: string[]; title: string }) =>
       </div>
       
       {/* Counter */}
-      <div className="absolute top-4 right-4 bg-black/60 text-white text-sm font-medium px-3 py-1 rounded-full backdrop-blur-md">
+      <div className="absolute top-4 right-4 bg-black/60 text-white text-sm font-medium px-3 py-1 rounded-full backdrop-blur-md z-10">
         {currentIdx + 1} / {images.length}
       </div>
     </div>
@@ -436,7 +440,7 @@ const LifeAtwbt = () => {
           onClick={closeModal}
         >
           <div 
-            className="relative w-[90%] h-full flex flex-col bg-gray-100 rounded-3xl overflow-hidden shadow-2xl"
+            className="relative w-[90%] md:w-[80%] lg:w-[70%] max-w-5xl h-[85vh] flex flex-col bg-gray-100 rounded-none overflow-hidden shadow-2xl transition-all duration-300"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
@@ -455,21 +459,10 @@ const LifeAtwbt = () => {
             </div>
             
             {/* Modal Content */}
-            <div className="flex-1 overflow-y-auto p-6 md:p-10">
+            <div className={`flex-1 overflow-y-auto ${activePost ? 'p-0 bg-black' : 'p-6 md:p-10'}`}>
               {activePost ? (
-                <div className="flex flex-col h-full mx-auto w-full">
-                  <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 flex flex-col lg:flex-row gap-8 lg:items-start">
-                    <div className="w-full lg:w-3/5 flex-shrink-0">
-                      <PostCarousel images={activePost.images && activePost.images.length > 0 ? activePost.images : [activePost.image]} title={activePost.title} />
-                    </div>
-                    <div className="w-full lg:w-2/5 flex flex-col">
-                      <h3 className="text-3xl font-bold text-black mb-6">{activePost.title}</h3>
-                      <div 
-                        className="prose prose-sm md:prose-base max-w-none text-gray-700 leading-relaxed text-justify"
-                        dangerouslySetInnerHTML={{ __html: activePost.desc }}
-                      />
-                    </div>
-                  </div>
+                <div className="w-full h-full flex flex-col">
+                  <PostCarousel images={activePost.images && activePost.images.length > 0 ? activePost.images : [activePost.image]} title={activePost.title} />
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
