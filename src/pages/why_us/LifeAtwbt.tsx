@@ -9,8 +9,8 @@ const banner: BannerPropType = {
   header: "Life at",
   subheader: "Whiteboard",
   image:
-    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1788338398/4f9e9cfb-910e-4da1-bf84-0008c44a2dfb.png",
-  height: "h-[20rem] md:h-[24rem] max-md:h-48",
+    "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1789460472/SUM00994_rfz5zj.webp",
+  height: "h-[24rem] md:h-[32rem] max-md:h-64",
 };
 
 const employeePromise = [
@@ -130,6 +130,14 @@ const GroupedHighlightCard = ({
 const PostCarousel = ({ images, title }: { images: string[]; title: string }) => {
   const [currentIdx, setCurrentIdx] = useState(0);
 
+  useEffect(() => {
+    if (!images || images.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentIdx((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [images]);
+
   if (!images || images.length === 0) return null;
   if (images.length === 1) {
     return (
@@ -205,8 +213,27 @@ const LifeAtwbt = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = (items: typeof cards) => {
+    const allImages = items.reduce((acc, item) => {
+      if (item.images && item.images.length > 0) return [...acc, ...item.images];
+      if (item.image) return [...acc, item.image];
+      return acc;
+    }, [] as string[]);
+
+    let combinedDesc = items[0].desc;
+    if (items.length > 1) {
+       combinedDesc = items.map(i => `<strong>${i.title}</strong><br/>${i.desc}`).join("<br/><br/>");
+    }
+
+    const combinedPost = {
+      title: items[0].badge + " Highlights",
+      desc: combinedDesc,
+      image: allImages[0] || "",
+      images: allImages,
+      badge: items[0].badge,
+    };
+
     setModalItems(items);
-    setActivePost(null);
+    setActivePost(combinedPost);
     setIsModalOpen(true);
   };
   const closeModal = () => {
@@ -267,6 +294,58 @@ const LifeAtwbt = () => {
 
       <div className="mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl px-4">
         
+        {/* 4. LIFE AT THE COMPANY SECTION */}
+        <section className="mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-10">
+            
+            <h2 className="text-4xl font-bold text-black mt-2">
+              What does working here actually feel like?
+            </h2>
+            
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {groupedCards.map((group, idx) => (
+              <GroupedHighlightCard 
+                key={idx} 
+                cover={group.cover} 
+                onOpenModal={() => openModal(group.items)}
+              />
+            ))}
+          </div>
+        </section>
+
+        {/* 3. GROWTH & LEARNING SECTION */}
+        <section className="mb-16 bg-gray-50 rounded-3xl p-8 border-2 shadow-sm">
+          <div className="mb-8">
+            <span className="text-[#6abd45] font-semibold text-lg uppercase tracking-wider">
+              Growth & Learning
+            </span>
+            <h2 className="text-4xl font-bold text-black mt-2">
+              Accelerate Your Career Path
+            </h2>
+            <p className="text-lg text-gray-700 mt-2">
+              We empower you to evolve from skilled technicians to industry-leading engineering consultants.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {growthPoints.map((gp, idx) => (
+              <div
+                key={idx}
+                className="bg-white p-6 rounded-2xl border-2 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <h4 className="text-xl font-bold text-[#6abd45] mb-2">
+                  {gp.question}
+                </h4>
+                <p className="text-gray-700 leading-relaxed text-justify">
+                  {gp.answer}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* 2. WHY US / EMPLOYEE PROMISE SECTION */}
         <section className="mb-16">
           
@@ -320,58 +399,6 @@ const LifeAtwbt = () => {
                   {item.desc}
                 </p>
               </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 3. GROWTH & LEARNING SECTION */}
-        <section className="mb-16 bg-gray-50 rounded-3xl p-8 border-2 shadow-sm">
-          <div className="mb-8">
-            <span className="text-[#6abd45] font-semibold text-lg uppercase tracking-wider">
-              Growth & Learning
-            </span>
-            <h2 className="text-4xl font-bold text-black mt-2">
-              Accelerate Your Career Path
-            </h2>
-            <p className="text-lg text-gray-700 mt-2">
-              We empower you to evolve from skilled technicians to industry-leading engineering consultants.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {growthPoints.map((gp, idx) => (
-              <div
-                key={idx}
-                className="bg-white p-6 rounded-2xl border-2 shadow-sm hover:shadow-md transition-shadow"
-              >
-                <h4 className="text-xl font-bold text-[#6abd45] mb-2">
-                  {gp.question}
-                </h4>
-                <p className="text-gray-700 leading-relaxed text-justify">
-                  {gp.answer}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 4. LIFE AT THE COMPANY SECTION */}
-        <section className="mb-16">
-          <div className="text-center max-w-3xl mx-auto mb-10">
-            
-            <h2 className="text-4xl font-bold text-black mt-2">
-              What does working here actually feel like?
-            </h2>
-            
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {groupedCards.map((group, idx) => (
-              <GroupedHighlightCard 
-                key={idx} 
-                cover={group.cover} 
-                onOpenModal={() => openModal(group.items)}
-              />
             ))}
           </div>
         </section>
@@ -431,12 +458,6 @@ const LifeAtwbt = () => {
             <div className="flex-1 overflow-y-auto p-6 md:p-10">
               {activePost ? (
                 <div className="flex flex-col h-full mx-auto w-full">
-                  <button 
-                    onClick={() => setActivePost(null)}
-                    className="self-start mb-6 text-[#6abd45] hover:underline flex items-center gap-1 font-bold text-lg transition-all hover:-translate-x-1"
-                  >
-                    <ChevronLeft className="w-5 h-5" /> Back to {modalItems[0]?.badge}
-                  </button>
                   <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 flex flex-col lg:flex-row gap-8 lg:items-start">
                     <div className="w-full lg:w-3/5 flex-shrink-0">
                       <PostCarousel images={activePost.images && activePost.images.length > 0 ? activePost.images : [activePost.image]} title={activePost.title} />

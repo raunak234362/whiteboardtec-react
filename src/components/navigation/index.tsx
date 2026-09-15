@@ -119,16 +119,10 @@ const NavRoute: NavRouteType[] = [
       
   },
   {
-    name: "Why Us",
+    name: "Life at WBT",
     path: "/why-us",
     image:
       "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685708/route-image/our-firm_qbwtod.jpg",
-    child: [
-      {
-        name: "Life at WBT",
-        path: "/life-at-wbt",
-      },
-    ],
   },
   {
     name: "Careers",

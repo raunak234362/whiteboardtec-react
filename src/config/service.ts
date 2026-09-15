@@ -652,6 +652,24 @@ class Service {
     }
   }
 
+  static async whyUsPicUpdate(id: string, payload: FormData): Promise<whyUsPicInterface> {
+    try {
+      const token = sessionStorage.getItem("token");
+      const response = await api.put(`whyUsPic/update/${id}`, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      const resData = response.data as ApiResponse<whyUsPicInterface>;
+      console.log("response for whyUsPicUpdate", resData);
+      return resData.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
   static async whyUsPicDelete(id: string): Promise<whyUsPicInterface> {
     try {
       const token = sessionStorage.getItem("token");

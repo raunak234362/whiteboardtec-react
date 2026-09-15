@@ -12,6 +12,7 @@ import {
   AlertCircle,
   ChevronLeft,
   ChevronRight,
+  Edit2,
 } from "lucide-react";
 import { Header, HeaderProp, Sidebar, useSidebar, RichTextEditor } from "../components";
 import Service from "../../../config/service";
@@ -89,15 +90,17 @@ const WhyUs: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Add Card Modal State
+  // Add/Edit Card Modal State
   const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [editCardId, setEditCardId] = useState<string | null>(null);
   const [formTag, setFormTag] = useState<string>("");
   const [formTitle, setFormTitle] = useState<string>("");
   const [formDescription, setFormDescription] = useState<string>("");
   const [formOrder, setFormOrder] = useState<number>(1);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [filePreviews, setFilePreviews] = useState<string[]>([]);
+  const [existingImages, setExistingImages] = useState<string[]>([]);
   const [previewActiveIdx, setPreviewActiveIdx] = useState<number>(0);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const fileInputId = useId();
@@ -153,12 +156,14 @@ const WhyUs: React.FC = () => {
       (max, c) => Math.max(max, Number(c.order) || 0),
       0
     );
+    setEditCardId(null);
     setFormTag("Outings & Fun");
     setFormTitle("");
     setFormDescription("");
     setFormOrder(maxOrder + 1);
     setSelectedFiles([]);
     setFilePreviews([]);
+    setExistingImages([]);
     setPreviewActiveIdx(0);
     setIsAddModalOpen(true);
   };
@@ -168,6 +173,8 @@ const WhyUs: React.FC = () => {
     setIsAddModalOpen(false);
     setSelectedFiles([]);
     setFilePreviews([]);
+    setExistingImages([]);
+    setEditCardId(null);
     setPreviewActiveIdx(0);
   };
 
@@ -185,9 +192,33 @@ const WhyUs: React.FC = () => {
     const updated = selectedFiles.filter((_, idx) => idx !== idxToRemove);
     setSelectedFiles(updated);
     setFilePreviews(updated.map((f) => URL.createObjectURL(f)));
-    if (previewActiveIdx >= updated.length) {
-      setPreviewActiveIdx(Math.max(0, updated.length - 1));
+    if (previewActiveIdx >= existingImages.length + updated.length) {
+      setPreviewActiveIdx(Math.max(0, existingImages.length + updated.length - 1));
     }
+  };
+
+  const removeExistingImage = (idxToRemove: number) => {
+    const updated = existingImages.filter((_, idx) => idx !== idxToRemove);
+    setExistingImages(updated);
+    if (previewActiveIdx >= updated.length + filePreviews.length) {
+      setPreviewActiveIdx(Math.max(0, updated.length + filePreviews.length - 1));
+    }
+  };
+
+  const handleOpenEditModal = (card: whyUsPicInterface) => {
+    setEditCardId(card.id);
+    setFormTag(card.tag);
+    setFormTitle(card.title);
+    setFormDescription(card.description);
+    setFormOrder(card.order);
+    
+    const images = getWhyUsImageUrls(card.image);
+    setExistingImages(images[0] === DEFAULT_CARD_IMAGE && images.length === 1 ? [] : images);
+    
+    setSelectedFiles([]);
+    setFilePreviews([]);
+    setPreviewActiveIdx(0);
+    setIsAddModalOpen(true);
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -215,7 +246,7 @@ const WhyUs: React.FC = () => {
     }
   };
 
-  // Submit Add Card Form
+  // Submit Add/Edit Card Form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -232,7 +263,7 @@ const WhyUs: React.FC = () => {
       alert("Please provide a description.");
       return;
     }
-    if (selectedFiles.length === 0) {
+    if (selectedFiles.length === 0 && (!editCardId || existingImages.length === 0)) {
       alert("Please select at least one image for this card.");
       return;
     }
@@ -245,13 +276,22 @@ const WhyUs: React.FC = () => {
       formData.append("description", formDescription.trim());
       formData.append("order", String(formOrder ?? 1));
 
-      // Append multiple images for backend array ingestion
       selectedFiles.forEach((file) => {
         formData.append("image", file);
       });
 
-      await Service.whyUsAdd(formData);
-      alert(`Card with ${selectedFiles.length} image(s) added successfully!`);
+      if (editCardId) {
+        // Append existing Cloudinary URLs so the backend knows to keep them
+        existingImages.forEach((url) => {
+          formData.append("image", url);
+        });
+        await Service.whyUsPicUpdate(editCardId, formData);
+        alert(`Card updated successfully!`);
+      } else {
+        await Service.whyUsAdd(formData);
+        alert(`Card with ${selectedFiles.length} image(s) added successfully!`);
+      }
+      
       handleCloseAddModal();
       await fetchCards();
     } catch (err: any) {
@@ -482,6 +522,16 @@ const WhyUs: React.FC = () => {
 
                           <button
                             type="button"
+                            onClick={() => handleOpenEditModal(card)}
+                            className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition"
+                            title="Edit Card"
+                          >
+                            <Edit2 className="w-3.5 h-3.5" />
+                            <span>Edit</span>
+                          </button>
+
+                          <button
+                            type="button"
                             onClick={() => handleDeleteCard(card)}
                             disabled={isDeleting}
                             className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-red-600 bg-red-50 hover:bg-red-100 rounded-lg transition disabled:opacity-50"
@@ -539,10 +589,12 @@ const WhyUs: React.FC = () => {
                         as="h3"
                         className="text-2xl font-bold text-gray-900"
                       >
-                        Add New Why Us Card
+                        {editCardId ? "Edit Why Us Card" : "Add New Why Us Card"}
                       </Dialog.Title>
                       <p className="text-xs text-gray-500 mt-0.5">
-                        Fill in the details below to add a card to the "What does working here actually feel like?" section.
+                        {editCardId 
+                          ? "Update the details and images below." 
+                          : "Fill in the details below to add a card to the \"What does working here actually feel like?\" section."}
                       </p>
                     </div>
 
@@ -668,14 +720,15 @@ const WhyUs: React.FC = () => {
                             </div>
                           </div>
 
-                          {/* Selected files preview gallery */}
-                          {selectedFiles.length > 0 && (
+                          {/* Selected files & existing images preview gallery */}
+                          {(selectedFiles.length > 0 || existingImages.length > 0) && (
                             <div className="mt-3 space-y-2">
                               <div className="flex items-center justify-between text-xs font-bold text-gray-700">
-                                <span>Selected Images ({selectedFiles.length})</span>
+                                <span>Card Images ({existingImages.length + selectedFiles.length})</span>
                                 <button
                                   type="button"
                                   onClick={() => {
+                                    setExistingImages([]);
                                     setSelectedFiles([]);
                                     setFilePreviews([]);
                                     setPreviewActiveIdx(0);
@@ -686,9 +739,9 @@ const WhyUs: React.FC = () => {
                                 </button>
                               </div>
                               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-48 overflow-y-auto p-2 bg-gray-50 rounded-xl border border-gray-200">
-                                {selectedFiles.map((file, idx) => (
+                                {existingImages.map((url, idx) => (
                                   <div
-                                    key={idx}
+                                    key={`exist-${idx}`}
                                     onClick={() => setPreviewActiveIdx(idx)}
                                     className={`relative group rounded-lg overflow-hidden border-2 bg-white p-1 cursor-pointer transition ${
                                       previewActiveIdx === idx
@@ -697,32 +750,64 @@ const WhyUs: React.FC = () => {
                                     }`}
                                   >
                                     <img
-                                      src={filePreviews[idx]}
-                                      alt={file.name}
+                                      src={url}
+                                      alt="Existing card image"
                                       className="w-full h-16 object-cover rounded"
                                     />
                                     <button
                                       type="button"
                                       onClick={(e) => {
                                         e.stopPropagation();
-                                        removeSelectedFile(idx);
+                                        removeExistingImage(idx);
                                       }}
                                       className="absolute top-1.5 right-1.5 bg-red-500 text-white rounded-full p-1 opacity-90 hover:opacity-100 shadow transition"
                                       title="Remove image"
                                     >
                                       <X className="w-3 h-3 stroke-[3]" />
                                     </button>
-                                    <p
-                                      className="text-[10px] text-gray-700 truncate mt-1 px-0.5 font-medium"
-                                      title={file.name}
-                                    >
-                                      {file.name}
-                                    </p>
-                                    <p className="text-[9px] text-gray-400 px-0.5">
-                                      {(file.size / 1024).toFixed(1)} KB
-                                    </p>
+                                    <p className="text-[10px] text-gray-500 mt-1 px-0.5 font-medium truncate">Previously Saved</p>
                                   </div>
                                 ))}
+                                {selectedFiles.map((file, idx) => {
+                                  const overallIdx = existingImages.length + idx;
+                                  return (
+                                    <div
+                                      key={`new-${idx}`}
+                                      onClick={() => setPreviewActiveIdx(overallIdx)}
+                                      className={`relative group rounded-lg overflow-hidden border-2 bg-white p-1 cursor-pointer transition ${
+                                        previewActiveIdx === overallIdx
+                                          ? "border-[#6abd45] ring-2 ring-[#6abd45]/30"
+                                          : "border-gray-200 hover:border-gray-300"
+                                      }`}
+                                    >
+                                      <img
+                                        src={filePreviews[idx]}
+                                        alt={file.name}
+                                        className="w-full h-16 object-cover rounded"
+                                      />
+                                      <button
+                                        type="button"
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          removeSelectedFile(idx);
+                                        }}
+                                        className="absolute top-1.5 right-1.5 bg-red-500 text-white rounded-full p-1 opacity-90 hover:opacity-100 shadow transition"
+                                        title="Remove image"
+                                      >
+                                        <X className="w-3 h-3 stroke-[3]" />
+                                      </button>
+                                      <p
+                                        className="text-[10px] text-gray-700 truncate mt-1 px-0.5 font-medium"
+                                        title={file.name}
+                                      >
+                                        {file.name}
+                                      </p>
+                                      <p className="text-[9px] text-gray-400 px-0.5">
+                                        {(file.size / 1024).toFixed(1)} KB
+                                      </p>
+                                    </div>
+                                  );
+                                })}
                               </div>
                             </div>
                           )}
@@ -735,9 +820,9 @@ const WhyUs: React.FC = () => {
                           <label className="block text-xs font-bold uppercase tracking-wider text-gray-500">
                             Live Public Card Preview
                           </label>
-                          {filePreviews.length > 1 && (
+                          {(existingImages.length + filePreviews.length) > 1 && (
                             <span className="text-[11px] text-[#6abd45] font-bold">
-                              Viewing photo {previewActiveIdx + 1} of {filePreviews.length}
+                              Viewing photo {previewActiveIdx + 1} of {existingImages.length + filePreviews.length}
                             </span>
                           )}
                         </div>
@@ -746,8 +831,8 @@ const WhyUs: React.FC = () => {
                           <div className="relative h-48 overflow-hidden bg-gray-100">
                             <img
                               src={
-                                filePreviews[previewActiveIdx] ||
-                                filePreviews[0] ||
+                                [...existingImages, ...filePreviews][previewActiveIdx] ||
+                                [...existingImages, ...filePreviews][0] ||
                                 DEFAULT_CARD_IMAGE
                               }
                               alt="Preview"
@@ -759,18 +844,18 @@ const WhyUs: React.FC = () => {
                             <span className="absolute top-3 right-3 bg-black/70 text-white text-xs font-mono font-semibold px-2.5 py-1 rounded-full shadow">
                               #{formOrder || 1}
                             </span>
-                            {filePreviews.length > 1 && (
+                            {(existingImages.length + filePreviews.length) > 1 && (
                               <span className="absolute bottom-2.5 right-2.5 bg-black/75 backdrop-blur-sm text-white text-[11px] font-semibold px-2 py-0.5 rounded-md shadow flex items-center gap-1">
                                 <ImageIcon className="w-3 h-3 text-[#6abd45]" />
-                                <span>{filePreviews.length} photos</span>
+                                <span>{existingImages.length + filePreviews.length} photos</span>
                               </span>
                             )}
                           </div>
 
                           {/* Mini thumbnails ribbon if multiple images */}
-                          {filePreviews.length > 1 && (
+                          {(existingImages.length + filePreviews.length) > 1 && (
                             <div className="flex gap-1.5 p-2 bg-gray-50 border-b border-gray-100 overflow-x-auto">
-                              {filePreviews.map((pUrl, pIdx) => (
+                              {[...existingImages, ...filePreviews].map((pUrl, pIdx) => (
                                 <button
                                   key={pIdx}
                                   type="button"
@@ -832,12 +917,12 @@ const WhyUs: React.FC = () => {
                         {isSubmitting ? (
                           <>
                             <RefreshCw className="w-4 h-4 animate-spin text-white" />
-                            <span className="text-white">Uploading & Saving...</span>
+                            <span className="text-white">Saving...</span>
                           </>
                         ) : (
                           <>
-                            <Plus className="w-4 h-4 stroke-[3] text-white" />
-                            <span className="text-white">Create Card</span>
+                            {editCardId ? <Edit2 className="w-4 h-4 stroke-[3] text-white" /> : <Plus className="w-4 h-4 stroke-[3] text-white" />}
+                            <span className="text-white">{editCardId ? "Save Changes" : "Create Card"}</span>
                           </>
                         )}
                       </button>
