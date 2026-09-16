@@ -13,23 +13,6 @@ const banner: BannerPropType = {
   height: "h-[24rem] md:h-[32rem] max-md:h-64",
 };
 
-const employeePromise = [
-  {
-    title: "Purpose-Driven Work",
-    desc: "Every 3D model, connection design, and detailing drawing you craft directly shapes iconic buildings and infrastructure across North America.",
-    icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685576/icons/work-icon_qbsh4o.png",
-  },
-  {
-    title: "People-First Culture",
-    desc: "We prioritize empathy, open communication, and mutual respect. We operate with a flat hierarchy where every voice is heard and valued.",
-    icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685580/icons/people-icon_o8b5nn.png",
-  },
-  {
-    title: "Modern Ecosystem",
-    desc: "Access best-in-class hardware, high-speed infrastructure, and latest software tools (Tekla, SDS/2, Revit) to perform at your best.",
-    icon: "https://res.cloudinary.com/dp7yxzrgw/image/upload/v1753685577/icons/tech-icon_e2gofv.png",
-  },
-];
 
 const lifeHighlights = [
   {
