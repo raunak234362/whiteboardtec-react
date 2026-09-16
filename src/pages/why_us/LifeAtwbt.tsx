@@ -76,7 +76,7 @@ const GroupedHighlightCard = ({
   const coverImage = cover.images && cover.images.length > 0 ? cover.images[0] : cover.image;
 
   return (
-    <div 
+    <div
       className="bg-white border-2 shadow-md rounded-3xl overflow-hidden flex flex-col justify-between transition-all hover:shadow-xl hover:-translate-y-1 cursor-pointer"
       onClick={onOpenModal}
     >
@@ -89,7 +89,7 @@ const GroupedHighlightCard = ({
         <span className="absolute top-3 left-3 bg-[#6abd45] text-white text-lg font-bold px-3 py-1 rounded-full shadow z-10">
           {cover.badge}
         </span>
-        
+
         {/* Overlay on hover */}
         <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
           <span className="text-white font-bold text-lg text-center px-4">
@@ -116,7 +116,7 @@ const PostCarousel = ({ images, title }: { images: string[]; title: string }) =>
   useEffect(() => {
     if (!images || images.length <= 1) return;
     const interval = setInterval(() => {
-      setCurrentIdx((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+      setCurrentIdx((prev) => prev + 1);
     }, 2000);
     return () => clearInterval(interval);
   }, [images]);
@@ -125,8 +125,8 @@ const PostCarousel = ({ images, title }: { images: string[]; title: string }) =>
   if (images.length === 1) {
     return (
       <div className="relative overflow-hidden w-full h-full bg-black flex items-center justify-center">
-        <img 
-          src={images[0]} 
+        <img
+          src={images[0]}
           alt={title}
           className="w-full h-full object-cover cursor-pointer transition-transform duration-500 hover:scale-[1.02]"
           onClick={() => window.open(images[0], "_blank")}
@@ -135,51 +135,82 @@ const PostCarousel = ({ images, title }: { images: string[]; title: string }) =>
     );
   }
 
+  const total = images.length;
+  // Calculate the actual current image index 0-based
+  const actualIdx = ((currentIdx % total) + total) % total;
+
   return (
     <div className="relative overflow-hidden w-full h-full bg-black group flex items-center justify-center">
-      {images.map((img, idx) => (
-        <img 
-          key={idx}
-          src={img} 
-          alt={`${title} - ${idx + 1}`}
-          className="absolute top-0 left-0 w-full h-full object-cover cursor-pointer transition-transform duration-1000 ease-out"
-          style={{ transform: `translateX(${(currentIdx - idx) * 100}%)` }}
-          onClick={() => window.open(img, "_blank")}
-        />
-      ))}
-      
+      {/* We render exactly 3 items at a time: previous, active, and next.
+          Using absolute index as key ensures clean sliding without rewind. */}
+      {[-1, 0, 1].map((offset) => {
+        const absIdx = currentIdx + offset;
+        const imgIdx = ((absIdx % total) + total) % total;
+        const img = images[imgIdx];
+        const isActive = offset === 0;
+
+        return (
+          <div
+            key={absIdx}
+            className="absolute top-0 left-0 w-full h-full transition-transform duration-[1200ms] ease-in-out"
+            style={{
+              transform: `translateX(${offset * 100}%)`,
+              zIndex: isActive ? 20 : 10
+            }}
+          >
+            <img
+              src={img}
+              alt={`${title} - ${imgIdx + 1}`}
+              className={`w-full h-full object-cover cursor-pointer ${isActive ? "scale-125" : "scale-100"
+                }`}
+              style={{
+                transitionProperty: "transform",
+                transitionDuration: "3000ms",
+                transitionDelay: isActive ? "100ms" : "0ms",
+                transitionTimingFunction: "ease-out"
+              }}
+              onClick={() => window.open(img, "_blank")}
+            />  
+          </div>
+        );
+      })}
+
       {/* Prev Button */}
       <button
-        onClick={(e) => { e.stopPropagation(); setCurrentIdx((prev) => prev === 0 ? images.length - 1 : prev - 1); }}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white rounded-full p-3 transition opacity-0 group-hover:opacity-100 z-10"
+        onClick={(e) => { e.stopPropagation(); setCurrentIdx((prev) => prev - 1); }}
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white rounded-full p-3 transition opacity-0 group-hover:opacity-100 z-30"
       >
         <ChevronLeft className="w-8 h-8" />
       </button>
 
       {/* Next Button */}
       <button
-        onClick={(e) => { e.stopPropagation(); setCurrentIdx((prev) => prev === images.length - 1 ? 0 : prev + 1); }}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white rounded-full p-3 transition opacity-0 group-hover:opacity-100 z-10"
+        onClick={(e) => { e.stopPropagation(); setCurrentIdx((prev) => prev + 1); }}
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white rounded-full p-3 transition opacity-0 group-hover:opacity-100 z-30"
       >
         <ChevronRight className="w-8 h-8" />
       </button>
 
       {/* Dots */}
-      <div className="absolute bottom-4 inset-x-0 flex justify-center gap-2 z-10 flex-wrap px-4">
+      <div className="absolute bottom-4 inset-x-0 flex justify-center gap-2 z-30 flex-wrap px-4">
         {images.map((_, i) => (
           <button
             key={i}
-            onClick={(e) => { e.stopPropagation(); setCurrentIdx(i); }}
-            className={`w-3 h-3 rounded-full transition-all ${
-              currentIdx === i ? "bg-white scale-125 shadow-md" : "bg-white/50 hover:bg-white/80"
-            }`}
+            onClick={(e) => {
+              e.stopPropagation();
+              const diff = i - actualIdx;
+              // Add difference to keep sliding in the shortest/direct direction
+              setCurrentIdx(prev => prev + diff);
+            }}
+            className={`w-3 h-3 rounded-full transition-all ${actualIdx === i ? "bg-white scale-125 shadow-md" : "bg-white/50 hover:bg-white/80"
+              }`}
           />
         ))}
       </div>
-      
+
       {/* Counter */}
-      <div className="absolute top-4 right-4 bg-black/60 text-white text-lg font-medium px-3 py-1 rounded-full backdrop-blur-md z-10">
-        {currentIdx + 1} / {images.length}
+      <div className="absolute top-4 right-4 bg-black/60 text-white text-lg font-medium px-3 py-1 rounded-full backdrop-blur-md z-30">
+        {actualIdx + 1} / {total}
       </div>
     </div>
   );
@@ -198,6 +229,7 @@ const LifeAtwbt = () => {
   const [modalItems, setModalItems] = useState<typeof cards>([]);
   const [activePost, setActivePost] = useState<typeof cards[0] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = (items: typeof cards) => {
     const allImages = items.reduce((acc, item) => {
@@ -208,7 +240,7 @@ const LifeAtwbt = () => {
 
     let combinedDesc = items[0].desc;
     if (items.length > 1) {
-       combinedDesc = items.map(i => `<strong>${i.title}</strong><br/>${i.desc}`).join("<br/><br/>");
+      combinedDesc = items.map(i => `<strong>${i.title}</strong><br/>${i.desc}`).join("<br/><br/>");
     }
 
     const combinedPost = {
@@ -222,10 +254,15 @@ const LifeAtwbt = () => {
     setModalItems(items);
     setActivePost(combinedPost);
     setIsModalOpen(true);
+    setTimeout(() => setModalVisible(true), 10);
   };
+
   const closeModal = () => {
-    setIsModalOpen(false);
-    setActivePost(null);
+    setModalVisible(false);
+    setTimeout(() => {
+      setIsModalOpen(false);
+      setActivePost(null);
+    }, 300);
   };
 
   useEffect(() => {
@@ -280,22 +317,22 @@ const LifeAtwbt = () => {
       <PageBanner {...banner} />
 
       <div className="mx-auto my-10 md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl px-4">
-        
+
         {/* 4. LIFE AT THE COMPANY SECTION */}
         <section className="mb-16">
           <div className="mb-10">
-            
+
             <h2 className="text-4xl font-bold text-black mt-2">
               What does working here actually feel like?
             </h2>
-            
+
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {groupedCards.map((group, idx) => (
-              <GroupedHighlightCard 
-                key={idx} 
-                cover={group.cover} 
+              <GroupedHighlightCard
+                key={idx}
+                cover={group.cover}
                 onOpenModal={() => openModal(group.items)}
               />
             ))}
@@ -335,7 +372,7 @@ const LifeAtwbt = () => {
 
         {/* 2. WHY US / EMPLOYEE PROMISE SECTION */}
         <section className="mb-16">
-          
+
 
           <div className="rounded-3xl border-2 p-2 grid grid-cols-[60%_40%] gap-3 shadow-md bg-white max-md:grid-cols-1 mb-8">
             <div className="order-1 m-4 leading-loose max-md:order-2">
@@ -371,7 +408,7 @@ const LifeAtwbt = () => {
             </div>
           </div>
 
-    
+
         </section>
 
         {/* 5. OPPORTUNITIES & CAREERS CTA SECTION */}
@@ -402,12 +439,12 @@ const LifeAtwbt = () => {
 
       {/* Detailed Posts Modal */}
       {isModalOpen && modalItems.length > 0 && (
-        <div 
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 md:p-8 backdrop-blur-sm"
+        <div
+          className={`fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 md:p-8 backdrop-blur-sm transition-opacity duration-300 ease-in-out ${modalVisible ? 'opacity-100' : 'opacity-0'}`}
           onClick={closeModal}
         >
-          <div 
-            className="relative w-[90%] md:w-[80%] lg:w-[70%] max-w-5xl h-[85vh] flex flex-col bg-gray-100 rounded-none overflow-hidden shadow-2xl transition-all duration-300"
+          <div
+            className={`relative w-[80%] h-[90%] flex flex-col bg-gray-100 rounded-none overflow-hidden shadow-2xl transition-all duration-300 ease-in-out transform ${modalVisible ? 'scale-100 opacity-100' : 'scale-50 opacity-0'}`}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
@@ -424,7 +461,7 @@ const LifeAtwbt = () => {
                 </svg>
               </button>
             </div>
-            
+
             {/* Modal Content */}
             <div className={`flex-1 overflow-y-auto ${activePost ? 'p-0 bg-black' : 'p-6 md:p-10'}`}>
               {activePost ? (
@@ -436,15 +473,15 @@ const LifeAtwbt = () => {
                   {modalItems.map((item, idx) => {
                     const coverImg = item.images && item.images.length > 0 ? item.images[0] : item.image;
                     return (
-                      <div 
-                        key={idx} 
+                      <div
+                        key={idx}
                         className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden cursor-pointer transition-transform hover:scale-[1.02] group"
                         onClick={() => setActivePost(item)}
                       >
                         <div className="relative h-56 overflow-hidden bg-gray-200">
                           <img src={coverImg} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                           <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                             <span className="text-white font-bold text-lg px-4 py-2 border-2 border-white rounded-full backdrop-blur-sm">View Post</span>
+                            <span className="text-white font-bold text-lg px-4 py-2 border-2 border-white rounded-full backdrop-blur-sm">View Post</span>
                           </div>
                         </div>
                         <div className="p-6">
