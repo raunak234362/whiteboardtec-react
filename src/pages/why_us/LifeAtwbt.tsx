@@ -103,7 +103,7 @@ const GroupedHighlightCard = ({
           alt={cover.title}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <span className="absolute top-3 left-3 bg-[#6abd45] text-white text-xs font-bold px-3 py-1 rounded-full shadow z-10">
+        <span className="absolute top-3 left-3 bg-[#6abd45] text-white text-lg font-bold px-3 py-1 rounded-full shadow z-10">
           {cover.badge}
         </span>
         
@@ -118,7 +118,7 @@ const GroupedHighlightCard = ({
         <div>
           <h3 className="text-xl font-bold text-black mb-2">{cover.title}</h3>
           <div
-            className="text-gray-700 text-sm leading-relaxed text-justify prose prose-sm max-w-none line-clamp-4"
+            className="text-gray-700 text-lg leading-relaxed prose prose-lg max-w-none"
             dangerouslySetInnerHTML={{ __html: cover.desc }}
           />
         </div>
@@ -195,7 +195,7 @@ const PostCarousel = ({ images, title }: { images: string[]; title: string }) =>
       </div>
       
       {/* Counter */}
-      <div className="absolute top-4 right-4 bg-black/60 text-white text-sm font-medium px-3 py-1 rounded-full backdrop-blur-md z-10">
+      <div className="absolute top-4 right-4 bg-black/60 text-white text-lg font-medium px-3 py-1 rounded-full backdrop-blur-md z-10">
         {currentIdx + 1} / {images.length}
       </div>
     </div>
@@ -300,7 +300,7 @@ const LifeAtwbt = () => {
         
         {/* 4. LIFE AT THE COMPANY SECTION */}
         <section className="mb-16">
-          <div className="text-center max-w-3xl mx-auto mb-10">
+          <div className="mb-10">
             
             <h2 className="text-4xl font-bold text-black mt-2">
               What does working here actually feel like?
@@ -322,7 +322,7 @@ const LifeAtwbt = () => {
         {/* 3. GROWTH & LEARNING SECTION */}
         <section className="mb-16 bg-gray-50 rounded-3xl p-8 border-2 shadow-sm">
           <div className="mb-8">
-            <span className="text-[#6abd45] font-semibold text-lg uppercase tracking-wider">
+            <span className="text-[#6abd45] font-semibold text-xl uppercase tracking-wider">
               Growth & Learning
             </span>
             <h2 className="text-4xl font-bold text-black mt-2">
@@ -339,10 +339,10 @@ const LifeAtwbt = () => {
                 key={idx}
                 className="bg-white p-6 rounded-2xl border-2 shadow-sm hover:shadow-md transition-shadow"
               >
-                <h4 className="text-xl font-bold text-[#6abd45] mb-2">
+                <h4 className="text-2xl font-bold text-[#6abd45] mb-2">
                   {gp.question}
                 </h4>
-                <p className="text-gray-700 leading-relaxed text-justify">
+                <p className="text-gray-700 leading-relaxed text-justify text-lg">
                   {gp.answer}
                 </p>
               </div>
@@ -369,8 +369,8 @@ const LifeAtwbt = () => {
 
             <div className="order-2 max-md:order-1 p-4 flex flex-col">
               <div className="bg-[#6abd45] rounded-2xl p-6 text-white shadow-xl flex flex-col justify-center w-full h-full">
-                <h4 className="text-2xl font-bold mb-3">Our Promise To You</h4>
-                <ul className="space-y-3 text-md opacity-95">
+                <h4 className="text-3xl font-bold mb-3">Our Promise To You</h4>
+                <ul className="space-y-3 text-lg opacity-95">
                   <li className="flex items-start gap-2">
                     <span className="font-bold text-xl">✓</span> Continuous skill enhancement & real mentorship
                   </li>
@@ -388,35 +388,19 @@ const LifeAtwbt = () => {
             </div>
           </div>
 
-          {/* Employee Promise Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {employeePromise.map((item, idx) => (
-              <div
-                key={idx}
-                className="bg-white border-2 shadow-md rounded-3xl p-6 transition-all hover:shadow-lg hover:-translate-y-1"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <img src={item.icon} alt={item.title} className="w-10 h-10" />
-                  <h4 className="text-xl font-bold text-black">{item.title}</h4>
-                </div>
-                <p className="text-gray-700 text-md leading-relaxed text-justify">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
+    
         </section>
 
         {/* 5. OPPORTUNITIES & CAREERS CTA SECTION */}
         <section className="bg-gray-50 rounded-3xl p-10 text-black shadow-2xl text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8 mb-10">
           <div className="max-w-2xl">
-            <span className="text-[#6abd45] font-semibold text-sm uppercase tracking-widest">
+            <span className="text-[#6abd45] font-semibold text-2xl uppercase tracking-normal">
               Opportunities
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold mt-2 mb-3">
+            <h2 className="text-4xl font-bold mt-2 mb-3">
               What roles are available?
             </h2>
-            <p className="text-gray-700 text-md leading-relaxed">
+            <p className="text-gray-700 text-lg leading-relaxed">
               We are constantly seeking talented Structural Detailers, Connection Designers, BIM Engineers, Estimators, and Trainees to join our growing team.
             </p>
           </div>
@@ -445,7 +429,7 @@ const LifeAtwbt = () => {
           >
             {/* Modal Header */}
             <div className="flex items-center justify-between p-6 bg-white border-b border-gray-200">
-              <h2 className="text-3xl font-bold text-[#6abd45]">
+              <h2 className="text-4xl font-bold text-[#6abd45]">
                 {modalItems[0].badge} Highlights
               </h2>
               <button
@@ -481,8 +465,8 @@ const LifeAtwbt = () => {
                           </div>
                         </div>
                         <div className="p-6">
-                          <h4 className="text-xl font-bold mb-3">{item.title}</h4>
-                          <div className="text-sm text-gray-600 line-clamp-3 prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: item.desc }} />
+                          <h4 className="text-4xl font-bold mb-3">{item.title}</h4>
+                          <div className="text-lg text-gray-600 line-clamp-3 prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: item.desc }} />
                         </div>
                       </div>
                     );
