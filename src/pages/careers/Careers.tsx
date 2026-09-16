@@ -150,21 +150,21 @@ function Careers({ previewData, onSectionClick }: { previewData?: any; onSection
         onClick={(e) => handleClick(e, "treeData")}
       >
         <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-4">
-          <div className="my-2 text-3xl font-semibold text-black mb-6">
+          <div className="my-2 text-4xl font-semibold text-black mb-6">
             We continue to attract and retain the best talent because of
           </div>
-          <section className="grid grid-cols-1 p-2 mt-3 gap-y-5 gap-x-10 md:grid-cols-3">
+          <section className="grid grid-cols-1 p-2 mt-3 gap-y-5 gap-x-10 md:grid-cols-2">
             {data.treeData.map((item: any, index: number) => (
               <div
                 key={index}
                 className="bg-white border-2 shadow-md rounded-3xl p-6 flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center gap-3 text-xl font-semibold text-black mb-4">
+                  <div className="flex items-center gap-3 text-2xl font-semibold text-black mb-4">
                     {item.icon && <img src={item.icon} alt="icon" className="w-10 h-10 object-contain" />}
                     <span dangerouslySetInnerHTML={{ __html: item.head }} />
                   </div>
-                  <div className="text-justify text-gray-600 text-md leading-relaxed" dangerouslySetInnerHTML={{ __html: item.body }} />
+                  <div className="text-gray-600 text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: item.body }} />
                 </div>
               </div>
             ))}

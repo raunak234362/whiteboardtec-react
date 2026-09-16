@@ -49,9 +49,9 @@ function Portal({ previewData, onSectionClick }: { previewData?: any; onSectionC
               className={`p-2 rounded ${getEditClass("introText")}`}
               onClick={(e) => handleClick(e, "introText")}
             >
-              <h1 className="md:text-3xl font-extrabold text-[#6abd45] leading-tight mb-8" dangerouslySetInnerHTML={{ __html: data.intro.title }} />
+              <h1 className="text-4xl font-extrabold text-[#6abd45] leading-tight mb-8" dangerouslySetInnerHTML={{ __html: data.intro.title }} />
               <p 
-                className="text-xlg text-slate-600 leading-relaxed mb-8 text-justify"
+                className="text-lg text-slate-600 leading-relaxed mb-8"
                 dangerouslySetInnerHTML={{ __html: data.intro.body }}
               />
             </motion.div>
@@ -84,7 +84,7 @@ function Portal({ previewData, onSectionClick }: { previewData?: any; onSectionC
       >
         <div className="mx-auto lg:max-w-screen-lg xl:max-w-screen-xl px-5">
           <div className="text-left mb-16">
-            <h2 className="text-[#6abd45] font-bold text-3xl mb-4">
+            <h2 className="text-[#6abd45] font-bold text-4xl mb-4">
               Core Capabilities
             </h2>
           </div>
