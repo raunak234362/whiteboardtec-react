@@ -55,12 +55,12 @@ function Careers({ previewData, onSectionClick }: { previewData?: any; onSection
       <div className="mx-auto my-16 lg:max-w-screen-lg xl:max-w-screen-xl px-4">
         <section className="rounded-3xl border-2 p-4 grid sm:grid-cols-1 lg:grid-cols-[60%_40%] gap-4 shadow-md bg-white">
            <div 
-            className={`order-2 flex flex-wrap justify-center max-md:order-1 p-2 rounded ${getEditClass("tagline")}`}
+            className={`order-2 m-4 max-md:order-1 p-2 rounded ${getEditClass("tagline")}`}
             onClick={(e) => handleClick(e, "tagline")}
           >
-            <div className="bg-[#6abd45] rounded-xl flex flex-wrap flex-col w-full h-fit shadow-2xl m-4 p-4">
+            <div className="bg-[#6abd45] rounded-xl flex flex-col justify-center w-full h-full shadow-2xl p-8">
               {data.headSection.tagline?.map((tag: string, index: number) => (
-                <h1 key={index} className="pb-2 text-2xl text-white font-semibold" dangerouslySetInnerHTML={{ __html: tag }} />
+                <h1 key={index} className="pb-4 text-2xl text-white font-semibold" dangerouslySetInnerHTML={{ __html: tag }} />
               ))}
             </div>
           </div>
