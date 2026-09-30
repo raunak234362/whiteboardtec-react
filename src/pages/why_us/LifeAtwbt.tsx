@@ -57,7 +57,7 @@ const growthPoints = [
   {
     question: "Will I actually grow here?",
     answer:
-      "Absolutely. We invest heavily in your professional development. Through structured mentorship from industry veterans, hands-on exposure to complex North American projects, and continuous training on advanced BIM & 3D software, your learning curve remains steep and rewarding.",
+      "Absolutely. We invest heavily in your professional development. Through structured mentorship from industry veterans, hands-on exposure to complex American & Canadian projects, and continuous training on advanced BIM & 3D software, your learning curve remains steep and rewarding.",
   },
   {
     question: "Who will I work with?",
