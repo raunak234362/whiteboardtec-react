@@ -26,6 +26,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
       technologyused: props.technologyused,
       otherType: props.otherType || "",
       designingSoftware: props.designingSoftware || "",
+      link: props.link || "",
       status: props.status,
       department: props.department, // Add department to default values
       // Note: `images` and `file` are not directly set as default values here
@@ -50,6 +51,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
   const otherType = watch("otherType");
   const technologyUsed = watch("technologyused");
   const designingSoftware = watch("designingSoftware");
+  const link = watch("link");
   const projectStatus = watch("status");
   const department = watch("department"); // Watch department too
 
@@ -62,6 +64,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
     setValue("otherType", props.otherType ?? "");
     setValue("technologyused", props.technologyused);
     setValue("designingSoftware", props.designingSoftware);
+    setValue("link", props.link || "");
     setValue("status", props.status);
     setValue("department", props.department); // Set department when props change
     setNewSelectedFiles([]); // Clear new selected files on prop change
@@ -90,6 +93,7 @@ function ImagePortfolio(props: ImagePortfolioProps) {
       formData.append("otherType", otherType);
       formData.append("designingSoftware", designingSoftware || "");
       formData.append("technologyused", technologyUsed.trim());
+      formData.append("link", link?.trim() || "");
       formData.append("status", projectStatus);
       formData.append("department", department);
 
@@ -340,6 +344,22 @@ function ImagePortfolio(props: ImagePortfolioProps) {
                       <option value="ON_HOLD">On Hold</option>
                       <option value="CANCELLED">Cancelled</option>
                     </select>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="edit-link"
+                      className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5"
+                    >
+                      YouTube Video Link
+                    </label>
+                    <input
+                      type="text"
+                      id="edit-link"
+                      {...register("link")}
+                      className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#6abd45]/20 focus:border-[#6abd45] transition-all"
+                      placeholder="e.g., https://youtu.be/..."
+                    />
                   </div>
 
                   <div>
