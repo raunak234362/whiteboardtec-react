@@ -46,6 +46,7 @@ export interface IProject {
   projectID?: any;
   otherType: string;
   title: string;
+  link?: string;
   description: string;
   location: string;
   type: string;

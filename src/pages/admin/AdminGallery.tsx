@@ -20,6 +20,7 @@ type IProjectFormInput = {
   designingSoftware: string;
   status: string;
   department: string;
+  link: string;
 };
 
 // Custom Hook for multiple file uploads
@@ -100,6 +101,7 @@ const AdminGallery = () => {
         technologyused: item.technologyused,
         status: item.status,
         images: item.images,
+        link: item.link,
         file: [],
         onUpdateSuccess: handleUpdateGalleryItem,
         onDeleteSuccess: handleDeleteGalleryItem,
@@ -132,6 +134,7 @@ const AdminGallery = () => {
       formData.append("designingSoftware", data.designingSoftware);
       formData.append("technologyused", data.technologyused);
       formData.append("status", data.status);
+      formData.append("link", data.link || "");
 
       selectedFiles.forEach((file) => {
         formData.append("images", file);
@@ -400,6 +403,22 @@ const AdminGallery = () => {
                         <option value="ON_HOLD">On Hold</option>
                         <option value="CANCELLED">Cancelled</option>
                       </select>
+                    </label>
+                     <label>
+                      <span className="block mb-1 text-sm font-medium text-gray-700">
+                        Link *
+                      </span>
+                      <input
+                        {...register("link")}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                        placeholder="Add live link of project here"
+                       
+                      />
+                      {errors.link && (
+                        <p className="mt-1 text-sm text-red-500">x
+                          {errors.link.message}
+                        </p>
+                      )}
                     </label>
                     <label>
                       <span className="block mb-1 text-sm font-medium text-gray-700">
