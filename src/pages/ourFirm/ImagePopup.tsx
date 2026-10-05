@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
+import ReactPlayer from "react-player";
 import Service from "../../config/service";
 
 interface ImageModalProps {
@@ -38,6 +39,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
     projectLocation?: string;
     technologyused?: string;
     designingSoftware?: string; // Add this key to the interface
+    link?: string;
     status?: string;
     ProjectStatus?: string;
     softwareUsed?: string;
@@ -65,12 +67,18 @@ export const ImageModal: React.FC<ImageModalProps> = ({
         images = [(response.images as GalleryFile).secureUrl];
       }
 
+      const carouselItems: { type: 'image' | 'video', url: string }[] = images.map(url => ({ type: 'image', url }));
+
+      if (response.link) {
+        carouselItems.push({ type: 'video', url: response.link });
+      }
+
       setImageData({
         title: response.projectTitle || response.title || "Untitled Project",
         description: response.description || "No Scope available",
         type: response.type || "Not specified",
         otherType: response.otherType || "Not specified",
-        images,
+        items: carouselItems,
         department: response.department || "Not specified",
         projectLocation:
           response.location || response.projectLocation || "Not specified",
@@ -93,31 +101,33 @@ export const ImageModal: React.FC<ImageModalProps> = ({
   }, [projectID]);
 
   const nextImage = () => {
-    if (imageData?.images?.length > 0) {
+    if (imageData?.items?.length > 0) {
       setSlideDirection("next");
-      setCurrentIndex((prev) => (prev + 1) % imageData.images.length);
+      setCurrentIndex((prev) => (prev + 1) % imageData.items.length);
     }
   };
 
   const prevImage = () => {
-    if (imageData?.images?.length > 0) {
+    if (imageData?.items?.length > 0) {
       setSlideDirection("prev");
       setCurrentIndex(
-        (prev) => (prev - 1 + imageData.images.length) % imageData.images.length
+        (prev) => (prev - 1 + imageData.items.length) % imageData.items.length
       );
     }
   };
 
+  const isCurrentVideo = imageData?.items?.[currentIndex]?.type === 'video';
+
   // Automatic slide every 3 seconds
   useEffect(() => {
-    if (imageData?.images?.length > 1) {
+    if (imageData?.items?.length > 1 && !isCurrentVideo) {
       const interval = setInterval(() => {
         nextImage();
       }, 3000);
 
       return () => clearInterval(interval);
     }
-  }, [imageData]);
+  }, [imageData, currentIndex, isCurrentVideo]);
 
   return (
     <Dialog
@@ -126,22 +136,44 @@ export const ImageModal: React.FC<ImageModalProps> = ({
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/30 backdrop-blur-lg  overflow-auto"
     >
       <Dialog.Panel className="relative flex flex-col w-[90%] md:w-[60%]  bg-white rounded-2xl shadow-2xl overflow-auto">
-        {imageData?.images?.length > 0 ? (
+        {imageData?.items?.length > 0 ? (
           <div className="flex flex-col md:flex-col md:space-x-8 max-md:h-[95vh] md:overflow-hidden ">
             {/* Image Viewer */}
             <div className="relative flex items-center justify-center p-5 bg-gray-100 md:w-full overflow-hidden">
-              <img
-                src={imageData.images[currentIndex]}
-                alt={`Project image ${currentIndex + 1}`}
-                className={`w-full h-[55vh] object-contain rounded-lg shadow-md transition-transform duration-2000 ease-in-out ${
-                  slideDirection === "next"
-                    ? "animate-slide-in-right"
-                    : slideDirection === "prev"
-                    ? "animate-slide-in-left"
-                    : ""
-                }`}
-                key={currentIndex}
-              />
+              {imageData.items[currentIndex].type === 'image' ? (
+                <img
+                  src={imageData.items[currentIndex].url}
+                  alt={`Project image ${currentIndex + 1}`}
+                  className={`w-full h-[55vh] object-contain rounded-lg shadow-md transition-transform duration-2000 ease-in-out ${
+                    slideDirection === "next"
+                      ? "animate-slide-in-right"
+                      : slideDirection === "prev"
+                      ? "animate-slide-in-left"
+                      : ""
+                  }`}
+                  key={currentIndex}
+                />
+              ) : (
+                <div
+                  className={`w-full h-[55vh] flex justify-center bg-black rounded-lg shadow-md transition-transform duration-2000 ease-in-out overflow-hidden ${
+                    slideDirection === "next"
+                      ? "animate-slide-in-right"
+                      : slideDirection === "prev"
+                      ? "animate-slide-in-left"
+                      : ""
+                  }`}
+                  key={currentIndex}
+                >
+                  <ReactPlayer
+                    src={imageData.items[currentIndex].url}
+                    width="100%"
+                    height="100%"
+                    playing={true}
+                    controls={true}
+                    onEnded={nextImage}
+                  />
+                </div>
+              )}
               <style>
                 {`
                   @keyframes slide-in-right {
@@ -172,7 +204,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({
                   }
                 `}
               </style>
-              {imageData.images.length > 1 && (
+              {imageData.items.length > 1 && (
                 <>
                   <button
                     onClick={prevImage}
